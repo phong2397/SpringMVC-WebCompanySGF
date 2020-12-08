@@ -20,7 +20,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @ComponentScan("com.sgfintech.*")
 @EnableTransactionManagement
-// Load to Environment.
 @PropertySources({ @PropertySource("classpath:datasource-cfg.properties")})
 public class ApplicationContextConfig {
     // Lưu trữ các giá thuộc tính load bởi @PropertySource.
@@ -31,10 +30,8 @@ public class ApplicationContextConfig {
     @Bean(name = "viewResolver")
     public InternalResourceViewResolver getViewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-
         viewResolver.setPrefix("/WEB-INF/pages/");
         viewResolver.setSuffix(".jsp");
-
         return viewResolver;
     }
 
