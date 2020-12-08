@@ -13,6 +13,6 @@ public class HomeController {
 
     @RequestMapping(value = { "/hello" }, method = RequestMethod.GET)
     public String welcomePage(Model model) {
-        return "index";
+        return "/error/index";
     }
 }

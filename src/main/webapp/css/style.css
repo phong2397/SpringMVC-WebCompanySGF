@@ -88,7 +88,7 @@ Waves
 @import url(icons/cryptocoins-master/cryptocoins.css);
 @import url(icons/weather-icons/css/weather-icons.min.css);
 @import url(icons/iconsmind/style.css);
-@import url(../../assets/vendor_components/animate/animate.css);
+@import url(../assets/vendor_components/animate/animate.css);
 html {
   height: 100%;
   font-size: 14px; }
@@ -16771,6 +16771,7 @@ time {
   opacity: .5;
   background-color: #879fba; }
 
+/*noinspection ALL*/
 .divider-line {
   display: -webkit-inline-box;
   display: inline-flex;
