@@ -12,13 +12,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-@ComponentScan("com.sgfintech.*")
+@EnableJpaRepositories(basePackages = {"com.sgfintech.*"})
 @EnableTransactionManagement
 @PropertySources({ @PropertySource("classpath:datasource-cfg.properties")})
 public class ApplicationContextConfig {
@@ -27,6 +29,14 @@ public class ApplicationContextConfig {
     @Autowired
     private Environment env;
 
+    @Bean
+    public LocalEntityManagerFactoryBean entityManagerFactory() {
+        LocalEntityManagerFactoryBean factoryBean = new LocalEntityManagerFactoryBean();
+        factoryBean.setPersistenceUnitName("halongDB");
+        return factoryBean;
+    }
+
+
     @Bean(name = "viewResolver")
     public InternalResourceViewResolver getViewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -34,6 +44,8 @@ public class ApplicationContextConfig {
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
+
+
 
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
