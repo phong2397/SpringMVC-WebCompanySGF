@@ -1,16 +1,13 @@
 package com.sgfintech.service;
 
-import com.sgfintech.dao.UseradminRepository;
 import com.sgfintech.entity.Useradmin;
 import com.sgfintech.mapper.UseradminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
-import java.sql.SQLException;
 
 /**
  * @author lucnguyen.hcmut@gmail.com
