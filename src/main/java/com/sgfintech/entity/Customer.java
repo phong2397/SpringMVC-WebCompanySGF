@@ -1,5 +1,6 @@
 package com.sgfintech.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -38,6 +39,12 @@ public class Customer implements Serializable {
 
     @Column(name = "customer_bank")
     private String customerBank;
+
+    @Column(name = "customer_bank_acc")
+    private String customerBankAcc;
+
+    @Column(name = "customer_bank_name")
+    private String customerBankName;
 
     @Column(name = "customer_id")
     private String customerId;

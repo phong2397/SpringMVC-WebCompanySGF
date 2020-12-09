@@ -3,7 +3,6 @@ package com.sgfintech.util;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -35,8 +34,9 @@ public class StringUtil {
     }
 
     public static LocalDateTime convertToLocalDateViaInstant(Date dateToConvert) {
-        return dateToConvert.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
+        LocalDateTime ldt = LocalDateTime.ofInstant(dateToConvert.toInstant(),
+                ZoneId.systemDefault()) ;
+        return ldt;
     }
+
 }

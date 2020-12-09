@@ -1,5 +1,6 @@
 package com.sgfintech.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -75,4 +76,29 @@ public class SaRequest implements Serializable {
     @Column(name = "lasttime_topup")
     private LocalDateTime lasttimeTopup;
 
+    public SaRequest(Long id, String companyCode, String customerPhone, Long borrow, Integer timeBorrow, Double interestRate, Double feeBorrow, String status, String employeeSua, LocalDateTime employeeSuaDate, String employeeThamdinh, LocalDateTime employeeThamdinhDate, String employeeDuyet, LocalDateTime employeeDuyetDate, String description, byte[] data, LocalDateTime createdDate, LocalDateTime updatedDate, LocalDateTime updatedTimeBororw, LocalDateTime lasttimeTopup) {
+        this.id = id;
+        this.companyCode = companyCode;
+        this.customerPhone = customerPhone;
+        this.borrow = borrow;
+        this.timeBorrow = timeBorrow;
+        this.interestRate = interestRate;
+        this.feeBorrow = feeBorrow;
+        this.status = status;
+        this.employeeSua = employeeSua;
+        this.employeeSuaDate = employeeSuaDate;
+        this.employeeThamdinh = employeeThamdinh;
+        this.employeeThamdinhDate = employeeThamdinhDate;
+        this.employeeDuyet = employeeDuyet;
+        this.employeeDuyetDate = employeeDuyetDate;
+        this.description = description;
+        this.data = data;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.updatedTimeBororw = updatedTimeBororw;
+        this.lasttimeTopup = lasttimeTopup;
+    }
+
+    public SaRequest() {
+    }
 }

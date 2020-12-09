@@ -3,6 +3,7 @@ package com.sgfintech.config;
 /**
  * @author lucnguyen.hcmut@gmail.com
  */
+import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
@@ -13,6 +14,9 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Properties;
@@ -21,7 +25,7 @@ import java.util.Properties;
 @ComponentScan("com.sgfintech.*")
 @EnableTransactionManagement
 // Load to Environment.
-@PropertySources({ @PropertySource("classpath:datasource-cfg.properties")})
+@PropertySources({@PropertySource("classpath:datasource-cfg.properties")})
 public class ApplicationContextConfig {
     // Lưu trữ các giá thuộc tính load bởi @PropertySource.
 
@@ -66,7 +70,7 @@ public class ApplicationContextConfig {
 
 
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-        factoryBean.setPackagesToScan(new String[] { "org.o7planning.springmvcforms.entity" });
+        factoryBean.setPackagesToScan(new String[] { "com.sgfintech.*" });
         factoryBean.setDataSource(dataSource);
         factoryBean.setHibernateProperties(properties);
         factoryBean.afterPropertiesSet();
@@ -74,11 +78,12 @@ public class ApplicationContextConfig {
         SessionFactory sf = factoryBean.getObject();
         return sf;
     }
-
+    
     @Autowired
     @Bean(name = "transactionManager")
     public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
         return transactionManager;
     }
+
 }

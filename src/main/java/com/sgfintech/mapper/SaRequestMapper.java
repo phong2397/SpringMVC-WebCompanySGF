@@ -19,32 +19,32 @@ public class SaRequestMapper implements RowMapper<SaRequest> {
         s.setCompanyCode(rs.getString("company_code"));
         s.setCustomerPhone(rs.getString("customer_phone"));
         s.setBorrow(rs.getLong("borrow"));
-        s.setTimeBorrow(rs.getInt("timne_borrow"));
+        s.setTimeBorrow(rs.getInt("time_borrow"));
         s.setInterestRate(rs.getDouble("interest_rate"));
         s.setFeeBorrow(rs.getDouble("fee_borrow"));
         s.setStatus(rs.getString("status"));
         s.setEmployeeSua(rs.getString("employee_sua"));
         if (!StringUtil.isEmpty(rs.getDate("employee_sua_date"))) {
-            s.setEmployeeSuaDate(StringUtil.convertToLocalDateViaInstant(rs.getDate("employee_sua_date")));
+            s.setEmployeeSuaDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("employee_sua_date")));
         }
         s.setEmployeeThamdinh(rs.getString("employee_thamdinh"));
         if (!StringUtil.isEmpty(rs.getDate("employee_thamdinh_date"))) {
-            s.setEmployeeThamdinhDate(StringUtil.convertToLocalDateViaInstant(rs.getDate("employee_thamdinh_date")));
+            s.setEmployeeThamdinhDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("employee_thamdinh_date")));
         }
         s.setEmployeeDuyet(rs.getString("employee_duyet"));
         if (!StringUtil.isEmpty(rs.getDate("employee_thamdinh_date"))) {
-            s.setEmployeeDuyetDate(StringUtil.convertToLocalDateViaInstant(rs.getDate("employee_duyet_date")));
+            s.setEmployeeDuyetDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("employee_duyet_date")));
         }
         s.setDescription(rs.getString("description"));
 //        s.setData(rs.getByte("data"));
         if (!StringUtil.isEmpty(rs.getDate("created_date"))) {
-            s.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getDate("created_date")));
+            s.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("created_date")));
         }
         if (!StringUtil.isEmpty(rs.getDate("updated_date"))) {
-            s.setUpdatedDate(StringUtil.convertToLocalDateViaInstant(rs.getDate("updated_date")));
+            s.setUpdatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("updated_date")));
         }
         if (!StringUtil.isEmpty(rs.getDate("updated_time_bororw"))) {
-            s.setUpdatedTimeBororw(StringUtil.convertToLocalDateViaInstant(rs.getDate("updated_time_bororw")));
+            s.setUpdatedTimeBororw(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("updated_time_bororw")));
         }
         return s;
     }

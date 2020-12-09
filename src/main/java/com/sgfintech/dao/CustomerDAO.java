@@ -1,7 +1,6 @@
 package com.sgfintech.dao;
 
 import com.sgfintech.entity.Customer;
-import com.sgfintech.entity.SaRequest;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,36 +8,34 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * @author lucnguyen.hcmut@gmail.com
  */
-@Repository(value = "saRequestDAO")
+@Repository(value = "customerDAO")
 @Transactional(rollbackFor = Exception.class)
-public class SaRequestDAO {
+public class CustomerDAO {
 
     @Autowired
-    @Qualifier("sessionFactory")
     private SessionFactory sessionFactory;
 
-    public void save(final SaRequest s) {
+    public void save(final Customer customer) {
         Session session = this.sessionFactory.getCurrentSession();
-        session.save(s);
+        session.save(customer);
     }
 
-    public void update(final SaRequest s) {
+    public void update(final Customer customer) {
         Session session = this.sessionFactory.getCurrentSession();
-        session.update(s);
+        session.update(customer);
     }
 
-    public SaRequest findById(final long id) {
+    public Customer findById(final int id) {
         Session session = this.sessionFactory.getCurrentSession();
-        return session.find(SaRequest.class, id);
+        return session.get(Customer.class, id);
     }
 
-    public List<SaRequest> findAll() {
+    public List<Customer> findAll() {
         Session session = this.sessionFactory.getCurrentSession();
-        return session.createQuery("FROM SaRequest", SaRequest.class).getResultList();
+        return session.createQuery("FROM Customer", Customer.class).getResultList();
     }
 }
