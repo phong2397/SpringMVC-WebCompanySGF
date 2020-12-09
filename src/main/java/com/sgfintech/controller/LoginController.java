@@ -3,12 +3,15 @@ package com.sgfintech.controller;
 import com.sgfintech.entity.Useradmin;
 import com.sgfintech.service.UseradminService;
 import com.sgfintech.util.Consts;
+import com.sgfintech.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,17 +21,40 @@ import java.util.Locale;
  * @author lucnguyen.hcmut@gmail.com
  */
 @Controller
-@RequestMapping(value = "/login")
 public class LoginController {
 
     @Autowired
     private UseradminService useradminService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(ModelMap mm) {
         mm.addAttribute(Consts.Attr_Euser, new Useradmin());
         mm.addAttribute(Consts.Attr_ToDay, getDateString());
-        return "login";
+        return "auth_login";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String checkLogin(HttpServletRequest request, HttpSession session) {
+        String user = request.getParameter("user");
+        String pass = request.getParameter("pass");
+        if (StringUtil.isEmpty(user)) {
+            session.setAttribute(Consts.Session_Result, "User không được bỏ trống");
+            return "redirect:login";
+        }
+        Useradmin u = useradminService.checkUser(user);
+        if (StringUtil.isEmpty(u)) {
+            session.setAttribute(Consts.Session_Result, "User không tồn tại trên hệ thống");
+            return "redirect:login";
+        }
+        String hp = StringUtil.hashPw(pass);
+        if (!hp.equals(u.getPassWord())) {
+            session.setAttribute(Consts.Session_Result, "Mật khẩu không chính xác");
+            return "redirect:login";
+        } else {
+            u.setPassWord("");
+            session.setAttribute(Consts.Session_Euser, u);
+            return "redirect:home";
+        }
     }
 
     String getDateString() {

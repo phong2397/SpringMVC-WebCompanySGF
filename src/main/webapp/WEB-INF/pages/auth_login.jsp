@@ -47,13 +47,13 @@
         <div class="auth-body">
             <!-- <p class="auth-msg text-white-50">Sign in to start your session</p> -->
 
-            <form action="index.html" method="post" class="form-element">
+            <form action="${pageContext.request.contextPath}/login" method="post" class="form-element">
                 <div class="form-group has-feedback">
-                    <input type="email" class="form-control text-white plc-white" placeholder="Tên đăng nhập">
+                    <input name="user" class="form-control text-white plc-white" placeholder="Tên đăng nhập">
                     <span class="ion ion-email form-control-feedback text-white"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control text-white plc-white" placeholder="Mật khẩu">
+                    <input name="pass" type="password" class="form-control text-white plc-white" placeholder="Mật khẩu">
                     <span class="ion ion-locked form-control-feedback text-white"></span>
                 </div>
                 <div class="row">
@@ -77,30 +77,15 @@
                 </div>
             </form>
 
-            <!-- <div class="text-center text-dark">
-                <p class="mt-50 text-white">- Sign With -</p>
-                <p class="gap-items-2 mb-20">
-                    <a class="btn btn-social-icon btn-round btn-outline btn-white" href="#"><i
-                            class="fa fa-facebook"></i></a>
-                    <a class="btn btn-social-icon btn-round btn-outline btn-white" href="#"><i
-                            class="fa fa-twitter"></i></a>
-                    <a class="btn btn-social-icon btn-round btn-outline btn-white" href="#"><i
-                            class="fa fa-google-plus"></i></a>
-                    <a class="btn btn-social-icon btn-round btn-outline btn-white" href="#"><i
-                            class="fa fa-instagram"></i></a>
-                </p>
-            </div> -->
-            <!-- /.social-auth-links -->
-
-            <!-- <div class="margin-top-30 text-center text-white">
-                <p>Don't have an account? <a href="auth_register2.html" class="text-info m-l-5">Sign Up</a></p>
-            </div> -->
-
         </div>
     </div>
 
 </div>
+
+
 <!-- Vendor JS -->
 <script src="js/vendors.min.js"></script>
+
 </body>
+
 </html>

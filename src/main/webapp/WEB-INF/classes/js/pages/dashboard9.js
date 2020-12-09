@@ -504,20 +504,9 @@ $(function () {
     );
 
     chart.render();
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	am4core.ready(function() {
+
+
+  am4core.ready(function() {
 
 	// Themes begin
 	am4core.useTheme(am4themes_kelly);
@@ -531,7 +520,7 @@ $(function () {
 	chart.data = [{
 	  "x": "1",
 	  "y": 1,
-	  "text": "[bold]2020 Q1[/]\nSố lượng khách hàng trong quý 1",
+	  "text": "[bold]2020 Q1[/]\n Số lượng khách hàng trong quý 1",
 	  "center": "bottom"
 	}, {
 	  "x": "2",

@@ -5,46 +5,28 @@ package com.sgfintech.config;
  */
 import javax.sql.DataSource;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.sgfintech.*"})
+@ComponentScan("com.sgfintech.*")
 @EnableTransactionManagement
+// Load to Environment.
 @PropertySources({ @PropertySource("classpath:datasource-cfg.properties")})
 public class ApplicationContextConfig {
     // Lưu trữ các giá thuộc tính load bởi @PropertySource.
 
     @Autowired
     private Environment env;
-
-    @Bean
-    public LocalEntityManagerFactoryBean entityManagerFactory() {
-        LocalEntityManagerFactoryBean factoryBean = new LocalEntityManagerFactoryBean();
-        factoryBean.setPersistenceUnitName("halongDB");
-        return factoryBean;
-    }
-
-
-    @Bean(name = "viewResolver")
-    public InternalResourceViewResolver getViewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/pages/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
-    }
-
 
 
     @Bean(name = "dataSource")
@@ -70,5 +52,33 @@ public class ApplicationContextConfig {
         txManager.setDataSource(dataSource);
 
         return txManager;
+    }
+
+    @Autowired
+    @Bean(name = "sessionFactory")
+    public SessionFactory getSessionFactory(DataSource dataSource) throws Exception {
+        Properties properties = new Properties();
+
+        // Xem: ds-hibernate-cfg.properties
+        properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        properties.put("current_session_context_class", env.getProperty("current_session_context_class"));
+
+
+        LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
+        factoryBean.setPackagesToScan(new String[] { "org.o7planning.springmvcforms.entity" });
+        factoryBean.setDataSource(dataSource);
+        factoryBean.setHibernateProperties(properties);
+        factoryBean.afterPropertiesSet();
+        //
+        SessionFactory sf = factoryBean.getObject();
+        return sf;
+    }
+
+    @Autowired
+    @Bean(name = "transactionManager")
+    public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
+        return transactionManager;
     }
 }
