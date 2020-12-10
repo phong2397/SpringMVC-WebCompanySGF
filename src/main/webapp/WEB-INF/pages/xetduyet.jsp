@@ -1,3 +1,6 @@
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.sgfintech.handler.MergeData" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -692,7 +695,7 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table id="tbdata" class="table table-lg invoice-archive">
+                                    <table id="example" class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
@@ -705,14 +708,15 @@
                                             <th class="text-center">Actions</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody style="font-weight: bold; color: #0b0b0b">
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
                                                 <td>#${lst.saRequest.id}9999</td>
                                                 <td>${lst.saRequest.createdDate}</td>
                                                 <td>
                                                     <h6 class="mb-0">
-                                                        <a onclick="viewInfoCustomer(${lst.customer.customerPhone})">${lst.customer.customerName}</a>
+                                                        <a data-toggle="modal" href="#"
+                                                           onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a>
                                                         <span class="d-block text-muted">Account number: ${lst.customer.customerBankAcc}</span>
                                                         <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
                                                         <span class="d-block text-muted">Company ID : ${lst.customer.companyCode}</span>
@@ -767,7 +771,7 @@
                 </li>
             </ul>
         </div>
-        &copy; 2020 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
+        &copy; 2020 <a href="https://www.multipurposethemes.com/">SG Fintech</a>. All Rights Reserved.
     </footer>
     <!-- Control Sidebar -->
     <aside class="control-sidebar">
@@ -1039,6 +1043,41 @@
         </div>
     </aside>
     <!-- /.control-sidebar -->
+    <!-- Modal -->
+    <div class="modal modal-right fade" id="modal-right" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông tin chi tiết khách hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                    <p>Họ Tên : <span id="customerName"></span></p>
+                    <p>Email : <span id="customerEmail"></span></p>
+                    <p>Lương : <span id="customerSalary"></span></p>
+                    <p>Tên ngân hàng : <span id="customerBank"></span></p>
+                    <p>Số tài khoản : <span id="customerBankAcc"></span></p>
+                    <p>Tên ngân hàng : <span id="customerBankName"></span></p>
+                    <p>CMND/Hộ chiếu/CCCD : <span id="customerId"></span></p>
+                    <p>Nơi cấp : <span id="customerIdLocation"></span></p>
+                    <p>Địa chỉ : <span id="customerAddress"></span></p>
+                    <p>Tạm trú : <span id="customerAddressTemp"></span></p>
+                    <p>Số BHXH : <span id="customerSocialInsurance"></span></p>
+                    <p>Số BHYT : <span id="customerHealthInsurance"></span></p>
+                    <p>Mã số thuế : <span id="customerTax"></span></p>
+                    <p>Số hợp đồng : <span id="customerContract"></span></p>
+                    <p>Thông tin người thân : <span id="customerRelative"></span></p>
+                    <p>Số điện thoại người thân : <span id="customerRelativePhone"></span></p>
+                </div>
+                <div class="modal-footer modal-footer-uniform">
+                    <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
 
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
@@ -1057,10 +1096,10 @@
 <script src="js/pages/data-table.js"></script>
 <script type="text/javascript">
     $("body").on("click", ".btn-accept", function () {
-        var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#","");
+        var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
         dataRequest = dataRequest.substring(0, dataRequest.length - 4);
         console.log(dataRequest);
-        let data = {datarequest: dataRequest, status : 'accept'};
+        let data = {datarequest: dataRequest, status: 'accept',  step : '1'};
         var result = sendOrder(data);
         if (result === "success") {
             Swal.fire({
@@ -1088,7 +1127,7 @@
             let text = $.ajax({
                 type: "POST",
                 timeout: 100000,
-                url: "${pageContext.request.contextPath}/xetduyet/changes",
+                url: "${pageContext.request.contextPath}/changes",
                 data: data,
                 dataType: 'text',
                 async: false
@@ -1101,12 +1140,53 @@
     }
 
     $("body").on("click", ".btn-refuse", function () {
-        console.log("asdasdasdsad");
+        var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
+        dataRequest = dataRequest.substring(0, dataRequest.length - 4);
+        console.log(dataRequest);
+        let data = {datarequest: dataRequest, status: 'deni', step : '1', dataCustomer : ""};
+        var result = sendOrder(data);
+        if (result === "success") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Dữ liệu được cập nhật thành công.',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            $(this).parents("tr").remove();
+        } else {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
     });
 
 
     function viewInfoCustomer(params) {
-        console.log("asdasdasdsad");
+        console.log('0' + params);
+
+        <%
+            List<MergeData> list = (List<MergeData>) request.getAttribute("views");
+            Gson g = new Gson();
+            String json = g.toJson(list);
+        %>
+        var result = <%=json%>;
+        result.forEach((customer) => {
+                if(customer.customer.customerPhone == params) {
+                    let c = customer.customer;
+                    Object.keys(c).forEach((key,_) => {
+                        let id = key;
+                        $('#'+id).text(c[key]);
+                    })
+                }
+        })
+        console.log(result);
+        // var index =
+        $('#modal-right').modal('show');
     }
 </script>
 

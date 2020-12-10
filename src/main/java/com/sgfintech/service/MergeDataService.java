@@ -43,5 +43,24 @@ public class MergeDataService {
             return null;
         }
     }
+    
+     public List<MergeData> getDataShow(String status, boolean nodate) {
+        String sql = "select sa.*, cu.* from sgft_sa_request sa, sgft_customer cu where sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status=?";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            Object[] param = new Object[]{ status };
+            List<MergeData> resultList = jdbcTemplate.query(sql,param,
+                    (rs, arg1) -> {
+                        Customer c = new CustomerMapper().mapRow(rs,arg1, true);
+                        SaRequest s = new SaRequestMapper().mapRow(rs,arg1);
+                        return new MergeData(c, s);
+                    });
+            return resultList;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
 
 }

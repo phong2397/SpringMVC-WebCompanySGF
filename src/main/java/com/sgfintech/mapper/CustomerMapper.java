@@ -45,9 +45,6 @@ public class CustomerMapper implements RowMapper<Customer> {
         if (!StringUtil.isEmpty(rs.getDate("updated_date"))) {
             c.setUpdatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("updated_date")));
         }
-        if (!StringUtil.isEmpty(rs.getDate("updated_time_bororw"))) {
-            c.setLoginedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("logined_date")));
-        }
         return c;
     }
 
@@ -83,9 +80,6 @@ public class CustomerMapper implements RowMapper<Customer> {
         }
         if (!StringUtil.isEmpty(rs.getDate("updated_date"))) {
             c.setUpdatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("updated_date")));
-        }
-        if (!StringUtil.isEmpty(rs.getDate("updated_time_bororw"))) {
-            c.setLoginedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("logined_date")));
         }
         return c;
     }

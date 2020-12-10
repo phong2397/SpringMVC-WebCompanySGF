@@ -1,5 +1,7 @@
 package com.sgfintech.util;
 
+import com.google.gson.JsonObject;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -37,6 +39,10 @@ public class StringUtil {
         LocalDateTime ldt = LocalDateTime.ofInstant(dateToConvert.toInstant(),
                 ZoneId.systemDefault()) ;
         return ldt;
+    }
+
+    public static String messageSign(String j) {
+        return null;
     }
 
 }

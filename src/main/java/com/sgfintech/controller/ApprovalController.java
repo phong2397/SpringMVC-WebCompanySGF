@@ -3,6 +3,7 @@ package com.sgfintech.controller;
 import com.google.gson.JsonObject;
 import com.sgfintech.dao.SaRequestDAO;
 import com.sgfintech.entity.SaRequest;
+import com.sgfintech.entity.Useradmin;
 import com.sgfintech.handler.MergeData;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.util.Consts;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -38,21 +40,26 @@ public class ApprovalController {
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
         List<MergeData> listMergeData = mergeDataService.getDataShow("wait");
         mm.addAttribute(Consts.Attr_ResultView, listMergeData);
-        System.out.println(listMergeData);
         return "xetduyet";
     }
 
-    @RequestMapping(value = "/xetduyet/changes", method = RequestMethod.POST )
-    public String changeStatusOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    @RequestMapping(value = "/changes", method = RequestMethod.POST )
+    public @ResponseBody String changeStatusOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String data = request.getParameter("datarequest");
         String status = request.getParameter("status");
+        String step = request.getParameter("step");
         try {
-            List<SaRequest> list = saRequestDAO.findAll();
             SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+            Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
             sa.setStatus(status);
+            if (Integer.parseInt(step) == 1) {
+                sa.setEmployeeSua(u.getUserLogin());
+                sa.setEmployeeDuyetDate(LocalDateTime.now());
+            } else {
+                sa.setEmployeeThamdinh(u.getUserLogin());
+                sa.setEmployeeThamdinhDate(LocalDateTime.now());
+            }
             saRequestDAO.update(sa);
-            System.out.println(data + status);
-            System.out.println(sa);
             return "success";
         } catch (Exception ex) {
             return "error";
