@@ -8,11 +8,11 @@ import lombok.Getter;
  * @author lucnguyen.hcmut@gmail.com
  */
 @Getter
-public class MergeData {
+public class MergeDataOrder {
     private final Customer customer;
     private final SaRequest saRequest;
 
-    public MergeData(Customer c, SaRequest s) {
+    public MergeDataOrder(Customer c, SaRequest s) {
         this.customer = c;
         this.saRequest = s;
     }

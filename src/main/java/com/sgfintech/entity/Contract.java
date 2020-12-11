@@ -56,4 +56,22 @@ public class Contract implements Serializable {
     @Column(name = "noted_by")
     private byte[] notedBy;
 
+    public Contract(Long idContract, String systemTrace, String customerPhone, Long borrow, Integer timeBorrow, Long remainAmountBorrow, Double feeBorrow, String transactionId, String status, LocalDateTime dateRepayment, LocalDateTime dateRepaymentUtil, String acceptedBy, byte[] notedBy) {
+        this.idContract = idContract;
+        this.systemTrace = systemTrace;
+        this.customerPhone = customerPhone;
+        this.borrow = borrow;
+        this.timeBorrow = timeBorrow;
+        this.remainAmountBorrow = remainAmountBorrow;
+        this.feeBorrow = feeBorrow;
+        this.transactionId = transactionId;
+        this.status = status;
+        this.dateRepayment = dateRepayment;
+        this.dateRepaymentUtil = dateRepaymentUtil;
+        this.acceptedBy = acceptedBy;
+        this.notedBy = notedBy;
+    }
+
+    public Contract() {
+    }
 }

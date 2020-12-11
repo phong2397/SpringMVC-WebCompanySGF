@@ -1,10 +1,7 @@
 package com.sgfintech.service;
 
 import com.sgfintech.entity.Customer;
-import com.sgfintech.entity.SaRequest;
-import com.sgfintech.handler.MergeData;
 import com.sgfintech.mapper.CustomerMapper;
-import com.sgfintech.mapper.SaRequestMapper;
 import com.sgfintech.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
-import java.util.List;
 
 /**
  * @author lucnguyen.hcmut@gmail.com

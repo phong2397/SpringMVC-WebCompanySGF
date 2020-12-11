@@ -2,10 +2,13 @@ package com.sgfintech.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.sgfintech.dao.ContractDAO;
 import com.sgfintech.dao.SaRequestDAO;
+import com.sgfintech.entity.Contract;
 import com.sgfintech.entity.Customer;
 import com.sgfintech.entity.SaRequest;
-import com.sgfintech.handler.MergeData;
+import com.sgfintech.entity.Useradmin;
+import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.handler.RequestGateway;
 import com.sgfintech.handler.SignatureRSA;
 import com.sgfintech.service.CustomerService;
@@ -23,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -41,12 +45,15 @@ public class SignController {
     CustomerService customerService;
 
     @Autowired
+    ContractDAO contractDAO;
+
+    @Autowired
     private ApplicationContext context;
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm) {
-        List<MergeData> listMergeData = mergeDataService.getDataShow("wfs", false);
-        mm.addAttribute(Consts.Attr_ResultView, listMergeData);
+        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
+        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
         return "kyduyet";
     }
 
@@ -80,17 +87,12 @@ public class SignController {
             j.addProperty("Signature", sign);
 
             String resultCheck = RequestGateway.checkUser(j);
-            System.out.println(resultCheck);
-
             //todo thuc hien chuyen khoan
             Gson g = new Gson();
             JsonObject resultRes = g.fromJson(resultCheck, JsonObject.class);
-            if (resultRes.get("ResponseCode").getAsInt() == 200) {
-                System.out.println("call done");
-            } else {
-                System.out.println("call fail");
+            if (!(resultRes.get("ResponseCode").getAsInt() == 200)) {
+                return "error";
             }
-
             j = new JsonObject();
             date = new Date();
             requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(date);
@@ -113,46 +115,37 @@ public class SignController {
             sign = signatureRSA.sign(messageCheck);
             j.addProperty("Signature", sign);
             resultCheck = RequestGateway.checkUser(j);
-            System.out.println(resultCheck);
-//            Map<String, String> r = new HashMap<>();
-//            r.put("RequestId", requestId);
-//            r.put("RequestTime", requestTime);
-//            r.put("PartnerCode", partnerCode);
-//            r.put("Operation", operation.toString());
-//            //todo gen ReferenceId
-//            r.put("ReferenceId", uuid.toString());
-//            r.put("BankNo", "970439"); //SCB = 970439
-//            r.put("AccNo", cu.getCustomerBankAcc());
-//            if (cu == null) {
-//                //todo add error ->
-//
-//            } else {
-//                //todo thuc hien chuyen khoan
-//
-//                Date date = new Date();
-//                String partnerCode = "VAYSV";
-//                String requestId = partnerCode + "BK" + new SimpleDateFormat("yyyyMMddhhmmss").format(date);
-//                String requestTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date);
-//                Integer operation = 9002;
-//                UUID uuid = UUID.randomUUID();
-//                JsonObject j = new JsonObject();
-//                j.addProperty("",);
-//                Map<String, String> r = new HashMap<>();
-//                r.put("RequestId", requestId);
-//                r.put("RequestTime", requestTime);
-//                r.put("PartnerCode", partnerCode);
-//                r.put("Operation", operation.toString());
-//                //todo gen ReferenceId
-//                r.put("ReferenceId", uuid.toString());
-//                r.put("BankNo", "970439"); //SCB = 970439
-//                r.put("AccNo", cu.getCustomerBankAcc());
-//                r.put("AccType")
-            //todo insert lai ket qua tra ve
+            resultRes = g.fromJson(resultCheck, JsonObject.class);
+            if (!(resultRes.get("ResponseCode").getAsInt() == 200)) {
+                return "error";
+            } else {
+                Contract ct = new Contract();
+                ct.setIdContract(sa.getId());
+                ct.setSystemTrace(uuid);
+                ct.setCustomerPhone(cu.getCustomerPhone());
+                ct.setBorrow(sa.getBorrow());
+                ct.setTimeBorrow(sa.getTimeBorrow());
+                ct.setRemainAmountBorrow(sa.getBorrow());
+                ct.setFeeBorrow(sa.getFeeBorrow());
+                ct.setTransactionId(resultRes.get("TransactionId").getAsString());
+                ct.setStatus("act");
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DATE, +30);
+                ct.setDateRepayment(LocalDateTime.now().plusDays(30));
+
+                Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+                ct.setAcceptedBy(u.getUserLogin());
+                contractDAO.save(ct);
+
+                sa.setEmployeeDuyet(u.getUserLogin());
+                sa.setEmployeeDuyetDate(LocalDateTime.now());
+                sa.setStatus("act");
+                saRequestDAO.update(sa);
+                return "success";
+            }
             //todo virtual account va tao collection point
-//            }
         } catch (Exception ex) {
-            return "";
+            return "error";
         }
-        return "kyduyet";
     }
 }

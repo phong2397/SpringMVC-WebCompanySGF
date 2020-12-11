@@ -1,9 +1,6 @@
 package com.sgfintech.controller;
 
-import com.sgfintech.dao.SaRequestDAO;
-import com.sgfintech.entity.SaRequest;
-import com.sgfintech.entity.Useradmin;
-import com.sgfintech.handler.MergeData;
+import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.util.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +22,8 @@ public class ExpertiseController {
 
     @RequestMapping(value = { "/thamdinh" }, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
-        List<MergeData> listMergeData = mergeDataService.getDataShow("accept", false);
-        mm.addAttribute(Consts.Attr_ResultView, listMergeData);
+        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("accept", false);
+        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
         return "thamdinh";
     }
 
