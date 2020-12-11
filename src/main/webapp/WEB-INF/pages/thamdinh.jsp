@@ -14,15 +14,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<jsp:include page="general/_head.jsp" />
+<jsp:include page="general/_head.jsp"/>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <div class="wrapper">
 
-    <jsp:include page="general/_header.jsp" />
+    <jsp:include page="general/_header.jsp"/>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <jsp:include page="general/_menu.jsp" />
+    <jsp:include page="general/_menu.jsp"/>
 
 
     <!-- Content Wrapper. Contains page content -->
@@ -264,9 +264,9 @@
         </div>
     </div>
 
-    <jsp:include page="general/_footer.jsp" />
+    <jsp:include page="general/_footer.jsp"/>
     <!-- Control Sidebar -->
-    <jsp:include page="general/_controlSidebar.jsp" />
+    <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <!-- Modal -->
     <div class="modal modal-right fade" id="modal-right" tabindex="-1">
@@ -313,16 +313,22 @@
 
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
 <script src="js/pages/data-table.js"></script>
+
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#loading").css("display", "none");
+    });
     $("body").on("click", ".btn-accept", function () {
-        var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
+        var dataRequest = $(this).parents("tr").find("td:eq(0)")
+        example.text().replaceAll("#", "");
         dataRequest = dataRequest.substring(0, dataRequest.length - 4);
         console.log(dataRequest);
-        let data = {datarequest: dataRequest, status: 'wfs', step : '2'};
+        let data = {datarequest: dataRequest, status: 'wfs', step: '2'};
         var result = sendOrder(data);
         if (result === "success") {
             Swal.fire({
@@ -366,7 +372,7 @@
         var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
         dataRequest = dataRequest.substring(0, dataRequest.length - 4);
         console.log(dataRequest);
-        let data = {datarequest: dataRequest, status: 'deni',  step : '2'};
+        let data = {datarequest: dataRequest, status: 'deni', step: '2'};
         var result = sendOrder(data);
         if (result === "success") {
             Swal.fire({
