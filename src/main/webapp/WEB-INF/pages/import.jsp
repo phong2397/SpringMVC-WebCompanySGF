@@ -141,12 +141,19 @@
 <!-- ./wrapper -->
 
 <!-- Vendor JS -->
-<jsp:include page="general/_script.jsp" />
+<script src="js/vendors.min.js"></script>
+<!-- Crypto Tokenizer Admin App -->
+<script src="js/template.js"></script>
+<script src="js/pages/dashboard9.js"></script>
+<script src="js/demo.js"></script>
 <script src="assets/vendor_components/dropzone/dropzone.js"></script>
 <script src="assets/vendor_components/sweetalert/sweetalert.min.js"></script>
 <script src="assets/vendor_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript">
+    $( document ).ready(function() {
+        $("#loading").css("display", "none");
+    });
     function submitform() {
         var tenconty = $("#tencongty").val();
         var macongty = $("#macongty").val();
@@ -196,8 +203,6 @@
         console.log(tenconty);
     }
 </script>
-
-
 </body>
 
 </html>

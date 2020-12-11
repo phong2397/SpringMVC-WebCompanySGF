@@ -16,4 +16,5 @@ public class MergeDataOrder {
         this.customer = c;
         this.saRequest = s;
     }
+
 }

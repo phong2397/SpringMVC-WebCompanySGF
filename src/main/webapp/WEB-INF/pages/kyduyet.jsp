@@ -318,12 +318,20 @@
 <!-- ./wrapper -->
 
 <!-- Vendor JS -->
+<script src="js/vendors.min.js"></script>
+
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+<!-- Crypto Tokenizer Admin App -->
+<script src="js/template.js"></script>
+<script src="js/demo.js"></script>
+<script src="js/pages/data-table.js"></script>
 
-<jsp:include page="general/_script.jsp"/>
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#loading").css("display", "none");
+    });
     $("body").on("click", ".btn-accept", function () {
         var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
         dataRequest = dataRequest.substring(0, dataRequest.length - 4);

@@ -356,7 +356,16 @@
 
 </div>
 <!-- ./wrapper -->
-<jsp:include page="general/_script.jsp" />
+<script src="js/vendors.min.js"></script>
+<!-- Crypto Tokenizer Admin App -->
+<script src="js/template.js"></script>
+<script src="js/pages/dashboard9.js"></script>
+<script src="js/demo.js"></script>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        $("#loading").css("display", "none");
+    });
+</script>
 <script src="assets/vendor_components/apexcharts-bundle/data.js"></script>
 <script src="assets/vendor_components/apexcharts-bundle/dist/apexcharts.js"></script>
 <script src="https://www.amcharts.com/lib/4/core.js"></script>
