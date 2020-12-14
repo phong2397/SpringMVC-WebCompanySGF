@@ -1,7 +1,5 @@
 package com.sgfintech.controller;
 
-import com.sgfintech.dao.ContractDAO;
-import com.sgfintech.entity.Contract;
 import com.sgfintech.handler.MergeDataWithdraw;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.util.Consts;
