@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class HomeController {
 
-    @RequestMapping(value = { "/home", "/index" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/home", "/index"}, method = RequestMethod.GET)
     public String welcomePage(Model model) {
 
         return "index";

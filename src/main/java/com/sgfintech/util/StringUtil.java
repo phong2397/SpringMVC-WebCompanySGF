@@ -1,8 +1,5 @@
 package com.sgfintech.util;
 
-import com.google.gson.JsonObject;
-
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
@@ -37,7 +34,7 @@ public class StringUtil {
 
     public static LocalDateTime convertToLocalDateViaInstant(Date dateToConvert) {
         LocalDateTime ldt = LocalDateTime.ofInstant(dateToConvert.toInstant(),
-                ZoneId.systemDefault()) ;
+                ZoneId.systemDefault());
         return ldt;
     }
 

@@ -1,8 +1,6 @@
 package com.sgfintech.dao;
 
 import com.sgfintech.entity.Contract;
-import com.sgfintech.entity.Customer;
-import com.sgfintech.entity.SaRequest;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +33,10 @@ public class ContractDAO {
     public List<Contract> findAll() {
         Session session = this.sessionFactory.getCurrentSession();
         return session.createQuery("FROM Contract", Contract.class).getResultList();
+    }
+
+    public Contract findById(final long id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        return session.get(Contract.class, id);
     }
 }

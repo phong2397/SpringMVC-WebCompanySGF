@@ -3,6 +3,7 @@ package com.sgfintech.handler;
 /**
  * @author lucnguyen.hcmut@gmail.com
  */
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMKeyPair;
@@ -24,8 +25,8 @@ public class SignatureRSA {
     public String sign(String requestStr) {
         InputStream privatePem = SignatureRSA.class.getClassLoader().getResourceAsStream("mlem.pem");
         String message = StringEscapeUtils.unescapeJava(requestStr);
-        PrivateKey privateKey  = privateKeyReader(privatePem).getPrivate();
-        byte[] messageAsByte = message.getBytes(Charset.forName( "UTF-8" ));
+        PrivateKey privateKey = privateKeyReader(privatePem).getPrivate();
+        byte[] messageAsByte = message.getBytes(Charset.forName("UTF-8"));
         byte[] signatureSHA1 = generateSignatureSHA1(messageAsByte, privateKey);
         String sig25664 = Base64.getEncoder().encodeToString(signatureSHA1);
         return sig25664;

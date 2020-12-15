@@ -153,7 +153,7 @@
                                 </div>
 
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">1100</div>
+                                    <div class="font-size-60">1,100</div>
                                     <span>Yêu cầu bị Refuse</span>
                                 </div>
                             </div>

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class ImportController {
-    @RequestMapping(value = { "/import" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/import"}, method = RequestMethod.GET)
     public String welcomePage(Model model) {
         return "import";
     }
