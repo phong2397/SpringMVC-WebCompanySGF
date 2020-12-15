@@ -150,7 +150,7 @@
 					<!-- /.col -->
 				</div>
 				<!-- Main content -->
-				<section class="invoice printableArea"  id="div">
+				<section class="invoice printableArea" style="display:none"  id="div">
 					<div class="col-12" >
 						<!-- title row -->
 						<div class="col-12">
@@ -339,7 +339,7 @@
 						})
 					}
 				})
-
+$("#div").toggle()
 			}
 		function viewInfoContract(params) {
 			var result = <%=json%>;
