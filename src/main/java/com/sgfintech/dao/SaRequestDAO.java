@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 /**
  * @author lucnguyen.hcmut@gmail.com
  */
+
 @Repository(value = "saRequestDAO")
 @Transactional(rollbackFor = Exception.class)
 public class SaRequestDAO {
