@@ -23,7 +23,7 @@ public class WaitWithdrawController {
 
     @RequestMapping(value = {"/chothuhoi"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm) {
-        List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("act,done", true, "");
+        List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("act", true, "");
         mm.addAttribute(Consts.Attr_ResultView, listdata);
         return "chothuhoi";
     }
