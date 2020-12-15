@@ -154,7 +154,7 @@
                                 </div>
 
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">1100</div>
+                                    <div class="font-size-60">1,100</div>
                                     <span>Yêu cầu bị từ chối</span>
                                 </div>
                             </div>
@@ -180,7 +180,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="text-center my-2">
                                     <div class="font-size-60">964</div>
                                     <span>Yêu cầu cần xác nhận</span>
@@ -324,8 +323,7 @@
         $("#loading").css("display", "none");
     });
     $("body").on("click", ".btn-accept", function () {
-        var dataRequest = $(this).parents("tr").find("td:eq(0)")
-        example.text().replaceAll("#", "");
+        var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
         dataRequest = dataRequest.substring(0, dataRequest.length - 4);
         console.log(dataRequest);
         let data = {datarequest: dataRequest, status: 'wfs', step: '2'};

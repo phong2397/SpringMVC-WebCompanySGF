@@ -11,20 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-/**
- * @author lucnguyen.hcmut@gmail.com
- */
 @Controller
-public class WaitWithdrawController {
-
+public class TotalListController {
     @Autowired
     MergeDataService mergeDataService;
 
-
-    @RequestMapping(value = {"/chothuhoi"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/tongdanhsach"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm) {
-        List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("act,done", true, "");
+        List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("done", true, "");
         mm.addAttribute(Consts.Attr_ResultView, listdata);
-        return "chothuhoi";
+        return "tongdanhsach";
     }
 }

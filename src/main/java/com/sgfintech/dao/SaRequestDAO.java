@@ -1,20 +1,18 @@
 package com.sgfintech.dao;
 
-import com.sgfintech.entity.Customer;
 import com.sgfintech.entity.SaRequest;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * @author lucnguyen.hcmut@gmail.com
  */
-
 @Repository(value = "saRequestDAO")
 @Transactional(rollbackFor = Exception.class)
 public class SaRequestDAO {

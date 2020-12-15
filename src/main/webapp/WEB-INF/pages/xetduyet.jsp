@@ -154,7 +154,7 @@
                                 </div>
 
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">1100</div>
+                                    <div class="font-size-60">1,100</div>
                                     <span>Yêu cầu bị từ chối</span>
                                 </div>
                             </div>
@@ -394,10 +394,8 @@
         }
     });
 
-
     function viewInfoCustomer(params) {
         console.log('0' + params);
-
         <%
             List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
             Gson g = new Gson();

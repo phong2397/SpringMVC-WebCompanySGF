@@ -1,7 +1,6 @@
 package com.sgfintech.dao;
 
 import com.sgfintech.entity.Companies;
-import com.sgfintech.entity.Contract;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
