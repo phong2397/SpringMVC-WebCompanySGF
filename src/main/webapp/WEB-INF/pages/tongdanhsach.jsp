@@ -222,7 +222,7 @@
 													<th>Mã giao dịch (Transaction ID)</th>
 													<th>Ngày</th>
 													<th>Số tiền còn nợ</th>
-													<th>Action</th>
+
 												</tr>
 											</thead>
 											<tbody>
@@ -245,15 +245,11 @@
 														</td>
 														<td>${lst.contract.borrow} đ</td>
 														<td>${lst.contract.systemTrace} đ</td>
-														<td ><h6 class="mb-0 "> Gạch nợ </h6></td>
+														<td ><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
 														<td>${lst.contract.transactionId}</td>
 														<td>${lst.contract.dateRepayment} đ</td>
 														<td>${lst.contract.borrow} đ</td>
-														<td>
-															<a href="javascript:void(0)" class="text-danger"
-																data-toggle="tooltip" data-original-title="Delete"><i
-																	class="ti-more" aria-hidden="true"></i></a>
-														</td>
+
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -324,13 +320,12 @@
 		$(document).ready(function () {
 			$("#loading").css("display", "none");
 		});
-  <%
+  				<%
                     List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");
                     Gson g = new Gson();
                     String json = g.toJson(list);
                 %>
 		 function viewInfoCustomer(params) {
-
                 var result = <%=json%>;
                 result.forEach((customer) => {
                     if (customer.customer.customerPhone == params) {
