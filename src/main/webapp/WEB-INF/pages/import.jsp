@@ -9,15 +9,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<jsp:include page="general/_head.jsp" />
+<jsp:include page="general/_head.jsp"/>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <div class="wrapper">
 
-    <jsp:include page="general/_header.jsp" />
+    <jsp:include page="general/_header.jsp"/>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <jsp:include page="general/_menu.jsp" />
+    <jsp:include page="general/_menu.jsp"/>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -47,8 +47,9 @@
                                     <h4 class="mt-0 text-primary">12,125</h4>
                                 </div>
                                 <div class="spark-chart">
-                                    <div id="thismonth"><canvas width="60" height="35"
-                                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
+                                    <div id="thismonth">
+                                        <canvas width="60" height="35"
+                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -58,8 +59,9 @@
                                     <h4 class="mt-0 text-danger">22,754</h4>
                                 </div>
                                 <div class="spark-chart">
-                                    <div id="lastyear"><canvas width="60" height="35"
-                                                               style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
+                                    <div id="lastyear">
+                                        <canvas width="60" height="35"
+                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -70,27 +72,26 @@
 
             <!-- Main content -->
             <section class="content">
-
-                <div class="box">
-                    <div class="box-header">
-                        <h4 class="box-title">Dropzone</h4>
-                        <h6 class="box-subtitle">For multiple file upload put class <code>.dropzone</code> to form.
-                        </h6>
-                    </div>
-                    <div class="box-body">
-                        <form action="#" class="dropzone">
-                            <div class="fallback">
-                                <input name="file" id="importFile" type="file" multiple />
+                <!-- /.box-header -->
+                <form method="post" enctype="multipart/form-data" class="form">
+                    <div class="box">
+                        <div class="box-header">
+                            <h4 class="box-title">Dropzone</h4>
+                            <h6 class="box-subtitle">For multiple file upload put class <code>.dropzone</code> to form.
+                            </h6>
+                        </div>
+                        <div class="box-body">
+                            <div class="dropzone">
+                                <div class="fallback">
+                                    <input name="file" id="importFile" type="file" multiple/>
+                                </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-12">
+                            <div class="box">
 
-                <div class="row">
-                    <div class="col-lg-12 col-12">
-                        <div class="box">
-                            <!-- /.box-header -->
-                            <form class="form">
                                 <div class="box-body">
                                     <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin công ty
                                     </h4>
@@ -118,11 +119,12 @@
                                         <i class="ti-save-alt"></i> Save
                                     </button>
                                 </div>
-                            </form>
+
+                            </div>
+                            <!-- /.box -->
                         </div>
-                        <!-- /.box -->
                     </div>
-                </div>
+                </form>
             </section>
             <!-- /.content -->
 
@@ -130,9 +132,9 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <jsp:include page="general/_footer.jsp" />
+    <jsp:include page="general/_footer.jsp"/>
     <!-- Control Sidebar -->
-    <jsp:include page="general/_controlSidebar.jsp" />
+    <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
 
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
@@ -151,56 +153,73 @@
 <script src="assets/vendor_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $(document).ready(function () {
         $("#loading").css("display", "none");
     });
+
     function submitform() {
+        var formData = new FormData();
+        formData.append('file', $('#importFile')[0].files[0]);
         var tenconty = $("#tencongty").val();
         var macongty = $("#macongty").val();
         var filePath = $("#importFile").val();
         console.log(filePath);
-        if (macongty == "sgfintech") {
-            Swal.fire(
-                'Successful',
-                'Dữ liệu của hệ thống đã được cập nhật',
-                'success'
-            )
-        } else if (macongty == "sgf") {
-            Swal.fire({
-                title: 'Mã công ty đã tồn tại!',
-                text: "Bạn có muốn cập nhật dữ liệu hiện có?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, update it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Dữ liệu của hệ thống đã được cập nhật',
-                        'success'
-                    )
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                        'Cancelled',
-                        'Thay đổi đã bị hủy',
-                        'error'
-                    )
-                }
-            })
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Lỗi trong quá trình thực thi',
-                footer: '<a href>Why do I have this issue?</a>'
-            })
-        }
-        console.log(tenconty);
+        $.ajax({
+            url: 'import?tencong=' + tenconty + '&macongty=' + macongty,
+            type: 'POST',
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            async: false,
+            success: function (data) {
+                console.log(data);
+                alert(data);
+            }
+        });
+
+
+        // if (macongty == "sgfintech") {
+        //     Swal.fire(
+        //         'Successful',
+        //         'Dữ liệu của hệ thống đã được cập nhật',
+        //         'success'
+        //     )
+        // } else if (macongty == "sgf") {
+        //     Swal.fire({
+        //         title: 'Mã công ty đã tồn tại!',
+        //         text: "Bạn có muốn cập nhật dữ liệu hiện có?",
+        //         icon: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'Yes, update it!'
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             Swal.fire(
+        //                 'Deleted!',
+        //                 'Dữ liệu của hệ thống đã được cập nhật',
+        //                 'success'
+        //             )
+        //         } else if (
+        //             /* Read more about handling dismissals below */
+        //             result.dismiss === Swal.DismissReason.cancel
+        //         ) {
+        //             swalWithBootstrapButtons.fire(
+        //                 'Cancelled',
+        //                 'Thay đổi đã bị hủy',
+        //                 'error'
+        //             )
+        //         }
+        //     })
+        // } else {
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: 'Oops...',
+        //         text: 'Lỗi trong quá trình thực thi',
+        //         footer: '<a href>Why do I have this issue?</a>'
+        //     })
+        // }
+        // console.log(tenconty);
     }
 </script>
 </body>

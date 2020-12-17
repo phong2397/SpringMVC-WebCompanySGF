@@ -135,55 +135,6 @@
                                                 </td>
                                             </tr>
                                         </c:forEach>
-                                        <tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-                        <!-- /.box -->
-                    </div>
-                    <div class="col-lg-12 col-12">
-                        <div class="box">
-                            <div class="box-header with-border">
-                                <h4 class="box-title">Danh sách nợ quá hạn</h4>
-                            </div>
-                            <div class="box-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered no-margin">
-                                        <thead>
-                                        <tr>
-                                            <th>Mã đơn vay</th>
-                                            <th>Thông tin khách hàng</th>
-                                            <th>Thông tin công ty</th>
-                                            <th class="text-right">Số tiền</th>
-                                            <th>Ngày cần tất toán</th>
-                                            <th class="text-right">Phí phạt</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        
-                                        <tr>
-                                            <td class="text-center">#0018</td>
-                                            <td>
-                                                <h6 class="mb-0">
-                                                    <a href="#">Nguyễn Văn A</a>
-                                                    <span class="d-block text-muted">Account number:
-																0000 1234 5678 0112</span>
-                                                    <span class="d-block text-muted">Owner :
-																Nguyen Van A</span>
-                                                    <span class="d-block text-muted">Company ID :
-																sgfintech</span>
-                                                    <span class="d-block text-muted">Phone number :
-																0989 999 999</span>
-                                                </h6>
-                                            </td>
-                                            <td>Công ty TNHH ABC123</td>
-                                            <td class="text-right">1,000,000đ</td>
-                                            <td>31-12-2020</td>
-                                            <td class="text-right"><span class="label label-danger">13.54
-															%</span></td>
-                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -237,6 +188,7 @@
             </div>
         </div>
     </div>
+
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>

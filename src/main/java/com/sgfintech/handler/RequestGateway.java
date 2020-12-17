@@ -9,10 +9,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 /**
  * @author lucnguyen.hcmut@gmail.com
  */
-public class RequestGateway {
+public class  RequestGateway {
 
     public static String checkUser(JsonObject req) {
         //todo check thong tin tai khoan -> khong dung tra ve ket qua gi do

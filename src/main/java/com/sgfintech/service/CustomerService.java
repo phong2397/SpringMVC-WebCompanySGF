@@ -21,17 +21,17 @@ public class CustomerService {
 
     private JdbcTemplate jdbcTemplate;
 
-    public Customer getCustomerByPhone(String phone){
+    public Customer getCustomerByPhone(String phone) {
         Customer c = null;
         String sql = "select * from sgft_customer where customer_phone = ?";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         try {
-            Object[] param = new Object[]{ phone };
-            c = jdbcTemplate.queryForObject(sql,param,
+            Object[] param = new Object[]{phone};
+            c = jdbcTemplate.queryForObject(sql, param,
                     (rs, arg1) -> {
-                        Customer cu = new CustomerMapper().mapRow(rs,arg1);
+                        Customer cu = new CustomerMapper().mapRow(rs, arg1);
                         return cu;
                     });
         } catch (Exception ex) {

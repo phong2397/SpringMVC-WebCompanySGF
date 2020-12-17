@@ -58,33 +58,33 @@
                 </a>
             </li>
 
-<%--            <li>--%>
-<%--                <a href="daxuly.html">--%>
-<%--                    <img src="images/svg-icon/sidebar-menu/ico.svg" class="svg-icon" alt="">--%>
-<%--                    <span>Đã xử lý</span>--%>
-<%--                </a>--%>
-<%--            </li>--%>
-<%--            <li>--%>
-<%--                <a href="noquahan.html">--%>
-<%--                    <img src="images/svg-icon/sidebar-menu/members.svg" class="svg-icon" alt="">--%>
-<%--                    <span>Nợ quá hạn</span>--%>
-<%--                </a>--%>
-<%--            </li>--%>
+         <li>
+              <a href="daxuly.html">
+             <img src="images/svg-icon/sidebar-menu/ico.svg" class="svg-icon" alt="">
+                  <span>Đã xử lý</span>
+             </a>
+           </li>
+        <li>
+              <a href="noquahan.html">
+                   <img src="images/svg-icon/sidebar-menu/members.svg" class="svg-icon" alt="">
+                  <span>Nợ quá hạn</span>
+             </a>
+           </li>
 
-<%--            <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Kế toán kiểm toán</li>--%>
+           <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Kế toán kiểm toán</li>
 
-<%--            <li>--%>
-<%--                <a href="tongdanhsach.html">--%>
-<%--                    <img src="images/svg-icon/sidebar-menu/tickers.svg" class="svg-icon" alt="">--%>
-<%--                    <span>Tổng danh sách</span>--%>
-<%--                </a>--%>
-<%--            </li>--%>
-<%--            <li>--%>
-<%--                <a href="gachno.html">--%>
-<%--                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">--%>
-<%--                    <span>Gạch nợ</span>--%>
-<%--                </a>--%>
-<%--            </li>--%>
+          <li>
+           <a href="tongdanhsach.html">
+                 <img src="images/svg-icon/sidebar-menu/tickers.svg" class="svg-icon" alt="">
+                   <span>Tổng danh sách</span>
+              </a>
+          </li>
+          <li>
+              <a href="gachno.html">
+                   <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
+                   <span>Gạch nợ</span>
+             </a>
+          </li>
 
 <%--            <li>--%>
 <%--                <a href="hoadon.html">--%>

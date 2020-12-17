@@ -27,20 +27,21 @@ public class ApprovalController {
 
     @Autowired
     MergeDataService mergeDataService;
-    
+
     @Autowired
     SaRequestDAO saRequestDAO;
-    
 
-    @RequestMapping(value = { "/xetduyet" }, method = RequestMethod.GET)
+
+    @RequestMapping(value = {"/xetduyet"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
         List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wait");
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
         return "xetduyet";
     }
 
-    @RequestMapping(value = "/changes", method = RequestMethod.POST )
-    public @ResponseBody String changeStatusOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    @RequestMapping(value = "/changes", method = RequestMethod.POST)
+    public @ResponseBody
+    String changeStatusOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String data = request.getParameter("datarequest");
         String status = request.getParameter("status");
         String step = request.getParameter("step");

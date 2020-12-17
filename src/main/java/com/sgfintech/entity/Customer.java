@@ -1,6 +1,5 @@
 package com.sgfintech.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -100,4 +99,6 @@ public class Customer implements Serializable {
     @Column(name = "logined_date")
     private LocalDateTime loginedDate;
 
+    public void Customer() {
+    }
 }

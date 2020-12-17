@@ -1,10 +1,12 @@
 package com.sgfintech.service;
 
+import com.sgfintech.entity.Companies;
 import com.sgfintech.entity.Contract;
 import com.sgfintech.entity.Customer;
 import com.sgfintech.entity.SaRequest;
 import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.handler.MergeDataWithdraw;
+import com.sgfintech.mapper.CompanyMapper;
 import com.sgfintech.mapper.ContractMapper;
 import com.sgfintech.mapper.CustomerMapper;
 import com.sgfintech.mapper.SaRequestMapper;
@@ -34,11 +36,11 @@ public class MergeDataService {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         try {
-            Object[] param = new Object[]{ status };
-            List<MergeDataOrder> resultList = jdbcTemplate.query(sql,param,
+            Object[] param = new Object[]{status};
+            List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {
-                        Customer c = new CustomerMapper().mapRow(rs,arg1, true);
-                        SaRequest s = new SaRequestMapper().mapRow(rs,arg1);
+                        Customer c = new CustomerMapper().mapRow(rs, arg1, true);
+                        SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
                         return new MergeDataOrder(c, s);
                     });
             return resultList;
@@ -46,18 +48,18 @@ public class MergeDataService {
             return null;
         }
     }
-    
-     public List<MergeDataOrder> getDataShow(String status, boolean nodate) {
+
+    public List<MergeDataOrder> getDataShow(String status, boolean nodate) {
         String sql = "select sa.*, cu.* from sgft_sa_request sa, sgft_customer cu where sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status=?";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         try {
-            Object[] param = new Object[]{ status };
-            List<MergeDataOrder> resultList = jdbcTemplate.query(sql,param,
+            Object[] param = new Object[]{status};
+            List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {
-                        Customer c = new CustomerMapper().mapRow(rs,arg1, true);
-                        SaRequest s = new SaRequestMapper().mapRow(rs,arg1);
+                        Customer c = new CustomerMapper().mapRow(rs, arg1, true);
+                        SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
                         return new MergeDataOrder(c, s);
                     });
             return resultList;
@@ -73,18 +75,19 @@ public class MergeDataService {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         if (nodate == true) {
-            sql = "select cu.*, co.* from sgft_customer cu , sgft_contract co where co.customer_phone = cu.customer_phone and co.status=?";
-            param = new Object[]{ status };
+            sql = "select cu.*, co.*,com.* from sgft_customer cu , sgft_contract co, sgft_companies com where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code  and co.status=?";
+            param = new Object[]{status};
         } else {
-            sql = "select cu.*, co.* from sgft_customer cu , sgft_contract co where co.customer_phone = cu.customer_phone and co.status=? and date_format(co.created_date , '%Y %M %d') = date_format(?,'%Y %M %d')";
-            param = new Object[]{ status , date };
+            sql = "select cu.*, co.*,com.* from sgft_customer cu , sgft_contract co, sgft_companies com where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code and co.status=? and date_format(co.created_date , '%Y %M %d') = date_format(?,'%Y %M %d')";
+            param = new Object[]{status, date};
         }
         try {
-            List<MergeDataWithdraw> resultList = jdbcTemplate.query(sql,param,
+            List<MergeDataWithdraw> resultList = jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {
-                        Customer cu = new CustomerMapper().mapRow(rs,arg1);
-                        Contract co = new ContractMapper().mapRow(rs,arg1);
-                        return new MergeDataWithdraw(cu,co);
+                        Customer cu = new CustomerMapper().mapRow(rs, arg1);
+                        Contract co = new ContractMapper().mapRow(rs, arg1);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new MergeDataWithdraw(cu, co, com);
                     });
             return resultList;
         } catch (Exception ex) {
