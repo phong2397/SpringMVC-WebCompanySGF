@@ -102,14 +102,14 @@
 										</thead>
 										<tbody>
 											<c:forEach items="${views}" var="lst" varStatus="loop">
-												<tr>
+												<tr >
 													<td><a href="#"
 															onclick="viewInfoContract('${lst.contract.idContract}')">#${lst.contract.idContract}9999</a>
 													</td>
 													<td class="text-left">
 														<h6 class="mb-0">
-															<a data-toggle="modal" href="#"
-																onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a>
+															<a  href="#"
+																>${lst.customer.customerName}</a>
 															<span class="d-block text-muted">Account number:
 																${lst.customer.customerBankAcc}</span>
 															<span class="d-block text-muted">Owner :
@@ -228,19 +228,14 @@
 
 						<div class="row">
 							<div class="col-12 text-right">
-								<p class="lead"><b>Ngày thanh toán:</b><span class="text-danger">${year}</p>
-								<p c <div>
+								<p class="lead"><b>Ngày thanh toán:</b><span class="text-danger">${year}</span></p>
 								<p>Sub - Total amount :
-									<fmt:formatNumber value="${lst.contract.remainAmountBorrow * 10}" type="currency" />
-								</p>
-								<p>Shipping :
-									<fmt:formatNumber value="${30000}" type="currency" />
+									<span id="remainAmountBorrow1">200.000 vnđ</span>
 								</p>
 							</div>
 							<div class="total-payment">
 								<h3><b>Total :</b>
-									<fmt:formatNumber value="${17000 * 10 + 30000 }"
-										type="currency" />
+									200.000 vnđ
 								</h3>
 							</div>
 						</div>
@@ -296,7 +291,7 @@
 					showConfirmButton: false,
 					timer: 3000
 				});
-				$(this).parents("tr").remove();
+				$("#idContract").parents("tr").remove();
 			} else {
 				Swal.fire({
 					position: 'top-end',
@@ -339,7 +334,7 @@
 						})
 					}
 				})
-$("#div").toggle()
+				$("#div").toggle(500).animate({scrollTop: -200}, "slow");;
 			}
 		function viewInfoContract(params) {
 			var result = <%=json%>;
@@ -352,6 +347,7 @@ $("#div").toggle()
 					})
 				}
 			})
+			$("#div").toggle(500).animate({scrollTop: -200}, "slow");;
 
 		}
 	</script>
