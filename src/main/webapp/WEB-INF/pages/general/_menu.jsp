@@ -27,6 +27,18 @@
                     <span>Nhập danh sách mới</span>
                 </a>
             </li>
+            <li>
+                <a href="manage-customer.html">
+                    <img src="images/svg-icon/form_elements.svg" class="svg-icon" alt="">
+                    <span>Quản lý danh sách</span>
+                </a>
+            </li>
+            <li>
+                <a href="list-customer.html">
+                    <img src="images/svg-icon/user.svg" class="svg-icon" alt="">
+                    <span>Thông tin khách hàng</span>
+                </a>
+            </li>
 
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Tiếp nhận yêu cầu</li>
 

@@ -48,6 +48,9 @@ public class Customer implements Serializable {
     @Column(name = "customer_id")
     private String customerId;
 
+    @Column(name = "customer_id_date")
+    private LocalDateTime customerIdDate;
+
     @Column(name = "customer_address")
     private String customerAddress;
 
