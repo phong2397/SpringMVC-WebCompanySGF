@@ -1,7 +1,6 @@
 package com.sgfintech.handler;
 
 import com.sgfintech.entity.Companies;
-import com.sgfintech.entity.Customer;
 
 import lombok.Getter;
 

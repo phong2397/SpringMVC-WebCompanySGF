@@ -27,23 +27,24 @@ import java.util.List;
 @Service
 @Transactional
 public class MergeDataService {
+
     @Autowired
     private DataSource dataSource;
 
     private JdbcTemplate jdbcTemplate;
 
-    public List<CompanyHandler> getDataManange() {
+    public List<Companies> getDataManange() {
         String sql = "select com.* from sgft_companies com";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         try {
-            Object[] param = new Object[]{};
-            List<CompanyHandler> resultList = jdbcTemplate.query(sql, param,
-                    (rs, arg1) -> {
-                        Companies com = new CompanyMapper().mapRow(rs, arg1);
-                        return new CompanyHandler(com);
-                    });
+            List<Companies> resultList = jdbcTemplate.queryForList(sql, Companies.class);
+//            List<CompanyHandler> resultList = jdbcTemplate.queryFor(sql, param,
+//                    (rs, arg1) -> {
+//                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+//                        return new CompanyHandler(com);
+//                    });
             return resultList;
         } catch (Exception ex) {
             return null;
@@ -51,7 +52,7 @@ public class MergeDataService {
     }
 
     public List<CustomerHandler> getDataCustomer() {
-        String sql = "select com.*,cu.* from sgft_companies com,sgft_customer cu where  com.company_code  = cu.company_code ";
+        String sql = "select com.*,cu.* from sgft_companies com,sgft_customer cu where  com.company_code = cu.company_code ";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
