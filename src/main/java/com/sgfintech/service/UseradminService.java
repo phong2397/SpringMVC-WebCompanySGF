@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
  */
 @Service
 @Transactional
-public class UseradminService{
+public class UseradminService {
 
     @Autowired
     private DataSource dataSource;
@@ -28,7 +28,7 @@ public class UseradminService{
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         String sql = "select * from sgft_useradmin where user_login = ?";
-        Object[] param = new Object[]{ user };
+        Object[] param = new Object[]{user};
         UseradminMapper mapper = new UseradminMapper();
         try {
             u = jdbcTemplate.queryForObject(sql, param, mapper);

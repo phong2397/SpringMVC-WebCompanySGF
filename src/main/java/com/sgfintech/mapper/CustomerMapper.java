@@ -48,7 +48,7 @@ public class CustomerMapper implements RowMapper<Customer> {
         return c;
     }
 
-    public Customer mapRow(ResultSet rs, int i , boolean ismerge) throws SQLException {
+    public Customer mapRow(ResultSet rs, int i, boolean ismerge) throws SQLException {
         Customer c = new Customer();
         c.setId(rs.getLong("cu.id"));
         c.setCompanyCode(rs.getString("company_code"));

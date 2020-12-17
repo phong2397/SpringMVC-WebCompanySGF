@@ -71,7 +71,6 @@ public class Contract implements Serializable {
         this.acceptedBy = acceptedBy;
         this.notedBy = notedBy;
     }
-
     public Contract() {
     }
 }

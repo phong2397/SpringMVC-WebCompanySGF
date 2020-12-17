@@ -20,7 +20,7 @@ public class ExpertiseController {
     @Autowired
     MergeDataService mergeDataService;
 
-    @RequestMapping(value = { "/thamdinh" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
         List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("accept", false);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
