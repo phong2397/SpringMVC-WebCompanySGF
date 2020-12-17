@@ -1,7 +1,9 @@
 package com.sgfintech.controller;
 
 import com.sgfintech.dao.ContractDAO;
+import com.sgfintech.dao.SaRequestDAO;
 import com.sgfintech.entity.Contract;
+import com.sgfintech.entity.SaRequest;
 import com.sgfintech.entity.Useradmin;
 import com.sgfintech.handler.MergeDataWithdraw;
 import com.sgfintech.service.MergeDataService;
@@ -28,6 +30,8 @@ public class WriteoffController {
     @Autowired
     ContractDAO contractDAO;
 
+    @Autowired
+    SaRequestDAO saRequestDAO;
 
     @RequestMapping(value = {"/gachno"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm) {
@@ -43,12 +47,15 @@ public class WriteoffController {
         String status = request.getParameter("status");
         try {
             Contract ct = contractDAO.findById(Long.parseLong(data));
+            SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
 //            Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
 //            ct.setAcceptedBy(u.getUserLogin());
+            sa.setStatus(status);
             ct.setStatus(status);
             ct.setBorrow(0l);
             ct.setDateRepayment(LocalDateTime.now());
             contractDAO.update(ct);
+            saRequestDAO.update(sa);
             return "success";
         } catch (Exception ex) {
             return "error";

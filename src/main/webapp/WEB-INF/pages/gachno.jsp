@@ -102,14 +102,14 @@
 										</thead>
 										<tbody>
 											<c:forEach items="${views}" var="lst" varStatus="loop">
-												<tr>
+												<tr >
 													<td><a href="#"
 															onclick="viewInfoContract('${lst.contract.idContract}')">#${lst.contract.idContract}9999</a>
 													</td>
 													<td class="text-left">
 														<h6 class="mb-0">
 															<a  href="#"
-																onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a>
+																>${lst.customer.customerName}</a>
 															<span class="d-block text-muted">Account number:
 																${lst.customer.customerBankAcc}</span>
 															<span class="d-block text-muted">Owner :
@@ -291,7 +291,7 @@
 					showConfirmButton: false,
 					timer: 3000
 				});
-				$(this).parents("tr").remove();
+				$("#idContract").parents("tr").remove();
 			} else {
 				Swal.fire({
 					position: 'top-end',
@@ -347,6 +347,8 @@
 					})
 				}
 			})
+			$("#div").toggle(500).animate({scrollTop: -200}, "slow");;
+
 		}
 	</script>
 </body>

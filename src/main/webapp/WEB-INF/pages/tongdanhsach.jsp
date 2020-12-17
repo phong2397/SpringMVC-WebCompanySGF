@@ -243,7 +243,7 @@
 																	${lst.customer.customerPhone}</span>
 															</h6>
 														</td>
-														<td>${lst.contract.borrow} đ</td>
+														<td>${lst.contract.remainAmountBorrow} đ</td>
 														<td>${lst.contract.systemTrace} đ</td>
 														<td ><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
 														<td>${lst.contract.transactionId}</td>
