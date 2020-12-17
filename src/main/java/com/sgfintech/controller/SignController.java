@@ -93,9 +93,9 @@ public class SignController {
             //todo thuc hien chuyen khoan
             Gson g = new Gson();
             JsonObject resultRes = g.fromJson(resultCheck, JsonObject.class);
-            if (!(resultRes.get("ResponseCode").getAsInt() == 200)) {
-                return "error";
-            }
+//            if (!(resultRes.get("ResponseCode").getAsInt() == 200)) {
+//                return "error";
+//            }
             j = new JsonObject();
             date = new Date();
             requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(date);
@@ -119,9 +119,10 @@ public class SignController {
             j.addProperty("Signature", sign);
             resultCheck = RequestGateway.checkUser(j);
             resultRes = g.fromJson(resultCheck, JsonObject.class);
-            if (!(resultRes.get("ResponseCode").getAsInt() == 200)) {
-                return "error";
-            } else {
+//            if (!(resultRes.get("ResponseCode").getAsInt() == 200)) {
+//                return "error";
+//            } else {
+//            }
                 Contract ct = new Contract();
                 ct.setIdContract(sa.getId());
                 ct.setSystemTrace(uuid);
@@ -130,7 +131,8 @@ public class SignController {
                 ct.setTimeBorrow(sa.getTimeBorrow());
                 ct.setRemainAmountBorrow(sa.getBorrow());
                 ct.setFeeBorrow(sa.getFeeBorrow());
-                ct.setTransactionId(resultRes.get("TransactionId").getAsString());
+//                ct.setTransactionId(resultRes.get("TransactionId").getAsString());
+                ct.setTransactionId(requestId);
                 ct.setStatus("act");
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DATE, +30);
@@ -145,7 +147,6 @@ public class SignController {
                 sa.setStatus("act");
                 saRequestDAO.update(sa);
                 return "success";
-            }
             //todo virtual account va tao collection point
         } catch (Exception ex) {
             return "error";

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -23,6 +24,11 @@ import java.util.List;
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver multiPartResolver(){
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        return resolver;
+    }
 
     @Bean(name = "viewResolver")
     public InternalResourceViewResolver getViewResolver() {
