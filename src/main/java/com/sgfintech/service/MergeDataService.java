@@ -4,6 +4,8 @@ import com.sgfintech.entity.Companies;
 import com.sgfintech.entity.Contract;
 import com.sgfintech.entity.Customer;
 import com.sgfintech.entity.SaRequest;
+import com.sgfintech.handler.CompanyHandler;
+import com.sgfintech.handler.CustomerHandler;
 import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.handler.MergeDataWithdraw;
 import com.sgfintech.mapper.CompanyMapper;
@@ -29,6 +31,43 @@ public class MergeDataService {
     private DataSource dataSource;
 
     private JdbcTemplate jdbcTemplate;
+
+    public List<CompanyHandler> getDataManange() {
+        String sql = "select com.* from sgft_companies com";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            Object[] param = new Object[]{};
+            List<CompanyHandler> resultList = jdbcTemplate.query(sql, param,
+                    (rs, arg1) -> {
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new CompanyHandler(com);
+                    });
+            return resultList;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<CustomerHandler> getDataCustomer() {
+        String sql = "select com.*,cu.* from sgft_companies com,sgft_customer cu where  com.company_code  = cu.company_code ";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            Object[] param = new Object[]{};
+            List<CustomerHandler> resultList = jdbcTemplate.query(sql, param,
+                    (rs, arg1) -> {
+                      Customer cu = new CustomerMapper().mapRow(rs, arg1);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new CustomerHandler(cu,com);
+                    });
+            return resultList;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
 
     public List<MergeDataOrder> getDataShow(String status) {
         String sql = "select sa.*, cu.* from sgft_sa_request sa, sgft_customer cu where sa.company_code  = cu.company_code and sa.customer_phone = cu.customer_phone and date_format(sa.created_date , '%Y %M %d') = date_format(sysdate(),'%Y %M %d') and sa.status=?";

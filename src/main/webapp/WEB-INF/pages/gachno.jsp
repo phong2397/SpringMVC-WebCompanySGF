@@ -109,7 +109,7 @@
 													<td class="text-left">
 														<h6 class="mb-0">
 															<a  href="#"
-																>${lst.customer.customerName}</a>
+																onclick="viewInfoCustomer('${lst.customer.customerPhone}')"	>${lst.customer.customerName}</a>
 															<span class="d-block text-muted">Account number:
 																${lst.customer.customerBankAcc}</span>
 															<span class="d-block text-muted">Owner :
@@ -150,7 +150,7 @@
 					<!-- /.col -->
 				</div>
 				<!-- Main content -->
-				<section class="invoice printableArea" style="display:none"  id="div">
+				<section class="invoice printableArea" id="div">
 					<div class="col-12" >
 						<!-- title row -->
 						<div class="col-12">
@@ -185,7 +185,7 @@
 							<!-- /.col -->
 							<div class="col-sm-12 invoice-col mb-15">
 								<div class="invoice-details row no-margin">
-									<div class="col-md-6 col-lg-3"><b>Mã đơn vay:</b>#<span id="idContract">9999</span>
+									<div class="col-md-6 col-lg-3"><b>Mã đơn vay:</b>#<span id="idContract"></span>9999
 									</div>
 									<div class="col-md-6 col-lg-3"><b>Thông tin giao dịch:</b>
 										<span id="transactionId"></span></div>
@@ -229,15 +229,17 @@
 						<div class="row">
 							<div class="col-12 text-right">
 								<p class="lead"><b>Ngày thanh toán:</b><span class="text-danger">${year}</span></p>
-								<p>Sub - Total amount :
-									<span id="remainAmountBorrow1">200.000 vnđ</span>
-								</p>
+
+								<c:forEach items="${views}" var="lst" varStatus="loop" begin="${i}" end="${j}" >
+								<div class="total-payment">
+									<h3><b>Total :</b>
+								<fmt:formatNumber value="${lst.contract.remainAmountBorrow * 10}" type="NUMBER"/>
+									</h3>
+									vnđ
+								</div>
+								</c:forEach>
 							</div>
-							<div class="total-payment">
-								<h3><b>Total :</b>
-									200.000 vnđ
-								</h3>
-							</div>
+
 						</div>
 						<!-- /.col -->
 					<!-- /.row -->
@@ -334,7 +336,6 @@
 						})
 					}
 				})
-				$("#div").toggle(500).animate({scrollTop: -200}, "slow");;
 			}
 		function viewInfoContract(params) {
 			var result = <%=json%>;
@@ -347,7 +348,7 @@
 					})
 				}
 			})
-			$("#div").toggle(500).animate({scrollTop: -200}, "slow");;
+			$("#fmt").show();
 
 		}
 	</script>
