@@ -1,6 +1,6 @@
-<%@ page import="com.sgfintech.handler.CompanyHandler" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.sgfintech.entity.Companies" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -80,37 +80,39 @@
                     <div class="col-lg-12 col-12">
                         <div class="box">
                             <!-- /.box-header -->
-                            <form class="form">
+                            <form class="form" action="${pageContext.request.contextPath}/doSearchManage" method="GET">
                                 <div class="box-body">
                                     <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin công ty
                                     </h4>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Tên công ty</label>
-                                                <select name="tencongty" class="form-control">
-                                                        <option >
-                                                            <span id="companyName"></span>
-                                                        </option>
+                                                <label> </label>
+                                                <select name="companyCode" class="form-control">
+                                                    <option value="Please Choose" >
+                                                       -- Please Choose --
+                                                    </option>
+                                                    <c:forEach items="${views}" var="lst" varStatus="loop">
+                                                            <option value="${lst.companyCode}" >
+                                                                ${lst.companyCode}
+                                                            </option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Mã Công ty</label>
-                                                <select name="tencongty" class="form-control">
-                                                    <c:forEach items="${views}" var="lst" varStatus="loop">
-                                                        <option value="${lst.company.companyCode}">
-                                                            <a href="#"
-                                                               onclick="viewCompany('${lst.company.companyCode}')">
-                                                                    ${lst.company.companyCode}</a>
+                                                <label> <span id="companyName"></span></label>
+                                                <select  class="form-control">
+                                                        <option >
+
                                                         </option>
-                                                    </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
+
                                     </div>
-                                    <button type="button" onclick="submitform();"
+                                    <button type="submit"
                                             class="btn btn-rounded btn-primary btn-outline">
                                         <i class="ti-save-alt"></i> Tìm kiếm
                                     </button>
@@ -119,7 +121,7 @@
                         </div>
                         <!-- /.box -->
                     </div>
-                        <div class="col-lg-12 col-12">
+                        <div class="col-lg-12 col-12" >
                             <div class="box">
                                 <div class="box-header with-border">
                                     <h4 class="box-title">Danh sách khách hàng </h4>
@@ -143,33 +145,33 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-<%--                                            <c:forEach items="${views}" var="lst" varStatus="loop">--%>
-<%--                                                <tr>--%>
-<%--                                                    <td>${lst.customer.companyCode}</td>--%>
-<%--                                                    <td>${lst.customer.customerCode}</td>--%>
-<%--                                                    <td>${lst.customer.customerName}</td>--%>
-<%--                                                    <td>${lst.customer.customerPhone}</td>--%>
-<%--                                                    <td>${lst.customer.customerSalary}</td>--%>
-<%--                                                    <td>${lst.customer.customerAddress}</td>--%>
-<%--                                                    <td>${lst.customer.customerAddressTemp}</td>--%>
-<%--                                                    <td>--%>
-<%--                                                        <h6 class="mb-0">--%>
-<%--                                                            <span class="d-block text-muted">Số cmnd: ${lst.customer.customerId}</span>--%>
-<%--                                                            <span class="d-block text-muted">Nơi cấp: ${lst.customer.customerIdLocation}</span>--%>
-<%--                                                            <span class="d-block text-muted">Ngày cấp :${lst.customer.customerIdDate}</span>--%>
+                                            <c:forEach items="${result}" var="lst" varStatus="loop">
+                                                <tr>
+                                                    <td>${lst.customer.companyCode}</td>
+                                                    <td>${lst.customer.customerCode}</td>
+                                                    <td>${lst.customer.customerName}</td>
+                                                    <td>${lst.customer.customerPhone}</td>
+                                                    <td>${lst.customer.customerSalary}</td>
+                                                    <td>${lst.customer.customerAddress}</td>
+                                                    <td>${lst.customer.customerAddressTemp}</td>
+                                                    <td>
+                                                        <h6 class="mb-0">
+                                                            <span class="d-block text-muted">Số cmnd: ${lst.customer.customerId}</span>
+                                                            <span class="d-block text-muted">Nơi cấp: ${lst.customer.customerIdLocation}</span>
+                                                            <span class="d-block text-muted">Ngày cấp :${lst.customer.customerIdDate}</span>
 
-<%--                                                        </h6>--%>
-<%--                                                    </td>--%>
-<%--                                                    <td>--%>
-<%--                                                        <h6 class="mb-0">--%>
-<%--                                                            <span class="d-block text-muted">Ten ngan hang: ${lst.customer.customerBankName}</span>--%>
-<%--                                                            <span class="d-block text-muted">Chu tai khoan : ${lst.customer.customerBank}</span>--%>
-<%--                                                            <span class="d-block text-muted">Account number: ${lst.customer.customerBankAcc}</span>--%>
-<%--                                                        </h6>--%>
-<%--                                                    </td>--%>
-<%--                                                    <td>${lst.customer.customerPosition}</td>--%>
-<%--                                                </tr>--%>
-<%--                                            </c:forEach>--%>
+                                                        </h6>
+                                                    </td>
+                                                    <td>
+                                                        <h6 class="mb-0">
+                                                            <span class="d-block text-muted">Ten ngan hang: ${lst.customer.customerBankName}</span>
+                                                            <span class="d-block text-muted">Chu tai khoan : ${lst.customer.customerBank}</span>
+                                                            <span class="d-block text-muted">Account number: ${lst.customer.customerBankAcc}</span>
+                                                        </h6>
+                                                    </td>
+                                                    <td>${lst.customer.customerPosition}</td>
+                                                </tr>
+                                            </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>
@@ -208,45 +210,22 @@
     $( document ).ready(function() {
         $("#loading").css("display", "none");
     });
-    function submitform() {
-        var tenconty = $("#tencongty").val();
-        var macongty = $("#macongty").val();
-        console.log(filePath);
-        if (macongty == "sgfintech") {
-            Swal.fire(
-                'Successful',
-                'Dữ liệu duoc tim thay',
-                'success'
-            )
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Lỗi trong quá trình thực thi',
-                footer: '<a href>Why do I have this issue?</a>'
-            })
-        }
-        console.log(tenconty);
-    }
-
-    function viewCompany(params) {
+    function viewInfoCustomer(params) {
         <%
-            List<CompanyHandler> list = (List<CompanyHandler>) request.getAttribute("views");
+            List<Companies> list = (List<Companies>) request.getAttribute("views");
             Gson g = new Gson();
             String json = g.toJson(list);
         %>
         var result = <%=json%>;
         result.forEach((company) => {
-            if (company.company.companyCode == params) {
-                let c = company.company;
+            if (company.companyCode == params) {
+                let c = company;
                 Object.keys(c).forEach((key, _) => {
                     let id = key;
                     $('#' + id).text(c[key]);
                 })
             }
         })
-        console.log(result);
-        // var index =
     }
 </script>
 </body>

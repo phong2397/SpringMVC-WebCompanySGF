@@ -76,35 +76,35 @@
                     <div class="col-lg-12 col-12">
                         <div class="box">
                             <!-- /.box-header -->
-                            <form class="form">
+                            <form class="form-control" action="${pageContext.request.contextPath}/doSearch" method="GET">
                                 <div class="box-body">
                                     <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin khách hàng
                                     </h4>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Tên công ty</label>
-                                                <input id="tencongty" type="text" class="form-control"
+                                                <label>Số điện thoại</label>
+                                                <input  type="text" class="form-control" name="customerPhone"
                                                        placeholder="Tên công ty">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Số CMND</label>
-                                                <input id="cmnd" type="text" class="form-control"
-                                                       placeholder="Mã công ty">
+                                                <input type="text" class="form-control" name="customerId"
+                                                       placeholder="Số CMND">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Họ và tên</label>
-                                                <input id="hovaten" type="text" class="form-control"
-                                                       placeholder="Mã công ty">
+                                                <input type="text" class="form-control" name ="customerName"
+                                                       placeholder="Họ và tên">
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="button" onclick="submitform();"
-                                            class="btn btn-rounded btn-primary btn-outline">
+                                    <button type="submit"
+                                            class="btn btn-rounded btn-primary btn-outline" >
                                         <i class="ti-save-alt"></i> Tìm kiếm
                                     </button>
                                 </div>
@@ -119,7 +119,6 @@
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-
                                     <table id="example" class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
@@ -140,7 +139,7 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
-                                                <td>${lst.company.companyCode}</td>
+                                                <td>${lst.customer.companyCode}</td>
                                                 <td>${lst.customer.customerCode}</td>
                                                 <td>${lst.customer.customerName}</td>
                                                 <td>${lst.customer.customerPhone}</td>
@@ -204,7 +203,7 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/pages/dashboard9.js"></script>
-<script src="js/demo.js"></script>
+<script src="js/pages/data-table.js"></script>
 <script src="assets/vendor_components/dropzone/dropzone.js"></script>
 <script src="assets/vendor_components/sweetalert/sweetalert.min.js"></script>
 <script src="assets/vendor_components/sweetalert/jquery.sweet-alert.custom.js"></script>
@@ -213,54 +212,6 @@
     $( document ).ready(function() {
         $("#loading").css("display", "none");
     });
-    function submitform() {
-        var tenconty = $("#tencongty").val();
-        var macongty = $("#macongty").val();
-        var filePath = $("#importFile").val();
-        console.log(filePath);
-        if (macongty == "sgfintech") {
-            Swal.fire(
-                'Successful',
-                'Dữ liệu của hệ thống đã được cập nhật',
-                'success'
-            )
-        } else if (macongty == "sgf") {
-            Swal.fire({
-                title: 'Mã công ty đã tồn tại!',
-                text: "Bạn có muốn cập nhật dữ liệu hiện có?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, update it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Dữ liệu của hệ thống đã được cập nhật',
-                        'success'
-                    )
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                        'Cancelled',
-                        'Thay đổi đã bị hủy',
-                        'error'
-                    )
-                }
-            })
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Lỗi trong quá trình thực thi',
-                footer: '<a href>Why do I have this issue?</a>'
-            })
-        }
-        console.log(tenconty);
-    }
 
 </script>
 </body>

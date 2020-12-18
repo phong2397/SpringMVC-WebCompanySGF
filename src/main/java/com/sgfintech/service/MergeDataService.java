@@ -4,7 +4,6 @@ import com.sgfintech.entity.Companies;
 import com.sgfintech.entity.Contract;
 import com.sgfintech.entity.Customer;
 import com.sgfintech.entity.SaRequest;
-import com.sgfintech.handler.CompanyHandler;
 import com.sgfintech.handler.CustomerHandler;
 import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.handler.MergeDataWithdraw;
@@ -33,18 +32,43 @@ public class MergeDataService {
 
     private JdbcTemplate jdbcTemplate;
 
-    public List<Companies> getDataManange() {
-        String sql = "select com.* from sgft_companies com";
+
+    @SuppressWarnings("nonchecked")
+    public List<CustomerHandler> searchCustomer(String customerName,String customerId,String customerPhone) {
+        String sql = "select com.*,cu.* from sgft_companies com,sgft_customer cu where  com.company_code = cu.company_code  " +
+                "and cu.customer_name like ? and cu.customer_phone like ?  and cu.customer_id like ? ";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         try {
-            List<Companies> resultList = jdbcTemplate.queryForList(sql, Companies.class);
-//            List<CompanyHandler> resultList = jdbcTemplate.queryFor(sql, param,
-//                    (rs, arg1) -> {
-//                        Companies com = new CompanyMapper().mapRow(rs, arg1);
-//                        return new CompanyHandler(com);
-//                    });
+            Object[] param = new Object[]{"%" + customerName + "%","%" + customerPhone + "%","%" + customerId + "%"};
+            List<CustomerHandler> resultList = jdbcTemplate.query(sql,param,
+                    (rs, arg1) -> {
+                        Customer cu = new CustomerMapper().mapRow(rs, arg1);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new CustomerHandler(cu,com);
+                    });
+            return resultList;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    @SuppressWarnings("nonchecked")
+    public List<CustomerHandler> searchCustomerCompany(String companyCode) {
+        String sql = "select com.*,cu.* from sgft_companies com,sgft_customer cu where  com.company_code = cu.company_code  " +
+                "and com.company_code like ? ";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            Object[] param = new Object[]{"%" + companyCode + "%"};
+            List<CustomerHandler> resultList = jdbcTemplate.query(sql,param,
+                    (rs, arg1) -> {
+                        Customer cu = new CustomerMapper().mapRow(rs, arg1);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new CustomerHandler(cu,com);
+                    });
             return resultList;
         } catch (Exception ex) {
             return null;

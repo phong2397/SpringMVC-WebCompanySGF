@@ -150,7 +150,7 @@
 					<!-- /.col -->
 				</div>
 				<!-- Main content -->
-				<section class="invoice printableArea" id="div">
+				<section class="invoice printableArea" id="div" style="display: none">
 					<div class="col-12" >
 						<!-- title row -->
 						<div class="col-12">
