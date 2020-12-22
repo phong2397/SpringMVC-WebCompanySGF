@@ -55,7 +55,7 @@ public class SignController {
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm) {
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
+        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", true);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
         return "kyduyet";
     }

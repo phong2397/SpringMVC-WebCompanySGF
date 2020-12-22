@@ -1,3 +1,6 @@
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.sgfintech.handler.CustomerHandler" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
@@ -76,7 +79,7 @@
                     <div class="col-lg-12 col-12">
                         <div class="box">
                             <!-- /.box-header -->
-                            <form class="form-control" action="${pageContext.request.contextPath}/doSearch" method="GET">
+                            <form class="form-control" >
                                 <div class="box-body">
                                     <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin khách hàng
                                     </h4>
@@ -84,27 +87,26 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Số điện thoại</label>
-                                                <input  type="text" class="form-control" name="customerPhone"
+                                                <input  type="number" class="form-control" name="customerPhone" id="customerPhone"
                                                        placeholder="Tên công ty">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Số CMND</label>
-                                                <input type="text" class="form-control" name="customerId"
+                                                <input type="number" class="form-control" name="customerId" id="customerId"
                                                        placeholder="Số CMND">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Họ và tên</label>
-                                                <input type="text" class="form-control" name ="customerName"
+                                                <input type="text" class="form-control" name="customerName" id="customerName"
                                                        placeholder="Họ và tên">
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit"
-                                            class="btn btn-rounded btn-primary btn-outline" >
+                                    <button type="button" class="btn btn-rounded btn-primary btn-outline" >
                                         <i class="ti-save-alt"></i> Tìm kiếm
                                     </button>
                                 </div>
@@ -127,8 +129,7 @@
                                             <th>Tên khách hàng</th>
                                             <th>Số điện thoại</th>
                                             <th>Lương </th>
-                                            <th>Địa chỉ thường trú</th>
-                                            <th>Địa chỉ tạm trú</th>
+                                            <th>Địa chỉ</th>
                                             <th>Vị trí</th>
                                             <th>Thông tin CMND</th>
                                             <th>Thông tin ngân hàng</th>
@@ -136,7 +137,7 @@
                                             <th>HÌnh ảnh</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="tbodytable">
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
                                                 <td>${lst.customer.companyCode}</td>
@@ -169,8 +170,10 @@
                                                     </h6>
                                                 </td>
                                                 <td>
-                                                    <img src="data:image/png;base64,${lst.customer.customerImageFront}" alt="Mat truoc"  width="100" height="100" />
-                                                    <img src="data:image/png;base64,${lst.customer.customerImageBack}" alt="Mat sau"  width="100" height="100"  />
+                                                    <button type="button"
+                                                            class="btn btn-rounded btn-info btn-accept"  onclick="viewInfoCustomer('${lst.customer.customerPhone}')" >
+                                                        CMND
+                                                    </button>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -192,7 +195,26 @@
     <!-- Control Sidebar -->
     <jsp:include page="general/_controlSidebar.jsp" />
     <!-- /.control-sidebar -->
+    <div class="modal modal-right fade" id="modal-right" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông tin chi tiết khách hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                    <p>Họ Tên : <img src="" id="customerImageFront" alt=""></p>
+                    <p>Email :  <img src="" id="customerImageBack" alt=""></p>
 
+                </div>
+                <div class="modal-footer modal-footer-uniform">
+                    <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
@@ -211,8 +233,98 @@
 <script type="text/javascript">
     $( document ).ready(function() {
         $("#loading").css("display", "none");
+        // SUBMIT FORM
     });
 
+    $("body").on("click", ".btn-outline", function () {
+        var customerName = $("#customerName").val();
+        var customerPhone = $("#customerPhone").val();
+        var customerId = $("#customerId").val();
+        var data = {customerName:customerName,customerPhone:customerPhone,customerId:customerId};
+        var dataobject = ajaxPost(data);
+
+        //todo parse dataobject => json object
+        try {
+            var obj = JSON.parse(dataobject);
+        } catch (error) {
+            var obj = dataobject;
+        }
+        //forech(item: jsonobject){
+        var body = $("#tbodytable");
+        body.empty();
+        for (var i = 0; i < obj.length; i++){
+            var e = obj[i];
+            var rowElement = $('<tr></tr>');
+            rowElement.append('<td>' + e.customer.companyCode + '</td>');
+            rowElement.append('<td>' + e.customer.customerId + '</td>');
+            rowElement.append('<td>' + e.customer.customerName + '</td>');
+            rowElement.append('<td>' + e.customer.customerPhone + '</td>');
+            rowElement.append('<td>' + e.customer.customerSalary + '</td>');
+            rowElement.append('<td>' + '<h6>' +
+                '<span class="d-block text-muted">'+'Thường trú:'+ e.customer.customerAddress+'</span>' +
+                '<span class="d-block text-muted">Tạm trú:'+ e.customer.customerAddressTemp + '</span>' +'</h6>'+'</td>');
+            rowElement.append('<td>' + e.customer.customerPosition + '</td>');
+            rowElement.append('<td>' + '<h6>' +
+                '<span class="d-block text-muted">CMND:'+ e.customer.customerId+'</span>' +
+                '<span class="d-block text-muted">Nơi cấp:'+ e.customer.customerIdLocation + '</span>' +
+                '<span class="d-block text-muted">Ngày cấp:'+e.customer.customerIdDate.date.day +'-' + e.customer.customerIdDate.date.month +'-' + e.customer.customerIdDate.date.year + '</span>' + '</h6>' + '</td>');
+            rowElement.append('<td>' +  '<h6 class="mb-0">' +
+                '<span class="d-block text-muted">Tên ngân hàng:'+ e.customer.customerBankName+'</span>' +
+                '<span class="d-block text-muted">Chủ tài khoản:'+ e.customer.customerBank + '</span>' +
+                '<span class="d-block text-muted">Account number:'+ e.customer.customerBankAcc + '</span>' + '</h6>'+'</td>');
+            rowElement.append('<td>' +  '<h6 class="mb-0">' +
+                '<span class="d-block text-muted">Người thân:'+ e.customer.customerRelative+'</span>' +
+                '<span class="d-block text-muted">Số điện thoại người thân:'+ e.customer.customerRelativePhone + '</span>' + '</h6>'+'</td>');
+            // rowElement.append('<td>' +  '<button type="button" class="btn btn-rounded btn-info btn-accept"  >' + e.customer.customerImageFront + '</button>' + '</td>');
+            body.append(rowElement);
+        }
+
+        //
+    });
+    function ajaxPost(data)  {
+        let result = "";
+        try {
+            $.ajax({
+                type: "POST",
+                timeout: 100000,
+                url: "${pageContext.request.contextPath}/doSearch",
+                data: data,
+                async: false,
+                success: function (data, status, xhr) { //data nay chinh la cai cuc em return o controller
+                    console.log(data);
+                    result = data;
+                    return result;
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    console.log(textStatus);
+                    console.log(errorMessage);
+                }
+            })
+        } catch(error) {
+            return "Không thể kết nối tới server";
+        }
+        return result;
+    }
+
+    function viewInfoCustomer(params) {
+        <%
+            List<CustomerHandler> list = (List<CustomerHandler>) request.getAttribute("views");
+            Gson g = new Gson();
+            String json = g.toJson(list);
+        %>
+        var result = <%=json%>;
+        result.forEach((customer) => {
+            if (customer.customer.customerPhone == params) {
+                let c = customer.customer;
+                Object.keys(c).forEach((key, _) => {
+                    let id = key;
+                    $('#' + id).text(c[key]);
+                })
+            }
+        })
+        $('#modal-right').modal('show');
+
+    }
 </script>
 </body>
 

@@ -80,7 +80,7 @@
                     <div class="col-lg-12 col-12">
                         <div class="box">
                             <!-- /.box-header -->
-                            <form class="form" action="${pageContext.request.contextPath}/doSearchManage" method="GET">
+                            <form class="form">
                                 <div class="box-body">
                                     <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin công ty
                                     </h4>
@@ -88,14 +88,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label> </label>
-                                                <select name="companyCode" class="form-control">
+                                                <select name="companyCode" id="companyCode" class="form-control">
                                                     <option value="Please Choose" >
-                                                       -- Please Choose --
+                                                        -- Please Choose --
                                                     </option>
                                                     <c:forEach items="${views}" var="lst" varStatus="loop">
-                                                            <option value="${lst.companyCode}" >
+                                                        <option value="${lst.companyCode}" >
                                                                 ${lst.companyCode}
-                                                            </option>
+                                                        </option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -104,15 +104,14 @@
                                             <div class="form-group">
                                                 <label> <span id="companyName"></span></label>
                                                 <select  class="form-control">
-                                                        <option >
-
-                                                        </option>
+                                                    <option >
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
 
                                     </div>
-                                    <button type="submit"
+                                    <button type="button"
                                             class="btn btn-rounded btn-primary btn-outline">
                                         <i class="ti-save-alt"></i> Tìm kiếm
                                     </button>
@@ -121,63 +120,35 @@
                         </div>
                         <!-- /.box -->
                     </div>
-                        <div class="col-lg-12 col-12" >
-                            <div class="box">
-                                <div class="box-header with-border">
-                                    <h4 class="box-title">Danh sách khách hàng </h4>
-                                </div>
-                                <div class="box-body">
-                                    <div class="table-responsive">
+                    <div class="col-lg-12 col-12" >
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h4 class="box-title">Danh sách khách hàng </h4>
+                            </div>
+                            <div class="box-body">
+                                <div class="table-responsive">
 
-                                        <table id="example" class="table table-lg invoice-archive">
-                                            <thead>
-                                            <tr>
-                                                <th>Mã công ty</th>
-                                                <th>Mã số khách hàng</th>
-                                                <th>Tên khách hàng</th>
-                                                <th>Số điện thoại</th>
-                                                <th>Lương </th>
-                                                <th>Địa chỉ thường trú</th>
-                                                <th>Địa chỉ tạm trú</th>
-                                                <th>Thông tin CMND</th>
-                                                <th>Thông tin ngân hàng</th>
-                                                <th>Vị trí</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <c:forEach items="${result}" var="lst" varStatus="loop">
-                                                <tr>
-                                                    <td>${lst.customer.companyCode}</td>
-                                                    <td>${lst.customer.customerCode}</td>
-                                                    <td>${lst.customer.customerName}</td>
-                                                    <td>${lst.customer.customerPhone}</td>
-                                                    <td>${lst.customer.customerSalary}</td>
-                                                    <td>${lst.customer.customerAddress}</td>
-                                                    <td>${lst.customer.customerAddressTemp}</td>
-                                                    <td>
-                                                        <h6 class="mb-0">
-                                                            <span class="d-block text-muted">Số cmnd: ${lst.customer.customerId}</span>
-                                                            <span class="d-block text-muted">Nơi cấp: ${lst.customer.customerIdLocation}</span>
-                                                            <span class="d-block text-muted">Ngày cấp :${lst.customer.customerIdDate}</span>
-
-                                                        </h6>
-                                                    </td>
-                                                    <td>
-                                                        <h6 class="mb-0">
-                                                            <span class="d-block text-muted">Ten ngan hang: ${lst.customer.customerBankName}</span>
-                                                            <span class="d-block text-muted">Chu tai khoan : ${lst.customer.customerBank}</span>
-                                                            <span class="d-block text-muted">Account number: ${lst.customer.customerBankAcc}</span>
-                                                        </h6>
-                                                    </td>
-                                                    <td>${lst.customer.customerPosition}</td>
-                                                </tr>
-                                            </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <table id="example" class="table table-lg invoice-archive">
+                                        <thead>
+                                        <tr>
+                                            <th>Mã công ty</th>
+                                            <th>Mã số khách hàng</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Lương </th>
+                                            <th>Địa chỉ</th>
+                                            <th>Thông tin CMND</th>
+                                            <th>Thông tin ngân hàng</th>
+                                            <th>Vị trí</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="tbodytable">
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
             </section>
             <!-- /.content -->
@@ -210,6 +181,70 @@
     $( document ).ready(function() {
         $("#loading").css("display", "none");
     });
+    $("body").on("click", ".btn-outline", function () {
+        var companyCode = $("#companyCode").val();
+        var data = {companyCode:companyCode};
+        var dataobject = ajaxPost(data);
+        //todo parse dataobject => json object
+        try {
+            var obj = JSON.parse(dataobject);
+        } catch (error) {
+            var obj = dataobject;
+        }
+        //forech(item: jsonobject){
+        var body = $("#tbodytable");
+        body.empty();
+        for (var i = 0; i < obj.length; i++){
+            var e = obj[i];
+            var rowElement = $('<tr></tr>');
+            rowElement.append('<td>' + e.company.companyCode + '</td>');
+            rowElement.append('<td>' + e.customer.customerCode + '</td>');
+            rowElement.append('<td>' + e.customer.customerName + '</td>');
+            rowElement.append('<td>' + e.customer.customerPhone + '</td>');
+            rowElement.append('<td>' + e.customer.customerSalary + '</td>');
+            rowElement.append('<td>' + '<h6>' +
+                '<span class="d-block text-muted">'+'Thường trú:'+ e.customer.customerAddress+'</span>' +
+                '<span class="d-block text-muted">Tạm trú:'+ e.customer.customerAddressTemp + '</span>' +'</h6>'+'</td>');
+            rowElement.append('<td>' + e.customer.customerPosition + '</td>');
+            rowElement.append('<td>' + '<h6>' +
+                '<span class="d-block text-muted">'+'CMND :'+ e.customer.customerId+'</span>' +
+                '<span class="d-block text-muted">Nơi cấp:'+ e.customer.customerIdLocation + '</span>' +
+                '<span class="d-block text-muted">Ngày cấp:'+e.customer.customerIdDate.date.day +'-' + e.customer.customerIdDate.date.month +'-' + e.customer.customerIdDate.date.year + '</span>' + '</h6>' + '</td>');
+            rowElement.append('<td>' +  '<h6 class="mb-0">' +
+                '<span class="d-block text-muted">Tên ngân hàng:'+ e.customer.customerBankName+'</span>' +
+                '<span class="d-block text-muted">Chủ tài khoản:'+ e.customer.customerBank + '</span>' +
+                '<span class="d-block text-muted">Account number:'+ e.customer.customerBankAcc + '</span>' + '</h6>'+'</td>');
+            rowElement.append('<td>' + e.customer.customerPosition + '</td>');
+            // rowElement.append('<td>' +  '<button type="button" class="btn btn-rounded btn-info btn-accept"  >' + e.customer.customerImageFront + '</button>' + '</td>');
+            body.append(rowElement);
+        }
+
+        //
+    });
+    function ajaxPost(data)  {
+        let result = "";
+        try {
+            $.ajax({
+                type: "POST",
+                timeout: 100000,
+                url: "${pageContext.request.contextPath}/doSearchManage",
+                data: data,
+                async: false,
+                success: function (data, status, xhr) { //data nay chinh la cai cuc em return o controller
+                    console.log(data);
+                    result = data;
+                    return result;
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    console.log(textStatus);
+                    console.log(errorMessage);
+                }
+            })
+        } catch(error) {
+            return "Không thể kết nối tới server";
+        }
+        return result;
+    }
     function viewInfoCustomer(params) {
         <%
             List<Companies> list = (List<Companies>) request.getAttribute("views");

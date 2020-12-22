@@ -94,8 +94,8 @@ public class MergeDataService {
         }
     }
 
-    public List<MergeDataOrder> getDataShow(String status) {
-        String sql = "select sa.*, cu.* from sgft_sa_request sa, sgft_customer cu where sa.company_code  = cu.company_code and sa.customer_phone = cu.customer_phone and date_format(sa.created_date , '%Y %M %d') = date_format(sysdate(),'%Y %M %d') and sa.status=?";
+    public List<MergeDataOrder> getData(String status) {
+        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com  where sa.company_code = com.company_code and sa.company_code  = cu.company_code and sa.customer_phone = cu.customer_phone and date_format(sa.created_date , '%Y %M %d') = date_format(sysdate(),'%Y %M %d') and sa.status=?";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
@@ -105,7 +105,8 @@ public class MergeDataService {
                     (rs, arg1) -> {
                         Customer c = new CustomerMapper().mapRow(rs, arg1, true);
                         SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
-                        return new MergeDataOrder(c, s);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new MergeDataOrder(c, s,com);
                     });
             return resultList;
         } catch (Exception ex) {
@@ -114,7 +115,7 @@ public class MergeDataService {
     }
 
     public List<MergeDataOrder> getDataShow(String status, boolean nodate) {
-        String sql = "select sa.*, cu.* from sgft_sa_request sa, sgft_customer cu where sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status=?";
+        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where sa.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status=?";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
@@ -124,7 +125,8 @@ public class MergeDataService {
                     (rs, arg1) -> {
                         Customer c = new CustomerMapper().mapRow(rs, arg1, true);
                         SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
-                        return new MergeDataOrder(c, s);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new MergeDataOrder(c, s,com);
                     });
             return resultList;
         } catch (Exception ex) {
