@@ -104,12 +104,12 @@
 											<c:forEach items="${views}" var="lst" varStatus="loop">
 												<tr >
 													<td><a href="#"
-															onclick="viewInfoContract('${lst.contract.idContract}')">#${lst.contract.idContract}9999</a>
+														   onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}9999</b></a>
 													</td>
 													<td class="text-left">
 														<h6 class="mb-0">
 															<a  href="#"
-																onclick="viewInfoCustomer('${lst.customer.customerPhone}')"	>${lst.customer.customerName}</a>
+																onclick="viewInfoCustomer('${lst.customer.customerPhone}')"	><b>${lst.customer.customerName}</b></a>
 															<span class="d-block text-muted">Account number:
 																${lst.customer.customerBankAcc}</span>
 															<span class="d-block text-muted">Owner :

@@ -228,11 +228,13 @@
 											<tbody>
 												<c:forEach items="${views}" var="lst" varStatus="loop">
 													<tr>
-														<td>#${lst.contract.idContract}9999</td>
+														<td><a href="#"
+															   onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}9999</b></a>
+														</td>
 														<td>
 															<h6 class="mb-0">
-																<a data-toggle="modal" href="#"
-																	onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a>
+																<a  href="#"
+																	onclick="viewInfoCustomer('${lst.customer.customerPhone}')"	><b>${lst.customer.customerName}</b></a>
 																<span class="d-block text-muted">Account number:
 																	${lst.customer.customerBankAcc}</span>
 																<span class="d-block text-muted">Owner :
@@ -271,32 +273,27 @@
 		<!-- Control Sidebar -->
 		<jsp:include page="general/_controlSidebar.jsp" />
 		<!-- /.control-sidebar -->
-		<div class="modal modal-right fade" id="modal-right" tabindex="-1">
+		<jsp:include page="general/modal.jsp"/>
+		<!-- Modal show info contract -->
+		<div class="modal modal-right fade" id="modal" tabindex="-1">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Thông tin chi tiết khách hàng</h5>
+						<h5 class="modal-title">Thông tin chi tiết hợp đồng </h5>
 						<button type="button" class="close" data-dismiss="modal">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-						<p>Họ Tên : <span id="customerName"></span></p>
-						<p>Email : <span id="customerEmail"></span></p>
-						<p>Lương : <span id="customerSalary"></span></p>
-						<p>Tên ngân hàng : <span id="customerBank"></span></p>
-						<p>Số tài khoản : <span id="customerBankAcc"></span></p>
-						<p>Tên ngân hàng : <span id="customerBankName"></span></p>
-						<p>CMND/Hộ chiếu/CCCD : <span id="customerId"></span></p>
-						<p>Nơi cấp : <span id="customerIdLocation"></span></p>
-						<p>Địa chỉ : <span id="customerAddress"></span></p>
-						<p>Tạm trú : <span id="customerAddressTemp"></span></p>
-						<p>Số BHXH : <span id="customerSocialInsurance"></span></p>
-						<p>Số BHYT : <span id="customerHealthInsurance"></span></p>
-						<p>Mã số thuế : <span id="customerTax"></span></p>
-						<p>Số hợp đồng : <span id="customerContract"></span></p>
-						<p>Thông tin người thân : <span id="customerRelative"></span></p>
-						<p>Số điện thoại người thân : <span id="customerRelativePhone"></span></p>
+						<h3><p>Mã hợp đồng : <span id="idContract"></span>9999</p></h3>
+						<p>System Trace : <span id="systemTrace"></span></p>
+						<p>Số điện thoại khách hàng : <span id="customerPhone"></span></p>
+						<p>Số lần mượn : <span id="timeBorrow"></span></p>
+						<p>Số tiền mượn : <span id="borrow"></span></p>
+						<p>Phí mượn : <span id="feeBorrow"></span></p>
+						<p>Mã giao dịch : <span id="transactionId"></span></p>
+						<p>Trạng thái : <b style="color: #0b2c89"><span id="status"></span></b></p>
+						<p>Người ký duyệt :  <span id="acceptedBy"></span></p>
 					</div>
 					<div class="modal-footer modal-footer-uniform">
 						<button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
@@ -304,6 +301,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- /.modal -->
 		<!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>
 	</div>
@@ -325,6 +323,19 @@
                     Gson g = new Gson();
                     String json = g.toJson(list);
                 %>
+		function viewInfoContract(params) {
+			var result = <%=json%>;
+			result.forEach((contract) => {
+				if (contract.contract.idContract == params) {
+					let c = contract.contract;
+					Object.keys(c).forEach((key, _) => {
+						let id = key;
+						$('#' + id).text(c[key]);
+					})
+				}
+			})
+			$('#modal').modal('show');
+		}
 		 function viewInfoCustomer(params) {
                 var result = <%=json%>;
                 result.forEach((customer) => {

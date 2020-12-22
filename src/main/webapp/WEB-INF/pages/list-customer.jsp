@@ -1,6 +1,3 @@
-<%@ page import="com.google.gson.Gson" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.sgfintech.handler.CustomerHandler" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
@@ -134,49 +131,10 @@
                                             <th>Thông tin CMND</th>
                                             <th>Thông tin ngân hàng</th>
                                             <th>Thông tin nhân thân</th>
-                                            <th>HÌnh ảnh</th>
                                         </tr>
                                         </thead>
                                         <tbody id="tbodytable">
-                                        <c:forEach items="${views}" var="lst" varStatus="loop">
-                                            <tr>
-                                                <td>${lst.customer.companyCode}</td>
-                                                <td>${lst.customer.customerCode}</td>
-                                                <td>${lst.customer.customerName}</td>
-                                                <td>${lst.customer.customerPhone}</td>
-                                                <td>${lst.customer.customerSalary}</td>
-                                                <td>${lst.customer.customerAddress}</td>
-                                                <td>${lst.customer.customerAddressTemp}</td>
-                                                <td>${lst.customer.customerPosition}</td>
-                                                <td>
-                                                    <h6 class="mb-0">
-                                                        <span class="d-block text-muted">Số cmnd: ${lst.customer.customerId}</span>
-                                                        <span class="d-block text-muted">Nơi cấp: ${lst.customer.customerIdLocation}</span>
-                                                        <span class="d-block text-muted">Ngày cấp :${lst.customer.customerIdDate}</span>
 
-                                                    </h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="mb-0">
-                                                        <span class="d-block text-muted">Tên ngân hàng: ${lst.customer.customerBankName}</span>
-                                                        <span class="d-block text-muted">Chủ tài khoản: ${lst.customer.customerBank}</span>
-                                                        <span class="d-block text-muted">Account number: ${lst.customer.customerBankAcc}</span>
-                                                    </h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="mb-0">
-                                                        <span class="d-block text-muted">Người thân: ${lst.customer.customerRelative}</span>
-                                                        <span class="d-block text-muted">Số điện thoại người thân: ${lst.customer.customerRelativePhone}</span>
-                                                    </h6>
-                                                </td>
-                                                <td>
-                                                    <button type="button"
-                                                            class="btn btn-rounded btn-info btn-accept"  onclick="viewInfoCustomer('${lst.customer.customerPhone}')" >
-                                                        CMND
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
@@ -230,102 +188,7 @@
 <script src="assets/vendor_components/sweetalert/sweetalert.min.js"></script>
 <script src="assets/vendor_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script type="text/javascript">
-    $( document ).ready(function() {
-        $("#loading").css("display", "none");
-        // SUBMIT FORM
-    });
-
-    $("body").on("click", ".btn-outline", function () {
-        var customerName = $("#customerName").val();
-        var customerPhone = $("#customerPhone").val();
-        var customerId = $("#customerId").val();
-        var data = {customerName:customerName,customerPhone:customerPhone,customerId:customerId};
-        var dataobject = ajaxPost(data);
-
-        //todo parse dataobject => json object
-        try {
-            var obj = JSON.parse(dataobject);
-        } catch (error) {
-            var obj = dataobject;
-        }
-        //forech(item: jsonobject){
-        var body = $("#tbodytable");
-        body.empty();
-        for (var i = 0; i < obj.length; i++){
-            var e = obj[i];
-            var rowElement = $('<tr></tr>');
-            rowElement.append('<td>' + e.customer.companyCode + '</td>');
-            rowElement.append('<td>' + e.customer.customerId + '</td>');
-            rowElement.append('<td>' + e.customer.customerName + '</td>');
-            rowElement.append('<td>' + e.customer.customerPhone + '</td>');
-            rowElement.append('<td>' + e.customer.customerSalary + '</td>');
-            rowElement.append('<td>' + '<h6>' +
-                '<span class="d-block text-muted">'+'Thường trú:'+ e.customer.customerAddress+'</span>' +
-                '<span class="d-block text-muted">Tạm trú:'+ e.customer.customerAddressTemp + '</span>' +'</h6>'+'</td>');
-            rowElement.append('<td>' + e.customer.customerPosition + '</td>');
-            rowElement.append('<td>' + '<h6>' +
-                '<span class="d-block text-muted">CMND:'+ e.customer.customerId+'</span>' +
-                '<span class="d-block text-muted">Nơi cấp:'+ e.customer.customerIdLocation + '</span>' +
-                '<span class="d-block text-muted">Ngày cấp:'+e.customer.customerIdDate.date.day +'-' + e.customer.customerIdDate.date.month +'-' + e.customer.customerIdDate.date.year + '</span>' + '</h6>' + '</td>');
-            rowElement.append('<td>' +  '<h6 class="mb-0">' +
-                '<span class="d-block text-muted">Tên ngân hàng:'+ e.customer.customerBankName+'</span>' +
-                '<span class="d-block text-muted">Chủ tài khoản:'+ e.customer.customerBank + '</span>' +
-                '<span class="d-block text-muted">Account number:'+ e.customer.customerBankAcc + '</span>' + '</h6>'+'</td>');
-            rowElement.append('<td>' +  '<h6 class="mb-0">' +
-                '<span class="d-block text-muted">Người thân:'+ e.customer.customerRelative+'</span>' +
-                '<span class="d-block text-muted">Số điện thoại người thân:'+ e.customer.customerRelativePhone + '</span>' + '</h6>'+'</td>');
-            // rowElement.append('<td>' +  '<button type="button" class="btn btn-rounded btn-info btn-accept"  >' + e.customer.customerImageFront + '</button>' + '</td>');
-            body.append(rowElement);
-        }
-
-        //
-    });
-    function ajaxPost(data)  {
-        let result = "";
-        try {
-            $.ajax({
-                type: "POST",
-                timeout: 100000,
-                url: "${pageContext.request.contextPath}/doSearch",
-                data: data,
-                async: false,
-                success: function (data, status, xhr) { //data nay chinh la cai cuc em return o controller
-                    console.log(data);
-                    result = data;
-                    return result;
-                },
-                error: function (jqXhr, textStatus, errorMessage) {
-                    console.log(textStatus);
-                    console.log(errorMessage);
-                }
-            })
-        } catch(error) {
-            return "Không thể kết nối tới server";
-        }
-        return result;
-    }
-
-    function viewInfoCustomer(params) {
-        <%
-            List<CustomerHandler> list = (List<CustomerHandler>) request.getAttribute("views");
-            Gson g = new Gson();
-            String json = g.toJson(list);
-        %>
-        var result = <%=json%>;
-        result.forEach((customer) => {
-            if (customer.customer.customerPhone == params) {
-                let c = customer.customer;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
-                })
-            }
-        })
-        $('#modal-right').modal('show');
-
-    }
-</script>
+<jsp:include page="general/funcListCustomer.jsp" />
 </body>
 
 </html>

@@ -3,23 +3,26 @@ package com.sgfintech.controller;
 import com.google.gson.Gson;
 import com.sgfintech.dao.CompaniesDAO;
 import com.sgfintech.entity.Companies;
+import com.sgfintech.entity.Customer;
 import com.sgfintech.handler.CustomerHandler;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.util.Consts;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.util.List;
 
 
@@ -62,7 +65,6 @@ public class CustomerController {
     @RequestMapping(value = "/doSearchManage", method = RequestMethod.POST)
     public @ResponseBody String doSearchManage(HttpServletRequest request, HttpServletResponse response) {
         String companyCode = request.getParameter("companyCode");
-        ModelAndView mav = new ModelAndView("manage-customer");
         List<CustomerHandler> result = mergeDataService.searchCustomerCompany(companyCode);
         Gson g = new Gson();
         String responseStr = g.toJson(result);

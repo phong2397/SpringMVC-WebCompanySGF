@@ -1,7 +1,4 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ page import="com.google.gson.Gson" %>
-<%@ page import="com.sgfintech.handler.MergeDataOrder" %>
-<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -217,8 +214,8 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
-                                                <td><b> <a data-toggle="modal" href="#"
-                                                           onclick="viewInfoOrder('${lst.saRequest.id}')">${lst.saRequest.id}9999</a></b></td>
+                                                <td> <a data-toggle="modal" href="#"
+                                                           onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}9999</b></a></td>
                                                 <td>${lst.saRequest.createdDate}</td>
                                                 <td>
                                                     <h6 class="mb-0">
@@ -265,30 +262,8 @@
     <!-- Control Sidebar -->
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
-    <!-- Modal show info company -->
-    <div class="modal modal-right fade" id="modal-center" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Thông tin công ty</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                    <h3><p>Mã công ty : <span id="companyCode"></span></p></h3>
-                    <p>Tên công ty : <span id="companyName"></span></p>
-                    <p>Địa chỉ công ty : <span id="companyAddress"></span></p>
-                    <p>Mã số thuế : <span id="conpanyTax"></span></p>
-                </div>
-                <div class="modal-footer modal-footer-uniform">
-                    <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.modal -->
-    <!-- Modal show info customer -->
+    <jsp:include page="general/modal.jsp"/>
+    <!-- Modal show info order -->
     <div class="modal modal-right fade" id="modal-left" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -300,48 +275,12 @@
                 </div>
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
                     <h3><p>Mã yêu cầu: <span id="id"></span>9999</p></h3>
-                    <p>Mã công ty : <span id="companyCode"></span></p>
-                    <p>Mã nhân viên : <span id="customerCode"></span></p>
-                    <p>Số tiền ứng : <span id="borrow"></span></p>
+                    <p>Số điện thoại : <span id="customerPhone"></span></p>
+                    <p>Số tiền ứng : <span id="borrow"></span>đ</p>
                     <p>Thuế : <span id="interestRate"></span>%</p>
                     <p>Phí : <span id="feeBorrow"></span></p>
                     <p>Số lần ứng : <span id="timeBorrow"></span></p>
-                    <p>Trạng thái : <b style="color: #0b2c89">chờ thẩm định</b></p>
-                </div>
-                <div class="modal-footer modal-footer-uniform">
-                    <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.modal -->
-    <!-- Modal show info customer -->
-    <div class="modal modal-right fade" id="modal-right" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Thông tin chi tiết khách hàng</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                    <p>Họ Tên : <span id="customerName"></span></p>
-                    <p>Email : <span id="customerEmail"></span></p>
-                    <p>Lương : <span id="customerSalary"></span></p>
-                    <p>Tên ngân hàng : <span id="customerBank"></span></p>
-                    <p>Số tài khoản : <span id="customerBankAcc"></span></p>
-                    <p>Tên ngân hàng : <span id="customerBankName"></span></p>
-                    <p>CMND/Hộ chiếu/CCCD : <span id="customerId"></span></p>
-                    <p>Nơi cấp : <span id="customerIdLocation"></span></p>
-                    <p>Địa chỉ : <span id="customerAddress"></span></p>
-                    <p>Tạm trú : <span id="customerAddressTemp"></span></p>
-                    <p>Số BHXH : <span id="customerSocialInsurance"></span></p>
-                    <p>Số BHYT : <span id="customerHealthInsurance"></span></p>
-                    <p>Mã số thuế : <span id="customerTax"></span></p>
-                    <p>Số hợp đồng : <span id="customerContract"></span></p>
-                    <p>Thông tin người thân : <span id="customerRelative"></span></p>
-                    <p>Số điện thoại người thân : <span id="customerRelativePhone"></span></p>
+                    <p>Trạng thái : <b style="color: #0b2c89"><span id="status"></span></b></p>
                 </div>
                 <div class="modal-footer modal-footer-uniform">
                     <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
@@ -365,132 +304,7 @@
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
 <script src="js/pages/data-table.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#loading").css("display", "none");
-    });
-    $("body").on("click", ".btn-accept", function () {
-        var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
-        dataRequest = dataRequest.substring(0, dataRequest.length - 4);
-        console.log(dataRequest);
-        let data = {datarequest: dataRequest, status: 'wfs', step: '1'};
-        var result = sendOrder(data);
-        if (result === "success") {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Dữ liệu được cập nhật thành công.',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            $(this).parents("tr").remove();
-        } else {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
-                showConfirmButton: false,
-                timer: 3000
-            });
-        }
-    });
-
-    function sendOrder(data) {
-        try {
-            // This async call may fail.
-            let text = $.ajax({
-                type: "POST",
-                timeout: 100000,
-                url: "${pageContext.request.contextPath}/changes",
-                data: data,
-                dataType: 'text',
-                async: false
-            }).responseText;
-            return text;
-            console.log(text);
-        } catch (error) {
-            return "Không thể kết nối tới server";
-        }
-    }
-
-    $("body").on("click", ".btn-refuse", function () {
-        var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
-        dataRequest = dataRequest.substring(0, dataRequest.length - 4);
-        console.log(dataRequest);
-        let data = {datarequest: dataRequest, status: 'deni', step: '1'};
-        var result = sendOrder(data);
-        if (result === "success") {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Dữ liệu được cập nhật thành công.',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            $(this).parents("tr").remove();
-        } else {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
-                showConfirmButton: false,
-                timer: 3000
-            });
-        }
-    });
-
-    <%
-                  List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
-                  Gson g = new Gson();
-                  String json = g.toJson(list);
-                  %>
-    function viewInfoOrder(params) {
-        var result = <%=json%>;
-        result.forEach((saRequest) => {
-            if (saRequest.saRequest.id == params) {
-                let c = saRequest.saRequest;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
-                })
-            }
-        })
-        console.log(result);
-        // var index =
-        $('#modal-left').modal('show');
-    }
-    function viewInfoCompany(params) {
-        var result = <%=json%>;
-        result.forEach((company) => {
-            if (company.company.companyCode == params) {
-                let c = company.company;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
-                })
-            }
-        })
-        console.log(result);
-        // var index =
-        $('#modal-center').modal('show');
-    }
-    function viewInfoCustomer(params) {
-        var result = <%=json%>;
-        result.forEach((customer) => {
-            if (customer.customer.customerPhone == params) {
-                let c = customer.customer;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
-                })
-            }
-        })
-        console.log(result);
-        // var index =
-        $('#modal-right').modal('show');
-    }
-</script>
+<jsp:include page="general/functhamdinh.jsp" />
 </body>
 
 </html>

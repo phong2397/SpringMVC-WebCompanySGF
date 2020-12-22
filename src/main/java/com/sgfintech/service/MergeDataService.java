@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
+import java.sql.Blob;
 import java.util.List;
 
 /**
@@ -31,7 +32,6 @@ public class MergeDataService {
     private DataSource dataSource;
 
     private JdbcTemplate jdbcTemplate;
-
 
     @SuppressWarnings("nonchecked")
     public List<CustomerHandler> searchCustomer(String customerName,String customerId,String customerPhone) {

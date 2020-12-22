@@ -21,7 +21,7 @@ public class ProcessedController {
 
     @RequestMapping(value = {"/daxuly"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm) {
-        List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("act", true, "");
+        List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("done", true, "");
         mm.addAttribute(Consts.Attr_ResultView, listdata);
         return "daxuly";
     }
