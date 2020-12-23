@@ -1,3 +1,8 @@
+<%@ page import="com.sgfintech.handler.CustomerHandler" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.sgfintech.entity.Useradmin" %>
+<%@ page import="com.sgfintech.util.Consts" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
@@ -8,6 +13,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    String role = u.getRole();
+    if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
+        response.sendRedirect("list-customer");
+    }else{
+        response.sendRedirect("login");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -144,7 +158,6 @@
                 </div>
             </section>
             <!-- /.content -->
-
         </div>
     </div>
     <!-- /.content-wrapper -->
@@ -188,7 +201,28 @@
 <script src="assets/vendor_components/sweetalert/sweetalert.min.js"></script>
 <script src="assets/vendor_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<jsp:include page="general/funcListCustomer.jsp" />
+<script src="js/funcListCustomer.js"></script>
+<script type="text/javascript">
+    <%
+         List<CustomerHandler> list = (List<CustomerHandler>) request.getAttribute("views");
+         Gson g = new Gson();
+         String json = g.toJson(list);
+     %>
+    function viewInfoCustomer(params) {
+        var result = <%=json%>;
+        result.forEach((customer) => {
+            if (customer.customer.customerPhone == params) {
+                let c = customer.customer;
+                Object.keys(c).forEach((key, _) => {
+                    let id = key;
+                    $('#' + id).text(c[key]);
+                })
+            }
+        })
+        $('#modal-right').modal('show');
+
+    }
+</script>
 </body>
 
 </html>

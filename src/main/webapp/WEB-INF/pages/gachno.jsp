@@ -1,6 +1,8 @@
 <%@ page import="com.sgfintech.handler.MergeDataWithdraw" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.google.gson.Gson" %><%--
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.sgfintech.entity.Useradmin" %>
+<%@ page import="com.sgfintech.util.Consts" %><%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 12/11/2020
@@ -8,6 +10,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+	Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+	String role = u.getRole();
+	if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("truongthuhoi")){
+		response.sendRedirect("gachno");
+	}else{
+		response.sendRedirect("login");
+	}
+%>
 <!DOCTYPE html>
 <html lang="en">
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -104,12 +115,11 @@
 											<c:forEach items="${views}" var="lst" varStatus="loop">
 												<tr >
 													<td><a href="#"
-														   onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}9999</b></a>
+														   onclick="viewInfo('${lst.contract.idContract}', '${lst.customer.customerPhone}')"><b>${lst.contract.idContract}9999</b></a>
 													</td>
 													<td class="text-left">
 														<h6 class="mb-0">
-															<a  href="#"
-																onclick="viewInfoCustomer('${lst.customer.customerPhone}')"	><b>${lst.customer.customerName}</b></a>
+															<a  href="#" ><b>${lst.customer.customerName}</b></a>
 															<span class="d-block text-muted">Account number:
 																${lst.customer.customerBankAcc}</span>
 															<span class="d-block text-muted">Owner :
@@ -320,37 +330,39 @@
 				return "Không thể kết nối tới server";
 			}
 		}
+
 		  <%
 			List < MergeDataWithdraw > list = (List<MergeDataWithdraw>) request.getAttribute("views");
-		Gson g = new Gson();
-		String json = g.toJson(list);
-           %>
-			function viewInfoCustomer(params) {
-				var result = <%=json%>;
-				result.forEach((customer) => {
-					if (customer.customer.customerPhone == params) {
-						let c = customer.customer;
-						Object.keys(c).forEach((key, _) => {
-							let id = key;
-							$('#' + id).text(c[key]);
-						})
-					}
-				})
-			}
-		function viewInfoContract(params) {
-			var result = <%=json%>;
-			result.forEach((contract) => {
-				if (contract.contract.idContract == params) {
-					let c = contract.contract;
-					Object.keys(c).forEach((key, _) => {
-						let id = key;
-						$('#' + id).text(c[key]);
-					})
-				}
-			})
-			$("#div").show();
+			Gson g = new Gson();
+			String json = g.toJson(list);
+		   %>
 
+		const list = <%=json%>;
+
+		function viewInfo(idContract, custPhone) {
+			let result = list.find(el => el.customer.customerPhone == custPhone);
+			console.log(result)
+			const cust = result.customer;
+
+			Object.keys(cust).forEach((key) => {
+				$('#' + key).text(cust[key]);
+			});
+
+			result = list.find(el => el.contract.idContract == idContract);
+			const contract = result.contract;
+			Object.keys(contract).forEach((key) => {
+
+				if(key == "remainAmountBorrow"){
+					let value = contract[key];
+					$('#' + key).text(value.toLocaleString("vi-VN") + " vnđ");
+				}else {
+					$('#' + key).text(contract[key]);
+				}
+			});
+
+			$('#div').show();
 		}
+
 	</script>
 </body>
 

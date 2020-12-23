@@ -1,3 +1,8 @@
+<%@ page import="com.sgfintech.entity.Companies" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.sgfintech.entity.Useradmin" %>
+<%@ page import="com.sgfintech.util.Consts" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -9,6 +14,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    String role = u.getRole();
+    if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
+        response.sendRedirect("manage-customer");
+    }else{
+        response.sendRedirect("login");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,21 +97,27 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Mã công ty </label>
-
-                                                <select name="companyCode" id="companyCode" class="form-control" onchange="viewInfoCompany()">
+                                                <label style="color: black">Mã công ty </label>
+                                                <select name="companyCode" id="companyCode" class="form-control" onchange="onCompanyChanged(event)">
                                                     <option value="Please Choose" >
                                                         -- Please Choose --
                                                     </option>
-                                                    <c:forEach items="${views}" var="lst" varStatus="loop">
-                                                        <option value="${lst.companyCode}" >
+                                                <c:forEach items="${views}" var="lst" varStatus="loop">
+                                                        <option value="${lst.companyCode}">
                                                                 ${lst.companyCode}
                                                         </option>
-                                                    </c:forEach>
+                                                </c:forEach>
                                                 </select>
+
+                                            </div>
+
+                                            </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label style="color:black">Tên công ty</label><br>
+                                                <h5 style="color: #787878"><span id="companyName" ></span></h5>
                                             </div>
                                         </div>
-
                                     </div>
                                     <button type="button"
                                             class="btn btn-rounded btn-primary btn-outline">
@@ -165,8 +185,24 @@
 <script src="assets/vendor_components/sweetalert/sweetalert.min.js"></script>
 <script src="assets/vendor_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<jsp:include page="general/funcManageCustomer.jsp" />
+<script src="js/funcManageCustomer.js"></script>
+<script type="text/javascript">
+    <%
+        List<Companies> list = (List<Companies>) request.getAttribute("views");
+        Gson g = new Gson();
+        String json = g.toJson(list);
+    %>
+    var comList = <%=json%>;
 
+
+    function onCompanyChanged(e){
+        console.log(e);
+        let value = e.target.value;
+
+        let com = comList.find(e => e.companyCode == value);
+        $('#companyName').text(com.companyName);
+    }
+</script>
 </body>
 
 </html>

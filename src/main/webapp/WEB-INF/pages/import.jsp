@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.sgfintech.entity.Useradmin" %>
+<%@ page import="com.sgfintech.util.Consts" %><%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 12/09/2020
@@ -6,6 +7,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    String role = u.getRole();
+    if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
+        response.sendRedirect("import");
+    }else{
+        response.sendRedirect("login");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 

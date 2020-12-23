@@ -1,3 +1,8 @@
+<%@ page import="com.sgfintech.handler.MergeDataOrder" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.sgfintech.entity.Useradmin" %>
+<%@ page import="com.sgfintech.util.Consts" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
@@ -10,7 +15,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
-
+<%
+    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    String role = u.getRole();
+    if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh")){
+        response.sendRedirect("daxuly");
+    }else{
+        response.sendRedirect("login");
+    }
+%>
 <jsp:include page="general/_head.jsp"/>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary">
@@ -298,13 +311,64 @@
 <script src="js/vendors.min.js"></script>
 
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
+<script src="js/pages/data-table.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script src="js/pages/data-table.js"></script>
-<jsp:include page="general/functhamdinh.jsp" />
+<script type="text/javascript">
+    <%
+                  List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
+                  Gson g = new Gson();
+                  String json = g.toJson(list);
+                  %>
+    function viewInfoOrder(params) {
+        var result = <%=json%>;
+        result.forEach((saRequest) => {
+            if (saRequest.saRequest.id == params) {
+                let c = saRequest.saRequest;
+                Object.keys(c).forEach((key, _) => {
+                    let id = key;
+                    $('#' + id).text(c[key]);
+                })
+            }
+        })
+        console.log(result);
+        // var index =
+        $('#modal-left').modal('show');
+    }
+    function viewInfoCompany(params) {
+        var result = <%=json%>;
+        result.forEach((company) => {
+            if (company.company.companyCode == params) {
+                let c = company.company;
+                Object.keys(c).forEach((key, _) => {
+                    let id = key;
+                    $('#' + id).text(c[key]);
+                })
+            }
+        })
+        console.log(result);
+        // var index =
+        $('#modal-center').modal('show');
+    }
+    function viewInfoCustomer(params) {
+        var result = <%=json%>;
+        result.forEach((customer) => {
+            if (customer.customer.customerPhone == params) {
+                let c = customer.customer;
+                Object.keys(c).forEach((key, _) => {
+                    let id = key;
+                    $('#' + id).text(c[key]);
+                })
+            }
+        })
+        console.log(result);
+        // var index =
+        $('#modal-right').modal('show');
+    }
+</script>
+
 </body>
 
 </html>

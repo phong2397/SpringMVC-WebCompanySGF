@@ -8,7 +8,7 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
-    Useradmin u= (Useradmin)session.getAttribute("euser");
+    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
     String role = u.getRole();
 %>
 <aside class="main-sidebar">
@@ -16,7 +16,7 @@
     <section class="sidebar">
         <!-- sidebar menu-->
         <ul class="sidebar-menu" data-widget="tree">
-            <% if (role.equals("root")) { %>
+            <% if (role.equals("root")) {  %>
             <li>
                 <a href="index.html">
                     <img src="images/svg-icon/sidebar-menu/dashboard.svg" class="svg-icon" alt="">

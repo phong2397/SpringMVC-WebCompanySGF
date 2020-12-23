@@ -1,6 +1,8 @@
 <%@ page import="com.sgfintech.handler.MergeDataWithdraw" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.sgfintech.entity.Useradmin" %>
+<%@ page import="com.sgfintech.util.Consts" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -13,7 +15,15 @@
 <html lang="en">
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%
+	Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+	String role = u.getRole();
+	if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")){
+		response.sendRedirect("tongdanhsach");
+	}else{
+		response.sendRedirect("login");
+	}
+%>
 <jsp:include page="general/_head.jsp" />
 
 <body class="hold-transition light-skin sidebar-mini theme-primary">
@@ -210,7 +220,7 @@
 								</div>
 								<div class="box-body p-15">
 									<div class="table-responsive">
-										<table id="tickets" class="table mt-0 table-hover no-wrap table-borderless"
+										<table id="example" class="table table-lg invoice-archive"
 											data-page-size="10">
 											<thead>
 												<tr>
@@ -305,15 +315,15 @@
 		<!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>
 	</div>
-	<!-- ./wrapper -->
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	<script src="js/pages/data-table.js"></script>
 	<!-- Vendor JS -->
 	<script src="js/vendors.min.js"></script>
+
+	<script src="assets/vendor_components/datatable/datatables.min.js"></script>
+	<script src="js/pages/data-table.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<!-- Crypto Tokenizer Admin App -->
 	<script src="js/template.js"></script>
 	<script src="js/demo.js"></script>
-	<script src="js/pages/data-table.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
 			$("#loading").css("display", "none");

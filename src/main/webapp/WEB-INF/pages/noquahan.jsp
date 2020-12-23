@@ -1,6 +1,8 @@
 <%@ page import="com.sgfintech.handler.MergeDataWithdraw" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.google.gson.Gson" %><%--
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.sgfintech.entity.Useradmin" %>
+<%@ page import="com.sgfintech.util.Consts" %><%--
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -8,13 +10,20 @@
   Time: 01:40
   To change this template use File | Settings | File Templates.
 --%>
-
 <!DOCTYPE html>
 <html lang="en">
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%
+    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    String role = u.getRole();
+    if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thuhoi")|| role.equals("truongthuhoi")){
+        response.sendRedirect("noquahan");
+    }else{
+        response.sendRedirect("login");
+    }
+%>
 <jsp:include page="general/_head.jsp" />
 
 <body class="hold-transition light-skin sidebar-mini theme-primary">

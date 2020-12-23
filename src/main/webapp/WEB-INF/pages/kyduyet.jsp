@@ -1,4 +1,8 @@
-<%--
+<%@ page import="com.sgfintech.handler.MergeDataOrder" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.sgfintech.entity.Useradmin" %>
+<%@ page import="com.sgfintech.util.Consts" %><%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 12/09/2020
@@ -8,6 +12,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    String role = u.getRole();
+    if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("kyduyet")){
+        response.sendRedirect("kyduyet");
+    }else{
+        response.sendRedirect("login");
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -315,7 +328,60 @@
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
 <script src="js/pages/data-table.js"></script>
-<jsp:include page="general/funckyduyet.jsp" />
+<script type="text/javascript" src="js/funckyduyet.js">
+</script>
+<script type="text/javascript">
+    <%
+              List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
+              Gson g = new Gson();
+              String json = g.toJson(list);
+              %>
+    var result = <%=json%>;
+    function viewInfoCompany(params) {
+        result.forEach((company) => {
+            if (company.company.companyCode == params) {
+                let c = company.company;
+                Object.keys(c).forEach((key, _) => {
+                    let id = key;
+                    $('#' + id).text(c[key]);
+                })
+            }
+        })
+        console.log(result);
+        // var index =
+        $('#modal-center').modal('show');
+    }
+    function viewInfoOrder(params) {
+        result.forEach((saRequest) => {
+            if (saRequest.saRequest.id == params) {
+                let c = saRequest.saRequest;
+                Object.keys(c).forEach((key, _) => {
+                    let id = key;
+                    $('#' + id).text(c[key]);
+                })
+            }
+        })
+        console.log(result);
+        // var index =
+        $('#modal-left').modal('show');
+    }
+    function viewInfoCustomer(params) {
+        var result = <%=json%>;
+        result.forEach((customer) => {
+            if (customer.customer.customerPhone == params) {
+                let c = customer.customer;
+                Object.keys(c).forEach((key, _) => {
+                    let id = key;
+                    $('#' + id).text(c[key]);
+                })
+            }
+        })
+        console.log(result);
+        // var index =
+        $('#modal-right').modal('show');
+    }
+</script>
+
 </body>
 
 </html>
