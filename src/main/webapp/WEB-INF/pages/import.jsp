@@ -11,9 +11,8 @@
     Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
     String role = u.getRole();
     if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
-        response.sendRedirect("import");
     }else{
-        response.sendRedirect("login");
+        response.sendRedirect("404");
     }
 %>
 <!DOCTYPE html>
@@ -151,7 +150,6 @@
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
 <!-- Vendor JS -->
 <script src="js/vendors.min.js"></script>
 <!-- Crypto Tokenizer Admin App -->

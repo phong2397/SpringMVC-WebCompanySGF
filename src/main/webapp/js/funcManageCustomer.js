@@ -17,7 +17,6 @@ $( document ).ready(function() {
                 var e = obj[i];
                 var rowElement = $('<tr></tr>');
                 rowElement.append('<td><h5>' + e.company.companyName + '</h5></td>');
-                rowElement.append('<td>' + e.customer.customerCode + '</td>');
                 rowElement.append('<td>' + e.customer.customerName + '</td>');
                 rowElement.append('<td>' + e.customer.customerPhone + '</td>');
                 rowElement.append('<td>' + e.customer.customerSalary + '</td>');

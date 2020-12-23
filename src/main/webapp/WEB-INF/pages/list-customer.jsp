@@ -17,9 +17,8 @@
     Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
     String role = u.getRole();
     if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
-        response.sendRedirect("list-customer");
     }else{
-        response.sendRedirect("login");
+        response.sendRedirect("404");
     }
 %>
 <!DOCTYPE html>
@@ -136,15 +135,13 @@
                                         <thead>
                                         <tr>
                                             <th>Mã công ty</th>
-                                            <th>Mã số khách hàng</th>
-                                            <th>Tên khách hàng</th>
-                                            <th>Số điện thoại</th>
-                                            <th>Lương </th>
+                                            <th>Thông tin khách hàng</th>
                                             <th>Địa chỉ</th>
                                             <th>Vị trí</th>
                                             <th>Thông tin CMND</th>
                                             <th>Thông tin ngân hàng</th>
                                             <th>Thông tin nhân thân</th>
+                                            <th>Tài liệu</th>
                                         </tr>
                                         </thead>
                                         <tbody id="tbodytable">
@@ -201,8 +198,12 @@
 <script src="assets/vendor_components/sweetalert/sweetalert.min.js"></script>
 <script src="assets/vendor_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="js/funcListCustomer.js"></script>
+<script type="text/javascript" src="js/funcListCustomer.js"></script>
 <script type="text/javascript">
+    $( document ).ready(function() {
+        $("#loading").css("display", "none");
+    });
+
     <%
          List<CustomerHandler> list = (List<CustomerHandler>) request.getAttribute("views");
          Gson g = new Gson();

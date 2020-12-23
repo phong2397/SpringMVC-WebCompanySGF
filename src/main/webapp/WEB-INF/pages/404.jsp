@@ -35,21 +35,12 @@
         <div class="row h-p100 align-items-center justify-content-center text-center">
             <div class="col-lg-7 col-md-10 col-12">
                 <div class="rounded5 bg-white-10 pb-50">
-                    <h1 class="text-white font-size-180 font-weight-bold error-page-title"> 404</h1>
-                    <h1 class="text-white">Page Not Found !</h1>
-                    <h3 class="text-white">looks like, page doesn't exist</h3>
-                    <div class="my-30"><a href="../index.html" class="btn btn-danger">Back to dashboard</a></div>
+                    <h1  ><i class="fa fa-ban" aria-hidden="true" style="color: red"> FORBIDDEN</i>
+                        </h1>
+                    <h1 class="text-white">You are now allow to open this page!!</h1>
+                    <div class="my-30"><a href="index.html" class="btn btn-danger">Back to dashboard</a></div>
 
-                    <form class="search-form mx-auto mt-30 w-p75">
-                        <div class="input-group rounded5 overflow-h">
-                            <input type="text" name="search" class="form-control" placeholder="Search">
-                            <div class="input-group-prepend">
-                                <button type="submit" name="submit" class="btn btn-danger btn-sm"><i
-                                        class="fa fa-search"></i></button>
-                            </div>
-                        </div>
-                        <!-- /.input-group -->
-                    </form>
+
                 </div>
             </div>
         </div>

@@ -2,7 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.sgfintech.entity.Useradmin" %>
-<%@ page import="com.sgfintech.util.Consts" %><%--
+<%@ page import="com.sgfintech.util.Consts" %>
+<%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 12/09/2020
@@ -16,9 +17,8 @@
     Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
     String role = u.getRole();
     if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("kyduyet")){
-        response.sendRedirect("kyduyet");
     }else{
-        response.sendRedirect("login");
+        response.sendRedirect("404");
     }
 %>
 <!DOCTYPE html>
@@ -249,7 +249,7 @@
                                                 <td>
                                                         ${lst.saRequest.timeBorrow} tháng
                                                 </td>
-                                                <td>
+                                                <td> <td class="text-right"></td>
                                                     <h6 class="mb-0 font-weight-bold"> ${lst.saRequest.borrow} đ
                                                         <span class="d-block text-muted font-weight-normal">Thuế ${lst.saRequest.interestRate} % </span>
                                                         <span class="d-block text-muted font-weight-normal">Phí ${lst.saRequest.feeBorrow} đ </span>

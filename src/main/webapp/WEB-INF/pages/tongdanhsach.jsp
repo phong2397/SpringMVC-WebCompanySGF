@@ -19,9 +19,8 @@
 	Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
 	String role = u.getRole();
 	if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")){
-		response.sendRedirect("tongdanhsach");
 	}else{
-		response.sendRedirect("login");
+		response.sendRedirect("404");
 	}
 %>
 <jsp:include page="general/_head.jsp" />
@@ -260,7 +259,7 @@
 														<td ><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
 														<td>${lst.contract.transactionId}</td>
 														<td>${lst.contract.dateRepayment} đ</td>
-														<td>${lst.contract.borrow} đ</td>
+														<td> ${lst.contract.borrow} đ</td>
 
 													</tr>
 												</c:forEach>

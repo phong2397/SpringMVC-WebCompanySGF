@@ -2,7 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.sgfintech.entity.Useradmin" %>
-<%@ page import="com.sgfintech.util.Consts" %><%--
+<%@ page import="com.sgfintech.util.Consts" %>
+<%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 12/11/2020
@@ -14,9 +15,8 @@
 	Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
 	String role = u.getRole();
 	if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("truongthuhoi")){
-		response.sendRedirect("gachno");
 	}else{
-		response.sendRedirect("login");
+		response.sendRedirect("404");
 	}
 %>
 <!DOCTYPE html>
@@ -115,7 +115,7 @@
 											<c:forEach items="${views}" var="lst" varStatus="loop">
 												<tr >
 													<td><a href="#"
-														   onclick="viewInfo('${lst.contract.idContract}', '${lst.customer.customerPhone}')"><b>${lst.contract.idContract}9999</b></a>
+														   onclick="viewInfo('${lst.contract.idContract}','${lst.customer.customerPhone}')"><b>${lst.contract.idContract}9999</b></a>
 													</td>
 													<td class="text-left">
 														<h6 class="mb-0">
@@ -160,7 +160,7 @@
 					<!-- /.col -->
 				</div>
 				<!-- Main content -->
-				<section class="invoice printableArea" id="div" style="display: none">
+				<section class="invoice printableArea" id="main" style="display: none" >
 					<div class="col-12" >
 						<!-- title row -->
 						<div class="col-12">
@@ -215,19 +215,16 @@
 										<tr>
 											<th>Mô tả</th>
 											<th>Serial #</th>
-											<th class="text-right">Số tiền thanh toán</th>
 											<th class="text-right">Thuế</th>
 											<th class="text-right">Phí</th>
-											<th class="text-right">Tổng</th>
+											<th class="text-right">Số tiền thanh toán</th>
 										</tr>
 										<tr>
 											<td>Thanh toán dư nợ cuối kì</td>
 											<td><span id="systemTrace"></span></td>
-											<td class="text-right"><span id="borrow"></span></td>
 											<td class="text-right">10%</td>
 											<td class="text-right"><span id="feeBorrow"></span></td>
-											<td class="text-right"><span id="remainAmountBorrow"></span></td>
-
+											<td class="text-right"><span id="borrow"></span></td>
 										</tr>
 									</tbody>
 								</table>
@@ -239,15 +236,11 @@
 						<div class="row">
 							<div class="col-12 text-right">
 								<p class="lead"><b>Ngày thanh toán:</b><span class="text-danger">${year}</span></p>
-
-								<c:forEach items="${views}" var="lst" varStatus="loop" begin="${i}" end="${j}" >
-								<div class="total-payment">
-									<h3><b>Total :</b>
-								<fmt:formatNumber value="${lst.contract.remainAmountBorrow * 10}" type="NUMBER"/>
-									</h3>
-									vnđ
-								</div>
-								</c:forEach>
+									<div class="total-payment">
+										<h3><b>Total :</b>
+										<td class="text-right"><span id="remainAmountBorrow"></span></td>
+										</h3>
+									</div>
 							</div>
 
 						</div>
@@ -347,20 +340,17 @@
 			Object.keys(cust).forEach((key) => {
 				$('#' + key).text(cust[key]);
 			});
-
 			result = list.find(el => el.contract.idContract == idContract);
 			const contract = result.contract;
 			Object.keys(contract).forEach((key) => {
-
-				if(key == "remainAmountBorrow"){
-					let value = contract[key];
-					$('#' + key).text(value.toLocaleString("vi-VN") + " vnđ");
+				if(key == "remainAmountBorrow" || key == "borrow"){
+					let value = (10/100 * contract[key]) + contract[key];
+					$('#' + key).text(value.toLocaleString("vi-VN") + " đ");
 				}else {
 					$('#' + key).text(contract[key]);
 				}
 			});
-
-			$('#div').show();
+			$('#main').slideDown("slow");
 		}
 
 	</script>

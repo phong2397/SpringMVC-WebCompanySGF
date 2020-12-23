@@ -2,7 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.sgfintech.entity.Useradmin" %>
-<%@ page import="com.sgfintech.util.Consts" %><%--
+<%@ page import="com.sgfintech.util.Consts" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -19,9 +19,8 @@
     Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
     String role = u.getRole();
     if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thuhoi")|| role.equals("truongthuhoi")){
-        response.sendRedirect("noquahan");
     }else{
-        response.sendRedirect("login");
+        response.sendRedirect("404");
     }
 %>
 <jsp:include page="general/_head.jsp" />
@@ -126,7 +125,6 @@
                                                 <span class="d-block text-muted">Company Number : ${lst.companies.companyCode}</span>
                                                  <span class="d-block text-muted">Company Name: ${lst.companies.companyName}</span>
                                                  </td>
-
                                                 <td>${lst.contract.borrow} đ</td>
                                                 <td>${lst.contract.dateRepayment}</td>
                                                 <td class="text-right"><span class="label label-danger">13.54%</span></td>

@@ -18,9 +18,8 @@
     Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
     String role = u.getRole();
     if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
-        response.sendRedirect("manage-customer");
     }else{
-        response.sendRedirect("login");
+        response.sendRedirect("404");
     }
 %>
 <!DOCTYPE html>
@@ -147,7 +146,6 @@
                                             <th>Địa chỉ</th>
                                             <th>Vị trí</th>
                                             <th>Thông tin CMND</th>
-                                            <th>Thông tin ngân hàng</th>
                                         </tr>
                                         </thead>
                                         <tbody id="tbodytable">

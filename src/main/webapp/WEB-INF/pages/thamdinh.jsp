@@ -19,9 +19,8 @@
     Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
     String role = u.getRole();
     if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh")){
-        response.sendRedirect("daxuly");
     }else{
-        response.sendRedirect("login");
+        response.sendRedirect("404");
     }
 %>
 <jsp:include page="general/_head.jsp"/>
