@@ -52,35 +52,10 @@ public class SignController {
 
     @Autowired
     private ApplicationContext context;
-    @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
-    public String welcomePage(ModelMap mm, HttpServletRequest request) {
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wait",false);
-        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        return "thamdinh";
-    }
-
-    @RequestMapping(value = "/changes", method = RequestMethod.POST)
-    public @ResponseBody
-    String changeStatusOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        String data = request.getParameter("datarequest");
-        String status = request.getParameter("status");
-        String step = request.getParameter("step");
-        try {
-            SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
-            Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-            sa.setStatus(status);
-            sa.setEmployeeThamdinh(u.getUserLogin());
-            sa.setEmployeeThamdinhDate(LocalDateTime.now());
-            saRequestDAO.update(sa);
-            return "success";
-        } catch (Exception ex) {
-            return "error";
-        }
-    }
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm) {
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", true);
+        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
         return "kyduyet";
     }

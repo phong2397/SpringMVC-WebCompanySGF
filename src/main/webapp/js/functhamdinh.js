@@ -1,11 +1,9 @@
 
-    $(document).ready(function () {
-        $("#loading").css("display", "none");
-    });
+$(document).ready(function () {
+    $("#loading").css("display", "none");
     $("body").on("click", ".btn-accept", function () {
         var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
         dataRequest = dataRequest.substring(0, dataRequest.length - 4);
-        console.log(dataRequest);
         let data = {datarequest: dataRequest, status: 'wfs', step: '1'};
         var result = sendOrder(data);
         if (result === "success") {
@@ -28,13 +26,14 @@
         }
     });
 
+
     function sendOrder(data) {
         try {
             // This async call may fail.
             let text = $.ajax({
                 type: "POST",
                 timeout: 100000,
-                url: "${pageContext.request.contextPath}/changes",
+                url: "changes",
                 data: data,
                 dataType: 'text',
                 async: false
@@ -73,3 +72,5 @@
     });
 
 
+
+});

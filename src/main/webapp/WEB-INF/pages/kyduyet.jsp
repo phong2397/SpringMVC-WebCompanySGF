@@ -230,6 +230,7 @@
                                             <tr>
                                                 <td><b> <a data-toggle="modal" href="#"
                                                            onclick="viewInfoOrder('${lst.saRequest.id}')">${lst.saRequest.id}9999</a></b></td>
+                                                <td class="text-right"></td>
                                                 <td>${lst.saRequest.createdDate}</td>
                                                 <td>
                                                     <h6 class="mb-0">
@@ -249,7 +250,7 @@
                                                 <td>
                                                         ${lst.saRequest.timeBorrow} tháng
                                                 </td>
-                                                <td> <td class="text-right"></td>
+                                                <td>
                                                     <h6 class="mb-0 font-weight-bold"> ${lst.saRequest.borrow} đ
                                                         <span class="d-block text-muted font-weight-normal">Thuế ${lst.saRequest.interestRate} % </span>
                                                         <span class="d-block text-muted font-weight-normal">Phí ${lst.saRequest.feeBorrow} đ </span>
@@ -296,7 +297,6 @@
                 </div>
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
                     <h3><p>Mã yêu cầu: <span id="id"></span>9999</p></h3>
-                    <p>Mã công ty : <span id="companyCode"></span></p>
                     <p>Mã nhân viên : <span id="customerCode"></span></p>
                     <p>Số tiền ứng : <span id="borrow"></span> đ</p>
                     <p>Thuế : <span id="interestRate"></span>%</p>

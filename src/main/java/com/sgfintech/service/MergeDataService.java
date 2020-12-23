@@ -115,7 +115,7 @@ public class MergeDataService {
     }
 
     public List<MergeDataOrder> getDataShow(String status, boolean nodate) {
-        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where sa.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status=?";
+        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where cu.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status = ?";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
@@ -130,6 +130,7 @@ public class MergeDataService {
                     });
             return resultList;
         } catch (Exception ex) {
+            ex.printStackTrace();
             return null;
         }
     }

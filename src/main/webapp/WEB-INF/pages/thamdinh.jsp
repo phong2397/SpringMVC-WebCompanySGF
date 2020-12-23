@@ -244,8 +244,7 @@
                                                 <td class="text-center">
                                                     <span class="badge badge-pill badge-primary">2 ngày</span>
                                                 </td>
-                                                <td>
-                                                        ${lst.saRequest.timeBorrow} month
+                                                <td>${lst.saRequest.timeBorrow} month
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0 font-weight-bold"> ${lst.saRequest.borrow} đ
@@ -315,7 +314,9 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
+<script src="js/functhamdinh.js" type="text/javascript"></script>
 <script type="text/javascript">
+
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
                   Gson g = new Gson();

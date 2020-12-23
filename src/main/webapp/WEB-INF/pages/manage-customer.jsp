@@ -192,7 +192,6 @@
     %>
     var comList = <%=json%>;
 
-
     function onCompanyChanged(e){
         console.log(e);
         let value = e.target.value;
