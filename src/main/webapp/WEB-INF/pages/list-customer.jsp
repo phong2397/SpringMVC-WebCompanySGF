@@ -4,7 +4,9 @@
 <%@ page import="com.sgfintech.entity.Useradmin" %>
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>\
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -14,11 +16,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
-    String role = u.getRole();
-    if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
-    }else{
-        response.sendRedirect("404");
+    if (session.getAttribute(Consts.Session_Euser) != null){
+        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+        String role = u.getRole();
+        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
+        }else{
+            response.sendRedirect("404");
+        }
+    } else{
+        response.sendRedirect("login");
+
     }
 %>
 <!DOCTYPE html>
@@ -200,9 +207,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript" src="js/funcListCustomer.js"></script>
 <script type="text/javascript">
-    $( document ).ready(function() {
-        $("#loading").css("display", "none");
-    });
 
     <%
          List<CustomerHandler> list = (List<CustomerHandler>) request.getAttribute("views");
@@ -210,18 +214,21 @@
          String json = g.toJson(list);
      %>
     function viewInfoCustomer(params) {
-        var result = <%=json%>;
         result.forEach((customer) => {
             if (customer.customer.customerPhone == params) {
                 let c = customer.customer;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
+                Object.keys(c).forEach((key) => {
+                    if (key == "customerSalary" ){
+                        value = c[key]
+                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                    }
+                    else{
+                        $('#' + key).text(c[key]);
+                    }
                 })
             }
         })
         $('#modal-right').modal('show');
-
     }
 </script>
 </body>

@@ -1,5 +1,5 @@
 $("body").on("click", ".btn-accept", function () {
-    var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
+    var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "").trim();
     dataRequest = dataRequest.substring(0, dataRequest.length - 4);
     let data = {datarequest: dataRequest, status: 'act', step: '2'};
     var result = sendOrder(data);

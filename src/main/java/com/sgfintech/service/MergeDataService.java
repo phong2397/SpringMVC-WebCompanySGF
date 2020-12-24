@@ -123,7 +123,7 @@ public class MergeDataService {
             Object[] param = new Object[]{status};
             List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {
-                        Customer c = new CustomerMapper().mapRow(rs, arg1, true);
+                        Customer c = new CustomerMapper().mapRow(rs, arg1,true);
                         SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
                         Companies com = new CompanyMapper().mapRow(rs, arg1);
                         return new MergeDataOrder(c, s,com);

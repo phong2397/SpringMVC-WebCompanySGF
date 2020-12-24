@@ -12,11 +12,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-	Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
-	String role = u.getRole();
-	if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("truongthuhoi")){
-	}else{
-		response.sendRedirect("404");
+	if (session.getAttribute(Consts.Session_Euser) != null){
+		Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+		String role = u.getRole();
+		if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("truongthuhoi")){
+		}else{
+			response.sendRedirect("404");
+		}
+	} else{
+		response.sendRedirect("login");
+
 	}
 %>
 <!DOCTYPE html>
@@ -97,7 +102,7 @@
 							</div>
 							<div class="box-body">
 								<div class="table-responsive">
-									<table class="table table-striped table-bordered no-margin">
+									<table id="example" class="table table-striped table-bordered no-margin">
 										<thead>
 											<tr>
 												<th class="text-center">Mã đơn vay</th>
@@ -120,18 +125,17 @@
 													<td class="text-left">
 														<h6 class="mb-0">
 															<a  href="#" ><b>${lst.customer.customerName}</b></a>
+															<span class="d-block text-muted">Company ID :<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
 															<span class="d-block text-muted">Account number:
 																${lst.customer.customerBankAcc}</span>
 															<span class="d-block text-muted">Owner :
 																${lst.customer.customerBankName}</span>
-															<span class="d-block text-muted">Company ID :
-																${lst.customer.companyCode}</span>
 															<span class="d-block text-muted">Phone number :
 																${lst.customer.customerPhone}</span>
 														</h6>
 													</td>
-													<td class="text-right">${lst.contract.borrow} đ</td>
-													<td class="text-right">${lst.contract.borrow} đ</td>
+													<td class="text-right"><fmt:formatNumber value="${lst.contract.borrow}" type = "number"/> đ</td>
+													<td class="text-right"><fmt:formatNumber value="${lst.contract.borrow}" type = "number"/> đ</td>
 													<td class="text-right">0</td>
 													<td class="text-right">${lst.contract.dateRepayment}</td>
 													<td class="text-right">1</td>
@@ -266,64 +270,22 @@
 	<!-- Control Sidebar -->
 	<jsp:include page="general/_controlSidebar.jsp" />
 	<!-- /.control-sidebar -->
+		<jsp:include page="general/modal.jsp"/>
 
 	<!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
 	<div class="control-sidebar-bg"></div>
 	</div>
 	<!-- ./wrapper -->
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	<script src="js/pages/data-table.js"></script>
-	<!-- Vendor JS -->
 	<script src="js/vendors.min.js"></script>
+
+	<script src="assets/vendor_components/datatable/datatables.min.js"></script>
+	<script src="js/pages/data-table.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<!-- Crypto Tokenizer Admin App -->
 	<script src="js/template.js"></script>
 	<script src="js/demo.js"></script>
-	<script src="js/pages/data-table.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function () {
-			$("#loading").css("display", "none");
-		});
-
-		$("body").on("click", ".btn-success", function () {
-			var dataRequest = $("#idContract").text();
-			let data = { datarequest: dataRequest, status: 'done' };
-			var result = submitWithdraw(data);
-			if (result === "success") {
-				Swal.fire({
-					position: 'top-end',
-					icon: 'success',
-					title: 'Dữ liệu được cập nhật thành công.',
-					showConfirmButton: false,
-					timer: 3000
-				});
-				$("#idContract").parents("tr").remove();
-			} else {
-				Swal.fire({
-					position: 'top-end',
-					icon: 'error',
-					title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
-					showConfirmButton: false,
-					timer: 3000
-				});
-			}
-		});
-		function submitWithdraw(data) {
-			try {
-				// This async call may fail.
-				let text = $.ajax({
-					type: "POST",
-					timeout: 100000,
-					url: "${pageContext.request.contextPath}/gachno",
-					data: data,
-					dataType: 'text',
-					async: false
-				}).responseText;
-				return text;
-			} catch (error) {
-				return "Không thể kết nối tới server";
-			}
-		}
-
+	<script type="text/javascript" src="js/funcgachno.js"></script>
+		<script type="text/javascript">
 		  <%
 			List < MergeDataWithdraw > list = (List<MergeDataWithdraw>) request.getAttribute("views");
 			Gson g = new Gson();
@@ -331,7 +293,20 @@
 		   %>
 
 		const list = <%=json%>;
-
+		  function viewInfoCompany(params) {
+			  list.forEach((company) => {
+				  if (company.companies.companyCode == params) {
+					  let c = company.companies;
+					  Object.keys(c).forEach((key, _) => {
+						  let id = key;
+						  $('#' + id).text(c[key]);
+					  })
+				  }
+			  })
+			  console.log(list);
+			  // var index =
+			  $('#modal-center').modal('show');
+		  }
 		function viewInfo(idContract, custPhone) {
 			let result = list.find(el => el.customer.customerPhone == custPhone);
 			console.log(result)
@@ -343,16 +318,20 @@
 			result = list.find(el => el.contract.idContract == idContract);
 			const contract = result.contract;
 			Object.keys(contract).forEach((key) => {
-				if(key == "remainAmountBorrow" || key == "borrow"){
+				if(key == "remainAmountBorrow") {
 					let value = (10/100 * contract[key]) + contract[key];
 					$('#' + key).text(value.toLocaleString("vi-VN") + " đ");
-				}else {
+
+				}else if(key == "borrow" ){
+					let value1 = contract[key];
+					$('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
+				}
+				else {
 					$('#' + key).text(contract[key]);
 				}
 			});
 			$('#main').slideDown("slow");
 		}
-
 	</script>
 </body>
 

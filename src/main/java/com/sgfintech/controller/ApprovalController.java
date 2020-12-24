@@ -48,7 +48,7 @@ public class ApprovalController {
         try {
             SaRequest sa = saRequestDAO.findById(Long.parseLong(data.trim()));
             Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-            sa.setStatus(status);
+            sa.setStatus(status.trim());
                 sa.setEmployeeThamdinh(u.getUserLogin());
                 sa.setEmployeeThamdinhDate(LocalDateTime.now());
 

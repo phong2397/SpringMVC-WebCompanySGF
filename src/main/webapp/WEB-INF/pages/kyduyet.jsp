@@ -12,25 +12,27 @@
 --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
-    String role = u.getRole();
-    if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("kyduyet")){
-    }else{
-        response.sendRedirect("404");
+    if (session.getAttribute(Consts.Session_Euser) != null){
+        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+        String role = u.getRole();
+        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("kyduyet")){
+        }else{
+            response.sendRedirect("404");
+        }
+    } else{
+        response.sendRedirect("login");
+
     }
 %>
 <!DOCTYPE html>
 <html lang="en">
-
 <jsp:include page="general/_head.jsp" />
-
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <div class="wrapper">
-
     <jsp:include page="general/_header.jsp"/>
-
     <!-- Left side column. contains the logo and sidebar -->
     <jsp:include page="general/_menu.jsp"/>
 
@@ -230,7 +232,7 @@
                                             <tr>
                                                 <td><b> <a data-toggle="modal" href="#"
                                                            onclick="viewInfoOrder('${lst.saRequest.id}')">${lst.saRequest.id}9999</a></b></td>
-                                                <td class="text-right"></td>
+                                                <td class="text-left">${lst.saRequest.employeeThamdinh}</td>
                                                 <td>${lst.saRequest.createdDate}</td>
                                                 <td>
                                                     <h6 class="mb-0">
@@ -242,7 +244,7 @@
                                                     </h6>
                                                 </td>
                                                 <td class="text-center">
-                                                    <h6 class="mb-0 font-weight-bold"> chờ ký </h6>
+                                                    <h6 class="mb-0 font-weight-bold">chờ ký</h6>
                                                 </td>
                                                 <td class="text-center">
                                                     <span class="badge badge-pill badge-primary">2 ngày</span>
@@ -251,7 +253,7 @@
                                                         ${lst.saRequest.timeBorrow} tháng
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold"> ${lst.saRequest.borrow} đ
+                                                    <h6 class="mb-0 font-weight-bold"> <fmt:formatNumber value="${lst.saRequest.borrow}" type = "number"/> đ
                                                         <span class="d-block text-muted font-weight-normal">Thuế ${lst.saRequest.interestRate} % </span>
                                                         <span class="d-block text-muted font-weight-normal">Phí ${lst.saRequest.feeBorrow} đ </span>
                                                     </h6>
@@ -298,7 +300,7 @@
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
                     <h3><p>Mã yêu cầu: <span id="id"></span>9999</p></h3>
                     <p>Mã nhân viên : <span id="customerCode"></span></p>
-                    <p>Số tiền ứng : <span id="borrow"></span> đ</p>
+                    <p>Số tiền ứng : <span id="borrow"></span></p>
                     <p>Thuế : <span id="interestRate"></span>%</p>
                     <p>Phí : <span id="feeBorrow"></span></p>
                     <p>Số lần ứng : <span id="timeBorrow"></span></p>
@@ -355,9 +357,14 @@
         result.forEach((saRequest) => {
             if (saRequest.saRequest.id == params) {
                 let c = saRequest.saRequest;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
+                Object.keys(c).forEach((key) => {
+                    if (key == "borrow" ){
+                        value = c[key]
+                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                    }
+                    else{
+                        $('#' + key).text(c[key]);
+                    }
                 })
             }
         })
@@ -366,18 +373,20 @@
         $('#modal-left').modal('show');
     }
     function viewInfoCustomer(params) {
-        var result = <%=json%>;
         result.forEach((customer) => {
             if (customer.customer.customerPhone == params) {
                 let c = customer.customer;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
+                Object.keys(c).forEach((key) => {
+                    if (key == "customerSalary" ){
+                        value = c[key]
+                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                    }
+                    else{
+                        $('#' + key).text(c[key]);
+                    }
                 })
             }
         })
-        console.log(result);
-        // var index =
         $('#modal-right').modal('show');
     }
 </script>

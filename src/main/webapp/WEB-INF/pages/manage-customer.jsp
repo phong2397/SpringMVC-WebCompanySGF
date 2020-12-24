@@ -5,6 +5,7 @@
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -15,11 +16,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
-    String role = u.getRole();
-    if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
-    }else{
-        response.sendRedirect("404");
+    if (session.getAttribute(Consts.Session_Euser) != null){
+        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+        String role = u.getRole();
+        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
+        }else{
+            response.sendRedirect("404");
+        }
+    } else{
+        response.sendRedirect("login");
+
     }
 %>
 <!DOCTYPE html>
@@ -107,14 +113,12 @@
                                                         </option>
                                                 </c:forEach>
                                                 </select>
-
                                             </div>
-
                                             </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label style="color:black">Tên công ty</label><br>
-                                                <h5 style="color: #787878"><span id="companyName" ></span></h5>
+                                                <h5 style="color: #787878;font-size: 25px"><span id="companyName" ></span></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -138,14 +142,14 @@
                                     <table id="example" class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
-                                            <th>Tên công ty</th>
-                                            <th>Mã số khách hàng</th>
-                                            <th>Tên khách hàng</th>
-                                            <th>Số điện thoại</th>
-                                            <th>Lương </th>
+                                            <th>Mã công ty</th>
+                                            <th>Thông tin khách hàng</th>
                                             <th>Địa chỉ</th>
                                             <th>Vị trí</th>
                                             <th>Thông tin CMND</th>
+                                            <th>Thông tin ngân hàng</th>
+                                            <th>Thông tin nhân thân</th>
+                                            <th>Tài liệu</th>
                                         </tr>
                                         </thead>
                                         <tbody id="tbodytable">
@@ -185,6 +189,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="js/funcManageCustomer.js"></script>
 <script type="text/javascript">
+
     <%
         List<Companies> list = (List<Companies>) request.getAttribute("views");
         Gson g = new Gson();

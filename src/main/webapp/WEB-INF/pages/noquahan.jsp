@@ -16,11 +16,16 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
-    String role = u.getRole();
-    if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thuhoi")|| role.equals("truongthuhoi")){
-    }else{
-        response.sendRedirect("404");
+    if (session.getAttribute(Consts.Session_Euser) != null){
+        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+        String role = u.getRole();
+        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thuhoi")|| role.equals("truongthuhoi")){
+        }else{
+            response.sendRedirect("404");
+        }
+    } else{
+        response.sendRedirect("login");
+
     }
 %>
 <jsp:include page="general/_head.jsp" />
@@ -95,13 +100,13 @@
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered no-margin">
+                                    <table id="example" class="table table-bordered no-margin">
                                         <thead>
                                         <tr>
                                             <th>Mã đơn vay</th>
                                             <th>Thông tin khách hàng</th>
                                             <th>Thông tin công ty</th>
-                                            <th >Số tiền</th>
+                                            <th >Số tiền còn nợ</th>
                                             <th>Ngày cần tất toán</th>
                                             <th class="text-right">Phí phạt</th>
                                         </tr>
@@ -115,9 +120,9 @@
                                                     <h6 class="mb-0">
                                                         <a  href="#"
                                                             onclick="viewInfoCustomer('${lst.customer.customerPhone}')"	><b>${lst.customer.customerName}</b></a>
+                                                        <span class="d-block text-muted">Company ID :<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
                                                         <span class="d-block text-muted">Account number: ${lst.customer.customerBankAcc}</span>
                                                         <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
-                                                        <span class="d-block text-muted">Company ID : ${lst.customer.companyCode}</span>
                                                         <span class="d-block text-muted">Phone number : ${lst.customer.customerPhone}</span>
                                                     </h6>
                                                 </td>
@@ -125,7 +130,7 @@
                                                 <span class="d-block text-muted">Company Number : ${lst.companies.companyCode}</span>
                                                  <span class="d-block text-muted">Company Name: ${lst.companies.companyName}</span>
                                                  </td>
-                                                <td>${lst.contract.borrow} đ</td>
+                                                <td><fmt:formatNumber value="${lst.contract.remainAmountBorrow}" type = "number"/> đ</td>
                                                 <td>${lst.contract.dateRepayment}</td>
                                                 <td class="text-right"><span class="label label-danger">13.54%</span></td>
                                             </tr>
@@ -168,7 +173,7 @@
                     <p>System Trace : <span id="systemTrace"></span></p>
                     <p>Số điện thoại khách hàng : <span id="customerPhone"></span></p>
                     <p>Số lần mượn : <span id="timeBorrow"></span></p>
-                    <p>Số tiền mượn : <span id="borrow"></span></p>
+                    <p>Số tiền mượn : <span id="remainAmountBorrow"></span></p>
                     <p>Phí mượn : <span id="feeBorrow"></span></p>
                     <p>Mã giao dịch : <span id="transactionId"></span></p>
                     <p>Trạng thái : <b style="color: #0b2c89"><span id="status"></span></b></p>
@@ -189,10 +194,13 @@
 <script src="js/pages/data-table.js"></script>
 <!-- Vendor JS -->
 <script src="js/vendors.min.js"></script>
+
+<script src="assets/vendor_components/datatable/datatables.min.js"></script>
+<script src="js/pages/data-table.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script src="js/pages/data-table.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").css("display", "none");
@@ -202,28 +210,50 @@
              Gson g = new Gson();
              String json = g.toJson(list);
          %>
-    function viewInfoContract(params) {
-        var result = <%=json%>;
-        result.forEach((contract) => {
-            if (contract.contract.idContract == params) {
-                let c = contract.contract;
+    var result = <%=json%>;
+    function viewInfoCompany(params) {
+        result.forEach((company) => {
+            if (company.companies.companyCode == params) {
+                let c = company.companies;
                 Object.keys(c).forEach((key, _) => {
                     let id = key;
                     $('#' + id).text(c[key]);
                 })
             }
         })
+        console.log(result);
+        // var index =
+        $('#modal-center').modal('show');
+    }
+    function viewInfoContract(params) {
+        result.forEach((contract) => {
+            if (contract.contract.idContract == params) {
+                let c = contract.contract;
+                Object.keys(c).forEach((key) => {
+                    if (key == "remainAmountBorrow" ){
+                        value = c[key]
+                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                    }
+                    else{
+                        $('#' + key).text(c[key]);
+                    }
+                })
+            }
+        })
         $('#modal').modal('show');
     }
     function viewInfoCustomer(params) {
-
-        var result = <%=json%>;
         result.forEach((customer) => {
             if (customer.customer.customerPhone == params) {
                 let c = customer.customer;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
+                Object.keys(c).forEach((key) => {
+                    if (key == "customerSalary" ){
+                        value = c[key]
+                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                    }
+                    else{
+                        $('#' + key).text(c[key]);
+                    }
                 })
             }
         })

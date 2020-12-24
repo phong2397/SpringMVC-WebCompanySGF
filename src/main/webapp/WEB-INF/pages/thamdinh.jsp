@@ -5,6 +5,7 @@
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -16,11 +17,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <%
-    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
-    String role = u.getRole();
-    if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh")){
-    }else{
-        response.sendRedirect("404");
+    if (session.getAttribute(Consts.Session_Euser) != null){
+        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+        String role = u.getRole();
+        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh")){
+        }else{
+            response.sendRedirect("404");
+        }
+    } else{
+        response.sendRedirect("login");
+
     }
 %>
 <jsp:include page="general/_head.jsp"/>
@@ -218,8 +224,8 @@
                                             <th>Thông tin khách hàng</th>
                                             <th>Trạng thái</th>
                                             <th>Thời gian còn lại</th>
-                                            <th>Thời gian vay</th>
-                                            <th>Số tiền vay</th>
+                                            <th>Thời gian ứng</th>
+                                            <th>Số tiền ứng</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                         </thead>
@@ -239,7 +245,7 @@
                                                     </h6>
                                                 </td>
                                                 <td class="text-center">
-                                                    <h6 class="mb-0 font-weight-bold" style="color: #0b2c89"> ${lst.saRequest.status}ing</h6>
+                                                    <h6 class="mb-0 font-weight-bold" style="color: #0b2c89"> chờ thẩm định</h6>
                                                 </td>
                                                 <td class="text-center">
                                                     <span class="badge badge-pill badge-primary">2 ngày</span>
@@ -247,7 +253,7 @@
                                                 <td>${lst.saRequest.timeBorrow} month
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold"> ${lst.saRequest.borrow} đ
+                                                    <h6 class="mb-0 font-weight-bold"> <fmt:formatNumber value="${lst.saRequest.borrow}" type = "number"/> đ
                                                         <span class="d-block text-muted font-weight-normal">Thuế ${lst.saRequest.interestRate} % </span>
                                                         <span class="d-block text-muted font-weight-normal">Phí ${lst.saRequest.feeBorrow} đ </span>
                                                     </h6>
@@ -273,7 +279,43 @@
     <!-- Control Sidebar -->
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
-    <jsp:include page="general/modal.jsp"/>
+    <!-- Modal show info customer -->
+    <div class="modal modal-right fade" id="modal-right" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông tin chi tiết khách hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                    <p>Họ Tên : <span id="customerName"></span></p>
+                    <p>Email : <span id="customerEmail"></span></p>
+                    <p>Lương : <span id="customerSalary"></span></p>
+                    <p>Giới tính : <span id="customerGender"></span></p>
+                    <p>Ngày sinh : <span id="customerBirthday"></span></p>
+                    <p>Tên ngân hàng : <span id="customerBank"></span></p>
+                    <p>Số tài khoản : <span id="customerBankAcc"></span></p>
+                    <p>Tên ngân hàng : <span id="customerBankName"></span></p>
+                    <p>CMND/Hộ chiếu/CCCD : <span id="customerId"></span></p>
+                    <p>Nơi cấp : <span id="customerIdLocation"></span></p>
+                    <p>Địa chỉ : <span id="customerAddress"></span></p>
+                    <p>Tạm trú : <span id="customerAddressTemp"></span></p>
+                    <p>Số BHXH : <span id="customerSocialInsurance"></span></p>
+                    <p>Số BHYT : <span id="customerHealthInsurance"></span></p>
+                    <p>Mã số thuế : <span id="customerTax"></span></p>
+                    <p>Số hợp đồng : <span id="customerContract"></span></p>
+                    <p>Thông tin người thân : <span id="customerRelative"></span></p>
+                    <p>Số điện thoại người thân : <span id="customerRelativePhone"></span></p>
+                </div>
+                <div class="modal-footer modal-footer-uniform">
+                    <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
     <!-- Modal show info order -->
     <div class="modal modal-right fade" id="modal-left" tabindex="-1">
         <div class="modal-dialog">
@@ -322,14 +364,19 @@
                   Gson g = new Gson();
                   String json = g.toJson(list);
                   %>
+    var result = <%=json%>;
     function viewInfoOrder(params) {
-        var result = <%=json%>;
         result.forEach((saRequest) => {
             if (saRequest.saRequest.id == params) {
                 let c = saRequest.saRequest;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
+                Object.keys(c).forEach((key) => {
+                    if (key == "borrow" ){
+                        value = c[key]
+                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                    }
+                    else{
+                        $('#' + key).text(c[key]);
+                    }
                 })
             }
         })
@@ -338,7 +385,6 @@
         $('#modal-left').modal('show');
     }
     function viewInfoCompany(params) {
-        var result = <%=json%>;
         result.forEach((company) => {
             if (company.company.companyCode == params) {
                 let c = company.company;
@@ -349,22 +395,24 @@
             }
         })
         console.log(result);
-        // var index =
         $('#modal-center').modal('show');
     }
     function viewInfoCustomer(params) {
-        var result = <%=json%>;
         result.forEach((customer) => {
             if (customer.customer.customerPhone == params) {
                 let c = customer.customer;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
+                Object.keys(c).forEach((key) => {
+                    if (key == "customerSalary" ){
+                        value = c[key]
+                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                    }
+                    else{
+                        $('#' + key).text(c[key]);
+                    }
                 })
             }
         })
-        console.log(result);
-        // var index =
+        console.log(result)
         $('#modal-right').modal('show');
     }
 </script>

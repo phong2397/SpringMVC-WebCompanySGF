@@ -19,22 +19,23 @@
 <fmt:formatDate var="year" value="${now}" pattern="dd-MM-yyyy" />
 <jsp:include page="general/_head.jsp" />
 <%
-    Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
-    String role = u.getRole();
-    if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thuhoi")|| role.equals("truongthuhoi")){
-    }else{
-        response.sendRedirect("404");
+    if (session.getAttribute(Consts.Session_Euser) != null){
+        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+        String role = u.getRole();
+        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thuhoi")|| role.equals("truongthuhoi")){
+        }else{
+            response.sendRedirect("404");
+        }
+    } else{
+        response.sendRedirect("login");
     }
 %>
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <!-- Site wrapper -->
 <div class="wrapper">
-
     <jsp:include page="general/_header.jsp" />
-
     <!-- Left side column. contains the logo and sidebar -->
     <jsp:include page="general/_menu.jsp" />
-
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -96,19 +97,19 @@
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-                                    <table id="example" class="table table-lg invoice-archive">
+                                    <table id="example" class="table table-striped table-bordered no-margin">
                                         <thead>
                                         <tr>
                                             <th class="text-center">Mã đơn vay</th>
                                             <th>Thông tin khách hàng</th>
-                                            <th class="text-right">Số tiền tối thiểu</th>
-                                            <th class="text-right">Số tiền còn nợ</th>
-                                            <th class="text-right">Số tiền đã đóng</th>
-                                            <th class="text-right">Hạn thanh toán</th>
-                                            <th class="text-right">Kỳ thanh toán</th>
-                                            <th class="text-right">Nhân viên nhắc nợ</th>
-                                            <th class="text-right">Ngày nhắc nợ</th>
-                                            <th class="text-right">Trạng thái nhắc nợ</th>
+                                            <th class="text-left">Số tiền tối thiểu</th>
+                                            <th class="text-left">Số tiền còn nợ</th>
+                                            <th class="text-left">Số tiền đã đóng</th>
+                                            <th class="text-left">Hạn thanh toán</th>
+                                            <th class="text-left">Kỳ thanh toán</th>
+                                            <th class="text-left">Nhân viên nhắc nợ</th>
+                                            <th class="text-left">Ngày nhắc nợ</th>
+                                            <th class="text-center">Trạng thái nhắc nợ</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -120,14 +121,14 @@
                                                     <h6 class="mb-0">
                                                         <a data-toggle="modal" href="#"
                                                            onclick="viewInfoCustomer('${lst.customer.customerPhone}')"><b>${lst.customer.customerName}</b></a>
+                                                        <span class="d-block text-muted">Company ID :<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
                                                         <span class="d-block text-muted">Account number: ${lst.customer.customerBankAcc}</span>
                                                         <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
-                                                        <span class="d-block text-muted">Company ID : ${lst.customer.companyCode}</span>
                                                         <span class="d-block text-muted">Phone number : ${lst.customer.customerPhone}</span>
                                                     </h6>
                                                 </td>
-                                                <td>${lst.contract.borrow} đ</td>
-                                                <td>${lst.contract.borrow} đ</td>
+                                                <td><fmt:formatNumber value="${lst.contract.borrow}" type = "number"/> đ</td>
+                                                <td><fmt:formatNumber value="${lst.contract.borrow}" type = "number"/> đ</td>
                                                 <td>0</td>
                                                 <td>${lst.contract.dateRepayment}</td>
                                                 <td>1</td>
@@ -216,30 +217,55 @@
            Gson g = new Gson();
            String json = g.toJson(list);
        %>
-    function viewInfoContract(params) {
-        var result = <%=json%>;
-        result.forEach((contract) => {
-            if (contract.contract.idContract == params) {
-                let c = contract.contract;
+    var result = <%=json%>;
+
+    function viewInfoCompany(params) {
+        result.forEach((company) => {
+            if (company.companies.companyCode == params) {
+                let c = company.companies;
                 Object.keys(c).forEach((key, _) => {
                     let id = key;
                     $('#' + id).text(c[key]);
+                })
+            }
+        })
+        console.log(result);
+        // var index =
+        $('#modal-center').modal('show');
+    }
+    function viewInfoContract(params) {
+        result.forEach((contract) => {
+            if (contract.contract.idContract == params) {
+                let c = contract.contract;
+                Object.keys(c).forEach((key) => {
+                    if (key == "borrow" ){
+                        value = c[key]
+                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                    }
+                    else{
+                        $('#' + key).text(c[key]);
+                    }
                 })
             }
         })
         $('#modal').modal('show');
     }
     function viewInfoCustomer(params) {
-        var result = <%=json%>;
         result.forEach((customer) => {
             if (customer.customer.customerPhone == params) {
                 let c = customer.customer;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
+                Object.keys(c).forEach((key) => {
+                    if (key == "customerSalary" ){
+                        value = c[key]
+                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                    }
+                    else{
+                        $('#' + key).text(c[key]);
+                    }
                 })
             }
         })
+        console.log(result)
         $('#modal-right').modal('show');
     }
 </script>

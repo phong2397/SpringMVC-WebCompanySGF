@@ -56,7 +56,7 @@ public class WriteoffController {
             ct.setDateRepayment(LocalDateTime.now());
             contractDAO.update(ct);
             saRequestDAO.update(sa);
-            return "success";
+              return "success";
         } catch (Exception ex) {
             return "error";
         }

@@ -10,9 +10,9 @@ import lombok.Getter;
  */
 @Getter
 public class MergeDataOrder {
-    private final Companies company;
     private final Customer customer;
     private final SaRequest saRequest;
+    private final Companies company;
 
     public MergeDataOrder(Customer c, SaRequest s,Companies com) {
         this.customer = c;
