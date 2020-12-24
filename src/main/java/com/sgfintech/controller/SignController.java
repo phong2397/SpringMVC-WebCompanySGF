@@ -68,7 +68,7 @@ public class SignController {
         String status = request.getParameter("status");
         String step = request.getParameter("step");
         try {
-            SaRequest sa = saRequestDAO.findById(Long.parseLong(data)); //sa.getBorrow();
+            SaRequest sa = saRequestDAO.findById(Long.parseLong(data.trim())); //sa.getBorrow();
             Customer cu = customerService.getCustomerByPhone(sa.getCustomerPhone());
 
             Date date = new Date();
