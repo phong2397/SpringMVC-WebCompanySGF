@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Table(name = "sgft_customer")
@@ -97,7 +98,7 @@ public class Customer implements Serializable {
     private String customerGender;
 
     @Column(name = "customer_birthday")
-    private LocalDateTime customerBirthday;
+    private LocalDate customerBirthday;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate = LocalDateTime.now();

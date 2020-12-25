@@ -218,7 +218,7 @@
                                         <tr>
                                             <th>Mã yêu cầu</th>
                                             <th>Nhân viên xác nhận</th>
-                                            <th>Ngày yêu cầu</th>
+                                            <th>Ngày thẩm định</th>
                                             <th>Thông tin khách hàng</th>
                                             <th>Trạng thái</th>
                                             <th>Thời gian còn lại</th>
@@ -233,7 +233,7 @@
                                                 <td><b> <a data-toggle="modal" href="#"
                                                            onclick="viewInfoOrder('${lst.saRequest.id}')">${lst.saRequest.id}9999</a></b></td>
                                                 <td class="text-left">${lst.saRequest.employeeThamdinh}</td>
-                                                <td>${lst.saRequest.createdDate}</td>
+                                                <td>${lst.saRequest.employeeThamdinhDate}</td>
                                                 <td>
                                                     <h6 class="mb-0">
                                                         <b> <a data-toggle="modal" href="#" onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
@@ -298,7 +298,7 @@
                     </button>
                 </div>
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                    <h3><p>Mã yêu cầu: <span id="id"></span>9999</p></h3>
+                    <h3><p>Mã yêu cầu: <span id="id"></span></p></h3>
                     <p>Mã nhân viên : <span id="customerCode"></span></p>
                     <p>Số tiền ứng : <span id="borrow"></span></p>
                     <p>Thuế : <span id="interestRate"></span>%</p>
@@ -306,7 +306,7 @@
                     <p>Số lần ứng : <span id="timeBorrow"></span></p>
                     <p>Trạng thái : <span id="status" style="color: #0b2c89"></span></p>
                     <p>Người thẩm định : <span id="employeeThamdinh"></span></p>
-                    <p>Ngày thẩm định : <span id="employeeThamdinhDate"></span></p>
+                    <p>Ngày thẩm định : <span id="day"></span>-<span id="month">-</span>-<span id="year"></span></p>
                 </div>
                 <div class="modal-footer modal-footer-uniform">
                     <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
@@ -353,14 +353,40 @@
         // var index =
         $('#modal-center').modal('show');
     }
-    function viewInfoOrder(params) {
-        result.forEach((saRequest) => {
-            if (saRequest.saRequest.id == params) {
-                let c = saRequest.saRequest;
+
+    function viewInfoOrder(id) {
+        list = result.find(el => el.saRequest.id == id);
+        console.log(list)
+        const saRequest = list.saRequest;
+        const date = saRequest.employeeThamdinhDate.date;
+        Object.keys(saRequest).forEach((key) => {
+           if(key == "borrow" ){
+                let value1 = saRequest[key];
+                $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
+               Object.keys(date).forEach((key) => {
+                       $('#' + key).text(date[key]);
+               });
+            }
+            else {
+                $('#' + key).text(saRequest[key]);
+            }
+        });
+        // var index =
+        $('#modal-left').modal('show');
+    }
+
+    function viewInfoCustomer(params) {
+        result.forEach((customer) => {
+            if (customer.customer.customerPhone == params) {
+                let c = customer.customer;
+                const date = c.customerBirthday;
                 Object.keys(c).forEach((key) => {
-                    if (key == "borrow" ){
+                    if (key == "customerSalary" ){
                         value = c[key]
                         $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                        Object.keys(date).forEach((key) => {
+                                $('#' + key).text(date[key]);
+                        })
                     }
                     else{
                         $('#' + key).text(c[key]);
@@ -369,24 +395,6 @@
             }
         })
         console.log(result);
-        // var index =
-        $('#modal-left').modal('show');
-    }
-    function viewInfoCustomer(params) {
-        result.forEach((customer) => {
-            if (customer.customer.customerPhone == params) {
-                let c = customer.customer;
-                Object.keys(c).forEach((key) => {
-                    if (key == "customerSalary" ){
-                        value = c[key]
-                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
-                    }
-                    else{
-                        $('#' + key).text(c[key]);
-                    }
-                })
-            }
-        })
         $('#modal-right').modal('show');
     }
 </script>

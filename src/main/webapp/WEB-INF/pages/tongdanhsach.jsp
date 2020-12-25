@@ -372,10 +372,14 @@
 			result.forEach((customer) => {
 				if (customer.customer.customerPhone == params) {
 					let c = customer.customer;
+					const date = c.customerBirthday;
 					Object.keys(c).forEach((key) => {
 						if (key == "customerSalary" ){
 							value = c[key]
 							$('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+							Object.keys(date).forEach((key) => {
+								$('#' + key).text(date[key]);
+							})
 						}
 						else{
 							$('#' + key).text(c[key]);
@@ -383,6 +387,7 @@
 					})
 				}
 			})
+			console.log(result);
 			$('#modal-right').modal('show');
 		}
 	</script>

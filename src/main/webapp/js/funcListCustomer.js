@@ -22,7 +22,7 @@ $( document ).ready(function() {
             rowElement.append('<td ><b>' + e.customer.customerName+'</b><br>' +
                 'Mã số nhân viên :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerCode+  '</span><br>'+
                 'Số điện thoại :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerPhone +  '</span><br>' +
-                'Ngày sinh :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerBirthday.date.day +'-' + e.customer.customerBirthday.date.month +'-' + e.customer.customerBirthday.date.year +  '</span><br>' +
+                'Ngày sinh :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerBirthday.day +'-' + e.customer.customerBirthday.month +'-' + e.customer.customerBirthday.year +  '</span><br>' +
                 'Giới tính :'+' '+ '<span className="d-block text-muted font-weight-normal">'+ e.customer.customerGender + '</span></td>');
             rowElement.append('<td>' +'Thường trú :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerAddress +'</span><br>'+
                 'Tạm trú :'+' '+ '<span className="d-block text-muted font-weight-normal">'+ e.customer.customerAddressTemp  +'</span></td>');

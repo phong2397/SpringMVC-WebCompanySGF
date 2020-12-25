@@ -41,10 +41,11 @@
             </div>
             <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
                 <p>Họ Tên : <span id="customerName"></span></p>
+                <p>Mã nhân viên : <span id="customerCode"></span></p>
                 <p>Email : <span id="customerEmail"></span></p>
                 <p>Lương : <span id="customerSalary"></span></p>
                 <p>Giới tính : <span id="customerGender"></span></p>
-                <p>Ngày sinh : <span id="customerBirthday"></span></p>
+                <p>Ngày sinh : <span id="day"></span>-<span id="month"></span>-<span id="year"></span></p>
                 <p>Tên ngân hàng : <span id="customerBank"></span></p>
                 <p>Số tài khoản : <span id="customerBankAcc"></span></p>
                 <p>Tên ngân hàng : <span id="customerBankName"></span></p>

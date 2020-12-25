@@ -237,7 +237,7 @@
                                                 <td>${lst.saRequest.createdDate}</td>
                                                 <td>
                                                     <h6 class="mb-0">
-                                                       <b> <a data-toggle="modal" href="#" onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
+                                                        <b> <a data-toggle="modal" href="#" onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
                                                         <span class="d-block text-muted">Company ID :<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.company.companyCode}')"> ${lst.company.companyCode}</a></b></span>
                                                         <span class="d-block text-muted">Account number : ${lst.customer.customerBankAcc}</span>
                                                         <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
@@ -279,43 +279,7 @@
     <!-- Control Sidebar -->
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
-    <!-- Modal show info customer -->
-    <div class="modal modal-right fade" id="modal-right" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Thông tin chi tiết khách hàng</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                    <p>Họ Tên : <span id="customerName"></span></p>
-                    <p>Email : <span id="customerEmail"></span></p>
-                    <p>Lương : <span id="customerSalary"></span></p>
-                    <p>Giới tính : <span id="customerGender"></span></p>
-                    <p>Ngày sinh : <span id="customerBirthday"></span></p>
-                    <p>Tên ngân hàng : <span id="customerBank"></span></p>
-                    <p>Số tài khoản : <span id="customerBankAcc"></span></p>
-                    <p>Tên ngân hàng : <span id="customerBankName"></span></p>
-                    <p>CMND/Hộ chiếu/CCCD : <span id="customerId"></span></p>
-                    <p>Nơi cấp : <span id="customerIdLocation"></span></p>
-                    <p>Địa chỉ : <span id="customerAddress"></span></p>
-                    <p>Tạm trú : <span id="customerAddressTemp"></span></p>
-                    <p>Số BHXH : <span id="customerSocialInsurance"></span></p>
-                    <p>Số BHYT : <span id="customerHealthInsurance"></span></p>
-                    <p>Mã số thuế : <span id="customerTax"></span></p>
-                    <p>Số hợp đồng : <span id="customerContract"></span></p>
-                    <p>Thông tin người thân : <span id="customerRelative"></span></p>
-                    <p>Số điện thoại người thân : <span id="customerRelativePhone"></span></p>
-                </div>
-                <div class="modal-footer modal-footer-uniform">
-                    <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.modal -->
+    <jsp:include page="general/modal.jsp"/>
     <!-- Modal show info order -->
     <div class="modal modal-right fade" id="modal-left" tabindex="-1">
         <div class="modal-dialog">
@@ -365,25 +329,23 @@
                   String json = g.toJson(list);
                   %>
     var result = <%=json%>;
-    function viewInfoOrder(params) {
-        result.forEach((saRequest) => {
-            if (saRequest.saRequest.id == params) {
-                let c = saRequest.saRequest;
-                Object.keys(c).forEach((key) => {
-                    if (key == "borrow" ){
-                        value = c[key]
-                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
-                    }
-                    else{
-                        $('#' + key).text(c[key]);
-                    }
-                })
+    function viewInfoOrder(id) {
+        list = result.find(el => el.saRequest.id == id);
+        console.log(list)
+        const saRequest = list.saRequest;
+        Object.keys(saRequest).forEach((key) => {
+            if(key == "borrow" ){
+                let value1 = saRequest[key];
+                $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
             }
-        })
-        console.log(result);
+            else {
+                $('#' + key).text(saRequest[key]);
+            }
+        });
         // var index =
         $('#modal-left').modal('show');
     }
+
     function viewInfoCompany(params) {
         result.forEach((company) => {
             if (company.company.companyCode == params) {
@@ -397,14 +359,19 @@
         console.log(result);
         $('#modal-center').modal('show');
     }
+
     function viewInfoCustomer(params) {
         result.forEach((customer) => {
             if (customer.customer.customerPhone == params) {
                 let c = customer.customer;
+                const date = c.customerBirthday;
                 Object.keys(c).forEach((key) => {
                     if (key == "customerSalary" ){
                         value = c[key]
                         $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                        Object.keys(date).forEach((key) => {
+                            $('#' + key).text(date[key]);
+                        })
                     }
                     else{
                         $('#' + key).text(c[key]);
@@ -412,7 +379,7 @@
                 })
             }
         })
-        console.log(result)
+        console.log(result);
         $('#modal-right').modal('show');
     }
 </script>
