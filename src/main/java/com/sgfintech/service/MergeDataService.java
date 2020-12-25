@@ -4,6 +4,7 @@ import com.sgfintech.entity.Companies;
 import com.sgfintech.entity.Contract;
 import com.sgfintech.entity.Customer;
 import com.sgfintech.entity.SaRequest;
+import com.sgfintech.handler.CustomerHandler;
 import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.handler.MergeDataWithdraw;
 import com.sgfintech.mapper.CompanyMapper;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
+import java.sql.Blob;
 import java.util.List;
 
 /**
@@ -25,13 +27,75 @@ import java.util.List;
 @Service
 @Transactional
 public class MergeDataService {
+
     @Autowired
     private DataSource dataSource;
 
     private JdbcTemplate jdbcTemplate;
 
-    public List<MergeDataOrder> getDataShow(String status) {
-        String sql = "select sa.*, cu.* from sgft_sa_request sa, sgft_customer cu where sa.company_code  = cu.company_code and sa.customer_phone = cu.customer_phone and date_format(sa.created_date , '%Y %M %d') = date_format(sysdate(),'%Y %M %d') and sa.status=?";
+    @SuppressWarnings("nonchecked")
+    public List<CustomerHandler> searchCustomer(String customerName,String customerId,String customerPhone) {
+        String sql = "select com.*,cu.* from sgft_companies com,sgft_customer cu where  com.company_code = cu.company_code  " +
+                "and cu.customer_name like ? and cu.customer_phone like ?  and cu.customer_id like ? ";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            Object[] param = new Object[]{"%" + customerName + "%","%" + customerPhone + "%","%" + customerId + "%"};
+            List<CustomerHandler> resultList = jdbcTemplate.query(sql,param,
+                    (rs, arg1) -> {
+                        Customer cu = new CustomerMapper().mapRow(rs, arg1);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new CustomerHandler(cu,com);
+                    });
+            return resultList;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    @SuppressWarnings("nonchecked")
+    public List<CustomerHandler> searchCustomerCompany(String companyCode) {
+        String sql = "select com.*,cu.* from sgft_companies com,sgft_customer cu where  com.company_code = cu.company_code  " +
+                "and com.company_code like ? ";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            Object[] param = new Object[]{"%" + companyCode + "%"};
+            List<CustomerHandler> resultList = jdbcTemplate.query(sql,param,
+                    (rs, arg1) -> {
+                        Customer cu = new CustomerMapper().mapRow(rs, arg1);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new CustomerHandler(cu,com);
+                    });
+            return resultList;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<CustomerHandler> getDataCustomer() {
+        String sql = "select com.*,cu.* from sgft_companies com,sgft_customer cu where  com.company_code = cu.company_code ";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            Object[] param = new Object[]{};
+            List<CustomerHandler> resultList = jdbcTemplate.query(sql, param,
+                    (rs, arg1) -> {
+                      Customer cu = new CustomerMapper().mapRow(rs, arg1);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new CustomerHandler(cu,com);
+                    });
+            return resultList;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<MergeDataOrder> getData(String status) {
+        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com  where sa.company_code = com.company_code and sa.company_code  = cu.company_code and sa.customer_phone = cu.customer_phone and date_format(sa.created_date , '%Y %M %d') = date_format(sysdate(),'%Y %M %d') and sa.status=?";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
@@ -39,9 +103,10 @@ public class MergeDataService {
             Object[] param = new Object[]{status};
             List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {
-                        Customer c = new CustomerMapper().mapRow(rs, arg1, true);
+                        Customer c = new CustomerMapper().mapRow(rs, arg1);
                         SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
-                        return new MergeDataOrder(c, s);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new MergeDataOrder(c, s,com);
                     });
             return resultList;
         } catch (Exception ex) {
@@ -50,7 +115,7 @@ public class MergeDataService {
     }
 
     public List<MergeDataOrder> getDataShow(String status, boolean nodate) {
-        String sql = "select sa.*, cu.* from sgft_sa_request sa, sgft_customer cu where sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status=?";
+        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where cu.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status = ?";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
@@ -58,12 +123,14 @@ public class MergeDataService {
             Object[] param = new Object[]{status};
             List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {
-                        Customer c = new CustomerMapper().mapRow(rs, arg1, true);
+                        Customer c = new CustomerMapper().mapRow(rs, arg1);
                         SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
-                        return new MergeDataOrder(c, s);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new MergeDataOrder(c, s,com);
                     });
             return resultList;
         } catch (Exception ex) {
+            ex.printStackTrace();
             return null;
         }
     }

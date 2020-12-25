@@ -24,6 +24,10 @@ public class HomeController {
 
         return "index";
     }
+    @RequestMapping(value = {"/404"}, method = RequestMethod.GET)
+    public String error(Model model) {
+        return "404";
+    }
 
     @RequestMapping(value = {"/infoCompany"}, method = RequestMethod.POST)
     public @ResponseBody

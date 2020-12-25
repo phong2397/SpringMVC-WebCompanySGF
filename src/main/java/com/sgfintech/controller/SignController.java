@@ -54,8 +54,8 @@ public class SignController {
     private ApplicationContext context;
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
-    public String welcomePage(ModelMap mm) {
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
+    public String welcomePage(ModelMap mm, HttpServletRequest request) {
+        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs",false);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
         return "kyduyet";
     }
@@ -68,7 +68,7 @@ public class SignController {
         String status = request.getParameter("status");
         String step = request.getParameter("step");
         try {
-            SaRequest sa = saRequestDAO.findById(Long.parseLong(data)); //sa.getBorrow();
+            SaRequest sa = saRequestDAO.findById(Long.parseLong(data.trim())); //sa.getBorrow();
             Customer cu = customerService.getCustomerByPhone(sa.getCustomerPhone());
 
             Date date = new Date();
@@ -123,30 +123,30 @@ public class SignController {
 //                return "error";
 //            } else {
 //            }
-                Contract ct = new Contract();
-                ct.setIdContract(sa.getId());
-                ct.setSystemTrace(uuid);
-                ct.setCustomerPhone(cu.getCustomerPhone());
-                ct.setBorrow(sa.getBorrow());
-                ct.setTimeBorrow(sa.getTimeBorrow());
-                ct.setRemainAmountBorrow(sa.getBorrow());
-                ct.setFeeBorrow(sa.getFeeBorrow());
+            Contract ct = new Contract();
+            ct.setIdContract(sa.getId());
+            ct.setSystemTrace(uuid);
+            ct.setCustomerPhone(cu.getCustomerPhone());
+            ct.setBorrow(sa.getBorrow());
+            ct.setTimeBorrow(sa.getTimeBorrow());
+            ct.setRemainAmountBorrow(sa.getBorrow());
+            ct.setFeeBorrow(sa.getFeeBorrow());
 //                ct.setTransactionId(resultRes.get("TransactionId").getAsString());
-                ct.setTransactionId(requestId);
-                ct.setStatus("act");
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, +30);
-                ct.setDateRepayment(LocalDateTime.now().plusDays(30));
+            ct.setTransactionId(requestId);
+            ct.setStatus("act");
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, +30);
+            ct.setDateRepayment(LocalDateTime.now().plusDays(30));
 
-                Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-                ct.setAcceptedBy(u.getUserLogin());
-                contractDAO.save(ct);
+            Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+            ct.setAcceptedBy(u.getUserLogin());
+            contractDAO.save(ct);
 
-                sa.setEmployeeDuyet(u.getUserLogin());
-                sa.setEmployeeDuyetDate(LocalDateTime.now());
-                sa.setStatus("act");
-                saRequestDAO.update(sa);
-                return "success";
+            sa.setEmployeeDuyet(u.getUserLogin());
+            sa.setEmployeeDuyetDate(LocalDateTime.now());
+            sa.setStatus("act");
+            saRequestDAO.update(sa);
+            return "success";
             //todo virtual account va tao collection point
         } catch (Exception ex) {
             return "error";

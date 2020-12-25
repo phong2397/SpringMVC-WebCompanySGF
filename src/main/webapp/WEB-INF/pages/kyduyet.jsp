@@ -1,3 +1,8 @@
+<%@ page import="com.sgfintech.handler.MergeDataOrder" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.sgfintech.entity.Useradmin" %>
+<%@ page import="com.sgfintech.util.Consts" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -6,21 +11,28 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ page import="com.google.gson.Gson" %>
-<%@ page import="com.sgfintech.handler.MergeDataOrder" %>
-<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    if (session.getAttribute(Consts.Session_Euser) != null){
+        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+        String role = u.getRole();
+        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("kyduyet")){
+        }else{
+            response.sendRedirect("404");
+        }
+    } else{
+        response.sendRedirect("login");
+
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
-
 <jsp:include page="general/_head.jsp" />
-
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <div class="wrapper">
-
     <jsp:include page="general/_header.jsp"/>
-
     <!-- Left side column. contains the logo and sidebar -->
     <jsp:include page="general/_menu.jsp"/>
 
@@ -206,36 +218,33 @@
                                         <tr>
                                             <th>Mã yêu cầu</th>
                                             <th>Nhân viên xác nhận</th>
-                                            <th>Ngày yêu cầu</th>
+                                            <th>Ngày thẩm định</th>
                                             <th>Thông tin khách hàng</th>
                                             <th>Trạng thái</th>
                                             <th>Thời gian còn lại</th>
-                                            <th>Thời gian vay</th>
-                                            <th>Số tiền vay</th>
+                                            <th>Thời gian ứng</th>
+                                            <th>Số tiền ứng</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
-                                                <td>#${lst.saRequest.id}9999</td>
-                                                <td>
-                                                    <span class="d-block text-muted">${fn:toUpperCase(lst.saRequest.employeeSua)}</span>
-                                                    <span class="d-block text-muted">${fn:toUpperCase(lst.saRequest.employeeThamdinh)}</span>
-                                                </td>
-                                                <td>${lst.saRequest.createdDate}</td>
+                                                <td><b> <a data-toggle="modal" href="#"
+                                                           onclick="viewInfoOrder('${lst.saRequest.id}')">${lst.saRequest.id}9999</a></b></td>
+                                                <td class="text-left">${lst.saRequest.employeeThamdinh}</td>
+                                                <td>${lst.saRequest.employeeThamdinhDate}</td>
                                                 <td>
                                                     <h6 class="mb-0">
-                                                        <a data-toggle="modal" href="#"
-                                                           onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a>
+                                                        <b> <a data-toggle="modal" href="#" onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
+                                                        <span class="d-block text-muted">Company ID :<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.company.companyCode}')">${lst.company.companyCode}</a></b></span>
                                                         <span class="d-block text-muted">Account number: ${lst.customer.customerBankAcc}</span>
                                                         <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
-                                                        <span class="d-block text-muted">Company ID : ${lst.customer.companyCode}</span>
                                                         <span class="d-block text-muted">Phone number : ${lst.customer.customerPhone}</span>
                                                     </h6>
                                                 </td>
                                                 <td class="text-center">
-                                                    <h6 class="mb-0 font-weight-bold"> chờ ký </h6>
+                                                    <h6 class="mb-0 font-weight-bold">chờ ký</h6>
                                                 </td>
                                                 <td class="text-center">
                                                     <span class="badge badge-pill badge-primary">2 ngày</span>
@@ -244,7 +253,7 @@
                                                         ${lst.saRequest.timeBorrow} tháng
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold"> ${lst.saRequest.borrow} đ
+                                                    <h6 class="mb-0 font-weight-bold"> <fmt:formatNumber value="${lst.saRequest.borrow}" type = "number"/> đ
                                                         <span class="d-block text-muted font-weight-normal">Thuế ${lst.saRequest.interestRate} % </span>
                                                         <span class="d-block text-muted font-weight-normal">Phí ${lst.saRequest.feeBorrow} đ </span>
                                                     </h6>
@@ -277,33 +286,27 @@
     <jsp:include page="general/_controlSidebar.jsp"/>
 
     <!-- /.control-sidebar -->
-    <!-- Modal -->
-    <div class="modal modal-right fade" id="modal-right" tabindex="-1">
+    <jsp:include page="general/modal.jsp"/>
+    <!-- Modal show info customer -->
+    <div class="modal modal-right fade" id="modal-left" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Thông tin chi tiết khách hàng</h5>
+                    <h5 class="modal-title">Thông tin chi tiết đơn hàng</h5>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                    <p>Họ Tên : <span id="customerName"></span></p>
-                    <p>Email : <span id="customerEmail"></span></p>
-                    <p>Lương : <span id="customerSalary"></span></p>
-                    <p>Tên ngân hàng : <span id="customerBank"></span></p>
-                    <p>Số tài khoản : <span id="customerBankAcc"></span></p>
-                    <p>Tên ngân hàng : <span id="customerBankName"></span></p>
-                    <p>CMND/Hộ chiếu/CCCD : <span id="customerId"></span></p>
-                    <p>Nơi cấp : <span id="customerIdLocation"></span></p>
-                    <p>Địa chỉ : <span id="customerAddress"></span></p>
-                    <p>Tạm trú : <span id="customerAddressTemp"></span></p>
-                    <p>Số BHXH : <span id="customerSocialInsurance"></span></p>
-                    <p>Số BHYT : <span id="customerHealthInsurance"></span></p>
-                    <p>Mã số thuế : <span id="customerTax"></span></p>
-                    <p>Số hợp đồng : <span id="customerContract"></span></p>
-                    <p>Thông tin người thân : <span id="customerRelative"></span></p>
-                    <p>Số điện thoại người thân : <span id="customerRelativePhone"></span></p>
+                    <h3><p>Mã yêu cầu: <span id="id"></span></p></h3>
+                    <p>Mã nhân viên : <span id="customerCode"></span></p>
+                    <p>Số tiền ứng : <span id="borrow"></span></p>
+                    <p>Thuế : <span id="interestRate"></span>%</p>
+                    <p>Phí : <span id="feeBorrow"></span></p>
+                    <p>Số lần ứng : <span id="timeBorrow"></span></p>
+                    <p>Trạng thái : <span id="status" style="color: #0b2c89"></span></p>
+                    <p>Người thẩm định : <span id="employeeThamdinh"></span></p>
+                    <p>Ngày thẩm định : <span id="day"></span>-<span id="month">-</span>-<span id="year"></span></p>
                 </div>
                 <div class="modal-footer modal-footer-uniform">
                     <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
@@ -327,89 +330,19 @@
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
 <script src="js/pages/data-table.js"></script>
-
+<script type="text/javascript" src="js/funckyduyet.js">
+</script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#loading").css("display", "none");
-    });
-    $("body").on("click", ".btn-accept", function () {
-        var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
-        dataRequest = dataRequest.substring(0, dataRequest.length - 4);
-        let data = {datarequest: dataRequest, status: 'act', step: '3'};
-        var result = sendOrder(data);
-        if (result === "success") {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Dữ liệu được cập nhật thành công.',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            $(this).parents("tr").remove();
-        } else {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
-                showConfirmButton: false,
-                timer: 3000
-            });
-        }
-    });
-
-    function sendOrder(data) {
-        try {
-            // This async call may fail.
-            let text = $.ajax({
-                type: "POST",
-                timeout: 100000,
-                url: "${pageContext.request.contextPath}/kyduyet",
-                data: data,
-                dataType: 'text',
-                async: false
-            }).responseText;
-            return text;
-        } catch (error) {
-            return "Không thể kết nối tới server";
-        }
-    }
-
-    $("body").on("click", ".btn-refuse", function () {
-        var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
-        dataRequest = dataRequest.substring(0, dataRequest.length - 4);
-        let data = {datarequest: dataRequest, status: 'act', step: '3'};
-        var result = sendOrder(data);
-        if (result === "success") {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Dữ liệu được cập nhật thành công.',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            $(this).parents("tr").remove();
-        } else {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
-                showConfirmButton: false,
-                timer: 3000
-            });
-        }
-    });
-
-
-    function viewInfoCustomer(params) {
-        <%
-            List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
-            Gson g = new Gson();
-            String json = g.toJson(list);
-        %>
-        var result = <%=json%>;
-        result.forEach((customer) => {
-            if (customer.customer.customerPhone == params) {
-                let c = customer.customer;
+    <%
+              List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
+              Gson g = new Gson();
+              String json = g.toJson(list);
+              %>
+    var result = <%=json%>;
+    function viewInfoCompany(params) {
+        result.forEach((company) => {
+            if (company.company.companyCode == params) {
+                let c = company.company;
                 Object.keys(c).forEach((key, _) => {
                     let id = key;
                     $('#' + id).text(c[key]);
@@ -418,9 +351,54 @@
         })
         console.log(result);
         // var index =
+        $('#modal-center').modal('show');
+    }
+
+    function viewInfoOrder(id) {
+        list = result.find(el => el.saRequest.id == id);
+        console.log(list)
+        const saRequest = list.saRequest;
+        const date = saRequest.employeeThamdinhDate.date;
+        Object.keys(saRequest).forEach((key) => {
+           if(key == "borrow" ){
+                let value1 = saRequest[key];
+                $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
+               Object.keys(date).forEach((key) => {
+                       $('#' + key).text(date[key]);
+               });
+            }
+            else {
+                $('#' + key).text(saRequest[key]);
+            }
+        });
+        // var index =
+        $('#modal-left').modal('show');
+    }
+
+    function viewInfoCustomer(params) {
+        result.forEach((customer) => {
+            if (customer.customer.customerPhone == params) {
+                let c = customer.customer;
+                const date = c.customerBirthday;
+                Object.keys(c).forEach((key) => {
+                    if (key == "customerSalary" ){
+                        value = c[key]
+                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                        Object.keys(date).forEach((key) => {
+                                $('#' + key).text(date[key]);
+                        })
+                    }
+                    else{
+                        $('#' + key).text(c[key]);
+                    }
+                })
+            }
+        })
+        console.log(result);
         $('#modal-right').modal('show');
     }
 </script>
+
 </body>
 
 </html>

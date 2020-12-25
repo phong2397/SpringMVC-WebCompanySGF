@@ -32,11 +32,11 @@ public class ApprovalController {
     SaRequestDAO saRequestDAO;
 
 
-    @RequestMapping(value = {"/xetduyet"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wait");
+        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("wait");
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        return "xetduyet";
+        return "thamdinh";
     }
 
     @RequestMapping(value = "/changes", method = RequestMethod.POST)
@@ -46,16 +46,12 @@ public class ApprovalController {
         String status = request.getParameter("status");
         String step = request.getParameter("step");
         try {
-            SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+            SaRequest sa = saRequestDAO.findById(Long.parseLong(data.trim()));
             Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-            sa.setStatus(status);
-            if (Integer.parseInt(step) == 1) {
-                sa.setEmployeeSua(u.getUserLogin());
-                sa.setEmployeeDuyetDate(LocalDateTime.now());
-            } else {
+            sa.setStatus(status.trim());
                 sa.setEmployeeThamdinh(u.getUserLogin());
                 sa.setEmployeeThamdinhDate(LocalDateTime.now());
-            }
+
             saRequestDAO.update(sa);
             return "success";
         } catch (Exception ex) {

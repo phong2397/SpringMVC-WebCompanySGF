@@ -32,7 +32,7 @@ public class SaRequestMapper implements RowMapper<SaRequest> {
             s.setEmployeeThamdinhDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("employee_thamdinh_date")));
         }
         s.setEmployeeDuyet(rs.getString("employee_duyet"));
-        if (!StringUtil.isEmpty(rs.getDate("employee_thamdinh_date"))) {
+        if (!StringUtil.isEmpty(rs.getDate("employee_duyet_date"))) {
             s.setEmployeeDuyetDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("employee_duyet_date")));
         }
         s.setDescription(rs.getString("description"));

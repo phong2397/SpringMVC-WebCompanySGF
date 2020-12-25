@@ -33,18 +33,28 @@ public class CustomerMapper implements RowMapper<Customer> {
         c.setCustomerPosition(rs.getString("customer_position"));
         c.setCustomerTax(rs.getString("customer_tax"));
         c.setCustomerContract(rs.getLong("customer_contract"));
+        c.setCustomerImageFront(rs.getBytes("customer_image_front"));
+        c.setCustomerImageFront(rs.getBytes("customer_image_back"));
+        c.setCustomerGender(rs.getString("customer_gender"));
         if (!StringUtil.isEmpty(rs.getDate("customer_contract_expired"))) {
             c.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_contract_expired")));
+        }
+        if (!StringUtil.isEmpty(rs.getDate("customer_birthday"))) {
+            c.setCustomerBirthday(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_birthday")).toLocalDate());
         }
         c.setCustomerRelative(rs.getString("customer_relative"));
         c.setCustomerRelativePhone(rs.getString("customer_relative_phone"));
         c.setStatus(rs.getString("status"));
+        if (!StringUtil.isEmpty(rs.getDate("customer_id_date"))) {
+            c.setCustomerIdDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_id_date")));
+        }
         if (!StringUtil.isEmpty(rs.getDate("created_date"))) {
             c.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("created_date")));
         }
         if (!StringUtil.isEmpty(rs.getDate("updated_date"))) {
             c.setUpdatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("updated_date")));
         }
+
         return c;
     }
 
@@ -69,12 +79,17 @@ public class CustomerMapper implements RowMapper<Customer> {
         c.setCustomerPosition(rs.getString("customer_position"));
         c.setCustomerTax(rs.getString("customer_tax"));
         c.setCustomerContract(rs.getLong("customer_contract"));
+        c.setCustomerImageFront(rs.getBytes("customer_image_front"));
+        c.setCustomerImageFront(rs.getBytes("customer_image_back"));
         if (!StringUtil.isEmpty(rs.getDate("customer_contract_expired"))) {
             c.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_contract_expired")));
         }
         c.setCustomerRelative(rs.getString("customer_relative"));
         c.setCustomerRelativePhone(rs.getString("customer_relative_phone"));
         c.setStatus(rs.getString("status"));
+        if (!StringUtil.isEmpty(rs.getDate("customer_id_date"))) {
+            c.setCustomerIdDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_id_date")));
+        }
         if (!StringUtil.isEmpty(rs.getDate("created_date"))) {
             c.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("created_date")));
         }

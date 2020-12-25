@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.sgfintech.entity.Useradmin" %>
+<%@ page import="com.sgfintech.util.Consts" %><%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 12/09/2020
@@ -6,9 +7,22 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
+<%
+    if (session.getAttribute(Consts.Session_Euser) != null){
+        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+        String role = u.getRole();
+        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
+        }else{
+            response.sendRedirect("404");
+        }
+    } else{
+        response.sendRedirect("login");
 
+    }
+%>
 <jsp:include page="general/_head.jsp"/>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary">
@@ -141,7 +155,6 @@
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
 <!-- Vendor JS -->
 <script src="js/vendors.min.js"></script>
 <!-- Crypto Tokenizer Admin App -->
@@ -177,49 +190,48 @@
             }
         });
 
-
-        // if (macongty == "sgfintech") {
-        //     Swal.fire(
-        //         'Successful',
-        //         'Dữ liệu của hệ thống đã được cập nhật',
-        //         'success'
-        //     )
-        // } else if (macongty == "sgf") {
-        //     Swal.fire({
-        //         title: 'Mã công ty đã tồn tại!',
-        //         text: "Bạn có muốn cập nhật dữ liệu hiện có?",
-        //         icon: 'warning',
-        //         showCancelButton: true,
-        //         confirmButtonColor: '#3085d6',
-        //         cancelButtonColor: '#d33',
-        //         confirmButtonText: 'Yes, update it!'
-        //     }).then((result) => {
-        //         if (result.isConfirmed) {
-        //             Swal.fire(
-        //                 'Deleted!',
-        //                 'Dữ liệu của hệ thống đã được cập nhật',
-        //                 'success'
-        //             )
-        //         } else if (
-        //             /* Read more about handling dismissals below */
-        //             result.dismiss === Swal.DismissReason.cancel
-        //         ) {
-        //             swalWithBootstrapButtons.fire(
-        //                 'Cancelled',
-        //                 'Thay đổi đã bị hủy',
-        //                 'error'
-        //             )
-        //         }
-        //     })
-        // } else {
-        //     Swal.fire({
-        //         icon: 'error',
-        //         title: 'Oops...',
-        //         text: 'Lỗi trong quá trình thực thi',
-        //         footer: '<a href>Why do I have this issue?</a>'
-        //     })
-        // }
-        // console.log(tenconty);
+        if (macongty == "sgfintech") {
+            Swal.fire(
+                'Successful',
+                'Dữ liệu của hệ thống đã được cập nhật',
+                'success'
+            )
+        } else if (macongty == "sgf") {
+            Swal.fire({
+                title: 'Mã công ty đã tồn tại!',
+                text: "Bạn có muốn cập nhật dữ liệu hiện có?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, update it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Dữ liệu của hệ thống đã được cập nhật',
+                        'success'
+                    )
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Thay đổi đã bị hủy',
+                        'error'
+                    )
+                }
+            })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Lỗi trong quá trình thực thi',
+                footer: '<a href>Why do I have this issue?</a>'
+            })
+        }
+        console.log(tenconty);
     }
 </script>
 </body>
