@@ -311,6 +311,7 @@
 		  }
 		function viewInfo(idContract, custPhone) {
 		  	selectedContractId = idContract;
+			console.log(selectedContractId)
 			let result = list.find(el => el.customer.customerPhone == custPhone);
 			console.log(result)
 			const cust = result.customer;

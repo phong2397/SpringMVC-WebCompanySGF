@@ -27,9 +27,9 @@ $( document ).ready(function() {
             rowElement.append('<td>' +'Thường trú :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerAddress +'</span><br>'+
                 'Tạm trú :'+' '+ '<span className="d-block text-muted font-weight-normal">'+ e.customer.customerAddressTemp  +'</span></td>');
             rowElement.append('<td>' +'Vị trí :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerPosition + '<br>'+
-                'Lương :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerSalary.toLocaleString("en-US") +' '+ 'đ</td>');
+                'Lương :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerSalary.toLocaleString("vi-VN") +' '+ 'đ</td>');
             rowElement.append('<td>' +
-                'CMND :'+ ' '+'<span className="d-block text-muted font-weight-normal">'+e.customer.customerId + '</span><br>'+
+                'Số CMND :'+ ' '+'<span className="d-block text-muted font-weight-normal">'+e.customer.customerId + '</span><br>'+
                 'Nơi cấp :'+ ' '+'<span className="d-block text-muted font-weight-normal">'+e.customer.customerIdLocation +'</span><br>'+
                 'Ngày cấp :'+' '+'<span className="d-block text-muted font-weight-normal">'+e.customer.customerIdDate.date.day +'-' + e.customer.customerIdDate.date.month +'-' + e.customer.customerIdDate.date.year  + '</span></td>');
             rowElement.append('<td xmlns="http://www.w3.org/1999/html">' +
@@ -41,8 +41,8 @@ $( document ).ready(function() {
                 'Số điện thoại :'+ ' '+'<span className="d-block text-muted font-weight-normal">'+e.customer.customerRelativePhone  +'</span></td>');
             rowElement.append('<td>' +
                 'Mã số thuế :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerTax +'</span><br>' +
-                'Bảo hiểm xã hội :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerSocialInsurance + '</span></br>' +
-                'Bảo hiểm y tế :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerHealthInsurance + '</span></td>');
+                'Mã số bảo hiểm xã hội :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerSocialInsurance + '</span></br>' +
+                'Mã số bảo hiểm y tế :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerHealthInsurance + '</span></td>');
             body.append(rowElement);
         }
         //

@@ -90,7 +90,7 @@
             <section class="content">
 
                 <div class="row">
-                    <div class="col-xl-3 col-md-6 col-12 ">
+                    <div class="col-xs-4 col-md-2 col-10 ">
                         <div class="box box-inverse box-success">
                             <div class="box-body">
                                 <div class="flexbox">
@@ -116,11 +116,64 @@
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-xl-3 col-md-6 col-12 ">
+                    <div class="col-xs-4 col-md-2 col-10 ">
+                        <div class="box box-inverse box-warning">
+                            <div class="box-body">
+                                <div class="flexbox">
+                                    <h5>Chờ giải quyết</h5>
+                                    <div class="dropdown">
+											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
+                                                    class="ion-android-more-vertical rotate-90"></i></span>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
+                                                Details</a>
+                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
+                                                new</a>
+                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
+                                                Refresh</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center my-2">
+                                    <div class="font-size-60">${countWait}</div>
+                                    <span>Yêu cầu chờ thẩm định</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4 col-md-2 col-10 ">
                         <div class="box box-inverse box-primary">
                             <div class="box-body">
                                 <div class="flexbox">
-                                    <h5>Đã giải quyết</h5>
+                                    <h5> Chờ ký duyệt</h5>
+                                    <div class="dropdown">
+											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
+                                                    class="ion-android-more-vertical rotate-90"></i></span>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
+                                                Details</a>
+                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
+                                                new</a>
+                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
+                                                Refresh</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center my-2">
+                                    <div class="font-size-60">${countWFS}</div>
+                                    <span>Yêu cầu chờ ký duyệt</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4 col-md-2 col-10 ">
+                        <div class="box box-inverse " style="background-color: hotpink">
+                            <div class="box-body">
+                                <div class="flexbox">
+                                    <h5> Đã giải ngân</h5>
                                     <div class="dropdown">
 											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
                                                     class="ion-android-more-vertical rotate-90"></i></span>
@@ -143,8 +196,7 @@
                         </div>
                     </div>
                     <!-- /.col -->
-
-                    <div class="col-xl-3 col-md-6 col-12">
+                    <div class="col-xs-4 col-md-2 col-10 ">
                         <div class="box box-inverse box-danger">
                             <div class="box-body">
                                 <div class="flexbox">
@@ -172,32 +224,7 @@
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-xl-3 col-md-6 col-12">
-                        <div class="box box-inverse box-warning">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Chờ giải quyết</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countWait}</div>
-                                    <span>Yêu cầu cần xác nhận</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
+
 
                 </div>
 

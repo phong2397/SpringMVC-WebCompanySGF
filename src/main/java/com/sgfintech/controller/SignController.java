@@ -57,14 +57,14 @@ public class SignController {
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
         int countAll = mergeDataService.countAll();
         int countWait = mergeDataService.countStatus("wait");
-        int countAct = mergeDataService.countStatus("act");
+        int countWFS = mergeDataService.countStatus("wfs");
         int countDone = mergeDataService.countStatus("done");
         int countDeni = mergeDataService.countStatus("deni");
         List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs",false);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
         mm.addAttribute("countAll", countAll);
         mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countAct", countAct);
+        mm.addAttribute("countWFS", countWFS);
         mm.addAttribute("countDone", countDone);
         mm.addAttribute("countDeni", countDeni);
         return "kyduyet";
