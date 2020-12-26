@@ -12,7 +12,7 @@ $(document).ready(function () {
                 showConfirmButton: false,
                 timer: 3000
             });
-            $("#idContract").parents("tr").remove();
+            $("#tr-" + selectedContractId).remove();
         } else {
             Swal.fire({
                 position: 'top-end',

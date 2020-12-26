@@ -27,7 +27,7 @@ $( document ).ready(function() {
             rowElement.append('<td>' +'Thường trú :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerAddress +'</span><br>'+
                 'Tạm trú :'+' '+ '<span className="d-block text-muted font-weight-normal">'+ e.customer.customerAddressTemp  +'</span></td>');
             rowElement.append('<td>' +'Vị trí :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerPosition + '<br>'+
-                'Lương :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerSalary +' '+ 'đ</td>');
+                'Lương :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerSalary.toLocaleString("en-US") +' '+ 'đ</td>');
             rowElement.append('<td>' +
                 'CMND :'+ ' '+'<span className="d-block text-muted font-weight-normal">'+e.customer.customerId + '</span><br>'+
                 'Nơi cấp :'+ ' '+'<span className="d-block text-muted font-weight-normal">'+e.customer.customerIdLocation +'</span><br>'+

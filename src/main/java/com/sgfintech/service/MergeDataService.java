@@ -114,6 +114,48 @@ public class MergeDataService {
         }
     }
 
+    public int countAll() {
+        String sql = "select COUNT(sa.status) from sgft_sa_request sa ";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            int count = jdbcTemplate.queryForObject(sql, Integer.class);
+            return count;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int countStatus(String status) {
+        String sql = "select COUNT(sa.status) from sgft_sa_request sa where sa.status = ? ";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            int count = jdbcTemplate.queryForObject(sql, new Object[]{status} , Integer.class);
+            return count;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
+    public int contractStatus(String status) {
+        String sql = "select COUNT(con.status) from sgft_contract con where con.status = ? ";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            int count = jdbcTemplate.queryForObject(sql, new Object[]{status} , Integer.class);
+            return count;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
     public List<MergeDataOrder> getDataShow(String status, boolean nodate) {
         String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where cu.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status = ?";
         if (StringUtil.isEmpty(jdbcTemplate)) {

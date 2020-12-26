@@ -23,10 +23,6 @@ public class SaRequestMapper implements RowMapper<SaRequest> {
         s.setInterestRate(rs.getDouble("interest_rate"));
         s.setFeeBorrow(rs.getDouble("fee_borrow"));
         s.setStatus(rs.getString("status"));
-        s.setEmployeeSua(rs.getString("employee_sua"));
-        if (!StringUtil.isEmpty(rs.getDate("employee_sua_date"))) {
-            s.setEmployeeSuaDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("employee_sua_date")));
-        }
         s.setEmployeeThamdinh(rs.getString("employee_thamdinh"));
         if (!StringUtil.isEmpty(rs.getDate("employee_thamdinh_date"))) {
             s.setEmployeeThamdinhDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("employee_thamdinh_date")));

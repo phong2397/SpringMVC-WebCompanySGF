@@ -108,9 +108,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">2,064</div>
+                                    <div class="font-size-60">${countAll}</div>
                                     <span>Tổng số lượt yêu cầu trong ngày</span>
                                 </div>
                             </div>
@@ -137,7 +136,7 @@
                                 </div>
 
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">1,738</div>
+                                    <div class="font-size-60">${countDone}</div>
                                     <span>Yêu cầu tất toán thành công</span>
                                 </div>
                             </div>
@@ -165,8 +164,8 @@
                                 </div>
 
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">1,100</div>
-                                    <span>Yêu cầu bị Refuse</span>
+                                    <div class="font-size-60">${countDeni}</div>
+                                    <span>Yêu cầu bị từ chối</span>
                                 </div>
                             </div>
 
@@ -191,9 +190,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">964</div>
+                                    <div class="font-size-60">${countWait}</div>
                                     <span>Yêu cầu cần xác nhận</span>
                                 </div>
                             </div>
@@ -299,7 +297,7 @@
                 </div>
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
                     <h3><p>Mã yêu cầu: <span id="id"></span></p></h3>
-                    <p>Mã nhân viên : <span id="customerCode"></span></p>
+                    <p>Số điện thoại : <span id="customerPhone"></span></p>
                     <p>Số tiền ứng : <span id="borrow"></span></p>
                     <p>Thuế : <span id="interestRate"></span>%</p>
                     <p>Phí : <span id="feeBorrow"></span></p>
@@ -359,6 +357,7 @@
         console.log(list)
         const saRequest = list.saRequest;
         const date = saRequest.employeeThamdinhDate.date;
+        debugger;
         Object.keys(saRequest).forEach((key) => {
            if(key == "borrow" ){
                 let value1 = saRequest[key];

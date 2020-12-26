@@ -93,7 +93,7 @@
 						<div class="col-lg-3 col-6">
 							<a class="box box-link-shadow text-center" href="javascript:void(0)">
 								<div class="box-body">
-									<div class="font-size-24">+264</div>
+									<div class="font-size-24">+${countDone}</div>
 									<span>Tổng số lượng gạch nợ</span>
 								</div>
 								<div class="box-body bg-info">
@@ -234,7 +234,7 @@
 													<th>Mã hệ thống (System Trace)</th>
 													<th>Status</th>
 													<th>Mã giao dịch (Transaction ID)</th>
-													<th>Ngày</th>
+													<th>Ngày gạch nợ</th>
 													<th>Số tiền còn nợ</th>
 
 												</tr>
@@ -262,7 +262,7 @@
 														<td>${lst.contract.systemTrace} đ</td>
 														<td ><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
 														<td>${lst.contract.transactionId}</td>
-														<td>${lst.contract.dateRepayment} đ</td>
+														<td>${lst.contract} </td>
 														<td> ${lst.contract.borrow} đ</td>
 
 													</tr>

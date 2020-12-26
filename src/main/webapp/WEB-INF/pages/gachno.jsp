@@ -118,7 +118,7 @@
 										</thead>
 										<tbody>
 											<c:forEach items="${views}" var="lst" varStatus="loop">
-												<tr >
+												<tr id="tr-${lst.contract.idContract}">
 													<td><a href="#"
 														   onclick="viewInfo('${lst.contract.idContract}','${lst.customer.customerPhone}')"><b>${lst.contract.idContract}9999</b></a>
 													</td>
@@ -286,6 +286,8 @@
 	<script src="js/demo.js"></script>
 	<script type="text/javascript" src="js/funcgachno.js"></script>
 		<script type="text/javascript">
+			var selectedContractId;
+
 		  <%
 			List < MergeDataWithdraw > list = (List<MergeDataWithdraw>) request.getAttribute("views");
 			Gson g = new Gson();
@@ -308,6 +310,7 @@
 			  $('#modal-center').modal('show');
 		  }
 		function viewInfo(idContract, custPhone) {
+		  	selectedContractId = idContract;
 			let result = list.find(el => el.customer.customerPhone == custPhone);
 			console.log(result)
 			const cust = result.customer;

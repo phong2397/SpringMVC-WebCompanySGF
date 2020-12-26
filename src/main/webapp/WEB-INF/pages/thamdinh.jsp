@@ -112,11 +112,11 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">2,064</div>
+                                    <div class="text-center my-2">
+                                        <div class="font-size-60">${countAll}</div>
                                     <span>Tổng số lượt yêu cầu trong ngày</span>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -141,7 +141,7 @@
                                 </div>
 
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">1,738</div>
+                                    <div class="font-size-60">${countDone}</div>
                                     <span>Yêu cầu tất toán thành công</span>
                                 </div>
                             </div>
@@ -169,7 +169,7 @@
                                 </div>
 
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">1,100</div>
+                                    <div class="font-size-60">${countDeni}</div>
                                     <span>Yêu cầu bị từ chối</span>
                                 </div>
                             </div>
@@ -196,7 +196,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">964</div>
+                                    <div class="font-size-60">${countWait}</div>
                                     <span>Yêu cầu cần xác nhận</span>
                                 </div>
                             </div>

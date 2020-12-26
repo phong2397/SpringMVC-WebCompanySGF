@@ -18,8 +18,10 @@ public class TotalListController {
 
     @RequestMapping(value = {"/tongdanhsach"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm) {
+        int countDone = mergeDataService.contractStatus("done");
         List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("done", true, "");
         mm.addAttribute(Consts.Attr_ResultView, listdata);
+        mm.addAttribute("countDone", countDone);
         return "tongdanhsach";
     }
 }
