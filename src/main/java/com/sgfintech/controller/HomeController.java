@@ -21,7 +21,6 @@ public class HomeController {
 
     @RequestMapping(value = {"/home", "/index"}, method = RequestMethod.GET)
     public String welcomePage(Model model) {
-
         return "index";
     }
     @RequestMapping(value = {"/404"}, method = RequestMethod.GET)
