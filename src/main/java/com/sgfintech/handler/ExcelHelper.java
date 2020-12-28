@@ -91,6 +91,8 @@ public class ExcelHelper {
             c.setCustomerBankAcc(row.getCell(count++).getStringCellValue());
             c.setCustomerBankName(row.getCell(count++).getStringCellValue());
             c.setCustomerBank(row.getCell(count++).getStringCellValue());
+
+
             /*
 //            c.setCustomer
 //            c.setCustomerPhone(row.getCell(count++).getStringCellValue());
