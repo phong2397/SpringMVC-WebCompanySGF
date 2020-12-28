@@ -1,7 +1,11 @@
 package com.sgfintech.controller;
 
+import com.sgfintech.dao.CompaniesDAO;
+import com.sgfintech.dao.CustomerDAO;
+import com.sgfintech.entity.Companies;
 import com.sgfintech.entity.Customer;
 import com.sgfintech.handler.ExcelHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,13 +40,19 @@ public class ImportController implements ServletContextAware {
 
     private ServletContext servletContext;
 
+
+    @Autowired
+    CompaniesDAO companiesDAO;
+
+    @Autowired
+    CustomerDAO customerDAO;
+
     @RequestMapping(value = "/import", method = RequestMethod.POST)
     public String process(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request) throws Exception {
-        String companyCode = request.getParameter("code");
-        String companyName = request.getParameter("name");
+        String companyCode = request.getParameter("macongty");
+        String companyName = request.getParameter("tencongty");
         try {
             String path = servletContext.getRealPath(fileLocation);
-//        String fileName = uploadExcelFile(file, path);
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-sss");
             String fileName = sdf.format(date) + multipartFile.getOriginalFilename();
@@ -54,11 +64,16 @@ public class ImportController implements ServletContextAware {
             String excelPath = servletContext.getRealPath(fileLocation + fileName);
             ExcelHelper excelHelper = new ExcelHelper(excelPath);
             List<Customer> lstCustomer = excelHelper.parseDataFromExcel("Customer", companyCode);
-            System.out.println("Customer List");
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            for (Customer item : lstCustomer) {
-                item.toString();
+            long c = companiesDAO.countCompanyByCode(companyCode);
+            if (c < 1) {
+                Companies com = new Companies();
+                com.setCompanyCode(companyCode);
+                com.setCompanyName(companyName);
+                companiesDAO.save(com);
+                customerDAO.saveAllStateless(lstCustomer);
             }
+
+
         } catch (Exception ex) {
             ex.toString();
             ex.printStackTrace();

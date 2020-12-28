@@ -33,8 +33,6 @@ public class CustomerMapper implements RowMapper<Customer> {
         c.setCustomerPosition(rs.getString("customer_position"));
         c.setCustomerTax(rs.getString("customer_tax"));
         c.setCustomerContract(rs.getLong("customer_contract"));
-        c.setCustomerImageFront(rs.getBytes("customer_image_front"));
-        c.setCustomerImageFront(rs.getBytes("customer_image_back"));
         if (!StringUtil.isEmpty(rs.getDate("customer_contract_expired"))) {
             c.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_contract_expired")));
         }
@@ -75,8 +73,6 @@ public class CustomerMapper implements RowMapper<Customer> {
         c.setCustomerPosition(rs.getString("customer_position"));
         c.setCustomerTax(rs.getString("customer_tax"));
         c.setCustomerContract(rs.getLong("customer_contract"));
-        c.setCustomerImageFront(rs.getBytes("customer_image_front"));
-        c.setCustomerImageFront(rs.getBytes("customer_image_back"));
         if (!StringUtil.isEmpty(rs.getDate("customer_contract_expired"))) {
             c.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_contract_expired")));
         }

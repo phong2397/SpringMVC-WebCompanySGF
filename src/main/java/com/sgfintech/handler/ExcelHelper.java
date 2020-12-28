@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -56,12 +57,7 @@ public class ExcelHelper {
 
     private Sheet getSheetWithName(String name) {
         Sheet sheet = null;
-        for (int i = 0; i < workbook.getNumberOfSheets(); i++) {
-            if (name.compareTo(workbook.getSheetName(i)) == 0) {
-                sheet = workbook.getSheetAt(i);
-                break;
-            }
-        }
+        sheet = workbook.getSheetAt(0);
         return sheet;
     }
 
@@ -80,29 +76,48 @@ public class ExcelHelper {
             int count = 0;
             row = sheet.getRow(rowCount);
             c.setCompanyCode(companyCode);
-            c.setCustomerPhone(row.getCell(count++).getStringCellValue());
-            c.setCustomerName(row.getCell(count++).getStringCellValue());
-            c.setCustomerEmail(row.getCell(count++).getStringCellValue());
-            c.setCustomerCode(row.getCell(count++).getStringCellValue());
-            c.setCustomerSalary(new Double(row.getCell(count++).getNumericCellValue()).longValue());
-            c.setCustomerBank(row.getCell(count++).getStringCellValue());
+            c.setCustomerName(row.getCell(count).getStringCellValue());
             c.setCustomerId(row.getCell(count++).getStringCellValue());
-            c.setCustomerAddress(row.getCell(count++).getStringCellValue());
-            c.setCustomerAddressTemp(row.getCell(count++).getStringCellValue());
-            c.setCustomerIdLocation(row.getCell(count++).getStringCellValue());
-            c.setCustomerSocialInsurance(row.getCell(count++).getStringCellValue());
-            c.setCustomerHealthInsurance(row.getCell(count++).getStringCellValue());
-            c.setCustomerPosition(row.getCell(count++).getStringCellValue());
-            c.setCustomerTax(row.getCell(count++).getStringCellValue());
-            c.setCustomerContract(new Double(row.getCell(count++).getNumericCellValue()).longValue());
+            c.setCustomerBirthday(row.getCell(count++).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            c.setCustomerPhone(row.getCell(count++).getStringCellValue());
             c.setCustomerContractExpired(LocalDateTime.ofInstant(row.getCell(count++).getDateCellValue().toInstant(),
                     ZoneId.systemDefault()));
-            c.setCustomerRelative(row.getCell(count++).getStringCellValue());
-            c.setCustomerRelativePhone(row.getCell(count++).getStringCellValue());
+            c.setCustomerContract(Long.parseLong(row.getCell(count++).getStringCellValue()));
+            int n = (int) row.getCell(count++).getNumericCellValue();
+            c.setStatus(
+                    (n == 0) ? "active" : "expried"
+            );
+
             c.setCustomerBankAcc(row.getCell(count++).getStringCellValue());
             c.setCustomerBankName(row.getCell(count++).getStringCellValue());
-            c.setCustomerIdDate(LocalDateTime.ofInstant(row.getCell(count++).getDateCellValue().toInstant(),
-                    ZoneId.systemDefault()));
+            c.setCustomerBank(row.getCell(count++).getStringCellValue());
+            /*
+//            c.setCustomer
+//            c.setCustomerPhone(row.getCell(count++).getStringCellValue());
+//            c.setCustomerName(row.getCell(count++).getStringCellValue());
+//            c.setCustomerEmail(row.getCell(count++).getStringCellValue());
+//            c.setCustomerCode(row.getCell(count++).getStringCellValue());
+//            c.setCustomerSalary(new Double(row.getCell(count++).getNumericCellValue()).longValue());
+//            c.setCustomerBank(row.getCell(count++).getStringCellValue());
+//            c.setCustomerId(row.getCell(count++).getStringCellValue());
+//            c.setCustomerAddress(row.getCell(count++).getStringCellValue());
+//            c.setCustomerAddressTemp(row.getCell(count++).getStringCellValue());
+//            c.setCustomerIdLocation(row.getCell(count++).getStringCellValue());
+//            c.setCustomerSocialInsurance(row.getCell(count++).getStringCellValue());
+//            c.setCustomerHealthInsurance(row.getCell(count++).getStringCellValue());
+//            c.setCustomerPosition(row.getCell(count++).getStringCellValue());
+//            c.setCustomerTax(row.getCell(count++).getStringCellValue());
+//            c.setCustomerContract(new Double(row.getCell(count++).getNumericCellValue()).longValue());
+//            c.setCustomerContractExpired(LocalDateTime.ofInstant(row.getCell(count++).getDateCellValue().toInstant(),
+//                    ZoneId.systemDefault()));
+//            c.setCustomerRelative(row.getCell(count++).getStringCellValue());
+//            c.setCustomerRelativePhone(row.getCell(count++).getStringCellValue());
+//            c.setCustomerBankAcc(row.getCell(count++).getStringCellValue());
+//            c.setCustomerBankName(row.getCell(count++).getStringCellValue());
+//            c.setCustomerIdDate(LocalDateTime.ofInstant(row.getCell(count++).getDateCellValue().toInstant(),
+//                    ZoneId.systemDefault()));
+
+             */
             lstCust.add(c);
         }
         return lstCust;

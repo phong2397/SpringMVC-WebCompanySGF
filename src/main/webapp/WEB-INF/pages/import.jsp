@@ -165,7 +165,7 @@
         var filePath = $("#importFile").val();
         console.log(filePath);
         $.ajax({
-            url: 'import?tencong=' + tenconty + '&macongty=' + macongty,
+            url: 'import?tencongty=' + tenconty + '&macongty=' + macongty,
             type: 'POST',
             data: formData,
             processData: false,  // tell jQuery not to process the data

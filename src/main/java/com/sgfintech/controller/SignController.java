@@ -70,7 +70,6 @@ public class SignController {
         try {
             SaRequest sa = saRequestDAO.findById(Long.parseLong(data)); //sa.getBorrow();
             Customer cu = customerService.getCustomerByPhone(sa.getCustomerPhone());
-
             Date date = new Date();
             String partnerCode = "VAYSV";
             String requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(date);
