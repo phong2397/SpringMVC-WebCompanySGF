@@ -234,7 +234,7 @@
 													<th>Mã hệ thống (System Trace)</th>
 													<th>Status</th>
 													<th>Mã giao dịch (Transaction ID)</th>
-													<th>Ngày gạch nợ</th>
+													<th></th>
 													<th>Số tiền còn nợ</th>
 
 												</tr>
@@ -262,7 +262,7 @@
 														<td>${lst.contract.systemTrace} đ</td>
 														<td ><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
 														<td>${lst.contract.transactionId}</td>
-														<td>${lst.contract} </td>
+														<td>${lst.contract.dateRepayment} </td>
 														<td> ${lst.contract.borrow} đ</td>
 
 													</tr>
@@ -329,7 +329,7 @@
 	<script src="js/demo.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$("#loading").css("display", "none");
+			$("#loading").fadeOut(2000);
 		});
   				<%
                     List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");

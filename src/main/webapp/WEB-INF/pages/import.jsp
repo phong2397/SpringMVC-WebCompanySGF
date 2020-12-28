@@ -167,9 +167,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#loading").css("display", "none");
+        $("#loading").fadeOut(2000);
     });
-
     function submitform() {
         var formData = new FormData();
         formData.append('file', $('#importFile')[0].files[0]);

@@ -49,7 +49,7 @@
                 <p>Tên ngân hàng : <span id="customerBank"></span></p>
                 <p>Số tài khoản : <span id="customerBankAcc"></span></p>
                 <p>Tên ngân hàng : <span id="customerBankName"></span></p>
-                <p>CMND/Hộ chiếu/CCCD : <span id="customerId"></span></p>
+                <p>Số CMND : <span id="customerId"></span></p>
                 <p>Thường trú : <span id="customerIdLocation"></span></p>
                 <p>Địa chỉ : <span id="customerAddress"></span></p>
                 <p>Tạm trú : <span id="customerAddressTemp"></span></p>

@@ -32,13 +32,13 @@
 <jsp:include page="general/_head.jsp"/>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary">
+
 <div class="wrapper">
 
     <jsp:include page="general/_header.jsp"/>
 
     <!-- Left side column. contains the logo and sidebar -->
     <jsp:include page="general/_menu.jsp"/>
-
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -95,7 +95,7 @@
 
                 <div class="row">
 
-                    <div class="col-xl-2 col-md-6 col-12 ">
+                    <div class="col-xl-3 col-md-6 col-12 ">
                         <div class="box box-inverse box-success">
                             <div class="box-body">
                                 <div class="flexbox">
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-xl-2 col-md-6 col-12">
+                    <div class="col-xl-3 col-md-6 col-12">
                         <div class="box box-inverse box-warning">
                             <div class="box-body">
                                 <div class="flexbox">
@@ -148,7 +148,7 @@
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-xl-2 col-md-6 col-12 ">
+                    <div class="col-xl-3 col-md-6 col-12 ">
                         <div class="box box-inverse box-primary">
                             <div class="box-body">
                                 <div class="flexbox">
@@ -169,13 +169,13 @@
 
                                 <div class="text-center my-2">
                                     <div class="font-size-60">${countWFS}</div>
-                                    <span>Yêu cầu tất toán thành công</span>
+                                    <span>Yêu cầu chờ ký duyệt</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-xl-2 col-md-6 col-12 ">
+                    <div class="col-xl-3 col-md-6 col-12 ">
                         <div class="box box-inverse " style="background-color: hotpink">
                             <div class="box-body">
                                 <div class="flexbox">
@@ -202,34 +202,34 @@
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-xl-2 col-md-6 col-12">
-                        <div class="box box-inverse box-danger">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Đã hủy</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
+<%--                    <div class="col-xl-2 col-md-6 col-12">--%>
+<%--                        <div class="box box-inverse box-danger">--%>
+<%--                            <div class="box-body">--%>
+<%--                                <div class="flexbox">--%>
+<%--                                    <h5>Đã hủy</h5>--%>
+<%--                                    <div class="dropdown">--%>
+<%--											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i--%>
+<%--                                                    class="ion-android-more-vertical rotate-90"></i></span>--%>
+<%--                                        <div class="dropdown-menu dropdown-menu-right">--%>
+<%--                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>--%>
+<%--                                                Details</a>--%>
+<%--                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add--%>
+<%--                                                new</a>--%>
+<%--                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>--%>
+<%--                                                Refresh</a>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
 
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countDeni}</div>
-                                    <span>Yêu cầu bị từ chối</span>
-                                </div>
-                            </div>
+<%--                                <div class="text-center my-2">--%>
+<%--                                    <div class="font-size-60">${countDeni}</div>--%>
+<%--                                    <span>Yêu cầu bị từ chối</span>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
 
-                        </div>
-                    </div>
-                    <!-- /.col -->
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                    <!-- /.col -->--%>
 
                 </div>
 
@@ -349,7 +349,9 @@
 <script src="js/demo.js"></script>
 <script src="js/functhamdinh.js" type="text/javascript"></script>
 <script type="text/javascript">
-
+    $(document).ready(function () {
+        $("#loading").fadeOut(2000);
+    });
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
                   Gson g = new Gson();

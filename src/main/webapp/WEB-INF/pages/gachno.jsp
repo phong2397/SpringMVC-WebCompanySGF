@@ -286,6 +286,9 @@
 	<script src="js/demo.js"></script>
 	<script type="text/javascript" src="js/funcgachno.js"></script>
 		<script type="text/javascript">
+			$(document).ready(function () {
+				$("#loading").fadeOut(2000);
+			});
 			var selectedContractId;
 
 		  <%

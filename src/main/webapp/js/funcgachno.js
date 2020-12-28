@@ -1,5 +1,4 @@
-$(document).ready(function () {
-    $("#loading").css("display", "none");
+
     $("body").on("click", ".btn-success", function () {
         var dataRequest = $("#idContract").text().trim();
         let data = { datarequest: dataRequest, status: 'done' };
@@ -39,4 +38,4 @@ $(document).ready(function () {
             return "Không thể kết nối tới server";
         }
     }
-});
+

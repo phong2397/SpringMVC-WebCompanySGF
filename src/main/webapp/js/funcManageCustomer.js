@@ -1,6 +1,4 @@
-$( document ).ready(function() {
-    $("#loading").css("display", "none");
-    $("body").on("click", ".btn-outline", function () {
+$("body").on("click", ".btn-outline", function () {
         var companyCode = $("#companyCode").val();
         var data = {companyCode:companyCode};
         var dataobject = ajaxPost(data);
@@ -68,5 +66,3 @@ $( document ).ready(function() {
         }
         return result;
     }
-
-});

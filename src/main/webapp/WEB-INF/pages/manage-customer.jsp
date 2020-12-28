@@ -103,7 +103,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label style="color: black">Mã công ty </label>
-                                                <select name="companyCode" id="companyCode" class="form-control" onchange="onCompanyChanged(event)">
+                                                <select  id="companyCode" class="form-control" onchange="onCompanyChanged(event)">
                                                     <option value="Please Choose" >
                                                         -- Please Choose --
                                                     </option>
@@ -145,7 +145,7 @@
                                             <th>Mã công ty</th>
                                             <th>Thông tin khách hàng</th>
                                             <th>Địa chỉ</th>
-                                            <th>Vị trí</th>
+                                            <th>Chức vụ</th>
                                             <th>Thông tin CMND</th>
                                             <th>Thông tin ngân hàng</th>
                                             <th>Thông tin nhân thân</th>
@@ -189,7 +189,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="js/funcManageCustomer.js"></script>
 <script type="text/javascript">
-
+    $(document).ready(function () {
+        $("#loading").fadeOut(2000);
+    });
     <%
         List<Companies> list = (List<Companies>) request.getAttribute("views");
         Gson g = new Gson();
@@ -198,10 +200,10 @@
     var comList = <%=json%>;
 
     function onCompanyChanged(e){
-        console.log(e);
         let value = e.target.value;
 
         let com = comList.find(e => e.companyCode == value);
+        console.log(com);
         $('#companyName').text(com.companyName);
     }
 </script>

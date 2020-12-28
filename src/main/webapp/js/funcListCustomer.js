@@ -1,5 +1,4 @@
-$( document ).ready(function() {
-    $("#loading").css("display", "none");
+
     $("body").on("click", ".btn-outline", function () {
         var customerName = $("#customerName").val();
         var customerPhone = $("#customerPhone").val();
@@ -71,4 +70,4 @@ $( document ).ready(function() {
         }
         return result;
     }
-});
+

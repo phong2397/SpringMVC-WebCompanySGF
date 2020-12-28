@@ -6,7 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+<div id="loading">
+    <div id="nest5"></div>
+</div>
 <header class="main-header">
     <div class="d-flex align-items-center logo-box pl-40">
         <a href="#" class="waves-effect waves-light nav-link rounded d-none d-md-inline-block push-btn"

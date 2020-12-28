@@ -29,7 +29,6 @@
 
 </head>
 <body class="hold-transition theme-primary bg-gradient-primary">
-
 <section class="error-page h-p100">
     <div class="container h-p100">
         <div class="row h-p100 align-items-center justify-content-center text-center">
@@ -50,6 +49,7 @@
 
 <!-- Vendor JS -->
 <script src="js/vendors.min.js"></script>
+
 </body>
 </html>
 

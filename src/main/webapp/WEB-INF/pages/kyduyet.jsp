@@ -90,7 +90,7 @@
             <section class="content">
 
                 <div class="row">
-                    <div class="col-xs-4 col-md-2 col-10 ">
+                    <div class="col-xl-3 col-md-6 col-12 ">
                         <div class="box box-inverse box-success">
                             <div class="box-body">
                                 <div class="flexbox">
@@ -116,8 +116,8 @@
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-xs-4 col-md-2 col-10 ">
-                        <div class="box box-inverse box-warning">
+                    <div class="col-xl-3 col-md-6 col-12 ">
+                    <div class="box box-inverse box-warning">
                             <div class="box-body">
                                 <div class="flexbox">
                                     <h5>Chờ giải quyết</h5>
@@ -142,8 +142,8 @@
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-xs-4 col-md-2 col-10 ">
-                        <div class="box box-inverse box-primary">
+                    <div class="col-xl-3 col-md-6 col-12 ">
+                    <div class="box box-inverse box-primary">
                             <div class="box-body">
                                 <div class="flexbox">
                                     <h5> Chờ ký duyệt</h5>
@@ -169,8 +169,8 @@
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-xs-4 col-md-2 col-10 ">
-                        <div class="box box-inverse " style="background-color: hotpink">
+                    <div class="col-xl-3 col-md-6 col-12 ">
+                    <div class="box box-inverse " style="background-color: hotpink">
                             <div class="box-body">
                                 <div class="flexbox">
                                     <h5> Đã giải ngân</h5>
@@ -196,33 +196,33 @@
                         </div>
                     </div>
                     <!-- /.col -->
-                    <div class="col-xs-4 col-md-2 col-10 ">
-                        <div class="box box-inverse box-danger">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Đã hủy</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
+<%--                    <div class="col-xs-4 col-md-2 col-10 ">--%>
+<%--                        <div class="box box-inverse box-danger">--%>
+<%--                            <div class="box-body">--%>
+<%--                                <div class="flexbox">--%>
+<%--                                    <h5>Đã hủy</h5>--%>
+<%--                                    <div class="dropdown">--%>
+<%--											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i--%>
+<%--                                                    class="ion-android-more-vertical rotate-90"></i></span>--%>
+<%--                                        <div class="dropdown-menu dropdown-menu-right">--%>
+<%--                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>--%>
+<%--                                                Details</a>--%>
+<%--                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add--%>
+<%--                                                new</a>--%>
+<%--                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>--%>
+<%--                                                Refresh</a>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
 
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countDeni}</div>
-                                    <span>Yêu cầu bị từ chối</span>
-                                </div>
-                            </div>
+<%--                                <div class="text-center my-2">--%>
+<%--                                    <div class="font-size-60">${countDeni}</div>--%>
+<%--                                    <span>Yêu cầu bị từ chối</span>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
 
-                        </div>
-                    </div>
+<%--                        </div>--%>
+<%--                    </div>--%>
                     <!-- /.col -->
 
 
@@ -331,7 +331,6 @@
                     <p>Số lần ứng : <span id="timeBorrow"></span></p>
                     <p>Trạng thái : <span id="status" style="color: #0b2c89"></span></p>
                     <p>Người thẩm định : <span id="employeeThamdinh"></span></p>
-                    <p>Ngày thẩm định : <span id="day"></span>-<span id="month">-</span>-<span id="year"></span></p>
                 </div>
                 <div class="modal-footer modal-footer-uniform">
                     <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
@@ -358,6 +357,9 @@
 <script type="text/javascript" src="js/funckyduyet.js">
 </script>
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#loading").fadeOut(2000);
+    });
     <%
               List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
               Gson g = new Gson();
@@ -389,9 +391,6 @@
            if(key == "borrow" ){
                 let value1 = saRequest[key];
                 $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
-               Object.keys(date).forEach((key) => {
-                       $('#' + key).text(date[key]);
-               });
             }
             else {
                 $('#' + key).text(saRequest[key]);
