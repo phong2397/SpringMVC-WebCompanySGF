@@ -49,7 +49,7 @@
 
             <form action="${pageContext.request.contextPath}/login" method="post" class="form-element">
                 <div class="form-group has-feedback">
-                    <input name="user" class="form-control text-white plc-white" placeholder="Tên đăng nhập">
+                    <input name="user" class="form-control text-white plc-white" placeholder="Tên đăng nhập gì gì đó?">
                     <span class="ion ion-email form-control-feedback text-white"></span>
                 </div>
                 <div class="form-group has-feedback">
