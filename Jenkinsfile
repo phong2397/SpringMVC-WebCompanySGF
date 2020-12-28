@@ -5,8 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'mvn clean install'
-                sh '/opt/os/apache-tomcat-8.5.60/bin/shutdown.sh'
-                sh '/opt/os/apache-tomcat-8.5.60/bin/startup.sh'
+                sh 'sudo rm -rf /opt/os/apache-tomcat-8.5.60/webapps/sgfintech-admin.war'
             }
         }
     }
