@@ -53,7 +53,7 @@
                     <span class="ion ion-email form-control-feedback text-white"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input name="pass" type="password" class="form-control text-white plc-white" placeholder="Mật khẩu">
+                    <input name="pass" type="password" class="form-control text-white plc-white" placeholder="Mật khẩu là gì gì đó?">
                     <span class="ion ion-locked form-control-feedback text-white"></span>
                 </div>
                 <div class="row">
