@@ -31,6 +31,21 @@ public class ApprovalController {
     @Autowired
     SaRequestDAO saRequestDAO;
 
+    @RequestMapping(value = {"/tuchoi"}, method = RequestMethod.GET)
+    public String declinePage(ModelMap mm, HttpServletRequest request) {
+        int countAll = mergeDataService.countAll();
+        int countWait = mergeDataService.countStatus("wait");
+        int countWFS = mergeDataService.countStatus("wfs");
+        int countDeni = mergeDataService.countStatus("deni");
+        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("deni");
+        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+        mm.addAttribute("countAll", countAll);
+        mm.addAttribute("countWait", countWait);
+        mm.addAttribute("countWFS", countWFS);
+        mm.addAttribute("countDeni", countDeni);
+        return "tuchoi";
+    }
+
     @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
         int countAll = mergeDataService.countAll();

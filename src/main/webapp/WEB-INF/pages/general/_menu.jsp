@@ -43,14 +43,19 @@
                     <span>Thông tin khách hàng</span>
                 </a>
             </li>
-<%--            <li>--%>
-<%--                <a href="document.html">--%>
-<%--                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">--%>
-<%--                    <span>Tài liệu</span>--%>
-<%--                </a>--%>
-<%--            </li>--%>
+            <li>
+                <a href="document.html">
+                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
+                    <span>Tài liệu</span>
+                </a>
+            </li>
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Tiếp nhận yêu cầu</li>
-
+            <li>
+                <a href="tuchoi.html">
+                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
+                    <span>Từ chối</span>
+                </a>
+            </li>
             <li>
                 <a href="thamdinh.html">
                     <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
@@ -137,12 +142,12 @@
                     <span>Thông tin khách hàng</span>
                 </a>
             </li>
-<%--            <li>--%>
-<%--                <a href="document.html">--%>
-<%--                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">--%>
-<%--                    <span>Tài liệu</span>--%>
-<%--                </a>--%>
-<%--            </li>--%>
+            <li>
+                <a href="document.html">
+                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
+                    <span>Tài liệu</span>
+                </a>
+            </li>
             <li>
                 <a href="${pageContext.request.contextPath}/logout">
                     <img src="images/svg-icon/sidebar-menu/logout.svg" class="svg-icon" alt="">
