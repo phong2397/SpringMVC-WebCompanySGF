@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.sgfintech.util.Consts" %>
+<%@ page import="com.sgfintech.entity.Useradmin" %><%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 12/09/2020
@@ -8,7 +9,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
+<%
+    if (session.getAttribute(Consts.Session_Euser) != null){
+        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+        String role = u.getRole();
+        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload") || role.equals("thuhoi") || role.equals("truongthuhoi")|| role.equals("kyduyet")|| role.equals("thamdinh") ){
+        }else{
+            response.sendRedirect("404");
+        }
+    } else{
+        response.sendRedirect("login");
 
+    }
+%>
 <jsp:include page="general/_head.jsp" />
 
 <body class="hold-transition light-skin sidebar-mini theme-primary fixed">
@@ -363,7 +376,7 @@
 <script src="js/demo.js"></script>
 <script type="text/javascript">
     $( document ).ready(function() {
-        $("#loading").css("display", "none");
+        $("#loading").fadeOut(1500);
     });
 </script>
 <script src="assets/vendor_components/apexcharts-bundle/data.js"></script>

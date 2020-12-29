@@ -32,6 +32,9 @@ public class ContractMapper implements RowMapper<Contract> {
         }
         c.setAcceptedBy(rs.getString("accepted_by"));
         c.setNotedBy(rs.getBytes("noted_by"));
+        if (!StringUtil.isEmpty(rs.getDate("updated_date"))) {
+            c.setUpdatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("updated_date")));
+        }
         return c;
     }
 }

@@ -81,8 +81,6 @@
     </div>
 
 </div>
-
-
 <!-- Vendor JS -->
 <script src="js/vendors.min.js"></script>
 

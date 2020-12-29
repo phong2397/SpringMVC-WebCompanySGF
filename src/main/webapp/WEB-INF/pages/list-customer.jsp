@@ -144,7 +144,7 @@
                                             <th>Mã công ty</th>
                                             <th>Thông tin khách hàng</th>
                                             <th>Địa chỉ</th>
-                                            <th>Vị trí</th>
+                                            <th>Chức vụ</th>
                                             <th>Thông tin CMND</th>
                                             <th>Thông tin ngân hàng</th>
                                             <th>Thông tin nhân thân</th>
@@ -207,7 +207,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript" src="js/funcListCustomer.js"></script>
 <script type="text/javascript">
-
+    $(document).ready(function () {
+        $("#loading").fadeOut(1500);
+    });
     <%
          List<CustomerHandler> list = (List<CustomerHandler>) request.getAttribute("views");
          Gson g = new Gson();

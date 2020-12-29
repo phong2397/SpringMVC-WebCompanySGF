@@ -112,7 +112,7 @@ body {
 
 /*=== extra preloading text=== */
 /** this code can be use for adding loading text under preloader */
-#laoding_text {
+#loading_text {
   display: block;
   position: absolute;
   font-family: sans-serif,arial;

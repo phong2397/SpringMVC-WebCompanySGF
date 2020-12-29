@@ -33,6 +33,7 @@
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <!-- Site wrapper -->
 <div class="wrapper">
+
     <jsp:include page="general/_header.jsp" />
     <!-- Left side column. contains the logo and sidebar -->
     <jsp:include page="general/_menu.jsp" />
@@ -210,7 +211,7 @@
 <script src="js/demo.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#loading").css("display", "none");
+        $("#loading").fadeOut(1500);
     });
       <%
            List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");

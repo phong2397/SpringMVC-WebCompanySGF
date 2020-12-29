@@ -39,12 +39,6 @@ public class SaRequest implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "employee_sua")
-    private String employeeSua;
-
-    @Column(name = "employee_sua_date")
-    private LocalDateTime employeeSuaDate;
-
     @Column(name = "employee_thamdinh")
     private String employeeThamdinh;
 
@@ -75,7 +69,7 @@ public class SaRequest implements Serializable {
     @Column(name = "lasttime_topup")
     private LocalDateTime lasttimeTopup;
 
-    public SaRequest(Long id, String companyCode, String customerPhone, Long borrow, Integer timeBorrow, Double interestRate, Double feeBorrow, String status, String employeeSua, LocalDateTime employeeSuaDate, String employeeThamdinh, LocalDateTime employeeThamdinhDate, String employeeDuyet, LocalDateTime employeeDuyetDate, String description, byte[] data, LocalDateTime createdDate, LocalDateTime updatedDate, LocalDateTime updatedTimeBororw, LocalDateTime lasttimeTopup) {
+    public SaRequest(Long id, String companyCode, String customerPhone, Long borrow, Integer timeBorrow, Double interestRate, Double feeBorrow, String status, String employeeThamdinh, LocalDateTime employeeThamdinhDate, String employeeDuyet, LocalDateTime employeeDuyetDate, String description, byte[] data, LocalDateTime createdDate, LocalDateTime updatedDate, LocalDateTime updatedTimeBororw, LocalDateTime lasttimeTopup) {
         this.id = id;
         this.companyCode = companyCode;
         this.customerPhone = customerPhone;
@@ -84,8 +78,6 @@ public class SaRequest implements Serializable {
         this.interestRate = interestRate;
         this.feeBorrow = feeBorrow;
         this.status = status;
-        this.employeeSua = employeeSua;
-        this.employeeSuaDate = employeeSuaDate;
         this.employeeThamdinh = employeeThamdinh;
         this.employeeThamdinhDate = employeeThamdinhDate;
         this.employeeDuyet = employeeDuyet;

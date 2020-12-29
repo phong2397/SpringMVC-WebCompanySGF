@@ -43,14 +43,14 @@
                 <p>Họ Tên : <span id="customerName"></span></p>
                 <p>Mã nhân viên : <span id="customerCode"></span></p>
                 <p>Email : <span id="customerEmail"></span></p>
-                <p>Lương : <span id="customerSalary"></span></p>
+                <p>Mức lương : <span id="customerSalary"></span></p>
                 <p>Giới tính : <span id="customerGender"></span></p>
                 <p>Ngày sinh : <span id="day"></span>-<span id="month"></span>-<span id="year"></span></p>
                 <p>Tên ngân hàng : <span id="customerBank"></span></p>
                 <p>Số tài khoản : <span id="customerBankAcc"></span></p>
                 <p>Tên ngân hàng : <span id="customerBankName"></span></p>
-                <p>CMND/Hộ chiếu/CCCD : <span id="customerId"></span></p>
-                <p>Nơi cấp : <span id="customerIdLocation"></span></p>
+                <p>Số CMND : <span id="customerId"></span></p>
+                <p>Thường trú : <span id="customerIdLocation"></span></p>
                 <p>Địa chỉ : <span id="customerAddress"></span></p>
                 <p>Tạm trú : <span id="customerAddressTemp"></span></p>
                 <p>Số BHXH : <span id="customerSocialInsurance"></span></p>

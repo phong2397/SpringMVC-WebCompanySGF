@@ -1,7 +1,3 @@
-
-$(document).ready(function () {
-    $("#loading").css("display", "none");
-});
 $("body").on("click", ".btn-accept", function () {
     var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
     dataRequest = dataRequest.substring(0, dataRequest.length - 4);
@@ -26,7 +22,6 @@ $("body").on("click", ".btn-accept", function () {
         });
     }
 });
-
 
 function sendOrder(data) {
     try {

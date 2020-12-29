@@ -57,6 +57,12 @@ public class LoginController {
         }
     }
 
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpSession session ) {
+        session.invalidate();
+        return "redirect:/login";
+    }
+
     String getDateString() {
         Calendar rightNow = Calendar.getInstance();
         Date date = rightNow.getTime();

@@ -55,8 +55,18 @@ public class SignController {
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
+        int countAll = mergeDataService.countAll();
+        int countWait = mergeDataService.countStatus("wait");
+        int countWFS = mergeDataService.countStatus("wfs");
+        int countDone = mergeDataService.countStatus("done");
+        int countDeni = mergeDataService.countStatus("deni");
         List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs",false);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+        mm.addAttribute("countAll", countAll);
+        mm.addAttribute("countWait", countWait);
+        mm.addAttribute("countWFS", countWFS);
+        mm.addAttribute("countDone", countDone);
+        mm.addAttribute("countDeni", countDeni);
         return "kyduyet";
     }
 
@@ -70,7 +80,6 @@ public class SignController {
         try {
             SaRequest sa = saRequestDAO.findById(Long.parseLong(data.trim())); //sa.getBorrow();
             Customer cu = customerService.getCustomerByPhone(sa.getCustomerPhone());
-
             Date date = new Date();
             String partnerCode = "VAYSV";
             String requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(date);

@@ -56,7 +56,10 @@ public class Contract implements Serializable {
     @Column(name = "noted_by")
     private byte[] notedBy;
 
-    public Contract(Long idContract, String systemTrace, String customerPhone, Long borrow, Integer timeBorrow, Long remainAmountBorrow, Double feeBorrow, String transactionId, String status, LocalDateTime dateRepayment, LocalDateTime dateRepaymentUtil, String acceptedBy, byte[] notedBy) {
+    @Column(name = "updated_date")
+    private LocalDateTime updatedDate;
+
+    public Contract(Long idContract, String systemTrace, String customerPhone, Long borrow, Integer timeBorrow, Long remainAmountBorrow, Double feeBorrow, String transactionId, String status, LocalDateTime dateRepayment, LocalDateTime dateRepaymentUtil, String acceptedBy, byte[] notedBy,LocalDateTime updatedDate) {
         this.idContract = idContract;
         this.systemTrace = systemTrace;
         this.customerPhone = customerPhone;
@@ -70,6 +73,7 @@ public class Contract implements Serializable {
         this.dateRepaymentUtil = dateRepaymentUtil;
         this.acceptedBy = acceptedBy;
         this.notedBy = notedBy;
+        this.updatedDate = updatedDate;
     }
     public Contract() {
     }
