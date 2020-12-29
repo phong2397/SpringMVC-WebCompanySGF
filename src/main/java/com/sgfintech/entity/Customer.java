@@ -85,6 +85,12 @@ public class Customer implements Serializable {
     @Column(name = "customer_relative_phone")
     private String customerRelativePhone;
 
+    @Column(name = "customer_birthday")
+    private LocalDate customerBirthday;
+
+    @Column(name = "customer_gender")
+    private String customerGender;
+
     @Column(name = "status")
     private String status = "wait";
 

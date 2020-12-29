@@ -13,5 +13,4 @@ public class CustomerHandler {
         this.customer = cu;
         this.company = com;
     }
-
 }
