@@ -49,11 +49,11 @@
 
             <form action="${pageContext.request.contextPath}/login" method="post" class="form-element">
                 <div class="form-group has-feedback">
-                    <input name="user" class="form-control text-white plc-white" placeholder="Tên đăng nhập gì gì đó?">
+                    <input name="user" class="form-control text-white plc-white" placeholder="Tên đăng nhập">
                     <span class="ion ion-email form-control-feedback text-white"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input name="pass" type="password" class="form-control text-white plc-white" placeholder="Mật khẩu là gì gì đó?">
+                    <input name="pass" type="password" class="form-control text-white plc-white" placeholder="Mật khẩu">
                     <span class="ion ion-locked form-control-feedback text-white"></span>
                 </div>
                 <div class="row">
