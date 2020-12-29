@@ -105,7 +105,6 @@
                     <div class="row">
                         <div class="col-lg-12 col-12">
                             <div class="box">
-
                                 <div class="box-body">
                                     <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin công ty
                                     </h4>
@@ -139,6 +138,40 @@
                         </div>
                     </div>
                 </form>
+
+                <div class="row" style="display: none" id="resultTable">
+
+                    <div class="col-lg-12 col-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h4 class="box-title">Kết quả import</h4>
+                            </div>
+                            <div class="box-body">
+                                <div class="table-responsive">
+                                    <table  id="example" class="table table-lg invoice-archive">
+                                        <thead>
+                                        <tr>
+                                            <th>Mã công ty</th>
+                                            <th>Số điện thoại khách hàng</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Ngày tháng năm sinh</th>
+                                            <th>Chủ tài khoản</th>
+                                            <th>Số tài khoản</th>
+                                            <th>Tên ngân hàng</th>
+                                            <th>Số CMND</th>
+                                            <th>Số hợp đồng</th>
+                                            <th>Ngày kết thúc hợp đồng</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="tbodytable">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
             <!-- /.content -->
 
@@ -169,8 +202,10 @@
     $(document).ready(function () {
         $("#loading").hide();
     });
+
     function submitform() {
         $("#loading").show();
+        $("#resultTable").hide();
         var formData = new FormData();
         formData.append('file', $('#importFile')[0].files[0]);
         var tenconty = $("#tencongty").val();
@@ -185,13 +220,42 @@
             contentType: false,  // tell jQuery not to set contentType
             async: false,
             success: function (data) {
-                $("#loading").hide();
-                console.log(data);
-                Swal.fire(
-                    'Successful',
-                    'Dữ liệu của hệ thống đã được cập nhật',
-                    'success'
-                )
+                try {
+                    $("#resultTable").show();
+                    var obj = JSON.parse(data + "") ;
+                    var body = $("#tbodytable");
+                    body.empty();
+                    for (var i = 0; i < obj.length; i++){
+                        var e = obj[i];
+                        var rowElement = $('<tr></tr>');
+                        rowElement.append('<td>' + e.companyCode + '</td>');
+                        rowElement.append('<td>' + e.customerPhone + '</td>');
+                        rowElement.append('<td>' + e.customerName + '</td>');
+                        rowElement.append('<td>' + e.customerBirthday.day + "-" + e.customerBirthday.month + "-" + e.customerBirthday.year  + '</td>');
+                        rowElement.append('<td>' + e.customerBank + '</td>');
+                        rowElement.append('<td>' + e.customerBankAcc + '</td>');
+                        rowElement.append('<td>' + e.customerBankName + '</td>');
+                        rowElement.append('<td>' + e.customerId + '</td>');
+                        rowElement.append('<td>' + e.customerContract + '</td>');
+                        rowElement.append('<td>' + e.customerContractExpired.date.day + "-" + e.customerContractExpired.date.month + "-" + e.customerContractExpired.date.year +  '</td>');
+                        body.append(rowElement);
+                    }
+                    $("#loading").hide();
+                    console.log(data);
+                    Swal.fire(
+                        'Successful',
+                        'Dữ liệu của hệ thống đã được cập nhật',
+                        'success'
+                    )
+                } catch (error) {
+                    $("#loading").hide();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Lỗi trong quá trình thực thi' + data,
+                    })
+                }
+
             },
             error : function (data) {
                 $("#loading").hide();
@@ -201,7 +265,7 @@
                     title: 'Oops...',
                     text: 'Lỗi trong quá trình thực thi',
                     footer: '<a href>Why do I have this issue?</a>'
-                })
+                });
             }
         });
     }

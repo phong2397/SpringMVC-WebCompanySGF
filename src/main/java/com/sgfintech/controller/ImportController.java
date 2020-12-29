@@ -73,14 +73,14 @@ public class ImportController implements ServletContextAware {
                 Companies com = new Companies();
                 com.setCompanyCode(companyCode);
                 com.setCompanyName(companyName);
-                companiesDAO.save(com);
-                customerDAO.saveAllStateless(lstCustomer);
+//                companiesDAO.save(com);
+//                customerDAO.saveAllStateless(lstCustomer);
                 return new Gson().toJson(lstCustomer);
             } else {
                 //todo compare 2 list
                 List<Customer> customerList = customerDAO.getAllItemByCode(companyCode);
                 List<Customer> importDB = CompareListHandler.compareList(customerList, lstCustomer);
-                customerDAO.saveAllStateless(importDB);
+//                customerDAO.saveAllStateless(importDB);
                 return new Gson().toJson(importDB);
             }
         } catch (Exception ex) {

@@ -1,4 +1,5 @@
 $("body").on("click", ".btn-outline", function () {
+    $("#loading").show();
         var companyCode = $("#companyCode").val();
         var data = {companyCode:companyCode};
         var dataobject = ajaxPost(data);
@@ -41,6 +42,7 @@ $("body").on("click", ".btn-outline", function () {
             'Mã số bảo hiểm y tế :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerHealthInsurance + '</span></td>');
         body.append(rowElement);
     }
+    $("#loading").hide();
     });
     function ajaxPost(data)  {
         let result = "";

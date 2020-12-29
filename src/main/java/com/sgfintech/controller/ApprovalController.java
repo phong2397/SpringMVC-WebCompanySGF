@@ -31,7 +31,6 @@ public class ApprovalController {
     @Autowired
     SaRequestDAO saRequestDAO;
 
-
     @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
         int countAll = mergeDataService.countAll();

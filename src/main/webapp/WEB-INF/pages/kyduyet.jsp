@@ -358,7 +358,8 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#loading").fadeOut(1500);
+        $("#loading").hide();
+
     });
     <%
               List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");

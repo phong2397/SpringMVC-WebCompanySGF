@@ -1,5 +1,6 @@
 
     $("body").on("click", ".btn-outline", function () {
+        $("#loading").show();
         var customerName = $("#customerName").val();
         var customerPhone = $("#customerPhone").val();
         var customerId = $("#customerId").val();
@@ -44,6 +45,7 @@
                 'Mã số bảo hiểm y tế :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerHealthInsurance + '</span></td>');
             body.append(rowElement);
         }
+        $("#loading").hide();
         //
     });
     function ajaxPost(data)  {

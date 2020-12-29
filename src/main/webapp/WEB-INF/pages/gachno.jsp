@@ -226,8 +226,8 @@
 										<tr>
 											<td>Thanh toán dư nợ cuối kì</td>
 											<td><span id="systemTrace"></span></td>
-											<td class="text-right">10%</td>
 											<td class="text-right">1.4%</td>
+											<td class="text-right"><span id="feeBorrow"></span></td>
 											<td class="text-right"><span id="borrow"></span></td>
 										</tr>
 									</tbody>
@@ -287,7 +287,7 @@
 	<script type="text/javascript" src="js/funcgachno.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function () {
-				$("#loading").fadeOut(1500);
+				$("#loading").hide();
 			});
 			var selectedContractId;
 
@@ -326,10 +326,14 @@
 			const contract = result.contract;
 			Object.keys(contract).forEach((key) => {
 				if(key == "remainAmountBorrow") {
-					let value = (10/100 * contract[key]) + (1.4/100 * contract[key])+ contract[key];
+					let value = (1.4/100 * contract[key])+ contract[key];
 					$('#' + key).text(value.toLocaleString("vi-VN") + " đ");
 
 				}else if(key == "borrow" ){
+					let value1 = contract[key];
+					$('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
+				}
+				else if(key == "feeBorrow" ){
 					let value1 = contract[key];
 					$('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
 				}
