@@ -204,8 +204,7 @@
 <script src="js/demo.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#loading").fadeOut(1500);
-
+        $("#loading").hide();
     });
     <%
              List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");

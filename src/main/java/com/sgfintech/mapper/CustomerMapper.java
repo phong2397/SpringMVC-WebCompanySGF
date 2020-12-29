@@ -77,11 +77,15 @@ public class CustomerMapper implements RowMapper<Customer> {
         c.setCustomerPosition(rs.getString("customer_position"));
         c.setCustomerTax(rs.getString("customer_tax"));
         c.setCustomerContract(rs.getLong("customer_contract"));
+        c.setCustomerGender(rs.getString("customer_gender"));
         if (!StringUtil.isEmpty(rs.getDate("customer_contract_expired"))) {
             c.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_contract_expired")));
         }
         c.setCustomerRelative(rs.getString("customer_relative"));
         c.setCustomerRelativePhone(rs.getString("customer_relative_phone"));
+        if (!StringUtil.isEmpty(rs.getDate("customer_birthday"))) {
+            c.setCustomerBirthday(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_birthday")).toLocalDate());
+        }
         c.setStatus(rs.getString("status"));
         if (!StringUtil.isEmpty(rs.getDate("customer_id_date"))) {
             c.setCustomerIdDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_id_date")));

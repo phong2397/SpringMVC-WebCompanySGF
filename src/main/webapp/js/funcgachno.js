@@ -1,5 +1,6 @@
 
     $("body").on("click", ".btn-success", function () {
+        $("#loading").show();
         var dataRequest = $("#idContract").text().trim();
         let data = { datarequest: dataRequest, status: 'done' };
         var result = submitWithdraw(data);
@@ -11,6 +12,7 @@
                 showConfirmButton: false,
                 timer: 3000
             });
+            $("#loading").hide();
             $("#tr-" + selectedContractId).remove();
         } else {
             Swal.fire({

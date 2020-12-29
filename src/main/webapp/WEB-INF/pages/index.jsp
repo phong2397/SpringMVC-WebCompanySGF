@@ -376,7 +376,7 @@
 <script src="js/demo.js"></script>
 <script type="text/javascript">
     $( document ).ready(function() {
-        $("#loading").fadeOut(1500);
+        $("#loading").hide();
     });
 </script>
 <script src="assets/vendor_components/apexcharts-bundle/data.js"></script>

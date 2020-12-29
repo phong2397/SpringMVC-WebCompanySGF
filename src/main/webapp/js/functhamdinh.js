@@ -2,8 +2,10 @@ $("body").on("click", ".btn-accept", function () {
     var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
     dataRequest = dataRequest.substring(0, dataRequest.length - 4);
     let data = {datarequest: dataRequest, status:'wfs', step:'1'};
+    $("#loading").show();
     var result = sendOrder(data);
     if (result === "success") {
+
         Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -11,6 +13,7 @@ $("body").on("click", ".btn-accept", function () {
             showConfirmButton: false,
             timer: 3000
         });
+        $("#loading").hide();
         $(this).parents("tr").remove();
     } else {
         Swal.fire({
@@ -42,6 +45,7 @@ function sendOrder(data) {
 }
 
 $("body").on("click", ".btn-refuse", function () {
+    $("#loading").show();
     var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
     dataRequest = dataRequest.substring(0, dataRequest.length - 4);
     console.log(dataRequest);
@@ -55,6 +59,7 @@ $("body").on("click", ".btn-refuse", function () {
             showConfirmButton: false,
             timer: 3000
         });
+        $("#loading").hide();
         $(this).parents("tr").remove();
     } else {
         Swal.fire({

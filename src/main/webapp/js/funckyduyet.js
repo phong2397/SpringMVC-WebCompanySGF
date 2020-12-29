@@ -2,6 +2,7 @@ $("body").on("click", ".btn-accept", function () {
         var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "").trim();
         dataRequest = dataRequest.substring(0, dataRequest.length - 4);
         let data = {datarequest: dataRequest, status: 'act', step: '2'};
+    $("#loading").show();
         var result = sendOrder(data);
         if (result === "success") {
             Swal.fire({
@@ -11,6 +12,7 @@ $("body").on("click", ".btn-accept", function () {
                 showConfirmButton: false,
                 timer: 3000
             });
+            $("#loading").hide();
             $(this).parents("tr").remove();
         } else {
             Swal.fire({

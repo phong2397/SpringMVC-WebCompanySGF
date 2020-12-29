@@ -262,8 +262,7 @@
 														<td ><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
 														<td>${lst.contract.transactionId}</td>
 														<td>${lst.contract.dateRepayment} </td>
-														<td> <fmt:formatNumber value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 10/100) +(lst.contract.remainAmountBorrow * 1.4/100) }" type = "number"/> đ</td>
-
+														<td> <fmt:formatNumber value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 1.4/100) }" type = "number"/> đ</td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -328,7 +327,7 @@
 	<script src="js/demo.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$("#loading").fadeOut(1500);
+			$("#loading").hide();
 		});
   				<%
                     List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");

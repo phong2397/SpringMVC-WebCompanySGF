@@ -114,8 +114,8 @@
                                                    ><b>${lst.productCode}</b></a>
                                             </td>
                                             <td><b>${lst.productName}</b></td>
+                                            <td class="text-left">0 đ</td>
                                             <td class="text-left">1.4%</td>
-                                            <td class="text-left">10%</td>
                                             <td class="text-left"><fmt:formatNumber value="1000000" type = "number"/> đ</td>
                                             <td class="text-left"><fmt:formatNumber value="2000000" type = "number"/> đ</td>
                                             <td class="text-left"><b style="color: #00E466">${lst.status}</b></td>
@@ -156,7 +156,7 @@
 <script src="js/demo.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#loading").fadeOut(1500);
+        $("#loading").hide();
     });
 
     <%--var result = <%=json%>;--%>
