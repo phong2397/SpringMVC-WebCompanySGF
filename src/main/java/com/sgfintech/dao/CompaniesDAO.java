@@ -51,7 +51,7 @@ public class CompaniesDAO {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Long> cr = cb.createQuery(Long.class);
         Root<Companies> items = cr.from(Companies.class);
-        cr.select(cb.count(items)).where(cb.equal(items.get("company_code"), companyCode));
+        cr.select(cb.count(items)).where(cb.equal(items.get("companyCode"), companyCode));
         Query<Long> query = session.createQuery(cr);
         List<Long> itemProjected = query.getResultList();
         return itemProjected.get(0);
@@ -59,9 +59,6 @@ public class CompaniesDAO {
 
     public void save(Companies companies) {
         Session session = this.sessionFactory.getCurrentSession();
-        Transaction rx =  session.beginTransaction();
         session.save(companies);
-        rx.commit();
-        session.close();
     }
 }

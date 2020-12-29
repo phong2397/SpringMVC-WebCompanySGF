@@ -154,71 +154,44 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#loading").css("display", "none");
+        $("#loading").hide();
     });
 
     function submitform() {
+        $("#loading").show();
         var formData = new FormData();
         formData.append('file', $('#importFile')[0].files[0]);
         var tenconty = $("#tencongty").val();
         var macongty = $("#macongty").val();
         var filePath = $("#importFile").val();
-        console.log(filePath);
         $.ajax({
             url: 'import?tencongty=' + tenconty + '&macongty=' + macongty,
             type: 'POST',
             data: formData,
+            cache: false,
             processData: false,  // tell jQuery not to process the data
             contentType: false,  // tell jQuery not to set contentType
             async: false,
             success: function (data) {
+                $("#loading").hide();
                 console.log(data);
+                Swal.fire(
+                    'Successful',
+                    'Dữ liệu của hệ thống đã được cập nhật',
+                    'success'
+                )
+            },
+            error : function (data) {
+                $("#loading").hide();
                 alert(data);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Lỗi trong quá trình thực thi',
+                    footer: '<a href>Why do I have this issue?</a>'
+                })
             }
         });
-
-        if (macongty == "sgfintech") {
-            Swal.fire(
-                'Successful',
-                'Dữ liệu của hệ thống đã được cập nhật',
-                'success'
-            )
-        } else if (macongty == "sgf") {
-            Swal.fire({
-                title: 'Mã công ty đã tồn tại!',
-                text: "Bạn có muốn cập nhật dữ liệu hiện có?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, update it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Dữ liệu của hệ thống đã được cập nhật',
-                        'success'
-                    )
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                        'Cancelled',
-                        'Thay đổi đã bị hủy',
-                        'error'
-                    )
-                }
-            })
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Lỗi trong quá trình thực thi',
-                footer: '<a href>Why do I have this issue?</a>'
-            })
-        }
-        console.log(tenconty);
     }
 </script>
 </body>

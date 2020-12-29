@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -69,28 +70,28 @@ public class ExcelHelper {
     public List<Customer> parseDataFromExcel(String sheetName, String companyCode) throws Exception {
         initializeForRead();
         Sheet sheet = getSheetWithName(sheetName);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         List<Customer> lstCust = new ArrayList<>();
         Row row;
         for (int rowCount = 1; rowCount <= sheet.getLastRowNum(); rowCount++) {
             Customer c = new Customer();
-            int count = 0;
             row = sheet.getRow(rowCount);
             c.setCompanyCode(companyCode);
-            c.setCustomerName(row.getCell(count).getStringCellValue());
-            c.setCustomerId(row.getCell(count++).getStringCellValue());
-            c.setCustomerBirthday(row.getCell(count++).getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            c.setCustomerPhone(row.getCell(count++).getStringCellValue());
-            c.setCustomerContractExpired(LocalDateTime.ofInstant(row.getCell(count++).getDateCellValue().toInstant(),
+            c.setCustomerName(row.getCell(0).getStringCellValue());
+             c.setCustomerId(row.getCell(1).getStringCellValue());
+             c.setCustomerBirthday(sdf.parse(row.getCell(2).getStringCellValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            c.setCustomerPhone(row.getCell(3).getStringCellValue());
+            c.setCustomerContractExpired(LocalDateTime.ofInstant(sdf.parse(row.getCell(4).getStringCellValue()).toInstant(),
                     ZoneId.systemDefault()));
-            c.setCustomerContract(Long.parseLong(row.getCell(count++).getStringCellValue()));
-            int n = (int) row.getCell(count++).getNumericCellValue();
+            c.setCustomerContract((long) (row.getCell(5).getNumericCellValue()));
+            int n = (int) row.getCell(6).getNumericCellValue();
             c.setStatus(
                     (n == 0) ? "active" : "expried"
             );
 
-            c.setCustomerBankAcc(row.getCell(count++).getStringCellValue());
-            c.setCustomerBankName(row.getCell(count++).getStringCellValue());
-            c.setCustomerBank(row.getCell(count++).getStringCellValue());
+            c.setCustomerBankAcc(row.getCell(7).getStringCellValue());
+            c.setCustomerBankName(row.getCell(8).getStringCellValue());
+            c.setCustomerBank(row.getCell(9).getStringCellValue());
 
 
             /*
