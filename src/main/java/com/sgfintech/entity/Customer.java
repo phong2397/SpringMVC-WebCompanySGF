@@ -94,12 +94,6 @@ public class Customer implements Serializable {
     @Column(name = "status")
     private String status = "wait";
 
-    @Column(name = "customer_gender")
-    private String customerGender;
-
-    @Column(name = "customer_birthday")
-    private LocalDate customerBirthday;
-
     @Column(name = "created_date")
     private LocalDateTime createdDate = LocalDateTime.now();
 
