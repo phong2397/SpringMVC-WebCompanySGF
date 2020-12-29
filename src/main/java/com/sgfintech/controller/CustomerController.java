@@ -2,8 +2,10 @@ package com.sgfintech.controller;
 
 import com.google.gson.Gson;
 import com.sgfintech.dao.CompaniesDAO;
+import com.sgfintech.dao.DocumentsDAO;
 import com.sgfintech.entity.Companies;
 import com.sgfintech.entity.Customer;
+import com.sgfintech.entity.Documents;
 import com.sgfintech.handler.CustomerHandler;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.util.Consts;
@@ -30,13 +32,23 @@ import java.util.List;
  * @author lucnguyen.hcmut@gmail.com
  */
 @Controller
-public class CustomerController {
+public class  CustomerController {
 
     @Autowired
     MergeDataService mergeDataService;
 
     @Autowired
     CompaniesDAO companiesDAO;
+
+    @Autowired
+    DocumentsDAO documentsDAO;
+
+    @RequestMapping(value = {"/document"}, method = RequestMethod.GET)
+    public String document(Model model) {
+        List<Documents> listdata = documentsDAO.findAll();
+        model.addAttribute(Consts.Attr_ResultView, listdata);
+        return "document";
+    }
 
     @RequestMapping(value = {"/list-customer"}, method = RequestMethod.GET)
     public String listCustomer(Model model) {

@@ -208,7 +208,7 @@
 <script type="text/javascript" src="js/funcListCustomer.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#loading").fadeOut(2000);
+        $("#loading").fadeOut(1500);
     });
     <%
          List<CustomerHandler> list = (List<CustomerHandler>) request.getAttribute("views");

@@ -167,7 +167,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#loading").fadeOut(2000);
+        $("#loading").fadeOut(1500);
     });
     function submitform() {
         var formData = new FormData();

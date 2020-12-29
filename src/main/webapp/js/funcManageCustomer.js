@@ -11,36 +11,36 @@ $("body").on("click", ".btn-outline", function () {
         //forech(item: jsonobject){
         var body = $("#tbodytable");
         body.empty();
-        for (var i = 0; i < obj.length; i++){
-            var e = obj[i];
-            var rowElement = $('<tr></tr>');
-            rowElement.append('<td>' + e.customer.companyCode + '</td>');
-            rowElement.append('<td ><b>' + e.customer.customerName+'</b><br>' +
-                'Mã số nhân viên :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerCode+  '</span><br>'+
-                'Số điện thoại :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerPhone +  '</span><br>' +
-                'Ngày sinh :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerBirthday.day +'-' + e.customer.customerBirthday.month +'-' + e.customer.customerBirthday.year +  '</span><br>' +
-                'Giới tính :'+' '+ '<span className="d-block text-muted font-weight-normal">'+ e.customer.customerGender + '</span></td>');
-            rowElement.append('<td>' +'Thường trú :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerAddress +'</span><br>'+
-                'Tạm trú :'+' '+ '<span className="d-block text-muted font-weight-normal">'+ e.customer.customerAddressTemp  +'</span></td>');
-            rowElement.append('<td>' +'Vị trí :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerPosition + '<br>'+
-                'Lương :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerSalary+' ' +'đ</td>');
-            rowElement.append('<td>' +
-                'Số CMND :'+ ' '+'<span className="d-block text-muted font-weight-normal">'+e.customer.customerId + '</span><br>'+
-                'Nơi cấp :'+ ' '+'<span className="d-block text-muted font-weight-normal">'+e.customer.customerIdLocation +'</span><br>'+
-                'Ngày cấp :'+' '+'<span className="d-block text-muted font-weight-normal">'+e.customer.customerIdDate.date.day +'-' + e.customer.customerIdDate.date.month +'-' + e.customer.customerIdDate.date.year  + '</span></td>');
-            rowElement.append('<td xmlns="http://www.w3.org/1999/html">' +
-                'Tên ngân hàng :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerBankName+'</span><br>' +
-                'Chủ tài khoản :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerBank + '</span><br>' +
-                'Account number :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerBankAcc + '</span></td>');
-            rowElement.append('<td>' +
-                'Người thân :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerRelative+'</span><br>' +
-                'Số điện thoại :'+ ' '+'<span className="d-block text-muted font-weight-normal">'+e.customer.customerRelativePhone  +'</span></td>');
-            rowElement.append('<td>' +
-                'Mã số thuế :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerTax +'</span><br>' +
-                'Mã số bảo hiểm xã hội :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerSocialInsurance + '</span></br>' +
-                'Mã số bảo hiểm y tế :'+' '+'<span className="d-block text-muted font-weight-normal">'+ e.customer.customerHealthInsurance + '</span></td>');
-            body.append(rowElement);
-        }
+    for (var i = 0; i < obj.length; i++){
+        var e = obj[i];
+        var rowElement = $('<tr></tr>');
+        rowElement.append('<td><h5>' + e.customer.companyCode + '</h5></td>');
+        rowElement.append('<td ><b>' + e.customer.customerName+'</b><br>' +
+            'Mã số nhân viên :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerCode+  '</span><br>'+
+            'Số điện thoại :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerPhone +  '</span><br>' +
+            'Ngày sinh :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerBirthday.day +'-' + e.customer.customerBirthday.month +'-' + e.customer.customerBirthday.year +  '</span><br>' +
+            'Giới tính :'+' '+ '<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerGender + '</span></td>');
+        rowElement.append('<td>' +'Thường trú :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerAddress +'</span><br>'+
+            'Tạm trú :'+' '+ '<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerAddressTemp  +'</span></td>');
+        rowElement.append('<td>' +'Vị trí :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerPosition + '</span><br>'+
+            'Mức lương :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerSalary.toLocaleString("vi-VN") +' '+ 'đ</span></td>');
+        rowElement.append('<td>' +
+            'Số CMND :'+ ' '+'<span style=" font-weight: 300 bold;color: grey">'+e.customer.customerId + '</span><br>'+
+            'Nơi cấp :'+ ' '+'<span style=" font-weight: 300 bold;color: grey">'+e.customer.customerIdLocation +'</span><br>'+
+            'Ngày cấp :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+e.customer.customerIdDate.date.day +'-' + e.customer.customerIdDate.date.month +'-' + e.customer.customerIdDate.date.year  + '</span></td>');
+        rowElement.append('<td xmlns="http://www.w3.org/1999/html">' +
+            'Tên ngân hàng :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerBankName+'</span><br>' +
+            'Chủ tài khoản :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerBank + '</span><br>' +
+            'Số tài khoản :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerBankAcc + '</span></td>');
+        rowElement.append('<td>' +
+            'Người thân :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerRelative+'</span><br>' +
+            'Số điện thoại :'+ ' '+'<span style=" font-weight: 300 bold;color: grey">'+e.customer.customerRelativePhone  +'</span></td>');
+        rowElement.append('<td>' +
+            'Mã số thuế :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerTax +'</span><br>' +
+            'Mã số bảo hiểm xã hội :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerSocialInsurance + '</span></br>' +
+            'Mã số bảo hiểm y tế :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerHealthInsurance + '</span></td>');
+        body.append(rowElement);
+    }
     });
     function ajaxPost(data)  {
         let result = "";

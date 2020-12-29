@@ -124,7 +124,7 @@
 													</td>
 													<td class="text-left">
 														<h6 class="mb-0">
-															<a  href="#" ><b>${lst.customer.customerName}</b></a>
+															<b>${lst.customer.customerName}</b>
 															<span class="d-block text-muted">Company ID :<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
 															<span class="d-block text-muted">Account number:
 																${lst.customer.customerBankAcc}</span>
@@ -227,7 +227,7 @@
 											<td>Thanh toán dư nợ cuối kì</td>
 											<td><span id="systemTrace"></span></td>
 											<td class="text-right">10%</td>
-											<td class="text-right"><span id="feeBorrow"></span></td>
+											<td class="text-right">1.4%</td>
 											<td class="text-right"><span id="borrow"></span></td>
 										</tr>
 									</tbody>
@@ -287,7 +287,7 @@
 	<script type="text/javascript" src="js/funcgachno.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function () {
-				$("#loading").fadeOut(2000);
+				$("#loading").fadeOut(1500);
 			});
 			var selectedContractId;
 
@@ -326,7 +326,7 @@
 			const contract = result.contract;
 			Object.keys(contract).forEach((key) => {
 				if(key == "remainAmountBorrow") {
-					let value = (10/100 * contract[key]) + contract[key];
+					let value = (10/100 * contract[key]) + (1.4/100 * contract[key])+ contract[key];
 					$('#' + key).text(value.toLocaleString("vi-VN") + " đ");
 
 				}else if(key == "borrow" ){

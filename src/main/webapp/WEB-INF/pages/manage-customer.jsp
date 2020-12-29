@@ -190,7 +190,7 @@
 <script src="js/funcManageCustomer.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#loading").fadeOut(2000);
+        $("#loading").fadeOut(1500);
     });
     <%
         List<Companies> list = (List<Companies>) request.getAttribute("views");

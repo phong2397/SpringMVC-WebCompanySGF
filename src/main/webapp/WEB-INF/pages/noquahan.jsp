@@ -204,7 +204,7 @@
 <script src="js/demo.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#loading").fadeOut(2000);
+        $("#loading").fadeOut(1500);
 
     });
     <%

@@ -29,7 +29,6 @@
 	}
 %>
 <jsp:include page="general/_head.jsp" />
-
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 	<!-- Site wrapper -->
 	<div class="wrapper">
@@ -234,7 +233,7 @@
 													<th>Mã hệ thống (System Trace)</th>
 													<th>Status</th>
 													<th>Mã giao dịch (Transaction ID)</th>
-													<th></th>
+													<th>Ngày thanh toán</th>
 													<th>Số tiền còn nợ</th>
 
 												</tr>
@@ -258,12 +257,12 @@
 																	${lst.customer.customerPhone}</span>
 															</h6>
 														</td>
-														<td><fmt:formatNumber value="${lst.contract.remainAmountBorrow}" type = "number"/> đ</td>
+														<td>${lst.contract.borrow} đ</td>
 														<td>${lst.contract.systemTrace} đ</td>
 														<td ><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
 														<td>${lst.contract.transactionId}</td>
 														<td>${lst.contract.dateRepayment} </td>
-														<td> ${lst.contract.borrow} đ</td>
+														<td> <fmt:formatNumber value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 10/100) +(lst.contract.remainAmountBorrow * 1.4/100) }" type = "number"/> đ</td>
 
 													</tr>
 												</c:forEach>
@@ -329,7 +328,7 @@
 	<script src="js/demo.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$("#loading").fadeOut(2000);
+			$("#loading").fadeOut(1500);
 		});
   				<%
                     List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");
