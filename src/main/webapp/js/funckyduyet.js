@@ -45,7 +45,7 @@ $("body").on("click", ".btn-accept", function () {
     $("body").on("click", ".btn-refuse", function () {
         var dataRequest = $(this).parents("tr").find("td:eq(0)").text().replaceAll("#", "");
         dataRequest = dataRequest.substring(0, dataRequest.length - 4);
-        let data = {datarequest: dataRequest, status: 'act', step: '2'};
+        let data = {datarequest: dataRequest, status: 'deni', step: '2'};
         var result = sendOrder(data);
         if (result === "success") {
             Swal.fire({
