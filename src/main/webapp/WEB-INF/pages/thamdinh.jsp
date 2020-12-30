@@ -280,9 +280,8 @@
                                                 <td>${lst.saRequest.timeBorrow} month
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold"> <fmt:formatNumber value="${lst.saRequest.borrow}" type = "number"/> đ
-                                                        <span class="d-block text-muted font-weight-normal">Thuế ${lst.saRequest.interestRate} % </span>
-                                                        <span class="d-block text-muted font-weight-normal">Phí ${lst.saRequest.feeBorrow} đ </span>
+                                                    <h6 class="mb-0 font-weight-bold"> <fmt:formatNumber value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2)}" type = "number"/> đ
+                                                        <span class="d-block text-muted font-weight-normal">Phí 2 % </span>
                                                     </h6>
                                                 </td>
                                                 <td>

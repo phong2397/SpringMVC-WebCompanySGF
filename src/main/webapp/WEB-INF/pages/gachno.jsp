@@ -219,14 +219,12 @@
 										<tr>
 											<th>Mô tả</th>
 											<th>Serial #</th>
-											<th class="text-right">Thuế</th>
 											<th class="text-right">Phí</th>
 											<th class="text-right">Số tiền thanh toán</th>
 										</tr>
 										<tr>
 											<td>Thanh toán dư nợ cuối kì</td>
-											<td><span id="systemTrace"></span></td>
-											<td class="text-right">1.4%</td>
+											<td class="text-right">2 %</td>
 											<td class="text-right"><span id="feeBorrow"></span></td>
 											<td class="text-right"><span id="borrow"></span></td>
 										</tr>

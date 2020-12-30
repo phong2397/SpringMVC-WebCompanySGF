@@ -58,7 +58,7 @@
                 <p>Mã số thuế : <span id="customerTax"></span></p>
                 <p>Số hợp đồng : <span id="customerContract"></span></p>
                 <p>Thông tin người thân : <span id="customerRelative"></span></p>
-                <p>Số điện thoại người thân : <span id="customerRelativePhone"></span></p>
+            </div>
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
