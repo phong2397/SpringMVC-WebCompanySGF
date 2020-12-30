@@ -68,12 +68,10 @@ public class CustomerDAO {
 
     public void saveAllStateless(final List<Customer> list) {
         StatelessSession statelessSession = sessionFactory.openStatelessSession();
-        Transaction tx = statelessSession.getTransaction();
         for (Customer c :
                 list) {
             statelessSession.insert(c);
         }
-        tx.commit();
         statelessSession.close();
     }
 
