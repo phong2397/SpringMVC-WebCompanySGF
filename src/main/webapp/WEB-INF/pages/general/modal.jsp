@@ -58,7 +58,15 @@
                 <p>Mã số thuế : <span id="customerTax"></span></p>
                 <p>Số hợp đồng : <span id="customerContract"></span></p>
                 <p>Thông tin người thân : <span id="customerRelative"></span></p>
-            </div>
+                <p>Số điện thoại người thân : <span id="customerRelativePhone"></span></p>
+                <p>Hình ảnh CMND : </p>
+                <p><img src="http://dev.sgft.info:8080/upload/0973154950@Screenshot from 2020-10-29 20-30-33.png" alt=""> </p>
+                <p>Hình ảnh Payslip : </p>
+                <p><img src="http://dev.sgft.info:8080/upload/0973154950@Screenshot from 2020-10-29 20-31-25.png" alt=""> </p>
+                <p>Hình ảnh bảng lương : </p>
+                <p><img src="http://dev.sgft.info:8080/upload/0973154950@Screenshot from 2020-10-29 20-40-51.png" alt=""> </p>
+                <p>Hình ảnh bảo hiểm y tế : </p>
+                <p><img src="http://dev.sgft.info:8080/upload/0973154950@Screenshot from 2020-10-29 20-37-04.png" alt=""> </p>
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>

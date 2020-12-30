@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class ApprovalController {
             Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
             sa.setStatus(status.trim());
                 sa.setEmployeeThamdinh(u.getUserLogin());
-                sa.setEmployeeThamdinhDate(LocalDateTime.now());
+                sa.setEmployeeThamdinhDate(LocalDate.now());
 
             saRequestDAO.update(sa);
             return "success";

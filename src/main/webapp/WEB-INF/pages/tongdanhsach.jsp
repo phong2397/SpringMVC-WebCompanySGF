@@ -223,7 +223,7 @@
 								</div>
 								<div class="box-body p-15">
 									<div class="table-responsive">
-										<table id="example" class="table table-lg invoice-archive"
+										<table class="table table-lg invoice-archive"
 											data-page-size="10">
 											<thead>
 												<tr>

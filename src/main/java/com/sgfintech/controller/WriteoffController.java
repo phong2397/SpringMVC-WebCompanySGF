@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class WriteoffController {
             sa.setStatus(status);
             ct.setStatus(status);
             ct.setBorrow(0l);
-            ct.setDateRepayment(LocalDateTime.now());
+            ct.setDateRepayment(LocalDate.now());
             contractDAO.update(ct);
             saRequestDAO.update(sa);
               return "success";

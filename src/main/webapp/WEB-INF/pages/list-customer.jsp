@@ -104,14 +104,14 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Số điện thoại</label>
-                                                <input  type="number" class="form-control" name="customerPhone" id="customerPhone"
+                                                <input  type="text" class="form-control" name="customerPhone" id="customerPhone"
                                                        placeholder="Tên công ty">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Số CMND</label>
-                                                <input type="number" class="form-control" name="customerId" id="customerId"
+                                                <input type="text" class="form-control" name="customerId" id="customerId"
                                                        placeholder="Số CMND">
                                             </div>
                                         </div>

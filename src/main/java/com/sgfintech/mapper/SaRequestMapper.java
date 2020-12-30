@@ -25,16 +25,16 @@ public class SaRequestMapper implements RowMapper<SaRequest> {
         s.setStatus(rs.getString("status"));
         s.setEmployeeThamdinh(rs.getString("employee_thamdinh"));
         if (!StringUtil.isEmpty(rs.getDate("employee_thamdinh_date"))) {
-            s.setEmployeeThamdinhDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("employee_thamdinh_date")));
+            s.setEmployeeThamdinhDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("employee_thamdinh_date")).toLocalDate());
         }
         s.setEmployeeDuyet(rs.getString("employee_duyet"));
         if (!StringUtil.isEmpty(rs.getDate("employee_duyet_date"))) {
-            s.setEmployeeDuyetDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("employee_duyet_date")));
+            s.setEmployeeDuyetDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("employee_duyet_date")).toLocalDate());
         }
         s.setDescription(rs.getString("description"));
 //        s.setData(rs.getByte("data"));
         if (!StringUtil.isEmpty(rs.getDate("created_date"))) {
-            s.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("created_date")));
+            s.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("created_date")).toLocalDate());
         }
         if (!StringUtil.isEmpty(rs.getDate("updated_date"))) {
             s.setUpdatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("updated_date")));

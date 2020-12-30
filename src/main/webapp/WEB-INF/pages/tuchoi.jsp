@@ -214,7 +214,7 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table id="example" class="table table-lg invoice-archive">
+                                    <table class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
