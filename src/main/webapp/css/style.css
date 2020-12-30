@@ -19355,7 +19355,7 @@ textarea.form-control {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 360px;
+  width: 460px;
   max-width: 100%;
   margin: 0;
   -webkit-transform: translate(100%, 0) !important;
@@ -19363,7 +19363,6 @@ textarea.form-control {
   -webkit-transition: .5s;
   transition: .5s; }
 .modal-right .modal-content {
-  height: 100%;
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;
