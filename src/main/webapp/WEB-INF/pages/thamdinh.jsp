@@ -59,34 +59,6 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="right-title">
-                        <div class="d-flex mt-10 justify-content-end">
-                            <div class="d-lg-flex mr-20 ml-10 d-none">
-                                <div class="chart-text mr-10">
-                                    <h6 class="mb-0"><small>THIS MONTH</small></h6>
-                                    <h4 class="mt-0 text-primary">$12,125</h4>
-                                </div>
-                                <div class="spark-chart">
-                                    <div id="thismonth">
-                                        <canvas width="60" height="35"
-                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-lg-flex mr-20 ml-10 d-none">
-                                <div class="chart-text mr-10">
-                                    <h6 class="mb-0"><small>LAST MONTH</small></h6>
-                                    <h4 class="mt-0 text-danger">$22,754</h4>
-                                </div>
-                                <div class="spark-chart">
-                                    <div id="lastyear">
-                                        <canvas width="60" height="35"
-                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -113,8 +85,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="text-center my-2">
-                                        <div class="font-size-60">${countAll}</div>
+                                <div class="text-center my-2">
+                                    <div class="font-size-60">${countAll}</div>
                                     <span>Tổng số lượt yêu cầu trong ngày</span>
                                 </div>
 
@@ -195,42 +167,12 @@
                                 </div>
 
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">${countDone}</div>
+                                    <div class="font-size-60">${countAct}</div>
                                     <span>Yêu cầu tất toán thành công</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- /.col -->
-<%--                    <div class="col-xl-2 col-md-6 col-12">--%>
-<%--                        <div class="box box-inverse box-danger">--%>
-<%--                            <div class="box-body">--%>
-<%--                                <div class="flexbox">--%>
-<%--                                    <h5>Đã hủy</h5>--%>
-<%--                                    <div class="dropdown">--%>
-<%--											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i--%>
-<%--                                                    class="ion-android-more-vertical rotate-90"></i></span>--%>
-<%--                                        <div class="dropdown-menu dropdown-menu-right">--%>
-<%--                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>--%>
-<%--                                                Details</a>--%>
-<%--                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add--%>
-<%--                                                new</a>--%>
-<%--                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>--%>
-<%--                                                Refresh</a>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-
-<%--                                <div class="text-center my-2">--%>
-<%--                                    <div class="font-size-60">${countDeni}</div>--%>
-<%--                                    <span>Yêu cầu bị từ chối</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <!-- /.col -->--%>
-
                 </div>
 
                 <div class="row">
@@ -243,7 +185,7 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table class="table table-lg invoice-archive">
+                                    <table  class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
@@ -259,16 +201,16 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
-                                                <td> <a data-toggle="modal" href="#"
-                                                           onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}9999</b></a></td>
+                                                <td> <a data-toggle="modal" href="#" id="saRequestID"
+                                                        onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a></td>
                                                 <td>${lst.saRequest.createdDate}</td>
                                                 <td>
                                                     <h6 class="mb-0">
-                                                        <b> <a data-toggle="modal" href="#" onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
+                                                        <b> <a data-toggle="modal" href="#"  onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
                                                         <span class="d-block text-muted">Company ID :<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.company.companyCode}')"> ${lst.company.companyCode}</a></b></span>
                                                         <span class="d-block text-muted">Account number : ${lst.customer.customerBankAcc}</span>
                                                         <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
-                                                        <span class="d-block text-muted">Phone number : ${lst.customer.customerPhone}</span>
+                                                        <span class="d-block text-muted" >Phone number : ${lst.customer.customerPhone}</span>
                                                     </h6>
                                                 </td>
                                                 <td class="text-center">
@@ -281,7 +223,7 @@
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0 font-weight-bold"> <fmt:formatNumber value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2)}" type = "number"/> đ
-                                                        <span class="d-block text-muted font-weight-normal">Phí 2 % </span>
+                                                        <span class="d-block text-muted font-weight-normal">Phí: 2 % </span>
                                                     </h6>
                                                 </td>
                                                 <td>
@@ -333,7 +275,7 @@
     </div>
     <!-- /.modal -->
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
-    <div class="control-sidebar-bg"></div>
+    <div class="control-sidebar-bg" ></div>
 </div>
 <!-- ./wrapper -->
 
@@ -350,6 +292,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
+
     });
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
@@ -391,6 +334,14 @@
     function viewInfoCustomer(params) {
         result.forEach((customer) => {
             if (customer.customer.customerPhone == params) {
+                $.ajax ({
+                    url: "http:/dev.sgft.info:8080/customergateway/api/v1/document/" + params,
+                    dataType: "json",
+                    type: 'GET',
+                    success: function(data){
+                        console.log(data)
+                    },
+                });
                 let c = customer.customer;
                 const date = c.customerBirthday;
                 Object.keys(c).forEach((key) => {

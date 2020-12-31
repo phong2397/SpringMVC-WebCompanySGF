@@ -230,7 +230,7 @@
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
                                                 <td> <a data-toggle="modal" href="#"
-                                                        onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}9999</b></a></td>
+                                                        onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a></td>
                                                 <td>${lst.saRequest.createdDate}</td>
                                                 <td>
                                                     <h6 class="mb-0">
@@ -242,7 +242,7 @@
                                                     </h6>
                                                 </td>
                                                 <td class="text-center">
-                                                    <h6 class="mb-0 font-weight-bold" style="color: #0b2c89"> chờ thẩm định</h6>
+                                                    <h6 class="mb-0 font-weight-bold" style="color: red">Từ chối</h6>
                                                 </td>
                                                 <td class="text-center">
                                                     <span class="badge badge-pill badge-primary">2 ngày</span>

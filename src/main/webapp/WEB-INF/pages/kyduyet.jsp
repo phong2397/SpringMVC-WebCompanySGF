@@ -55,34 +55,6 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="right-title">
-                        <div class="d-flex mt-10 justify-content-end">
-                            <div class="d-lg-flex mr-20 ml-10 d-none">
-                                <div class="chart-text mr-10">
-                                    <h6 class="mb-0"><small>THIS MONTH</small></h6>
-                                    <h4 class="mt-0 text-primary">$12,125</h4>
-                                </div>
-                                <div class="spark-chart">
-                                    <div id="thismonth">
-                                        <canvas width="60" height="35"
-                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-lg-flex mr-20 ml-10 d-none">
-                                <div class="chart-text mr-10">
-                                    <h6 class="mb-0"><small>LAST MONTH</small></h6>
-                                    <h4 class="mt-0 text-danger">$22,754</h4>
-                                </div>
-                                <div class="spark-chart">
-                                    <div id="lastyear">
-                                        <canvas width="60" height="35"
-                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -117,7 +89,7 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-xl-3 col-md-6 col-12 ">
-                    <div class="box box-inverse box-warning">
+                        <div class="box box-inverse box-warning">
                             <div class="box-body">
                                 <div class="flexbox">
                                     <h5>Chờ giải quyết</h5>
@@ -143,7 +115,7 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-xl-3 col-md-6 col-12 ">
-                    <div class="box box-inverse box-primary">
+                        <div class="box box-inverse box-primary">
                             <div class="box-body">
                                 <div class="flexbox">
                                     <h5> Chờ ký duyệt</h5>
@@ -170,7 +142,7 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-xl-3 col-md-6 col-12 ">
-                    <div class="box box-inverse " style="background-color: hotpink">
+                        <div class="box box-inverse " style="background-color: hotpink">
                             <div class="box-body">
                                 <div class="flexbox">
                                     <h5> Đã giải ngân</h5>
@@ -189,43 +161,12 @@
                                 </div>
 
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">${countDone}</div>
+                                    <div class="font-size-60">${countAct}</div>
                                     <span>Yêu cầu tất toán thành công</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- /.col -->
-<%--                    <div class="col-xs-4 col-md-2 col-10 ">--%>
-<%--                        <div class="box box-inverse box-danger">--%>
-<%--                            <div class="box-body">--%>
-<%--                                <div class="flexbox">--%>
-<%--                                    <h5>Đã hủy</h5>--%>
-<%--                                    <div class="dropdown">--%>
-<%--											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i--%>
-<%--                                                    class="ion-android-more-vertical rotate-90"></i></span>--%>
-<%--                                        <div class="dropdown-menu dropdown-menu-right">--%>
-<%--                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>--%>
-<%--                                                Details</a>--%>
-<%--                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add--%>
-<%--                                                new</a>--%>
-<%--                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>--%>
-<%--                                                Refresh</a>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-
-<%--                                <div class="text-center my-2">--%>
-<%--                                    <div class="font-size-60">${countDeni}</div>--%>
-<%--                                    <span>Yêu cầu bị từ chối</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-
-<%--                        </div>--%>
-<%--                    </div>--%>
-                    <!-- /.col -->
-
-
                 </div>
 
                 <div class="row">
@@ -238,7 +179,7 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table  class="table table-lg invoice-archive">
+                                    <table class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
@@ -255,8 +196,8 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
-                                                <td><b> <a data-toggle="modal" href="#"
-                                                           onclick="viewInfoOrder('${lst.saRequest.id}')">${lst.saRequest.id}9999</a></b></td>
+                                                <td> <a data-toggle="modal" href="#" id="saRequestID"
+                                                        onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a></td>
                                                 <td class="text-left">${lst.saRequest.employeeThamdinh}</td>
                                                 <td>${lst.saRequest.employeeThamdinhDate}</td>
                                                 <td>
@@ -279,7 +220,7 @@
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0 font-weight-bold"> <fmt:formatNumber value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2)}" type = "number"/> đ
-                                                        <span class="d-block text-muted font-weight-normal">Phí 2 % </span>
+                                                        <span class="d-block text-muted font-weight-normal">Phí: 2 % </span>
                                                     </h6>
                                                 </td>
                                                 <td>
@@ -388,7 +329,7 @@
         const date = saRequest.employeeThamdinhDate.date;
         debugger;
         Object.keys(saRequest).forEach((key) => {
-           if(key == "borrow" ){
+            if(key == "borrow" ){
                 let value1 = saRequest[key];
                 $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
             }
@@ -410,7 +351,7 @@
                         value = c[key]
                         $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
                         Object.keys(date).forEach((key) => {
-                                $('#' + key).text(date[key]);
+                            $('#' + key).text(date[key]);
                         })
                     }
                     else{

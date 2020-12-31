@@ -56,32 +56,6 @@
 								</nav>
 							</div>
 						</div>
-						<div class="right-title">
-							<div class="d-flex mt-10 justify-content-end">
-								<div class="d-lg-flex mr-20 ml-10 d-none">
-									<div class="chart-text mr-10">
-										<h6 class="mb-0"><small>THIS MONTH</small></h6>
-										<h4 class="mt-0 text-primary">$12,125</h4>
-									</div>
-									<div class="spark-chart">
-										<div id="thismonth"><canvas width="60" height="35"
-												style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-										</div>
-									</div>
-								</div>
-								<div class="d-lg-flex mr-20 ml-10 d-none">
-									<div class="chart-text mr-10">
-										<h6 class="mb-0"><small>LAST MONTH</small></h6>
-										<h4 class="mt-0 text-danger">$22,754</h4>
-									</div>
-									<div class="spark-chart">
-										<div id="lastyear"><canvas width="60" height="35"
-												style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 
@@ -141,80 +115,7 @@
 								</div>
 							</a>
 						</div>
-						<div class="col-xl-3 col-lg-4 col-12">
-							<div class="row">
-								<div class="col-12">
-									<div class="box">
-										<div class="box-header with-border">
-											<h5 class="box-title">Hình thức thanh toán nợ</h5>
-											<div class="box-tools pull-right">
-												<ul class="card-controls">
-													<li class="dropdown">
-														<a data-toggle="dropdown" href="#"><i
-																class="ion-android-more-vertical"></i></a>
-														<div class="dropdown-menu dropdown-menu-right">
-															<a class="dropdown-item active" href="#">Today</a>
-															<a class="dropdown-item" href="#">Yesterday</a>
-															<a class="dropdown-item" href="#">Last week</a>
-															<a class="dropdown-item" href="#">Last month</a>
-														</div>
-													</li>
-													<li><a href="" class="link card-btn-reload" data-toggle="tooltip"
-															title="" data-original-title="Refresh"><i
-																class="fa fa-circle-thin"></i></a></li>
-												</ul>
-											</div>
-										</div>
-
-										<div class="box-body">
-											<div class="text-center pb-25">
-												<div class="donut"
-													data-peity='{ "fill": ["#fc4b6c", "#ffb22b", "#398bf7"], "radius": 70, "innerRadius": 28  }'>
-													9,6,5</div>
-											</div>
-
-											<ul class="list-inline">
-												<li class="flexbox mb-5">
-													<div>
-														<span class="badge badge-dot badge-lg mr-1"
-															style="background-color: #fc4b6c"></span>
-														<span>Chuyển khoản</span>
-													</div>
-													<div>8952</div>
-												</li>
-
-												<li class="flexbox mb-5">
-													<div>
-														<span class="badge badge-dot badge-lg mr-1"
-															style="background-color: #ffb22b"></span>
-														<span>Trung gian thanh toán</span>
-													</div>
-													<div>7458</div>
-												</li>
-
-												<li class="flexbox">
-													<div>
-														<span class="badge badge-dot badge-lg mr-1"
-															style="background-color: #398bf7"></span>
-														<span>Trực tiếp</span>
-													</div>
-													<div>3254</div>
-												</li>
-												<li class="flexbox">
-													<div>
-														<span class="badge badge-dot badge-lg mr-1"
-															style="background-color: #ce389c"></span>
-														<span>Other</span>
-													</div>
-													<div>3254</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-9 col-lg-8 col-12">
+						<div class="col-12">
 							<div class="box">
 								<div class="box-header with-border">
 									<h4 class="box-title">Danh sách gạch nợ</h4>

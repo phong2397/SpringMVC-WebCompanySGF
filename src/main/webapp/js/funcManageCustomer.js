@@ -18,8 +18,7 @@ $("body").on("click", ".btn-outline", function () {
         rowElement.append('<td><h5>' + e.customer.companyCode + '</h5></td>');
         rowElement.append('<td ><b>' + e.customer.customerName+'</b><br>' +
             'Mã số nhân viên :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerCode+  '</span><br>'+
-            'Số điện thoại :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerPhone +  '</span><br>' +
-            'Ngày sinh :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerBirthday.day +'-' + e.customer.customerBirthday.month + '-' + e.customer.customerBirthday.year +  '</span></td>');
+            'Số điện thoại :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerPhone +  '</span></td>');
         rowElement.append('<td>' +'Thường trú :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerAddress +'</span><br>'+
             'Tạm trú :'+' '+ '<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerAddressTemp  +'</span></td>');
         rowElement.append('<td>' +'Vị trí :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerPosition + '</span><br>'+

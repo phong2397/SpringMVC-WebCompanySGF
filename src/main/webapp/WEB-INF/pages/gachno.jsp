@@ -120,7 +120,7 @@
 											<c:forEach items="${views}" var="lst" varStatus="loop">
 												<tr id="tr-${lst.contract.idContract}">
 													<td><a href="#"
-														   onclick="viewInfo('${lst.contract.idContract}','${lst.customer.customerPhone}')"><b>${lst.contract.idContract}9999</b></a>
+														   onclick="viewInfo('${lst.contract.idContract}','${lst.customer.customerPhone}')"><b>${lst.contract.idContract}</b></a>
 													</td>
 													<td class="text-left">
 														<h6 class="mb-0">
@@ -199,7 +199,7 @@
 							<!-- /.col -->
 							<div class="col-sm-12 invoice-col mb-15">
 								<div class="invoice-details row no-margin">
-									<div class="col-md-6 col-lg-3"><b>Mã đơn vay:</b>#<span id="idContract"></span>9999
+									<div class="col-md-6 col-lg-3"><b>Mã đơn vay:</b>#<span id="idContract"></span>
 									</div>
 									<div class="col-md-6 col-lg-3"><b>Thông tin giao dịch:</b>
 										<span id="transactionId"></span></div>
@@ -341,6 +341,8 @@
 			});
 			$('#main').slideDown("slow");
 		}
+
+
 	</script>
 </body>
 

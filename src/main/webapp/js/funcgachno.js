@@ -1,7 +1,6 @@
-
-    $("body").on("click", ".btn-success", function () {
+ $("body").on("click", ".btn-success", function () {
         $("#loading").show();
-        var dataRequest = $("#idContract").text().trim();
+        var dataRequest = $("#idContract").text();
         let data = { datarequest: dataRequest, status: 'done' };
         var result = submitWithdraw(data);
         if (result === "success") {

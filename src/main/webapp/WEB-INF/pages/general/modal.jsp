@@ -60,7 +60,7 @@
                 <p>Thông tin người thân : <span id="customerRelative"></span></p>
                 <p>Số điện thoại người thân : <span id="customerRelativePhone"></span></p>
                 <p>Hình ảnh CMND : </p>
-                <p><img src="http://dev.sgft.info:8080/upload/0973154950@Screenshot from 2020-10-29 20-30-33.png" alt=""> </p>
+                <p id="img"></p>
                 <p>Hình ảnh Payslip : </p>
                 <p><img src="http://dev.sgft.info:8080/upload/0973154950@Screenshot from 2020-10-29 20-31-25.png" alt=""> </p>
                 <p>Hình ảnh bảng lương : </p>
