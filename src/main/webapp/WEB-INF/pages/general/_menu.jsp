@@ -85,15 +85,15 @@
 
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Kế toán kiểm toán</li>
             <li>
-                <a href="tuchoi.html">
-                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
-                    <span>Từ chối</span>
-                </a>
-            </li>
-            <li>
                 <a href="tongdanhsach.html">
                     <img src="images/svg-icon/sidebar-menu/tickers.svg" class="svg-icon" alt="">
                     <span>Tổng danh sách</span>
+                </a>
+            </li>
+            <li>
+                <a href="tuchoi.html">
+                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
+                    <span>Từ chối</span>
                 </a>
             </li>
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Cấu hình sản phẩm</li>

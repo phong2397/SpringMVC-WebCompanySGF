@@ -146,14 +146,14 @@ public class SignController {
             ct.setStatus("act");
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.DATE, +30);
-            ct.setDateRepayment(LocalDate.now().plusDays(30));
+            ct.setDateRepayment(LocalDateTime.now().plusDays(30));
 
             Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
             ct.setAcceptedBy(u.getUserLogin());
             contractDAO.save(ct);
 
             sa.setEmployeeDuyet(u.getUserLogin());
-            sa.setEmployeeDuyetDate(LocalDate.now());
+            sa.setEmployeeDuyetDate(LocalDateTime.now());
             sa.setStatus("act");
             saRequestDAO.update(sa);
             return "success";

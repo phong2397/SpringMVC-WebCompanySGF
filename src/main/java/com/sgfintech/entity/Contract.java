@@ -46,7 +46,7 @@ public class Contract implements Serializable {
     private String status;
 
     @Column(name = "date_repayment")
-    private LocalDate dateRepayment;
+    private LocalDateTime dateRepayment;
 
     @Column(name = "date_repayment_util")
     private LocalDateTime dateRepaymentUtil;
@@ -60,7 +60,7 @@ public class Contract implements Serializable {
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
-    public Contract(Long idContract, String systemTrace, String customerPhone, Long borrow, Integer timeBorrow, Long remainAmountBorrow, Double feeBorrow, String transactionId, String status, LocalDate dateRepayment, LocalDateTime dateRepaymentUtil, String acceptedBy, byte[] notedBy, LocalDateTime updatedDate) {
+    public Contract(Long idContract, String systemTrace, String customerPhone, Long borrow, Integer timeBorrow, Long remainAmountBorrow, Double feeBorrow, String transactionId, String status, LocalDateTime dateRepayment, LocalDateTime dateRepaymentUtil, String acceptedBy, byte[] notedBy, LocalDateTime updatedDate) {
         this.idContract = idContract;
         this.systemTrace = systemTrace;
         this.customerPhone = customerPhone;

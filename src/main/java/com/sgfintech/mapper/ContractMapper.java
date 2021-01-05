@@ -25,7 +25,7 @@ public class ContractMapper implements RowMapper<Contract> {
         c.setTransactionId(rs.getString("transaction_id"));
         c.setStatus(rs.getString("status"));
         if (!StringUtil.isEmpty(rs.getDate("date_repayment"))) {
-            c.setDateRepayment(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("date_repayment")).toLocalDate());
+            c.setDateRepayment(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("date_repayment")));
         }
         if (!StringUtil.isEmpty(rs.getDate("date_repayment_util"))) {
             c.setDateRepaymentUtil(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("date_repayment_util")));

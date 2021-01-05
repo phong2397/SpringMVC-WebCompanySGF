@@ -60,32 +60,6 @@
 								</nav>
 							</div>
 						</div>
-						<div class="right-title">
-							<div class="d-flex mt-10 justify-content-end">
-								<div class="d-lg-flex mr-20 ml-10 d-none">
-									<div class="chart-text mr-10">
-										<h6 class="mb-0"><small>THIS MONTH</small></h6>
-										<h4 class="mt-0 text-primary">$12,125</h4>
-									</div>
-									<div class="spark-chart">
-										<div id="thismonth"><canvas width="60" height="35"
-												style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-										</div>
-									</div>
-								</div>
-								<div class="d-lg-flex mr-20 ml-10 d-none">
-									<div class="chart-text mr-10">
-										<h6 class="mb-0"><small>LAST MONTH</small></h6>
-										<h4 class="mt-0 text-danger">$22,754</h4>
-									</div>
-									<div class="spark-chart">
-										<div id="lastyear"><canvas width="60" height="35"
-												style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 				<div class="px-30 my-15 no-print">
@@ -199,7 +173,7 @@
 							<!-- /.col -->
 							<div class="col-sm-12 invoice-col mb-15">
 								<div class="invoice-details row no-margin">
-									<div class="col-md-6 col-lg-3"><b>Mã đơn vay:</b>#<span id="idContract"></span>
+									<div class="col-md-6 col-lg-3"><b>Mã đơn vay:</b><span id="idContract"></span>
 									</div>
 									<div class="col-md-6 col-lg-3"><b>Thông tin giao dịch:</b>
 										<span id="transactionId"></span></div>
@@ -328,10 +302,6 @@
 					$('#' + key).text(value.toLocaleString("vi-VN") + " đ");
 
 				}else if(key == "borrow" ){
-					let value1 = contract[key];
-					$('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
-				}
-				else if(key == "feeBorrow" ){
 					let value1 = contract[key];
 					$('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
 				}

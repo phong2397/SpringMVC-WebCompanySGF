@@ -130,8 +130,9 @@
                                             <th>Thời hạn HĐLĐ</th>
                                             <th>Loại HĐLĐ</th>
                                             <th>Trạng thái HĐLĐ</th>
-                                            <th>Tài khoản NN nhận lương</th>
+                                            <th>Tài khoản NH nhận lương</th>
                                             <th>NH Nhận lương</th>
+                                            <th>Tên Chủ Tài Khoản NH nhận lương</th>
                                         </tr>
                                         </thead>
                                         <tbody id="tbodytable">
@@ -196,21 +197,21 @@
                     var obj = JSON.parse(data + "") ;
                     var body = $("#tbodytable");
                     body.empty();
-                    for (var i = 0; i < obj.length; i++){
-                        var e = obj[i];
+                    Object.keys(obj).forEach((key)=>{
+                        var e = obj[key];
                         var rowElement = $('<tr></tr>');
                         rowElement.append('<td>' + e.customerName + '</td>');
                         rowElement.append('<td>' + e.customerId + '</td>');
-                        rowElement.append('<td>' + e.customerBirthday.day + "-" + e.customerBirthday.month + "-" + e.customerBirthday.year  + '</td>');
+                        rowElement.append('<td>' + e.customerBirthday.day + "/" + e.customerBirthday.month + "/" + e.customerBirthday.year  + '</td>');
                         rowElement.append('<td>' + e.customerPhone + '</td>');
-                        rowElement.append('<td>' + e.customerContractExpired.date.day + "-" + e.customerContractExpired.date.month + "-" + e.customerContractExpired.date.year +  '</td>');
+                        rowElement.append('<td>' + e.customerContractExpired.date.day + "/" + e.customerContractExpired.date.month + "/" + e.customerContractExpired.date.year +  '</td>');
                         rowElement.append('<td>' + e.customerContract + '</td>');
                         rowElement.append('<td>' + e.status + '</td>');
-                        rowElement.append('<td>' + e.customerBank + '</td>');
                         rowElement.append('<td>' + e.customerBankAcc + '</td>');
                         rowElement.append('<td>' + e.customerBankName + '</td>');
+                        rowElement.append('<td>' + e.customerBank + '</td>');
                         body.append(rowElement);
-                    }
+                    })
                     $("#loading").hide();
                     console.log(data);
                     Swal.fire(

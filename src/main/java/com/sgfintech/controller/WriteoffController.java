@@ -54,7 +54,7 @@ public class WriteoffController {
             sa.setStatus(status);
             ct.setStatus(status);
             ct.setBorrow(0l);
-            ct.setDateRepayment(LocalDate.now());
+            ct.setDateRepayment(LocalDateTime.now());
             contractDAO.update(ct);
             saRequestDAO.update(sa);
               return "success";

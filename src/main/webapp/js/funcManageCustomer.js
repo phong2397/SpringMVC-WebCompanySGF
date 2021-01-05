@@ -6,14 +6,15 @@ $("body").on("click", ".btn-outline", function () {
         //todo parse dataobject => json object
         try {
             var obj = JSON.parse(dataobject);
+            console.log(obj)
         } catch (error) {
             var obj = dataobject;
         }
         //forech(item: jsonobject){
         var body = $("#tbodytable");
         body.empty();
-    for (var i = 0; i < obj.length; i++){
-        var e = obj[i];
+        Object.keys(obj).forEach((key)=>{
+        var e = obj[key];
         var rowElement = $('<tr></tr>');
         rowElement.append('<td><h5>' + e.customer.companyCode + '</h5></td>');
         rowElement.append('<td ><b>' + e.customer.customerName+'</b><br>' +
@@ -25,8 +26,7 @@ $("body").on("click", ".btn-outline", function () {
             'Mức lương :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerSalary.toLocaleString("vi-VN") +' '+ 'đ</span></td>');
         rowElement.append('<td>' +
             'Số CMND :'+ ' '+'<span style=" font-weight: 300 bold;color: grey">'+e.customer.customerId + '</span><br>'+
-            'Nơi cấp :'+ ' '+'<span style=" font-weight: 300 bold;color: grey">'+e.customer.customerIdLocation +'</span><br>'+
-            'Ngày cấp :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+e.customer.customerIdDate.date.day +'-' + e.customer.customerIdDate.date.month +'-' + e.customer.customerIdDate.date.year  + '</span></td>');
+            'Nơi cấp :'+ ' '+'<span style=" font-weight: 300 bold;color: grey">'+e.customer.customerIdLocation + '</span></td>');
         rowElement.append('<td xmlns="http://www.w3.org/1999/html">' +
             'Tên ngân hàng :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerBankName+'</span><br>' +
             'Chủ tài khoản :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerBank + '</span><br>' +
@@ -40,7 +40,7 @@ $("body").on("click", ".btn-outline", function () {
             'Mã số bảo hiểm y tế :'+' '+'<span style=" font-weight: 300 bold;color: grey">'+ e.customer.customerHealthInsurance + '</span></td>');
         body.append(rowElement);
         $("#loading").hide();
-    }
+    })
     $("#loading").hide();
     });
     function ajaxPost(data)  {
@@ -53,7 +53,6 @@ $("body").on("click", ".btn-outline", function () {
                 data: data,
                 async: false,
                 success: function (data, status, xhr) { //data nay chinh la cai cuc em return o controller
-                    console.log(data);
                     result = data;
                     return result;
                 },

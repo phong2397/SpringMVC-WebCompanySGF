@@ -186,28 +186,6 @@
         $("#loading").hide();
 
     });
-    <%
-         List<CustomerHandler> list = (List<CustomerHandler>) request.getAttribute("views");
-         Gson g = new Gson();
-         String json = g.toJson(list);
-     %>
-    function viewInfoCustomer(params) {
-        result.forEach((customer) => {
-            if (customer.customer.customerPhone == params) {
-                let c = customer.customer;
-                Object.keys(c).forEach((key) => {
-                    if (key == "customerSalary" ){
-                        value = c[key]
-                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
-                    }
-                    else{
-                        $('#' + key).text(c[key]);
-                    }
-                })
-            }
-        })
-        $('#modal-right').modal('show');
-    }
 </script>
 </body>
 

@@ -3,6 +3,7 @@ package com.sgfintech.dao;
 import com.sgfintech.entity.Customer;
 import org.hibernate.*;
 import org.hibernate.query.Query;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,7 +74,9 @@ public class CustomerDAO {
                 list) {
             statelessSession.insert(c);
         }
-        tx.commit();
+        if (tx.getStatus().equals(TransactionStatus.ACTIVE)) {
+            tx.commit();
+        }
         statelessSession.close();
     }
 

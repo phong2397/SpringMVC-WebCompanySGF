@@ -75,7 +75,7 @@ public class ApprovalController {
             Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
             sa.setStatus(status.trim());
                 sa.setEmployeeThamdinh(u.getUserLogin());
-                sa.setEmployeeThamdinhDate(LocalDate.now());
+                sa.setEmployeeThamdinhDate(LocalDateTime.now());
             saRequestDAO.update(sa);
             return "success";
         } catch (Exception ex) {

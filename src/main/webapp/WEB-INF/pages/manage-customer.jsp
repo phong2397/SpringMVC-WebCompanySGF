@@ -173,7 +173,6 @@
         String json = g.toJson(list);
     %>
     var comList = <%=json%>;
-
     function onCompanyChanged(e){
         let value = e.target.value;
 

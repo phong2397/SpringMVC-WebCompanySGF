@@ -190,7 +190,7 @@
                                             <th>Thời gian còn lại</th>
                                             <th>Thời gian ứng</th>
                                             <th>Số tiền ứng</th>
-                                            <th class="text-center">Actions</th>
+                                            <th >Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -266,8 +266,7 @@
                     <h3><p>Mã yêu cầu: <span id="id"></span></p></h3>
                     <p>Số điện thoại : <span id="customerPhone"></span></p>
                     <p>Số tiền ứng : <span id="borrow"></span></p>
-                    <p>Thuế : <span id="interestRate"></span>%</p>
-                    <p>Phí : <span id="feeBorrow"></span></p>
+                    <p>Phí : <span id="interestRate"></span>%</p>
                     <p>Số lần ứng : <span id="timeBorrow"></span></p>
                     <p>Trạng thái : <span id="status" style="color: #0b2c89"></span></p>
                     <p>Người thẩm định : <span id="employeeThamdinh"></span></p>
@@ -330,7 +329,7 @@
         debugger;
         Object.keys(saRequest).forEach((key) => {
             if(key == "borrow" ){
-                let value1 = saRequest[key];
+                let value1 = saRequest[key] + (saRequest[key]* 0.2);
                 $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
             }
             else {
@@ -342,8 +341,68 @@
     }
 
     function viewInfoCustomer(params) {
+        let username = "sgfintech";
+        let password ="k6mzMtPJLPMi5crF";
         result.forEach((customer) => {
             if (customer.customer.customerPhone == params) {
+                $.ajax ({
+                    url:  'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
+                    headers: {
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Credentials" : true,
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+                    },
+                    crossDomain: true,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data){
+                        const imgCMND = JSON.parse(data.cmnd);
+                        $('#imgCMND').empty();
+                        Object.keys(imgCMND).forEach((key)=>{
+                            var e = imgCMND[key];
+                            console.log(e)
+                            $('#imgCMND').append('<img style="width: 100%" src="' + e +'"/>');
+                        });
+                        const payslipObj = JSON.parse(data.payslip);
+                        $('#imgPayslip').empty()
+                        Object.keys(payslipObj).forEach((key)=>{
+                            console.log(payslipObj[key]);
+                            $('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] +'"/>');
+                        });
+                        const salaryObj = JSON.parse(data.salary);
+                        $('#imgSalary').empty()
+                        Object.keys(salaryObj).forEach((key)=>{
+                            console.log(salaryObj[key]);
+                            $('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] +'"/>');
+                        });
+                        const healthObj = JSON.parse(data.health);
+                        $('#imgHealth').empty()
+                        Object.keys(healthObj).forEach((key)=>{
+                            console.log(healthObj[key]);
+                            $('#imgHealth').append('<img style="width: 100%" src="' + healthObj[key] +'"/>');
+                        });
+                        const appendixObj = JSON.parse(data.appendix);
+                        $('#imgAppendix').empty()
+                        Object.keys(appendixObj).forEach((key)=>{
+                            console.log(appendixObj[key]);
+                            $('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] +'"/>');
+                        });
+                        const socialObj = JSON.parse(data.social);
+                        $('#imgSocial').empty()
+                        Object.keys(socialObj).forEach((key)=>{
+                            console.log(socialObj[key]);
+                            $('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] +'"/>');
+                        });
+                        const contractObj = JSON.parse(data.contract);
+                        $('#imgContract').empty()
+                        Object.keys(contractObj).forEach((key)=>{
+                            console.log(contractObj[key]);
+                            $('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] +'"/>');
+                        });
+                    },
+                });
                 let c = customer.customer;
                 const date = c.customerBirthday;
                 Object.keys(c).forEach((key) => {
