@@ -93,7 +93,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label style="color:black">Tên công ty</label><br>
-                                                <h5 style="color: #787878;font-size: 25px"><span id="companyName" ></span></h5>
+                                                <h5 style="color: #1a2129;font-size: 25px"><span id="companyName" ></span></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -123,7 +123,6 @@
                                             <th>Chức vụ</th>
                                             <th>Thông tin CMND</th>
                                             <th>Thông tin ngân hàng</th>
-                                            <th>Thông tin nhân thân</th>
                                             <th>Tài liệu</th>
                                         </tr>
                                         </thead>

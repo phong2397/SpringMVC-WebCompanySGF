@@ -122,7 +122,6 @@
                                             <th>Chức vụ</th>
                                             <th>Thông tin CMND</th>
                                             <th>Thông tin ngân hàng</th>
-                                            <th>Thông tin nhân thân</th>
                                             <th>Tài liệu</th>
                                         </tr>
                                         </thead>

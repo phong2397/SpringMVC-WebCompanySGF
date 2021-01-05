@@ -21,7 +21,6 @@
 		}
 	} else{
 		response.sendRedirect("login");
-
 	}
 %>
 <!DOCTYPE html>
@@ -111,9 +110,13 @@
 													<td class="text-right"><fmt:formatNumber value="${lst.contract.borrow}" type = "number"/> đ</td>
 													<td class="text-right"><fmt:formatNumber value="${lst.contract.borrow}" type = "number"/> đ</td>
 													<td class="text-right">0</td>
-													<td class="text-right">${lst.contract.dateRepayment}</td>
+													<td class="text-right">
+														<fmt:parseDate value="${lst.contract.dateRepayment}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
+														<fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
 													<td class="text-right">1</td>
-													<td class="text-right">${year}</td>
+													<td class="text-right">
+														<fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
+														<fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
 												</tr>
 											</c:forEach>
 										<tbody>
@@ -145,7 +148,8 @@
 							<div class="page-header">
 								<h2 class="d-inline"><span class="font-size-30">Thông tin hóa đơn</span></h2>
 								<div class="pull-right text-right">
-									<h3>${year}</h3>
+									<h3><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
+										<fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></h3>
 								</div>
 							</div>
 						</div>
@@ -177,7 +181,8 @@
 									</div>
 									<div class="col-md-6 col-lg-3"><b>Thông tin giao dịch:</b>
 										<span id="transactionId"></span></div>
-									<div class="col-md-6 col-lg-3"><b>Ngày thanh toán:</b>${year}</div>
+									<div class="col-md-6 col-lg-3"><b>Ngày thanh toán:</b><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
+										<fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></div>
 									<div class="col-md-6 col-lg-3"><b>Tài khoản báo có :</b>
 										<span id="customerBankAcc"></span></div>
 								</div>
@@ -211,7 +216,8 @@
 
 						<div class="row">
 							<div class="col-12 text-right">
-								<p class="lead"><b>Ngày thanh toán:</b><span class="text-danger">${year}</span></p>
+								<p class="lead"><b>Ngày thanh toán:</b><span class="text-danger"><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
+														<fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></span></p>
 									<div class="total-payment">
 										<h3><b>Total :</b>
 										<td class="text-right"><span id="remainAmountBorrow"></span></td>
@@ -249,7 +255,6 @@
 	</div>
 	<!-- ./wrapper -->
 	<script src="js/vendors.min.js"></script>
-
 	<script src="assets/vendor_components/datatable/datatables.min.js"></script>
 	<script src="js/pages/data-table.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -262,13 +267,11 @@
 				$("#loading").hide();
 			});
 			var selectedContractId;
-
 		  <%
 			List < MergeDataWithdraw > list = (List<MergeDataWithdraw>) request.getAttribute("views");
 			Gson g = new Gson();
 			String json = g.toJson(list);
 		   %>
-
 		const list = <%=json%>;
 		  function viewInfoCompany(params) {
 			  list.forEach((company) => {
@@ -298,7 +301,7 @@
 			const contract = result.contract;
 			Object.keys(contract).forEach((key) => {
 				if(key == "remainAmountBorrow") {
-					let value = (1.4/100 * contract[key])+ contract[key];
+					let value = (2/100 * contract[key])	+ contract[key];
 					$('#' + key).text(value.toLocaleString("vi-VN") + " đ");
 
 				}else if(key == "borrow" ){
@@ -311,8 +314,6 @@
 			});
 			$('#main').slideDown("slow");
 		}
-
-
 	</script>
 </body>
 

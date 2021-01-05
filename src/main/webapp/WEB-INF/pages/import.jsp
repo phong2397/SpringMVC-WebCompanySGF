@@ -123,20 +123,19 @@
                                     <table  id="example" class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
-                                            <th>Họ tên</th>
+                                            <th>Họ Tên</th>
                                             <th>Số CMND/CCCD/Hộ Chiếu</th>
                                             <th>Ngày sinh</th>
-                                            <th>Số điện thoại cá nhân</th>
+                                            <th>Số Điện thoại cá nhân</th>
                                             <th>Thời hạn HĐLĐ</th>
                                             <th>Loại HĐLĐ</th>
                                             <th>Trạng thái HĐLĐ</th>
-                                            <th>Tài khoản NH nhận lương</th>
+                                            <th>Tài khoản NN nhận lương</th>
                                             <th>NH Nhận lương</th>
-                                            <th>Tên Chủ Tài Khoản NH nhận lương</th>
+                                            <th>Tên Chủ Tài khoản NH nhận lương</th>
                                         </tr>
                                         </thead>
                                         <tbody id="tbodytable">
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -146,11 +145,9 @@
                 </div>
             </section>
             <!-- /.content -->
-
         </div>
     </div>
     <!-- /.content-wrapper -->
-
     <jsp:include page="general/_footer.jsp"/>
     <!-- Control Sidebar -->
     <jsp:include page="general/_controlSidebar.jsp"/>

@@ -203,7 +203,8 @@
                                             <tr>
                                                 <td> <a data-toggle="modal" href="#"
                                                         onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a></td>
-                                                <td>${lst.saRequest.createdDate}</td>
+                                                <td><fmt:parseDate value="${lst.saRequest.createdDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
                                                 <td>
                                                     <h6 class="mb-0">
                                                         <b> <a data-toggle="modal" href="#" onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
@@ -219,7 +220,8 @@
                                                 <td class="text-center"><b>${lst.saRequest.employeeThamdinh}</b>
                                                 </td>
                                                 <td class="text-center">
-                                                   ${lst.saRequest.employeeThamdinhDate}
+                                                    <fmt:parseDate value="${lst.saRequest.employeeThamdinhDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/>
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0 font-weight-bold"> <fmt:formatNumber value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2)}" type = "number"/> đ

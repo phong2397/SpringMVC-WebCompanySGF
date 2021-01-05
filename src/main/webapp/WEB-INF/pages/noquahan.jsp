@@ -88,7 +88,7 @@
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
                                                 <td><a href="#"
-                                                       onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}9999</b></a>
+                                                       onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
                                                 </td>                                                <td>
                                                     <h6 class="mb-0">
                                                         <a  href="#"
@@ -104,7 +104,8 @@
                                                  <span class="d-block text-muted">Company Name: ${lst.companies.companyName}</span>
                                                  </td>
                                                 <td><fmt:formatNumber value="${lst.contract.remainAmountBorrow}" type = "number"/> đ</td>
-                                                <td>${lst.contract.dateRepayment}</td>
+                                                <td><fmt:parseDate value=" ${lst.contract.dateRepayment}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
                                                 <td class="text-right"><span class="label label-danger">13.54%</span></td>
                                             </tr>
                                         </c:forEach>

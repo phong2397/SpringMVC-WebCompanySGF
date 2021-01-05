@@ -204,7 +204,8 @@
                                                 <td><a data-toggle="modal" href="#" id="saRequestID"
                                                        onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
-                                                <td>${lst.saRequest.createdDate}</td>
+                                                <td><fmt:parseDate value="${lst.saRequest.createdDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
+                                                        <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/>
                                                 <td>
                                                     <h6 class="mb-0">
                                                         <b> <a data-toggle="modal" href="#"

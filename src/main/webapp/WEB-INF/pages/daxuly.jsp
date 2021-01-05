@@ -89,7 +89,7 @@
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
                                                 <td><a href="#"
-                                                       onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}9999</b></a>
+                                                       onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0">
@@ -103,10 +103,13 @@
                                                 </td>
                                                 <td class="text-left"><fmt:formatNumber value="${lst.contract.remainAmountBorrow}" type = "number"/> đ</td>
                                                 <td class="text-left">0 đ</td>
-                                                <td class="text-left">${lst.contract.dateRepayment}</td>
+                                                <td class="text-left">
+                                                    <fmt:parseDate value=" ${lst.contract.dateRepayment}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
                                                 <td class="text-left">1</td>
                                                 <td class="text-left">ROOT</td>
-                                                <td class="text-left">${year}</td>
+                                                <td class="text-left"><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
                                             </tr>
                                         </c:forEach>
                                         <tbody>

@@ -158,11 +158,13 @@
 																	${lst.customer.customerPhone}</span>
 															</h6>
 														</td>
+														</td>
 														<td>${lst.contract.borrow} đ</td>
 														<td>${lst.contract.systemTrace} đ</td>
 														<td ><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
 														<td>${lst.contract.transactionId}</td>
-														<td>${lst.contract.dateRepayment} </td>
+														<td><fmt:parseDate value=" ${lst.contract.dateRepayment}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
+															<fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
 														<td> <fmt:formatNumber value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 2/100) }" type = "number"/> đ</td>
 													</tr>
 												</c:forEach>
@@ -267,7 +269,7 @@
 			})
 			$('#modal').modal('show');
 		}
-		function viewInfoCustomer(params) {
+		function viewInfoCustomer(params) 	{
 			let username = "sgfintech";
 			let password ="k6mzMtPJLPMi5crF";
 			result.forEach((customer) => {

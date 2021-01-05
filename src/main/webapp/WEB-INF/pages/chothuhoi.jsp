@@ -103,10 +103,13 @@
                                                 <td><fmt:formatNumber value="${lst.contract.borrow}" type = "number"/> đ</td>
                                                 <td><fmt:formatNumber value="${lst.contract.borrow}" type = "number"/> đ</td>
                                                 <td>0</td>
-                                                <td>${lst.contract.dateRepayment}</td>
+                                                <td><fmt:parseDate value=" ${lst.contract.dateRepayment}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/>
+                                                        </td>
                                                 <td>1</td>
                                                 <td>ROOT</td>
-                                                <td>${year}</td>
+                                                <td><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
                                                 <td>
                                                     <select name="status" class="form-control"
                                                             data-placeholder="Select status">
