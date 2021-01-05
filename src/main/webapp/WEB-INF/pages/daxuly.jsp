@@ -222,7 +222,7 @@
                 $.ajax ({
                     url:  'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
                     headers: {
-                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Origin": 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
                         "Access-Control-Allow-Credentials" : true,
                     },
                     beforeSend: function (xhr) {
@@ -235,45 +235,72 @@
                         const imgCMND = JSON.parse(data.cmnd);
                         $('#imgCMND').empty();
                         Object.keys(imgCMND).forEach((key)=>{
-                            var e = imgCMND[key];
-                            console.log(e)
-                            $('#imgCMND').append('<img style="width: 100%" src="' + e +'"/>');
+                            console.log(imgCMND[key])
+                            if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgCMND').append('Bổ sung hình ảnh');
+                            }else{
+                                $('#imgCMND').append('<img style="width: 100%" src="' + imgCMND[key] +'"/>');
+                            }
                         });
                         const payslipObj = JSON.parse(data.payslip);
-                        $('#imgPayslip').empty()
+                        $('#imgPayslip').empty();
                         Object.keys(payslipObj).forEach((key)=>{
-                            console.log(payslipObj[key]);
-                            $('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] +'"/>');
+                            console.log(payslipObj[key])
+                            if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] +'"/>');
+                            }
                         });
                         const salaryObj = JSON.parse(data.salary);
-                        $('#imgSalary').empty()
+                        $('#imgSalary').empty();
                         Object.keys(salaryObj).forEach((key)=>{
                             console.log(salaryObj[key]);
-                            $('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] +'"/>');
+                            if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] +'"/>');
+                            }
                         });
                         const healthObj = JSON.parse(data.health);
-                        $('#imgHealth').empty()
+                        $('#imgHealth').empty();
                         Object.keys(healthObj).forEach((key)=>{
                             console.log(healthObj[key]);
-                            $('#imgHealth').append('<img style="width: 100%" src="' + healthObj[key] +'"/>');
+                            if (healthObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgHealth').append('<img style="width: 100%"  src="' + healthObj[key] +'"/>');
+                            }
                         });
                         const appendixObj = JSON.parse(data.appendix);
-                        $('#imgAppendix').empty()
+                        $('#imgAppendix').empty();
                         Object.keys(appendixObj).forEach((key)=>{
                             console.log(appendixObj[key]);
-                            $('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] +'"/>');
+                            if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] +'"/>');
+                            }
                         });
                         const socialObj = JSON.parse(data.social);
-                        $('#imgSocial').empty()
+                        $('#imgSocial').empty();
                         Object.keys(socialObj).forEach((key)=>{
                             console.log(socialObj[key]);
-                            $('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] +'"/>');
+                            if (socialObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] +'"/>');
+                            }
                         });
                         const contractObj = JSON.parse(data.contract);
-                        $('#imgContract').empty()
+                        $('#imgContract').empty();
                         Object.keys(contractObj).forEach((key)=>{
                             console.log(contractObj[key]);
-                            $('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] +'"/>');
+                            if (contractObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] +'"/>');
+                            }
                         });
                     },
                 });

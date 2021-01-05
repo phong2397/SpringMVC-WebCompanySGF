@@ -5,7 +5,7 @@
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -17,14 +17,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <%
-    if (session.getAttribute(Consts.Session_Euser) != null){
-        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    if (session.getAttribute(Consts.Session_Euser) != null) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh")){
-        }else{
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh")) {
+        } else {
             response.sendRedirect("404");
         }
-    } else{
+    } else {
         response.sendRedirect("login");
 
     }
@@ -185,7 +185,7 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table  class="table table-lg invoice-archive">
+                                    <table class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
@@ -195,26 +195,31 @@
                                             <th>Thời gian còn lại</th>
                                             <th>Thời gian ứng</th>
                                             <th>Số tiền ứng</th>
-                                            <th class="text-center">Actions</th>
+                                            <th >Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
-                                                <td> <a data-toggle="modal" href="#" id="saRequestID"
-                                                        onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a></td>
+                                                <td><a data-toggle="modal" href="#" id="saRequestID"
+                                                       onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a>
+                                                </td>
                                                 <td>${lst.saRequest.createdDate}</td>
                                                 <td>
                                                     <h6 class="mb-0">
-                                                        <b> <a data-toggle="modal" href="#"  onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
-                                                        <span class="d-block text-muted">Company ID :<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.company.companyCode}')"> ${lst.company.companyCode}</a></b></span>
+                                                        <b> <a data-toggle="modal" href="#"
+                                                               onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
+                                                        <span class="d-block text-muted">Company ID :<b><a
+                                                                data-toggle="modal" href="#"
+                                                                onclick="viewInfoCompany('${lst.company.companyCode}')"> ${lst.company.companyCode}</a></b></span>
                                                         <span class="d-block text-muted">Account number : ${lst.customer.customerBankAcc}</span>
                                                         <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
-                                                        <span class="d-block text-muted" >Phone number : ${lst.customer.customerPhone}</span>
+                                                        <span class="d-block text-muted">Phone number : ${lst.customer.customerPhone}</span>
                                                     </h6>
                                                 </td>
                                                 <td class="text-center">
-                                                    <h6 class="mb-0 font-weight-bold" style="color: #0b2c89"> chờ thẩm định</h6>
+                                                    <h6 class="mb-0 font-weight-bold" style="color: #0b2c89"> chờ thẩm
+                                                        định</h6>
                                                 </td>
                                                 <td class="text-center">
                                                     <span class="badge badge-pill badge-primary">2 ngày</span>
@@ -222,7 +227,9 @@
                                                 <td>${lst.saRequest.timeBorrow} month
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold"> <fmt:formatNumber value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2)}" type = "number"/> đ
+                                                    <h6 class="mb-0 font-weight-bold"><fmt:formatNumber
+                                                            value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2)}"
+                                                            type="number"/> đ
                                                         <span class="d-block text-muted font-weight-normal">Phí: 2 % </span>
                                                     </h6>
                                                 </td>
@@ -261,9 +268,8 @@
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
                     <h3><p>Mã yêu cầu: <span id="id"></span>9999</p></h3>
                     <p>Số điện thoại : <span id="customerPhone"></span></p>
-                    <p>Số tiền ứng : <span id="borrow"></span>đ</p>
-                    <p>Thuế : <span id="interestRate"></span>%</p>
-                    <p>Phí : <span id="feeBorrow"></span></p>
+                    <p>Số tiền ứng : <span id="borrow"></span></p>
+                    <p>Phí : <span id="interestRate"></span>%</p>
                     <p>Số lần ứng : <span id="timeBorrow"></span></p>
                     <p>Trạng thái : <b style="color: #0b2c89"><span id="status"></span></b></p>
                 </div>
@@ -275,7 +281,7 @@
     </div>
     <!-- /.modal -->
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
-    <div class="control-sidebar-bg" ></div>
+    <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
 
@@ -289,6 +295,7 @@
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
 <script src="js/functhamdinh.js" type="text/javascript"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
@@ -300,16 +307,16 @@
                   String json = g.toJson(list);
                   %>
     var result = <%=json%>;
+    console.log(result)
     function viewInfoOrder(id) {
         list = result.find(el => el.saRequest.id == id);
         console.log(list)
         const saRequest = list.saRequest;
         Object.keys(saRequest).forEach((key) => {
-            if(key == "borrow" ){
-                let value1 = saRequest[key];
+            if (key == "borrow") {
+                let value1 = saRequest[key] + (saRequest[key]* 0.2);
                 $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
-            }
-            else {
+            } else {
                 $('#' + key).text(saRequest[key]);
             }
         });
@@ -321,9 +328,8 @@
         result.forEach((company) => {
             if (company.company.companyCode == params) {
                 let c = company.company;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
+                Object.keys(c).forEach((key) => {
+                    $('#' + key).text(c[key]);
                 })
             }
         })
@@ -331,34 +337,108 @@
         $('#modal-center').modal('show');
     }
 
+
     function viewInfoCustomer(params) {
         result.forEach((customer) => {
             if (customer.customer.customerPhone == params) {
-                $.ajax ({
-                    url: "http:/dev.sgft.info:8080/customergateway/api/v1/document/" + params,
-                    dataType: "json",
-                    type: 'GET',
-                    success: function(data){
-                        console.log(data)
+                axios({
+                    method: 'GET',
+                    url: 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
+                    headers: {
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                        'Access-Control-Allow-Origin': 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
                     },
-                });
+                    auth: {
+                        username: "sgfintech",
+                        password: "k6mzMtPJLPMi5crF"
+                    }
+                })
+                    .then(function (response) {
+                        const imgCMND = JSON.parse(response.data.cmnd)
+                        $('#imgCMND').empty();
+                        Object.keys(imgCMND).forEach((key)=>{
+                            if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgCMND').append('Bổ sung hình ảnh');
+                            }else{
+                                $('#imgCMND').append('<img style="width: 100%" src="' + imgCMND[key] +'"/>');
+                            }
+                        });
+                        const payslipObj = JSON.parse(response.data.payslip);
+                        $('#imgPayslip').empty()
+                        Object.keys(payslipObj).forEach((key)=>{
+                            console.log(payslipObj[key]);
+                            if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] +'"/>');
+                            }
+                        });
+                        const salaryObj = JSON.parse(response.data.salary);
+                        $('#imgSalary').empty()
+                        Object.keys(salaryObj).forEach((key)=>{
+                            if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] +'"/>');
+                            }
+
+                        });
+                        const healthObj = JSON.parse(response.data.health);
+                        $('#imgHealth').empty()
+                        Object.keys(healthObj).forEach((key)=>{
+                            if (healthObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgHealth').append('<img style="width: 100%"  src="' + healthObj[key] +'"/>');
+                            }
+                        });
+                        const appendixObj = JSON.parse(response.data.appendix);
+                        $('#imgAppendix').empty()
+                        Object.keys(appendixObj).forEach((key)=>{
+                            if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] +'"/>');
+                            }
+                        });
+                        const socialObj = JSON.parse(response.data.social);
+                        $('#imgSocial').empty()
+                        Object.keys(socialObj).forEach((key)=>{
+                            if (socialObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] +'"/>');
+                            }
+                        });
+                        const contractObj = JSON.parse(response.data.contract);
+                        $('#imgContract').empty()
+                        Object.keys(contractObj).forEach((key)=>{
+                            if (contractObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] +'"/>');
+                            }
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
                 let c = customer.customer;
                 const date = c.customerBirthday;
                 Object.keys(c).forEach((key) => {
-                    if (key == "customerSalary" ){
+                    if (key == "customerSalary") {
                         value = c[key]
                         $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
                         Object.keys(date).forEach((key) => {
                             $('#' + key).text(date[key]);
                         })
-                    }
-                    else{
+                    } else {
                         $('#' + key).text(c[key]);
                     }
                 })
             }
         })
-        console.log(result);
         $('#modal-right').modal('show');
     }
 </script>
