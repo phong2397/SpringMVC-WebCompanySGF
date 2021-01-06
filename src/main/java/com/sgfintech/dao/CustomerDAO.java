@@ -73,9 +73,6 @@ public class CustomerDAO {
                 list) {
             statelessSession.insert(c);
         }
-        if (tx.getStatus().equals(TransactionStatus.ACTIVE)) {
-            tx.commit();
-        }
         statelessSession.close();
     }
 
