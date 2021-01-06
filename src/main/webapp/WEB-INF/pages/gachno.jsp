@@ -21,7 +21,6 @@
 		}
 	} else{
 		response.sendRedirect("login");
-
 	}
 %>
 <!DOCTYPE html>
@@ -60,32 +59,6 @@
 								</nav>
 							</div>
 						</div>
-						<div class="right-title">
-							<div class="d-flex mt-10 justify-content-end">
-								<div class="d-lg-flex mr-20 ml-10 d-none">
-									<div class="chart-text mr-10">
-										<h6 class="mb-0"><small>THIS MONTH</small></h6>
-										<h4 class="mt-0 text-primary">$12,125</h4>
-									</div>
-									<div class="spark-chart">
-										<div id="thismonth"><canvas width="60" height="35"
-												style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-										</div>
-									</div>
-								</div>
-								<div class="d-lg-flex mr-20 ml-10 d-none">
-									<div class="chart-text mr-10">
-										<h6 class="mb-0"><small>LAST MONTH</small></h6>
-										<h4 class="mt-0 text-danger">$22,754</h4>
-									</div>
-									<div class="spark-chart">
-										<div id="lastyear"><canvas width="60" height="35"
-												style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 				<div class="px-30 my-15 no-print">
@@ -102,7 +75,7 @@
 							</div>
 							<div class="box-body">
 								<div class="table-responsive">
-									<table id="example" class="table table-striped table-bordered no-margin">
+									<table class="table table-striped table-bordered no-margin">
 										<thead>
 											<tr>
 												<th class="text-center">Mã đơn vay</th>
@@ -120,7 +93,7 @@
 											<c:forEach items="${views}" var="lst" varStatus="loop">
 												<tr id="tr-${lst.contract.idContract}">
 													<td><a href="#"
-														   onclick="viewInfo('${lst.contract.idContract}','${lst.customer.customerPhone}')"><b>${lst.contract.idContract}9999</b></a>
+														   onclick="viewInfo('${lst.contract.idContract}','${lst.customer.customerPhone}')"><b>${lst.contract.idContract}</b></a>
 													</td>
 													<td class="text-left">
 														<h6 class="mb-0">
@@ -137,9 +110,13 @@
 													<td class="text-right"><fmt:formatNumber value="${lst.contract.borrow}" type = "number"/> đ</td>
 													<td class="text-right"><fmt:formatNumber value="${lst.contract.borrow}" type = "number"/> đ</td>
 													<td class="text-right">0</td>
-													<td class="text-right">${lst.contract.dateRepayment}</td>
+													<td class="text-right">
+														<fmt:parseDate value="${lst.contract.dateRepayment}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
+														<fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
 													<td class="text-right">1</td>
-													<td class="text-right">${year}</td>
+													<td class="text-right">
+														<fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
+														<fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
 												</tr>
 											</c:forEach>
 										<tbody>
@@ -171,7 +148,8 @@
 							<div class="page-header">
 								<h2 class="d-inline"><span class="font-size-30">Thông tin hóa đơn</span></h2>
 								<div class="pull-right text-right">
-									<h3>${year}</h3>
+									<h3><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
+										<fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></h3>
 								</div>
 							</div>
 						</div>
@@ -199,11 +177,12 @@
 							<!-- /.col -->
 							<div class="col-sm-12 invoice-col mb-15">
 								<div class="invoice-details row no-margin">
-									<div class="col-md-6 col-lg-3"><b>Mã đơn vay:</b>#<span id="idContract"></span>9999
+									<div class="col-md-6 col-lg-3"><b>Mã đơn vay:</b><span id="idContract"></span>
 									</div>
 									<div class="col-md-6 col-lg-3"><b>Thông tin giao dịch:</b>
 										<span id="transactionId"></span></div>
-									<div class="col-md-6 col-lg-3"><b>Ngày thanh toán:</b>${year}</div>
+									<div class="col-md-6 col-lg-3"><b>Ngày thanh toán:</b><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
+										<fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></div>
 									<div class="col-md-6 col-lg-3"><b>Tài khoản báo có :</b>
 										<span id="customerBankAcc"></span></div>
 								</div>
@@ -219,15 +198,13 @@
 										<tr>
 											<th>Mô tả</th>
 											<th>Serial #</th>
-											<th class="text-right">Thuế</th>
 											<th class="text-right">Phí</th>
 											<th class="text-right">Số tiền thanh toán</th>
 										</tr>
 										<tr>
 											<td>Thanh toán dư nợ cuối kì</td>
 											<td><span id="systemTrace"></span></td>
-											<td class="text-right">1.4%</td>
-											<td class="text-right"><span id="feeBorrow"></span></td>
+											<td class="text-right">2 %</td>
 											<td class="text-right"><span id="borrow"></span></td>
 										</tr>
 									</tbody>
@@ -239,7 +216,8 @@
 
 						<div class="row">
 							<div class="col-12 text-right">
-								<p class="lead"><b>Ngày thanh toán:</b><span class="text-danger">${year}</span></p>
+								<p class="lead"><b>Ngày thanh toán:</b><span class="text-danger"><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
+														<fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></span></p>
 									<div class="total-payment">
 										<h3><b>Total :</b>
 										<td class="text-right"><span id="remainAmountBorrow"></span></td>
@@ -277,7 +255,6 @@
 	</div>
 	<!-- ./wrapper -->
 	<script src="js/vendors.min.js"></script>
-
 	<script src="assets/vendor_components/datatable/datatables.min.js"></script>
 	<script src="js/pages/data-table.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -290,13 +267,11 @@
 				$("#loading").hide();
 			});
 			var selectedContractId;
-
 		  <%
 			List < MergeDataWithdraw > list = (List<MergeDataWithdraw>) request.getAttribute("views");
 			Gson g = new Gson();
 			String json = g.toJson(list);
 		   %>
-
 		const list = <%=json%>;
 		  function viewInfoCompany(params) {
 			  list.forEach((company) => {
@@ -326,14 +301,10 @@
 			const contract = result.contract;
 			Object.keys(contract).forEach((key) => {
 				if(key == "remainAmountBorrow") {
-					let value = (1.4/100 * contract[key])+ contract[key];
+					let value = (2/100 * contract[key])	+ contract[key];
 					$('#' + key).text(value.toLocaleString("vi-VN") + " đ");
 
 				}else if(key == "borrow" ){
-					let value1 = contract[key];
-					$('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
-				}
-				else if(key == "feeBorrow" ){
 					let value1 = contract[key];
 					$('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
 				}

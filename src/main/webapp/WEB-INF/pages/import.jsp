@@ -53,34 +53,6 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="right-title">
-                        <div class="d-flex mt-10 justify-content-end">
-                            <div class="d-lg-flex mr-20 ml-10 d-none">
-                                <div class="chart-text mr-10">
-                                    <h6 class="mb-0"><small>Số lượng upload trong tháng</small></h6>
-                                    <h4 class="mt-0 text-primary">12,125</h4>
-                                </div>
-                                <div class="spark-chart">
-                                    <div id="thismonth">
-                                        <canvas width="60" height="35"
-                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-lg-flex mr-20 ml-10 d-none">
-                                <div class="chart-text mr-10">
-                                    <h6 class="mb-0"><small>Tổng upload</small></h6>
-                                    <h4 class="mt-0 text-danger">22,754</h4>
-                                </div>
-                                <div class="spark-chart">
-                                    <div id="lastyear">
-                                        <canvas width="60" height="35"
-                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -151,20 +123,19 @@
                                     <table  id="example" class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
-                                            <th>Mã công ty</th>
-                                            <th>Số điện thoại khách hàng</th>
-                                            <th>Tên khách hàng</th>
-                                            <th>Ngày tháng năm sinh</th>
-                                            <th>Chủ tài khoản</th>
-                                            <th>Số tài khoản</th>
-                                            <th>Tên ngân hàng</th>
-                                            <th>Số CMND</th>
-                                            <th>Số hợp đồng</th>
-                                            <th>Ngày kết thúc hợp đồng</th>
+                                            <th>Họ Tên</th>
+                                            <th>Số CMND/CCCD/Hộ Chiếu</th>
+                                            <th>Ngày sinh</th>
+                                            <th>Số Điện thoại cá nhân</th>
+                                            <th>Thời hạn HĐLĐ</th>
+                                            <th>Loại HĐLĐ</th>
+                                            <th>Trạng thái HĐLĐ</th>
+                                            <th>Tài khoản NN nhận lương</th>
+                                            <th>NH Nhận lương</th>
+                                            <th>Tên Chủ Tài khoản NH nhận lương</th>
                                         </tr>
                                         </thead>
                                         <tbody id="tbodytable">
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -174,11 +145,9 @@
                 </div>
             </section>
             <!-- /.content -->
-
         </div>
     </div>
     <!-- /.content-wrapper -->
-
     <jsp:include page="general/_footer.jsp"/>
     <!-- Control Sidebar -->
     <jsp:include page="general/_controlSidebar.jsp"/>
@@ -225,21 +194,21 @@
                     var obj = JSON.parse(data + "") ;
                     var body = $("#tbodytable");
                     body.empty();
-                    for (var i = 0; i < obj.length; i++){
-                        var e = obj[i];
+                    Object.keys(obj).forEach((key)=>{
+                        var e = obj[key];
                         var rowElement = $('<tr></tr>');
-                        rowElement.append('<td>' + e.companyCode + '</td>');
-                        rowElement.append('<td>' + e.customerPhone + '</td>');
                         rowElement.append('<td>' + e.customerName + '</td>');
-                        rowElement.append('<td>' + e.customerBirthday.day + "-" + e.customerBirthday.month + "-" + e.customerBirthday.year  + '</td>');
-                        rowElement.append('<td>' + e.customerBank + '</td>');
+                        rowElement.append('<td>' + e.customerId + '</td>');
+                        rowElement.append('<td>' + e.customerBirthday.day + "/" + e.customerBirthday.month + "/" + e.customerBirthday.year  + '</td>');
+                        rowElement.append('<td>' + e.customerPhone + '</td>');
+                        rowElement.append('<td>' + e.customerContractExpired.date.day + "/" + e.customerContractExpired.date.month + "/" + e.customerContractExpired.date.year +  '</td>');
+                        rowElement.append('<td>' + e.customerContract + '</td>');
+                        rowElement.append('<td>' + e.status + '</td>');
                         rowElement.append('<td>' + e.customerBankAcc + '</td>');
                         rowElement.append('<td>' + e.customerBankName + '</td>');
-                        rowElement.append('<td>' + e.customerId + '</td>');
-                        rowElement.append('<td>' + e.customerContract + '</td>');
-                        rowElement.append('<td>' + e.customerContractExpired.date.day + "-" + e.customerContractExpired.date.month + "-" + e.customerContractExpired.date.year +  '</td>');
+                        rowElement.append('<td>' + e.customerBank + '</td>');
                         body.append(rowElement);
-                    }
+                    })
                     $("#loading").hide();
                     console.log(data);
                     Swal.fire(
@@ -255,7 +224,6 @@
                         text: 'Lỗi trong quá trình thực thi' + data,
                     })
                 }
-
             },
             error : function (data) {
                 $("#loading").hide();

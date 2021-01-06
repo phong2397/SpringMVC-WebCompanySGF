@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -58,7 +59,7 @@ public class SaRequest implements Serializable {
     private byte[] data;
 
     @Column(name = "created_date")
-    private LocalDateTime createdDate = LocalDateTime.now();
+    private LocalDateTime createdDate ;
 
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;

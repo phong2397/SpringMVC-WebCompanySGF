@@ -41,7 +41,7 @@
             <div class="content-header">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="page-title">Danh sách cấu hình sản phẩm</h3>
+                        <h3 class="page-title">Danh sách tham số điều chỉnh được</h3>
                         <div class="d-inline-block align-items-center">
                             <nav>
                                 <ol class="breadcrumb">
@@ -53,32 +53,6 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="right-title">
-                        <div class="d-flex mt-10 justify-content-end">
-                            <div class="d-lg-flex mr-20 ml-10 d-none">
-                                <div class="chart-text mr-10">
-                                    <h6 class="mb-0"><small>THIS MONTH</small></h6>
-                                    <h4 class="mt-0 text-primary">$12,125</h4>
-                                </div>
-                                <div class="spark-chart">
-                                    <div id="thismonth"><canvas width="60" height="35"
-                                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-lg-flex mr-20 ml-10 d-none">
-                                <div class="chart-text mr-10">
-                                    <h6 class="mb-0"><small>LAST MONTH</small></h6>
-                                    <h4 class="mt-0 text-danger">$22,754</h4>
-                                </div>
-                                <div class="spark-chart">
-                                    <div id="lastyear"><canvas width="60" height="35"
-                                                               style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -88,46 +62,63 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <h4 class="box-title">Danh sách cấu hình sản phẩm</h4>
+                                <h4 class="box-title">Danh sách tham số điều chỉnh được</h4>
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-                                    <table id="example" class="table table-striped table-bordered no-margin">
+                                    <table class="table table-striped table-bordered no-margin">
                                         <thead>
                                         <tr>
-                                            <th class="text-center">Mã sản phẩm</th>
                                             <th>Tên sản phẩm</th>
                                             <th class="text-left">Phí</th>
-                                            <th class="text-left">TIền lãi</th>
-                                            <th class="text-left">Số tiền nhỏ nhất</th>
                                             <th class="text-left">Số tiền lớn nhất</th>
-                                            <th class="text-left">Trạng thái</th>
-                                            <th class="text-left">Chi tiết sản phẩm</th>
+                                            <th class="text-left">Số tiền nhỏ nhất</th>
                                             <th class="text-left">Mục tiêu</th>
 
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${views}" var="lst" varStatus="loop">
                                         <tr>
-                                            <td><a href="#"
-                                                   ><b>${lst.productCode}</b></a>
-                                            </td>
-                                            <td><b>${lst.productName}</b></td>
-                                            <td class="text-left">0 đ</td>
-                                            <td class="text-left">1.4%</td>
-                                            <td class="text-left"><fmt:formatNumber value="1000000" type = "number"/> đ</td>
+                                            <td><b>Loại A</b></td>
+                                            <td class="text-left">2%</td>
                                             <td class="text-left"><fmt:formatNumber value="2000000" type = "number"/> đ</td>
-                                            <td class="text-left"><b style="color: #00E466">${lst.status}</b></td>
-                                            <td class="text-left">${lst.productDetail}</td>
+                                            <td class="text-left"><fmt:formatNumber value="500000" type = "number"/> đ</td>
                                             <td class="text-left"><span class="d-block text-muted">Khách hang có thu nhập từ 6tr-8tr</span></td>
                                         </tr>
-                                        </c:forEach>
+                                        <tr>
+                                        </tr>
                                         <tbody>
                                     </table>
                                 </div>
                             </div>
                             <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered no-margin">
+                                        <thead>
+                                        <tr>
+                                            <th>Tên sản phẩm</th>
+                                            <th class="text-left">Số tiền lớn nhất</th>
+                                            <th class="text-left">Số tiền nhỏ nhất</th>
+                                            <th class="text-left">Số lần ứng </th>
+                                            <th class="text-left">Mục tiêu</th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td><b>Loại B</b></td>
+                                            <td class="text-left">50% Lương của số ngày đi làm</td>
+                                            <td class="text-left"><fmt:formatNumber value="200000" type = "number"/> đ/ 1 lần ứng</td>
+                                            <td class="text-left">3 lần</td>
+                                            <td class="text-left"><span class="d-block text-muted">Khách hang có thu nhập từ 6tr-8tr</span></td>
+                                        </tr>
+                                        <tr>
+                                        </tr>
+                                        <tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.box -->
                     </div>

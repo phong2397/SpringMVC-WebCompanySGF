@@ -61,32 +61,7 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="right-title">
-                        <div class="d-flex mt-10 justify-content-end">
-                            <div class="d-lg-flex mr-20 ml-10 d-none">
-                                <div class="chart-text mr-10">
-                                    <h6 class="mb-0"><small>Số lượng upload trong tháng</small></h6>
-                                    <h4 class="mt-0 text-primary">12,125</h4>
-                                </div>
-                                <div class="spark-chart">
-                                    <div id="thismonth"><canvas width="60" height="35"
-                                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-lg-flex mr-20 ml-10 d-none">
-                                <div class="chart-text mr-10">
-                                    <h6 class="mb-0"><small>Tổng upload</small></h6>
-                                    <h4 class="mt-0 text-danger">22,754</h4>
-                                </div>
-                                <div class="spark-chart">
-                                    <div id="lastyear"><canvas width="60" height="35"
-                                                               style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
@@ -118,7 +93,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label style="color:black">Tên công ty</label><br>
-                                                <h5 style="color: #787878;font-size: 25px"><span id="companyName" ></span></h5>
+                                                <h5 style="color: #1a2129;font-size: 25px"><span id="companyName" ></span></h5>
                                             </div>
                                         </div>
                                     </div>
@@ -139,7 +114,7 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table id="example" class="table table-lg invoice-archive">
+                                    <table class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
                                             <th>Mã công ty</th>
@@ -148,7 +123,6 @@
                                             <th>Chức vụ</th>
                                             <th>Thông tin CMND</th>
                                             <th>Thông tin ngân hàng</th>
-                                            <th>Thông tin nhân thân</th>
                                             <th>Tài liệu</th>
                                         </tr>
                                         </thead>
@@ -198,7 +172,6 @@
         String json = g.toJson(list);
     %>
     var comList = <%=json%>;
-
     function onCompanyChanged(e){
         let value = e.target.value;
 

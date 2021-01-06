@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Table(name = "sgft_contract")
@@ -59,7 +60,7 @@ public class Contract implements Serializable {
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
-    public Contract(Long idContract, String systemTrace, String customerPhone, Long borrow, Integer timeBorrow, Long remainAmountBorrow, Double feeBorrow, String transactionId, String status, LocalDateTime dateRepayment, LocalDateTime dateRepaymentUtil, String acceptedBy, byte[] notedBy,LocalDateTime updatedDate) {
+    public Contract(Long idContract, String systemTrace, String customerPhone, Long borrow, Integer timeBorrow, Long remainAmountBorrow, Double feeBorrow, String transactionId, String status, LocalDateTime dateRepayment, LocalDateTime dateRepaymentUtil, String acceptedBy, byte[] notedBy, LocalDateTime updatedDate) {
         this.idContract = idContract;
         this.systemTrace = systemTrace;
         this.customerPhone = customerPhone;

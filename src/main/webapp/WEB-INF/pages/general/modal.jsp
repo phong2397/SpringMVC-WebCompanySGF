@@ -45,7 +45,7 @@
                 <p>Email : <span id="customerEmail"></span></p>
                 <p>Mức lương : <span id="customerSalary"></span></p>
                 <p>Giới tính : <span id="customerGender"></span></p>
-                <p>Ngày sinh : <span id="day"></span>-<span id="month"></span>-<span id="year"></span></p>
+                <p>Ngày sinh : <span id="day"></span>/<span id="month"></span>/<span id="year"></span></p>
                 <p>Tên ngân hàng : <span id="customerBank"></span></p>
                 <p>Số tài khoản : <span id="customerBankAcc"></span></p>
                 <p>Tên ngân hàng : <span id="customerBankName"></span></p>
@@ -59,6 +59,20 @@
                 <p>Số hợp đồng : <span id="customerContract"></span></p>
                 <p>Thông tin người thân : <span id="customerRelative"></span></p>
                 <p>Số điện thoại người thân : <span id="customerRelativePhone"></span></p>
+                <p>Hình ảnh chứng minh nhân dân : </p>
+                <p id="imgCMND"></p>
+                <p>Hình ảnh bảng lương cá nhân : </p>
+                <p id="imgPayslip"></p>
+                <p>Hình ảnh bảo hiểm y tế : </p>
+                <p id="imgHealth"></p>
+                <p>Hình ảnh bảng lương : </p>
+                <p id="imgSalary"></p>
+                <p>Hình ảnh phụ lục : </p>
+                <p id="imgAppendix"></p>
+                <p>Hình ảnh bảo hiểm xã hội : </p>
+                <p id="imgSocial"></p>
+                <p>Hình ảnh hợp đồng : </p>
+                <p id="imgContract"></p>
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>

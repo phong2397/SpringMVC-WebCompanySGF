@@ -60,34 +60,6 @@
                             </nav>
                         </div>
                     </div>
-                    <div class="right-title">
-                        <div class="d-flex mt-10 justify-content-end">
-                            <div class="d-lg-flex mr-20 ml-10 d-none">
-                                <div class="chart-text mr-10">
-                                    <h6 class="mb-0"><small>THIS MONTH</small></h6>
-                                    <h4 class="mt-0 text-primary">$12,125</h4>
-                                </div>
-                                <div class="spark-chart">
-                                    <div id="thismonth">
-                                        <canvas width="60" height="35"
-                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-lg-flex mr-20 ml-10 d-none">
-                                <div class="chart-text mr-10">
-                                    <h6 class="mb-0"><small>LAST MONTH</small></h6>
-                                    <h4 class="mt-0 text-danger">$22,754</h4>
-                                </div>
-                                <div class="spark-chart">
-                                    <div id="lastyear">
-                                        <canvas width="60" height="35"
-                                                style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- Main content -->
@@ -100,7 +72,7 @@
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-                                    <table id="example" class="table table-striped table-bordered no-margin">
+                                    <table class="table table-striped table-bordered no-margin">
                                         <thead>
                                         <tr>
                                             <th class="text-center">Mã đơn vay</th>
@@ -117,7 +89,7 @@
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
                                                 <td><a href="#"
-                                                       onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}9999</b></a>
+                                                       onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0">
@@ -131,10 +103,13 @@
                                                 </td>
                                                 <td class="text-left"><fmt:formatNumber value="${lst.contract.remainAmountBorrow}" type = "number"/> đ</td>
                                                 <td class="text-left">0 đ</td>
-                                                <td class="text-left">${lst.contract.dateRepayment}</td>
+                                                <td class="text-left">
+                                                    <fmt:parseDate value=" ${lst.contract.dateRepayment}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
                                                 <td class="text-left">1</td>
                                                 <td class="text-left">ROOT</td>
-                                                <td class="text-left">${year}</td>
+                                                <td class="text-left"><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
                                             </tr>
                                         </c:forEach>
                                         <tbody>
@@ -243,8 +218,95 @@
         $('#modal').modal('show');
     }
     function viewInfoCustomer(params) {
+        let username = "sgfintech";
+        let password ="k6mzMtPJLPMi5crF";
         result.forEach((customer) => {
             if (customer.customer.customerPhone == params) {
+                $.ajax ({
+                    url:  'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
+                    headers: {
+                        "Access-Control-Allow-Origin": 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
+                        "Access-Control-Allow-Credentials" : true,
+                    },
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+                    },
+                    crossDomain: true,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data){
+                        const imgCMND = JSON.parse(data.cmnd);
+                        $('#imgCMND').empty();
+                        Object.keys(imgCMND).forEach((key)=>{
+                            console.log(imgCMND[key])
+                            if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgCMND').append('Bổ sung hình ảnh');
+                            }else{
+                                $('#imgCMND').append('<img style="width: 100%" src="' + imgCMND[key] +'"/>');
+                            }
+                        });
+                        const payslipObj = JSON.parse(data.payslip);
+                        $('#imgPayslip').empty();
+                        Object.keys(payslipObj).forEach((key)=>{
+                            console.log(payslipObj[key])
+                            if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] +'"/>');
+                            }
+                        });
+                        const salaryObj = JSON.parse(data.salary);
+                        $('#imgSalary').empty();
+                        Object.keys(salaryObj).forEach((key)=>{
+                            console.log(salaryObj[key]);
+                            if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] +'"/>');
+                            }
+                        });
+                        const healthObj = JSON.parse(data.health);
+                        $('#imgHealth').empty();
+                        Object.keys(healthObj).forEach((key)=>{
+                            console.log(healthObj[key]);
+                            if (healthObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgHealth').append('<img style="width: 100%"  src="' + healthObj[key] +'"/>');
+                            }
+                        });
+                        const appendixObj = JSON.parse(data.appendix);
+                        $('#imgAppendix').empty();
+                        Object.keys(appendixObj).forEach((key)=>{
+                            console.log(appendixObj[key]);
+                            if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] +'"/>');
+                            }
+                        });
+                        const socialObj = JSON.parse(data.social);
+                        $('#imgSocial').empty();
+                        Object.keys(socialObj).forEach((key)=>{
+                            console.log(socialObj[key]);
+                            if (socialObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] +'"/>');
+                            }
+                        });
+                        const contractObj = JSON.parse(data.contract);
+                        $('#imgContract').empty();
+                        Object.keys(contractObj).forEach((key)=>{
+                            console.log(contractObj[key]);
+                            if (contractObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                                $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
+                            }else{
+                                $('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] +'"/>');
+                            }
+                        });
+                    },
+                });
                 let c = customer.customer;
                 const date = c.customerBirthday;
                 Object.keys(c).forEach((key) => {

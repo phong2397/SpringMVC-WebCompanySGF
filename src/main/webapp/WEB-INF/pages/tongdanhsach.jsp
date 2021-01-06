@@ -56,32 +56,6 @@
 								</nav>
 							</div>
 						</div>
-						<div class="right-title">
-							<div class="d-flex mt-10 justify-content-end">
-								<div class="d-lg-flex mr-20 ml-10 d-none">
-									<div class="chart-text mr-10">
-										<h6 class="mb-0"><small>THIS MONTH</small></h6>
-										<h4 class="mt-0 text-primary">$12,125</h4>
-									</div>
-									<div class="spark-chart">
-										<div id="thismonth"><canvas width="60" height="35"
-												style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-										</div>
-									</div>
-								</div>
-								<div class="d-lg-flex mr-20 ml-10 d-none">
-									<div class="chart-text mr-10">
-										<h6 class="mb-0"><small>LAST MONTH</small></h6>
-										<h4 class="mt-0 text-danger">$22,754</h4>
-									</div>
-									<div class="spark-chart">
-										<div id="lastyear"><canvas width="60" height="35"
-												style="display: inline-block; width: 60px; height: 35px; vertical-align: top;"></canvas>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 
@@ -141,80 +115,7 @@
 								</div>
 							</a>
 						</div>
-						<div class="col-xl-3 col-lg-4 col-12">
-							<div class="row">
-								<div class="col-12">
-									<div class="box">
-										<div class="box-header with-border">
-											<h5 class="box-title">Hình thức thanh toán nợ</h5>
-											<div class="box-tools pull-right">
-												<ul class="card-controls">
-													<li class="dropdown">
-														<a data-toggle="dropdown" href="#"><i
-																class="ion-android-more-vertical"></i></a>
-														<div class="dropdown-menu dropdown-menu-right">
-															<a class="dropdown-item active" href="#">Today</a>
-															<a class="dropdown-item" href="#">Yesterday</a>
-															<a class="dropdown-item" href="#">Last week</a>
-															<a class="dropdown-item" href="#">Last month</a>
-														</div>
-													</li>
-													<li><a href="" class="link card-btn-reload" data-toggle="tooltip"
-															title="" data-original-title="Refresh"><i
-																class="fa fa-circle-thin"></i></a></li>
-												</ul>
-											</div>
-										</div>
-
-										<div class="box-body">
-											<div class="text-center pb-25">
-												<div class="donut"
-													data-peity='{ "fill": ["#fc4b6c", "#ffb22b", "#398bf7"], "radius": 70, "innerRadius": 28  }'>
-													9,6,5</div>
-											</div>
-
-											<ul class="list-inline">
-												<li class="flexbox mb-5">
-													<div>
-														<span class="badge badge-dot badge-lg mr-1"
-															style="background-color: #fc4b6c"></span>
-														<span>Chuyển khoản</span>
-													</div>
-													<div>8952</div>
-												</li>
-
-												<li class="flexbox mb-5">
-													<div>
-														<span class="badge badge-dot badge-lg mr-1"
-															style="background-color: #ffb22b"></span>
-														<span>Trung gian thanh toán</span>
-													</div>
-													<div>7458</div>
-												</li>
-
-												<li class="flexbox">
-													<div>
-														<span class="badge badge-dot badge-lg mr-1"
-															style="background-color: #398bf7"></span>
-														<span>Trực tiếp</span>
-													</div>
-													<div>3254</div>
-												</li>
-												<li class="flexbox">
-													<div>
-														<span class="badge badge-dot badge-lg mr-1"
-															style="background-color: #ce389c"></span>
-														<span>Other</span>
-													</div>
-													<div>3254</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-9 col-lg-8 col-12">
+						<div class="col-12">
 							<div class="box">
 								<div class="box-header with-border">
 									<h4 class="box-title">Danh sách gạch nợ</h4>
@@ -242,7 +143,7 @@
 												<c:forEach items="${views}" var="lst" varStatus="loop">
 													<tr>
 														<td><a href="#"
-															   onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}9999</b></a>
+															   onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
 														</td>
 														<td>
 															<h6 class="mb-0">
@@ -257,12 +158,14 @@
 																	${lst.customer.customerPhone}</span>
 															</h6>
 														</td>
+														</td>
 														<td>${lst.contract.borrow} đ</td>
 														<td>${lst.contract.systemTrace} đ</td>
 														<td ><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
 														<td>${lst.contract.transactionId}</td>
-														<td>${lst.contract.dateRepayment} </td>
-														<td> <fmt:formatNumber value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 1.4/100) }" type = "number"/> đ</td>
+														<td><fmt:parseDate value=" ${lst.contract.dateRepayment}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
+															<fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
+														<td> <fmt:formatNumber value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 2/100) }" type = "number"/> đ</td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -366,9 +269,96 @@
 			})
 			$('#modal').modal('show');
 		}
-		function viewInfoCustomer(params) {
+		function viewInfoCustomer(params) 	{
+			let username = "sgfintech";
+			let password ="k6mzMtPJLPMi5crF";
 			result.forEach((customer) => {
 				if (customer.customer.customerPhone == params) {
+					$.ajax ({
+						url:  'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
+						headers: {
+							"Access-Control-Allow-Origin": 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
+							"Access-Control-Allow-Credentials" : true,
+						},
+						beforeSend: function (xhr) {
+							xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+						},
+						crossDomain: true,
+						method: 'GET',
+						dataType: 'json',
+						success: function(data){
+							const imgCMND = JSON.parse(data.cmnd);
+							$('#imgCMND').empty();
+							Object.keys(imgCMND).forEach((key)=>{
+								console.log(imgCMND[key])
+								if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/'+params+'@' ){
+									$('#imgCMND').append('Bổ sung hình ảnh');
+								}else{
+									$('#imgCMND').append('<img style="width: 100%" src="' + imgCMND[key] +'"/>');
+								}
+							});
+							const payslipObj = JSON.parse(data.payslip);
+							$('#imgPayslip').empty();
+							Object.keys(payslipObj).forEach((key)=>{
+								console.log(payslipObj[key])
+								if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+									$('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
+								}else{
+									$('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] +'"/>');
+								}
+							});
+							const salaryObj = JSON.parse(data.salary);
+							$('#imgSalary').empty();
+							Object.keys(salaryObj).forEach((key)=>{
+								console.log(salaryObj[key]);
+								if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+									$('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
+								}else{
+									$('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] +'"/>');
+								}
+							});
+							const healthObj = JSON.parse(data.health);
+							$('#imgHealth').empty();
+							Object.keys(healthObj).forEach((key)=>{
+								console.log(healthObj[key]);
+								if (healthObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+									$('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
+								}else{
+									$('#imgHealth').append('<img style="width: 100%"  src="' + healthObj[key] +'"/>');
+								}
+							});
+							const appendixObj = JSON.parse(data.appendix);
+							$('#imgAppendix').empty();
+							Object.keys(appendixObj).forEach((key)=>{
+								console.log(appendixObj[key]);
+								if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+									$('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
+								}else{
+									$('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] +'"/>');
+								}
+							});
+							const socialObj = JSON.parse(data.social);
+							$('#imgSocial').empty();
+							Object.keys(socialObj).forEach((key)=>{
+								console.log(socialObj[key]);
+								if (socialObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+									$('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
+								}else{
+									$('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] +'"/>');
+								}
+							});
+							const contractObj = JSON.parse(data.contract);
+							$('#imgContract').empty();
+							Object.keys(contractObj).forEach((key)=>{
+								console.log(contractObj[key]);
+								if (contractObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+									$('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
+								}else{
+									$('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] +'"/>');
+								}
+							});
+						},
+					});
 					let c = customer.customer;
 					const date = c.customerBirthday;
 					Object.keys(c).forEach((key) => {
@@ -379,7 +369,8 @@
 								$('#' + key).text(date[key]);
 							})
 						}
-						else{
+						else
+						{
 							$('#' + key).text(c[key]);
 						}
 					})

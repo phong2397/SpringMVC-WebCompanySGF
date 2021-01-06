@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -58,14 +59,14 @@ public class SignController {
         int countAll = mergeDataService.countAll();
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
-        int countDone = mergeDataService.countStatus("done");
+        int countAct = mergeDataService.countStatus("act");
         int countDeni = mergeDataService.countStatus("deni");
         List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs",false);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
         mm.addAttribute("countAll", countAll);
         mm.addAttribute("countWait", countWait);
         mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countDone", countDone);
+        mm.addAttribute("countAct", countAct);
         mm.addAttribute("countDeni", countDeni);
         return "kyduyet";
     }
@@ -78,7 +79,7 @@ public class SignController {
         String status = request.getParameter("status");
         String step = request.getParameter("step");
         try {
-            SaRequest sa = saRequestDAO.findById(Long.parseLong(data.trim())); //sa.getBorrow();
+            SaRequest sa = saRequestDAO.findById(Long.parseLong(data)); //sa.getBorrow();
             Customer cu = customerService.getCustomerByPhone(sa.getCustomerPhone());
             Date date = new Date();
             String partnerCode = "VAYSV";
