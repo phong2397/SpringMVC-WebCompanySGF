@@ -221,7 +221,7 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Lỗi trong quá trình thực thi' + data,
+                        text: 'Lỗi trong quá trình thực thi' +'' +data,
                     })
                 }
             },

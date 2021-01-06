@@ -81,6 +81,9 @@ public class SignController {
         try {
             SaRequest sa = saRequestDAO.findById(Long.parseLong(data)); //sa.getBorrow();
             Customer cu = customerService.getCustomerByPhone(sa.getCustomerPhone());
+            String uuid = UUID.randomUUID().toString();
+            String requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            /*
             Date date = new Date();
             String partnerCode = "VAYSV";
             String requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(date);
@@ -133,29 +136,32 @@ public class SignController {
 //                return "error";
 //            } else {
 //            }
-            Contract ct = new Contract();
-            ct.setIdContract(sa.getId());
-            ct.setSystemTrace(uuid);
-            ct.setCustomerPhone(cu.getCustomerPhone());
-            ct.setBorrow(sa.getBorrow());
-            ct.setTimeBorrow(sa.getTimeBorrow());
-            ct.setRemainAmountBorrow(sa.getBorrow());
-            ct.setFeeBorrow(sa.getFeeBorrow());
-//          ct.setTransactionId(resultRes.get("TransactionId").getAsString());
-            ct.setTransactionId(requestId);
-            ct.setStatus("act");
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.DATE, +30);
-            ct.setDateRepayment(LocalDateTime.now().plusDays(30));
-            ct.setCreatedDate(sa.getUpdatedDate());
-            Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-            ct.setAcceptedBy(u.getUserLogin());
-            contractDAO.save(ct);
 
+             */
+            Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+            if (status.equals("act")) {
+                Contract ct = new Contract();
+                ct.setIdContract(sa.getId());
+                ct.setSystemTrace(uuid);
+                ct.setCustomerPhone(cu.getCustomerPhone());
+                ct.setBorrow(sa.getBorrow());
+                ct.setTimeBorrow(sa.getTimeBorrow());
+                ct.setRemainAmountBorrow(sa.getBorrow());
+                ct.setFeeBorrow(sa.getFeeBorrow());
+//          ct.setTransactionId(resultRes.get("TransactionId").getAsString());
+                ct.setTransactionId(requestId);
+                ct.setStatus(status);
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DATE, +30);
+                ct.setDateRepayment(LocalDateTime.now().plusDays(30));
+                ct.setCreatedDate(sa.getUpdatedDate());
+                ct.setAcceptedBy(u.getUserLogin());
+                contractDAO.save(ct);
+            }
             sa.setEmployeeDuyet(u.getUserLogin());
             sa.setEmployeeDuyetDate(LocalDateTime.now());
             sa.setUpdatedDate(LocalDateTime.now());
-            sa.setStatus("act");
+            sa.setStatus(status);
             saRequestDAO.update(sa);
             return "success";
             //todo virtual account va tao collection point
