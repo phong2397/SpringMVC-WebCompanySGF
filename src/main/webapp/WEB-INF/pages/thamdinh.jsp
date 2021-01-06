@@ -185,7 +185,7 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table class="table table-lg invoice-archive">
+                                    <table id="example" class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
@@ -290,7 +290,6 @@
 <script src="js/vendors.min.js"></script>
 
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
-<script src="js/pages/data-table.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
@@ -300,7 +299,30 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
-
+        $('#example').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: [ 0, ':visible' ]
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [ 0, 1, 2,3,4, 5,6]
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: [ 0, 1, 2,3,4, 5,6 ]
+                    }
+                },
+                'colvis'
+            ]
+        } );
     });
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
@@ -309,139 +331,7 @@
                   %>
     var result = <%=json%>;
     console.log(result)
-    function viewInfoOrder(id) {
-        list = result.find(el => el.saRequest.id == id);
-        console.log(list)
-        const saRequest = list.saRequest;
-        Object.keys(saRequest).forEach((key) => {
-            if (key == "borrow") {
-                let value1 = saRequest[key] + (saRequest[key]* 0.2);
-                $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
-            } else {
-                $('#' + key).text(saRequest[key]);
-            }
-        });
-        // var index =
-        $('#modal-left').modal('show');
-    }
 
-    function viewInfoCompany(params) {
-        result.forEach((company) => {
-            if (company.company.companyCode == params) {
-                let c = company.company;
-                Object.keys(c).forEach((key) => {
-                    $('#' + key).text(c[key]);
-                })
-            }
-        })
-        console.log(result);
-        $('#modal-center').modal('show');
-    }
-
-
-    function viewInfoCustomer(params) {
-        result.forEach((customer) => {
-            if (customer.customer.customerPhone == params) {
-                axios({
-                    method: 'GET',
-                    url: 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
-                    headers: {
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                        'Access-Control-Allow-Origin': 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
-                    },
-                    auth: {
-                        username: "sgfintech",
-                        password: "k6mzMtPJLPMi5crF"
-                    }
-                })
-                    .then(function (response) {
-                        const imgCMND = JSON.parse(response.data.cmnd)
-                        $('#imgCMND').empty();
-                        Object.keys(imgCMND).forEach((key)=>{
-                            if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgCMND').append('Bổ sung hình ảnh');
-                            }else{
-                                $('#imgCMND').append('<img style="width: 100%" src="' + imgCMND[key] +'"/>');
-                            }
-                        });
-                        const payslipObj = JSON.parse(response.data.payslip);
-                        $('#imgPayslip').empty()
-                        Object.keys(payslipObj).forEach((key)=>{
-                            console.log(payslipObj[key]);
-                            if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] +'"/>');
-                            }
-                        });
-                        const salaryObj = JSON.parse(response.data.salary);
-                        $('#imgSalary').empty()
-                        Object.keys(salaryObj).forEach((key)=>{
-                            if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] +'"/>');
-                            }
-
-                        });
-                        const healthObj = JSON.parse(response.data.health);
-                        $('#imgHealth').empty()
-                        Object.keys(healthObj).forEach((key)=>{
-                            if (healthObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgHealth').append('<img style="width: 100%"  src="' + healthObj[key] +'"/>');
-                            }
-                        });
-                        const appendixObj = JSON.parse(response.data.appendix);
-                        $('#imgAppendix').empty()
-                        Object.keys(appendixObj).forEach((key)=>{
-                            if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] +'"/>');
-                            }
-                        });
-                        const socialObj = JSON.parse(response.data.social);
-                        $('#imgSocial').empty()
-                        Object.keys(socialObj).forEach((key)=>{
-                            if (socialObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] +'"/>');
-                            }
-                        });
-                        const contractObj = JSON.parse(response.data.contract);
-                        $('#imgContract').empty()
-                        Object.keys(contractObj).forEach((key)=>{
-                            if (contractObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] +'"/>');
-                            }
-                        });
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-
-                let c = customer.customer;
-                const date = c.customerBirthday;
-                Object.keys(c).forEach((key) => {
-                    if (key == "customerSalary") {
-                        value = c[key]
-                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
-                        Object.keys(date).forEach((key) => {
-                            $('#' + key).text(date[key]);
-                        })
-                    } else {
-                        $('#' + key).text(c[key]);
-                    }
-                })
-            }
-        })
-        $('#modal-right').modal('show');
-    }
 </script>
 
 </body>

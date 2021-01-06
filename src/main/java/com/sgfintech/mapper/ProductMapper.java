@@ -20,6 +20,10 @@ public class ProductMapper implements RowMapper<Product> {
         p.setProductName(rs.getString("product_name"));
         p.setProductDetail(rs.getString("product_detail"));
         p.setStatus(rs.getString("status"));
+//        p.setProductAmountMax(rs.getString("product_amount_max"));
+        p.setProductAmountMin(rs.getString("product_amount_min"));
+        p.setLimitCount(rs.getInt("limit_count"));
+        p.setProductRate(rs.getDouble("product_rate"));
         if (!StringUtil.isEmpty(rs.getDate("created_date"))) {
             p.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("created_date")));
         }

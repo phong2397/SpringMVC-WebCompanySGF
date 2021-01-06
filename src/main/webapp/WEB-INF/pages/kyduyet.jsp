@@ -179,7 +179,7 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table  class="table table-lg invoice-archive">
+                                    <table id="example" class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
@@ -294,13 +294,35 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script src="js/pages/data-table.js"></script>
 <script type="text/javascript" src="js/funckyduyet.js">
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
-
+        $('#example').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copyHtml5',
+                    exportOptions: {
+                        columns: [ 0, ':visible' ]
+                    }
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [ 0, 1, 2,3,4, 5,6]
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: [ 0, 1, 2,3,4, 5,6 ]
+                    }
+                },
+                'colvis'
+            ]
+        } );
     });
     <%
               List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
