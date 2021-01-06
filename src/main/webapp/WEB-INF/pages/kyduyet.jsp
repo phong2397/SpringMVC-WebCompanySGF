@@ -179,7 +179,7 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table id="example" class="table table-lg invoice-archive">
+                                    <table  class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
@@ -199,9 +199,7 @@
                                                 <td> <a data-toggle="modal" href="#" id="saRequestID"
                                                         onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a></td>
                                                 <td class="text-left">${lst.saRequest.employeeThamdinh}</td>
-                                                <td><fmt:parseDate value=" ${lst.saRequest.employeeThamdinhDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
-                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/>
-                                                </td>
+                                                <td>${lst.saRequest.employeeThamdinhDate}</td>
                                                 <td>
                                                     <h6 class="mb-0">
                                                         <b> <a data-toggle="modal" href="#" onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
@@ -294,35 +292,13 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
+<script src="js/pages/data-table.js"></script>
 <script type="text/javascript" src="js/funckyduyet.js">
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
-        $('#example').DataTable( {
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'copyHtml5',
-                    exportOptions: {
-                        columns: [ 0, ':visible' ]
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [ 0, 1, 2,3,4, 5,6]
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: [ 0, 1, 2,3,4, 5,6 ]
-                    }
-                },
-                'colvis'
-            ]
-        } );
+
     });
     <%
               List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
@@ -385,7 +361,6 @@
                         const imgCMND = JSON.parse(data.cmnd);
                         $('#imgCMND').empty();
                         Object.keys(imgCMND).forEach((key)=>{
-                            console.log(imgCMND[key])
                             if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
                                 $('#imgCMND').append('Bổ sung hình ảnh');
                             }else{
@@ -393,9 +368,8 @@
                             }
                         });
                         const payslipObj = JSON.parse(data.payslip);
-                        $('#imgPayslip').empty();
+                        $('#imgPayslip').empty()
                         Object.keys(payslipObj).forEach((key)=>{
-                            console.log(payslipObj[key])
                             if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
                                 $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
                             }else{
@@ -403,7 +377,7 @@
                             }
                         });
                         const salaryObj = JSON.parse(data.salary);
-                        $('#imgSalary').empty();
+                        $('#imgSalary').empty()
                         Object.keys(salaryObj).forEach((key)=>{
                             console.log(salaryObj[key]);
                             if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
@@ -413,7 +387,7 @@
                             }
                         });
                         const healthObj = JSON.parse(data.health);
-                        $('#imgHealth').empty();
+                        $('#imgHealth').empty()
                         Object.keys(healthObj).forEach((key)=>{
                             console.log(healthObj[key]);
                             if (healthObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
@@ -423,7 +397,7 @@
                             }
                         });
                         const appendixObj = JSON.parse(data.appendix);
-                        $('#imgAppendix').empty();
+                        $('#imgAppendix').empty()
                         Object.keys(appendixObj).forEach((key)=>{
                             console.log(appendixObj[key]);
                             if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
@@ -433,7 +407,7 @@
                             }
                         });
                         const socialObj = JSON.parse(data.social);
-                        $('#imgSocial').empty();
+                        $('#imgSocial').empty()
                         Object.keys(socialObj).forEach((key)=>{
                             console.log(socialObj[key]);
                             if (socialObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
@@ -443,7 +417,7 @@
                             }
                         });
                         const contractObj = JSON.parse(data.contract);
-                        $('#imgContract').empty();
+                        $('#imgContract').empty()
                         Object.keys(contractObj).forEach((key)=>{
                             console.log(contractObj[key]);
                             if (contractObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
