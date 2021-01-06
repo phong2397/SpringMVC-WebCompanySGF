@@ -1,6 +1,7 @@
 package com.sgfintech.entity;
 
 import lombok.Data;
+import org.w3c.dom.Text;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,4 +37,17 @@ public class Product implements Serializable {
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
+    @Column(name = "product_rate")
+    private Double productRate;
+
+//    @Lob
+//    @Column(name = "product_amount_max")
+//    private String productAmountMax;
+
+    @Lob
+    @Column(name = "product_amount_min")
+    private String productAmountMin;
+
+    @Column(name = "limit_count")
+    private Integer limitCount;
 }

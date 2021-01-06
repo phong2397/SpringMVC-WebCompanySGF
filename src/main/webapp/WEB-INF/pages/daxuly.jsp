@@ -101,7 +101,7 @@
                                                         <span class="d-block text-muted">Phone number : ${lst.customer.customerPhone}</span>
                                                     </h6>
                                                 </td>
-                                                <td class="text-left"><fmt:formatNumber value="${lst.contract.remainAmountBorrow}" type = "number"/> đ</td>
+                                                <td class="text-left"><fmt:formatNumber value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow*2/100)}" type = "number"/> đ</td>
                                                 <td class="text-left">0 đ</td>
                                                 <td class="text-left">
                                                     <fmt:parseDate value=" ${lst.contract.dateRepayment}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
@@ -153,6 +153,8 @@
                     <p>Mã giao dịch : <span id="transactionId"></span></p>
                     <p>Trạng thái : <b style="color: #0b2c89"><span id="status"></span></b></p>
                     <p>Người ký duyệt :  <span id="acceptedBy"></span></p>
+                    <p>Ngày ký duyệt :  <span id="day1"></span>/<span id="month1"></span>/<span id="year1"></span>&nbsp;&nbsp;<span id="hour"></span>:<span id="minute"></span>:<span id="second"></span></p>
+
                 </div>
                 <div class="modal-footer modal-footer-uniform">
                     <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
@@ -204,10 +206,21 @@
         result.forEach((contract) => {
             if (contract.contract.idContract == params) {
                 let c = contract.contract;
+                let time = c.createdDate.date;
+                let second = c.createdDate.time;
+                console.log(second)
                 Object.keys(c).forEach((key) => {
                     if (key == "borrow" ){
                         value = c[key]
                         $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                        Object.keys(time).forEach((key) => {
+                            console.log(time[key])
+                            $('#' + key+'1').text(time[key]);
+                        })
+                        Object.keys(second).forEach((key) => {
+                            console.log(second[key])
+                            $('#' + key).text(second[key]);
+                        })
                     }
                     else{
                         $('#' + key).text(c[key]);

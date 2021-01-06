@@ -93,7 +93,10 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label style="color:black">Tên công ty</label><br>
-                                                <h5 style="color: #1a2129;font-size: 25px"><span id="companyName" ></span></h5>
+                                                <select  class="form-control">
+                                                    <option id="companyName">
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

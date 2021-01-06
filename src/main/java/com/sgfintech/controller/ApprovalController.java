@@ -76,6 +76,7 @@ public class ApprovalController {
             sa.setStatus(status.trim());
                 sa.setEmployeeThamdinh(u.getUserLogin());
                 sa.setEmployeeThamdinhDate(LocalDateTime.now());
+                sa.setUpdatedDate(LocalDateTime.now());
             saRequestDAO.update(sa);
             return "success";
         } catch (Exception ex) {

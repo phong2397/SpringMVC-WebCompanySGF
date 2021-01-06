@@ -62,63 +62,44 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <h4 class="box-title">Danh sách tham số điều chỉnh được</h4>
+                                <h4 class="box-title">Danh sách sản phẩm</h4>
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered no-margin">
                                         <thead>
                                         <tr>
+                                            <th class="text-center">Mã sản phẩm</th>
                                             <th>Tên sản phẩm</th>
                                             <th class="text-left">Phí</th>
-                                            <th class="text-left">Số tiền lớn nhất</th>
                                             <th class="text-left">Số tiền nhỏ nhất</th>
-                                            <th class="text-left">Mục tiêu</th>
+                                            <th class="text-left">Số tiền lớn nhất</th>
+                                            <th class="text-left">Số lần ứng</th>
+                                            <th class="text-left">Chi tiết sản phẩm</th>
+                                            <th class="text-left">Trạng thái</th>
 
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        <c:forEach items="${views}" var="lst" varStatus="loop">
                                         <tr>
-                                            <td><b>Loại A</b></td>
-                                            <td class="text-left">2%</td>
+                                            <td><a href="#"
+                                                   ><b>${lst.productCode}</b></a>
+                                            </td>
+                                            <td><b>${lst.productName}</b></td>
+                                            <td class="text-left">${lst.productRate}%</td>
+                                            <td class="text-left"><fmt:formatNumber value="${lst.productAmountMin}" type = "number"/> đ</td>
                                             <td class="text-left"><fmt:formatNumber value="2000000" type = "number"/> đ</td>
-                                            <td class="text-left"><fmt:formatNumber value="500000" type = "number"/> đ</td>
-                                            <td class="text-left"><span class="d-block text-muted">Khách hang có thu nhập từ 6tr-8tr</span></td>
+                                            <td class="text-left"><b>${lst.limitCount}</b></td>
+                                            <td class="text-left"><b>${lst.productDetail}</b></td>
+                                            <td class="text-left"><b style="color: #00E466">${lst.status}</b></td>
                                         </tr>
-                                        <tr>
-                                        </tr>
+                                        </c:forEach>
                                         <tbody>
                                     </table>
                                 </div>
                             </div>
                             <!-- /.box-body -->
-                            <div class="box-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered no-margin">
-                                        <thead>
-                                        <tr>
-                                            <th>Tên sản phẩm</th>
-                                            <th class="text-left">Số tiền lớn nhất</th>
-                                            <th class="text-left">Số tiền nhỏ nhất</th>
-                                            <th class="text-left">Số lần ứng </th>
-                                            <th class="text-left">Mục tiêu</th>
-
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td><b>Loại B</b></td>
-                                            <td class="text-left">50% Lương của số ngày đi làm</td>
-                                            <td class="text-left"><fmt:formatNumber value="200000" type = "number"/> đ/ 1 lần ứng</td>
-                                            <td class="text-left">3 lần</td>
-                                            <td class="text-left"><span class="d-block text-muted">Khách hang có thu nhập từ 6tr-8tr</span></td>
-                                        </tr>
-                                        <tr>
-                                        </tr>
-                                        <tbody>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
                         <!-- /.box -->
                     </div>

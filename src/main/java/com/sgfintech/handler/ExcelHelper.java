@@ -76,6 +76,9 @@ public class ExcelHelper {
         for (int rowCount = 1; rowCount <= sheet.getLastRowNum(); rowCount++) {
             Customer c = new Customer();
             row = sheet.getRow(rowCount);
+            if (row == null) {
+                continue;
+            }
             c.setCompanyCode(companyCode);
             c.setCustomerName(row.getCell(0).getStringCellValue());
              c.setCustomerId(row.getCell(1).getStringCellValue());

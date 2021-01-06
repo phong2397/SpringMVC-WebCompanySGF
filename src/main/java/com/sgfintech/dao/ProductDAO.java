@@ -16,14 +16,14 @@ public class ProductDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void save(final Customer customer) {
+    public void save(final Product product) {
         Session session = this.sessionFactory.getCurrentSession();
-        session.save(customer);
+        session.save(product);
     }
 
-    public void update(final Customer customer) {
+    public void update(final Product product) {
         Session session = this.sessionFactory.getCurrentSession();
-        session.update(customer);
+        session.update(product);
     }
 
     public Product findById(final int id) {
