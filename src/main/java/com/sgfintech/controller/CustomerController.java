@@ -57,7 +57,8 @@ public class  CustomerController {
 
     @RequestMapping(value = "/doSearch", method = RequestMethod.POST)
     public @ResponseBody
-    String doSearch(HttpServletRequest request, HttpServletResponse response) {
+    String doSearch(HttpServletRequest request, HttpServletResponse response)
+    {
         String customerName = request.getParameter("customerName");
         String customerId = request.getParameter("customerId");
         String customerPhone = request.getParameter("customerPhone");
@@ -77,7 +78,8 @@ public class  CustomerController {
     @RequestMapping(value = "/doSearchManage", method = RequestMethod.POST)
     public @ResponseBody String doSearchManage(HttpServletRequest request, HttpServletResponse response) {
         String companyCode = request.getParameter("companyCode");
-        List<CustomerHandler> result = mergeDataService.searchCustomerCompany(companyCode);
+        String companyName = request.getParameter("companyName");
+        List<CustomerHandler> result = mergeDataService.searchCustomerCompany(companyCode,companyName);
         Gson g = new Gson();
         String responseStr = g.toJson(result);
         return responseStr;

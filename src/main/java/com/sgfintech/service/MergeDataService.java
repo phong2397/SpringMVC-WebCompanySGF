@@ -55,14 +55,14 @@ public class MergeDataService {
     }
 
     @SuppressWarnings("nonchecked")
-    public List<CustomerHandler> searchCustomerCompany(String companyCode) {
+    public List<CustomerHandler> searchCustomerCompany(String companyCode,String companyName) {
         String sql = "select com.*,cu.* from sgft_companies com,sgft_customer cu where  com.company_code = cu.company_code  " +
-                "and com.company_code like ? ";
+                "and com.company_code like ? and com.company_name like ?";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         try {
-            Object[] param = new Object[]{"%" + companyCode + "%"};
+            Object[] param = new Object[]{"%" + companyCode + "%","%" + companyName + "%"};
             List<CustomerHandler> resultList = jdbcTemplate.query(sql,param,
                     (rs, arg1) -> {
                         Customer cu = new CustomerMapper().mapRow(rs, arg1);

@@ -189,9 +189,8 @@
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
-                                            <th>Ngày yêu cầu</th>
-                                            <th>Thông tin khách hàng</th>
-                                            <th>Trạng thái</th>
+                                            <th>Tên khách hàng</th>
+                                            <th class="text-center">Trạng thái</th>
                                             <th>Thời gian còn lại</th>
                                             <th>Thời gian ứng</th>
                                             <th>Số tiền ứng</th>
@@ -204,8 +203,6 @@
                                                 <td><a data-toggle="modal" href="#" id="saRequestID"
                                                        onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
-                                                <td><fmt:parseDate value="${lst.saRequest.createdDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
-                                                        <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/>
                                                 <td>
                                                     <h6 class="mb-0">
                                                         <b> <a data-toggle="modal" href="#"
@@ -213,10 +210,6 @@
                                                         <span class="d-block text-muted">Company ID :<b><a
                                                                 data-toggle="modal" href="#"
                                                                 onclick="viewInfoCompany('${lst.company.companyCode}')"> ${lst.company.companyCode}</a></b></span>
-                                                        <span class="d-block text-muted">Account number : ${lst.customer.customerBankAcc}</span>
-                                                        <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
-                                                        <span class="d-block text-muted">Phone number : ${lst.customer.customerPhone}</span>
-                                                    </h6>
                                                 </td>
                                                 <td class="text-center">
                                                     <h6 class="mb-0 font-weight-bold" style="color: #0b2c89"> chờ thẩm
@@ -231,7 +224,7 @@
                                                     <h6 class="mb-0 font-weight-bold"><fmt:formatNumber
                                                             value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2)}"
                                                             type="number"/> đ
-                                                        <span class="d-block text-muted font-weight-normal">Phí: 2 % </span>
+                                                        <span class="d-block text-muted font-weight-normal">Phí : <fmt:formatNumber value="${lst.saRequest.feeBorrow }" type = "number"/> đ </span>
                                                     </h6>
                                                 </td>
                                                 <td>
@@ -267,12 +260,14 @@
                     </button>
                 </div>
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                    <h3><p>Mã yêu cầu: <span id="id"></span>9999</p></h3>
+                    <h3><p>Mã yêu cầu: <span id="id"></span></p></h3>
+                    <p>Ngày yêu cầu : <span id="day1"></span>/<span id="month1"></span>/<span id="year1"></span>&nbsp;&nbsp;<span id="hour"></span>:<span id="minute"></span>:<span id="second"></span></p>
                     <p>Số điện thoại : <span id="customerPhone"></span></p>
                     <p>Số tiền ứng : <span id="borrow"></span></p>
                     <p>Phí : <span id="interestRate"></span>%</p>
                     <p>Số lần ứng : <span id="timeBorrow"></span></p>
                     <p>Trạng thái : <b style="color: #0b2c89"><span id="status"></span></b></p>
+
                 </div>
                 <div class="modal-footer modal-footer-uniform">
                     <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
@@ -303,26 +298,13 @@
             dom: 'Bfrtip',
             buttons: [
                 {
-                    extend: 'copyHtml5',
-                    exportOptions: {
-                        columns: [ 0, ':visible' ]
-                    }
-                },
-                {
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [ 0, 1, 2,3,4, 5,6]
+                        columns: [ 0, 1, 2,3,4, 5]
                     }
                 },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: [ 0, 1, 2,3,4, 5,6 ]
-                    }
-                },
-                'colvis'
             ]
-        } );
+        } )
     });
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");

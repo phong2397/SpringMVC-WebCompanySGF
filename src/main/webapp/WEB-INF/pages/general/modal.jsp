@@ -46,7 +46,7 @@
                 <p>Mức lương : <span id="customerSalary"></span></p>
                 <p>Giới tính : <span id="customerGender"></span></p>
                 <p>Ngày sinh : <span id="day"></span>/<span id="month"></span>/<span id="year"></span></p>
-                <p>Tên ngân hàng : <span id="customerBank"></span></p>
+                <p>Chủ tài khoản : <span id="customerBank"></span></p>
                 <p>Số tài khoản : <span id="customerBankAcc"></span></p>
                 <p>Tên ngân hàng : <span id="customerBankName"></span></p>
                 <p>Số CMND : <span id="customerId"></span></p>

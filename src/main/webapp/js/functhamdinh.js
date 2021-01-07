@@ -71,10 +71,21 @@ function viewInfoOrder(id) {
     list = result.find(el => el.saRequest.id == id);
     console.log(list)
     const saRequest = list.saRequest;
+    let time = saRequest.createdDate.date;
+    let second = saRequest.createdDate.time;
+    console.log(second)
     Object.keys(saRequest).forEach((key) => {
         if (key == "borrow") {
-            let value1 = saRequest[key] + (saRequest[key]* 0.2);
+            let value1 = saRequest[key] + (saRequest[key] * 0.2);
             $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
+            Object.keys(time).forEach((key) => {
+                console.log(time[key])
+                $('#' + key+'1').text(time[key]);
+            })
+            Object.keys(second).forEach((key) => {
+                console.log(second[key])
+                $('#' + key).text(second[key]);
+            })
         } else {
             $('#' + key).text(saRequest[key]);
         }

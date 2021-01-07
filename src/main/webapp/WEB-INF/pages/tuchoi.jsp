@@ -190,7 +190,6 @@
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
-                                            <th>Ngày yêu cầu</th>
                                             <th>Thông tin khách hàng</th>
                                             <th>Trạng thái</th>
                                             <th>Người xác nhận</th>
@@ -203,10 +202,8 @@
                                             <tr>
                                                 <td> <a data-toggle="modal" href="#"
                                                         onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a></td>
-                                                <td><fmt:parseDate value="${lst.saRequest.createdDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
-                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
                                                 <td>
-                                                    <h6 class="mb-0">
+                                                    <h6 >
                                                         <b> <a data-toggle="modal" href="#" onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
                                                         <span class="d-block text-muted">Company ID :<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.company.companyCode}')"> ${lst.company.companyCode}</a></b></span>
                                                         <span class="d-block text-muted">Account number : ${lst.customer.customerBankAcc}</span>
@@ -214,18 +211,18 @@
                                                         <span class="d-block text-muted">Phone number : ${lst.customer.customerPhone}</span>
                                                     </h6>
                                                 </td>
-                                                <td class="text-center">
+                                                <td>
                                                     <h6 class="mb-0 font-weight-bold" style="color: red">Từ chối</h6>
                                                 </td>
-                                                <td class="text-center"><b>${lst.saRequest.employeeThamdinh}</b>
+                                                <td ><b>${lst.saRequest.employeeThamdinh}</b>
                                                 </td>
-                                                <td class="text-center">
+                                                <td >
                                                     <fmt:parseDate value="${lst.saRequest.employeeThamdinhDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/>
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold"> <fmt:formatNumber value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2)}" type = "number"/> đ
-                                                        <span class="d-block text-muted font-weight-normal">Phí 2 % </span>
+                                                    <h6 class="mb-0 font-weight-bold"> <fmt:formatNumber value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2 ) }" type = "number"/> đ
+                                                        <span class="d-block text-muted font-weight-normal">Phí : <fmt:formatNumber value="${lst.saRequest.feeBorrow }" type = "number"/> đ </span>
                                                     </h6>
                                                 </td>
                                             </tr>
@@ -258,6 +255,7 @@
                 </div>
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
                     <h3><p>Mã yêu cầu: <span id="id"></span>9999</p></h3>
+                    <p>Ngày yêu cầu : <span id="day1"></span>/<span id="month1"></span>/<span id="year1"></span>&nbsp;&nbsp;<span id="hour"></span>:<span id="minute"></span>:<span id="second"></span></p>
                     <p>Số điện thoại : <span id="customerPhone"></span></p>
                     <p>Số tiền ứng : <span id="borrow"></span>đ</p>
                     <p>Thuế : <span id="interestRate"></span>%</p>
@@ -301,10 +299,20 @@
         list = result.find(el => el.saRequest.id == id);
         console.log(list)
         const saRequest = list.saRequest;
+        let time = saRequest.createdDate.date;
+        let second = saRequest.createdDate.time;
         Object.keys(saRequest).forEach((key) => {
             if(key == "borrow" ){
                 let value1 = saRequest[key];
                 $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
+                Object.keys(time).forEach((key) => {
+                    console.log(time[key])
+                    $('#' + key+'1').text(time[key]);
+                })
+                Object.keys(second).forEach((key) => {
+                    console.log(second[key])
+                    $('#' + key).text(second[key]);
+                })
             }
             else {
                 $('#' + key).text(saRequest[key]);

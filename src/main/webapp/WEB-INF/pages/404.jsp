@@ -36,16 +36,13 @@
                 <div class="rounded5 bg-white-10 pb-50">
                     <h1  ><i class="fa fa-ban" aria-hidden="true" style="color: red"> FORBIDDEN</i>
                         </h1>
-                    <h1 class="text-white">You are now allow to open this page!!</h1>
+                    <h1 class="text-white">You are not allow to open this page!!</h1>
                     <div class="my-30"><a href="index.html" class="btn btn-danger">Back to dashboard</a></div>
-
-
                 </div>
             </div>
         </div>
     </div>
 </section>
-
 
 <!-- Vendor JS -->
 <script src="js/vendors.min.js"></script>

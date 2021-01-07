@@ -77,28 +77,35 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                <label style="color:black">Tên công ty</label><br>
+                                                <select id="company_name" class="form-control" onchange="onCompanyName(event)">
+                                                    <option id="companyName">
+                                                        -- Please Choose --
+                                                    </option>
+                                                    <c:forEach items="${views}" var="lst" varStatus="loop">
+                                                        <option  value="${lst.companyName}">
+                                                                ${lst.companyName}
+                                                        </option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
                                                 <label style="color: black">Mã công ty </label>
-                                                <select  id="companyCode" class="form-control" onchange="onCompanyChanged(event)">
-                                                    <option value="Please Choose" >
+                                                <select id="company_code" class="form-control" onchange="onCompanyChanged(event)">
+                                                    <option id="companyCode">
                                                         -- Please Choose --
                                                     </option>
                                                 <c:forEach items="${views}" var="lst" varStatus="loop">
-                                                        <option value="${lst.companyCode}">
+                                                        <option  value="${lst.companyCode}">
                                                                 ${lst.companyCode}
                                                         </option>
                                                 </c:forEach>
                                                 </select>
                                             </div>
                                             </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label style="color:black">Tên công ty</label><br>
-                                                <select  class="form-control">
-                                                    <option id="companyName">
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <button type="button"
                                             class="btn btn-rounded btn-primary btn-outline">
@@ -177,10 +184,17 @@
     var comList = <%=json%>;
     function onCompanyChanged(e){
         let value = e.target.value;
-
+        console.log(value)
         let com = comList.find(e => e.companyCode == value);
-        console.log(com);
+        console.log(com)
         $('#companyName').text(com.companyName);
+    }
+    function onCompanyName(e){
+        let value = e.target.value;
+        console.log(value)
+        let com = comList.find(e => e.companyName == value);
+        console.log(com)
+        $('#companyCode').text(com.companyCode);
     }
 </script>
 </body>

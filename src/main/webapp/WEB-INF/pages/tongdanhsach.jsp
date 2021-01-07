@@ -129,8 +129,8 @@
 											<thead>
 												<tr>
 													<th>Mã đơn vay</th>
+													<th>Mã công ty</th>
 													<th>Tên khách hàng</th>
-													<th>Số tiền thanh toán</th>
 													<th>Mã hệ thống (System Trace)</th>
 													<th>Status</th>
 													<th>Mã giao dịch (Transaction ID)</th>
@@ -145,21 +145,17 @@
 														<td><a href="#"
 															   onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
 														</td>
+														<td><h6 class="mb-0">
+															<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b>
+														</h6>
+														</td>
 														<td>
 															<h6 class="mb-0">
 																<a  href="#"
 																	onclick="viewInfoCustomer('${lst.customer.customerPhone}')"	><b>${lst.customer.customerName}</b></a>
-																<span class="d-block text-muted">Company ID :<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
-																<span class="d-block text-muted">Account number:
-																	${lst.customer.customerBankAcc}</span>
-																<span class="d-block text-muted">Owner :
-																	${lst.customer.customerBankName}</span>
-																<span class="d-block text-muted">Phone number :
-																	${lst.customer.customerPhone}</span>
 															</h6>
 														</td>
 														</td>
-														<td>${lst.contract.borrow} đ</td>
 														<td>${lst.contract.systemTrace} đ</td>
 														<td ><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
 														<td>${lst.contract.transactionId}</td>
@@ -224,14 +220,32 @@
 	<script src="js/vendors.min.js"></script>
 
 	<script src="assets/vendor_components/datatable/datatables.min.js"></script>
-	<script src="js/pages/data-table.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<!-- Crypto Tokenizer Admin App -->
 	<script src="js/template.js"></script>
 	<script src="js/demo.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$("#loading").hide();
+			$("#loading").hide()
+			$('#example').DataTable({
+				dom: 'BLfrtip',
+				pageLength: 50,
+				buttons: [{
+					extend: 'excel',
+					exportOptions: {
+						columns: ':visible'
+					},
+					Text: 'Export To Excel',
+					filename: 'Transaction Report',
+					customizeData: function (data) {
+						for (var i = 0; i < data.body.length; i++) {
+							for (var j = 0; j < data.body[i].length; j++) {
+								if (data.header[j] == "Column Name") {
+									data.body[i][j] = '\u200C' + data.body[i][j];
+								}
+							}
+						}
+					}}]})
 		});
   				<%
                     List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");
