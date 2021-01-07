@@ -37,26 +37,24 @@ public class LoginController {
     public String checkLogin(HttpServletRequest request, HttpSession session) {
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
-        if (StringUtil.isEmpty(user)) {
-            session.setAttribute(Consts.Session_Result, "User không được bỏ trống");
-            return "redirect:login";
-        }
         Useradmin u = useradminService.checkUser(user);
         if (StringUtil.isEmpty(u)) {
-            session.setAttribute(Consts.Session_Result, "User không tồn tại trên hệ thống");
+            session.setAttribute(Consts.Check_User, "User không tồn tại trên hệ thống");
             return "redirect:login";
+        }else{
+            String hp = StringUtil.hashPw(pass);
+            if (!hp.equals(u.getPassWord())) {
+                session.setAttribute(Consts.Check_Pass, "Mật khẩu không chính xác");
+                return "redirect:login";
+            }
+            else {
+                u.setPassWord("");
+                session.setAttribute(Consts.Session_Euser, u);
+                return "redirect:home";
+            }
         }
-        String hp = StringUtil.hashPw(pass);
-        if (!hp.equals(u.getPassWord())) {
-            session.setAttribute(Consts.Session_Result, "Mật khẩu không chính xác");
-            return "redirect:login";
-        } else {
-            u.setPassWord("");
-            session.setAttribute(Consts.Session_Euser, u);
-            return "redirect:home";
-        }
-    }
 
+    }
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session ) {
         session.invalidate();

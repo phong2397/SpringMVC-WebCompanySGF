@@ -57,10 +57,18 @@
                 <div class="form-group has-feedback">
                     <input name="user" id="user" class="form-control text-white plc-white" placeholder="Tên đăng nhập">
                     <span class="ion ion-email form-control-feedback text-white" ></span>
+                    <span style="color: red">${user}</span>
+                    <%
+                        session.removeAttribute(Consts.Check_User);
+                    %>
                 </div>
                 <div class="form-group has-feedback">
                     <input name="pass" id="pass" type="password" class="form-control text-white plc-white" placeholder="Mật khẩu">
                     <span class="ion ion-locked form-control-feedback text-white"></span>
+                    <span style="color: red">${pass}</span>
+                    <%
+                        session.removeAttribute(Consts.Check_Pass);
+                    %>
                 </div>
                 <div class="row">
                     <div class="col-6">

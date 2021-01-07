@@ -229,7 +229,7 @@
 			$("#loading").hide()
 			$('#example').DataTable({
 				dom: 'BLfrtip',
-				pageLength: 50,
+				pageLength: 10,
 				buttons: [{
 					extend: 'excel',
 					exportOptions: {
