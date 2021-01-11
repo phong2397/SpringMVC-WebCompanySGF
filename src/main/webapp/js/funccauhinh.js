@@ -4,7 +4,7 @@ $("body").on("click", ".btn-accept", function () {
     var productCode = $(this).closest("tr").find('td:eq(1) input').val().trim();
     var productName = $(this).closest("tr").find('td:eq(2) input').val().trim();
     var productRate = $(this).closest("tr").find('td:eq(3) input').val().replaceAll("%", "").trim();
-    var productMin = $(this).closest("tr").find('td:eq(4) input').val().replaceAll("đ", "").trim();
+    var productMin = $(this).closest("tr").find('td:eq(4) input').val().replaceAll(",", "").replaceAll("đ", "").trim();
     var productDetail = $(this).closest("tr").find('td:eq(7) input').val().trim();
     var limitCount = $(this).closest("tr").find('td:eq(6) input').val().trim();
     let data = {

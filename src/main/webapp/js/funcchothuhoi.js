@@ -21,7 +21,7 @@ function viewInfoContract(params) {
             let second = c.createdDate.time;
             console.log(second)
             Object.keys(c).forEach((key) => {
-                if (key == "borrow") {
+                if (key == "borrow" || key == "feeBorrow") {
                     value = c[key]
                     $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
                     Object.keys(time).forEach((key) => {

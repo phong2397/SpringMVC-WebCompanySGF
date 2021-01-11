@@ -297,7 +297,7 @@
                             id="hour"></span>:<span id="minute"></span>:<span id="second"></span></p>
                     <p>Số điện thoại : <span id="customerPhone"></span></p>
                     <p>Số tiền ứng : <span id="borrow"></span></p>
-                    <p>Phí : <span id="interestRate"></span>%</p>
+                    <p>Phí : <span id="feeBorrow"></span></p>
                     <p>Số lần ứng : <span id="timeBorrow"></span></p>
                     <p>Trạng thái : <b style="color: #0b2c89"><span id="status"></span></b></p>
                 </div>

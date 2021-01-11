@@ -96,6 +96,10 @@ function viewInfoOrder(id) {
                 console.log(second[key])
                 $('#' + key).text(second[key]);
             })
+        } else if (key == "feeBorrow") {
+            let value = saRequest[key];
+            $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+
         } else {
             $('#' + key).text(saRequest[key]);
         }

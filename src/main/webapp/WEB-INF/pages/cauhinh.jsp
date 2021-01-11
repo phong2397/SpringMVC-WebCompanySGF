@@ -88,7 +88,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <input type="text" id="productCode" value="${lst.productCode}"
-                                                       class="form-control"
+                                                       class="form-control" required
                                                 >
                                             </td>
                                             <td>
@@ -96,33 +96,35 @@
                                                        name="productName" id="productName"></td>
                                             <td class="text-left"><fmt:formatNumber type="number" maxFractionDigits="1"
                                                                                     value="${lst.productRate}"
-                                                                                    var="rate"/>
-                                                <input type="text" value="${rate} %"
-                                                       class="form-control"
-                                                       id="productRate">
+                                                                                    var="rate"/><input type="text"
+                                                                                                       value="${rate} %"
+                                                                                                       class="form-control"
+                                                                                                       id="productRate"
+                                                                                                       required>
                                             </td>
                                             <td class="text-left"><fmt:formatNumber
                                                     value="${lst.productAmountMin}" type="number" var="myNum"/><input
                                                     type="text"
                                                     value="${myNum} đ"
                                                     class="form-control"
-                                                    id="productMin">
+                                                    id="productMin" required>
 
                                             </td>
                                             <td class="text-left"><fmt:formatNumber
                                                     value="2000000" type="number" var="myNumMax"/><input type="text"
                                                                                                          value="${myNumMax} đ"
-                                                                                                         class="form-control">
+                                                                                                         class="form-control"
+                                                                                                         required>
                                             </td>
                                             <td class="text-left"><b><input type="text"
                                                                             value="${lst.limitCount} "
                                                                             class="form-control"
-                                                                            id="limitCount"></b>
+                                                                            id="limitCount" required></b>
                                             </td>
                                             <td class="text-left"><b><input type="text"
                                                                             value="${lst.productDetail}"
                                                                             class="form-control"
-                                                                            id="productDetail"></b>
+                                                                            id="productDetail" required></b>
                                             </td>
                                             <td class="text-left"><b style="color: #00E466">${lst.status}</b></td>
                                             <td>
@@ -164,6 +166,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
+
     });
 </script>
 </body>

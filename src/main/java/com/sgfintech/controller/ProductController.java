@@ -47,16 +47,20 @@ public class ProductController {
         String productMin = request.getParameter("productMin");
         String limitCount = request.getParameter("limitCount");
         try {
-            Product p = productDAO.findById(Long.parseLong(data));
-            p.setProductCode(productCode);
-            p.setLimitCount(Integer.parseInt(limitCount));
-            p.setProductRate(Double.parseDouble(productRate));
-            p.setProductAmountMin(productMin);
-            p.setProductDetail(productDetail);
-            p.setProductName(productName);
-            p.setUpdatedDate(LocalDateTime.now());
-            productDAO.update(p);
-            return "success";
+            if (productCode.length() != 0 || productDetail.length() != 0 || productName.length() != 0 || productRate.length() != 0 || productMin.length() != 0 || limitCount.length() != 0) {
+                Product p = productDAO.findById(Long.parseLong(data));
+                p.setProductCode(productCode);
+                p.setLimitCount(Integer.parseInt(limitCount));
+                p.setProductRate(Double.parseDouble(productRate));
+                p.setProductAmountMin(productMin);
+                p.setProductDetail(productDetail);
+                p.setProductName(productName);
+                p.setUpdatedDate(LocalDateTime.now());
+                productDAO.update(p);
+                return "success";
+            } else {
+                return "error";
+            }
         } catch (Exception ex) {
             return "error";
         }

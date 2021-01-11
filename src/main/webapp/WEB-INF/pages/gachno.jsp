@@ -139,10 +139,9 @@
                 <div class="col-12">
                     <div class="bb-1 clearFix">
                         <div class="text-right pb-15">
-                            <button class="btn btn-rounded btn-success" type="button"> <span><i
-                                    class="fa fa-print"></i> Save</span></button>
-                            <button id="print2" class="btn btn-rounded btn-warning" type="button"> <span><i
-                                    class="fa fa-print"></i> Print</span></button>
+                            <button onclick="printDiv('main')" class="btn btn-rounded btn-warning"
+                                    type="button"> <span><i
+                                    class="fa fa-print"></i>&nbsp;In hóa đơn</span></button>
                         </div>
                     </div>
                 </div>
@@ -280,6 +279,7 @@
     $(document).ready(function () {
         $("#loading").hide();
     });
+
     var selectedContractId;
     <%
       List < MergeDataWithdraw > list = (List<MergeDataWithdraw>) request.getAttribute("views");

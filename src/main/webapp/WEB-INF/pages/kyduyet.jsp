@@ -297,7 +297,7 @@
                     <h3><p>Mã yêu cầu: <span id="id"></span></p></h3>
                     <p>Số điện thoại : <span id="customerPhone"></span></p>
                     <p>Số tiền ứng : <span id="borrow"></span></p>
-                    <p>Phí : <span id="interestRate"></span>%</p>
+                    <p>Phí : <span id="feeBorrow"></span></p>
                     <p>Số lần ứng : <span id="timeBorrow"></span></p>
                     <p>Trạng thái : <span id="status" style="color: #0b2c89"></span></p>
                     <p>Người xác nhận : <span id="employeeThamdinh"></span></p>
