@@ -5,7 +5,7 @@
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -17,14 +17,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <%
-    if (session.getAttribute(Consts.Session_Euser) != null){
-        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    if (session.getAttribute(Consts.Session_Euser) != null) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh")){
-        }else{
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh")) {
+        } else {
             response.sendRedirect("404");
         }
-    } else{
+    } else {
         response.sendRedirect("login");
 
     }
@@ -66,33 +66,6 @@
             <section class="content">
 
                 <div class="row">
-
-                    <div class="col-xl-3 col-md-6 col-12 ">
-                        <div class="box box-inverse box-success">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Tổng số yêu cầu</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countAll}</div>
-                                    <span>Tổng số lượt yêu cầu trong ngày</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
                     <!-- /.col -->
                     <div class="col-xl-3 col-md-6 col-12">
                         <div class="box box-inverse box-warning">
@@ -146,6 +119,32 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xl-3 col-md-6 col-12 ">
+                        <div class="box box-inverse box-success">
+                            <div class="box-body">
+                                <div class="flexbox">
+                                    <h5>Tổng số yêu cầu</h5>
+                                    <div class="dropdown">
+											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
+                                                    class="ion-android-more-vertical rotate-90"></i></span>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
+                                                Details</a>
+                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
+                                                new</a>
+                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
+                                                Refresh</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center my-2">
+                                    <div class="font-size-60">${countAct}</div>
+                                    <span>Tổng số lượt yêu cầu trong ngày</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                     <!-- /.col -->
                     <div class="col-xl-3 col-md-6 col-12 ">
                         <div class="box box-inverse " style="background-color: hotpink">
@@ -186,44 +185,89 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table class="table table-lg invoice-archive">
+                                    <table id="example" class="table table-lg invoice-archive">
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
                                             <th>Thông tin khách hàng</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Mã công ty</th>
+                                            <th>Số tài khoản</th>
+                                            <th>Tên ngân hàng</th>
+                                            <th>Số điện thoại</th>
                                             <th>Trạng thái</th>
                                             <th>Người xác nhận</th>
                                             <th>Ngày thẩm định</th>
+                                            <th>Tổng số tiền ứng</th>
                                             <th>Số tiền ứng</th>
+                                            <th>Tiền phí</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
-                                                <td> <a data-toggle="modal" href="#"
-                                                        onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a></td>
+                                                <td><a data-toggle="modal" href="#"
+                                                       onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a>
+                                                </td>
                                                 <td>
-                                                    <h6 >
-                                                        <b> <a data-toggle="modal" href="#" onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
-                                                        <span class="d-block text-muted">Company ID :<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.company.companyCode}')"> ${lst.company.companyCode}</a></b></span>
+                                                    <h6>
+                                                        <b> <a data-toggle="modal" href="#"
+                                                               onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
+                                                        <span class="d-block text-muted">Company ID :<b><a
+                                                                data-toggle="modal" href="#"
+                                                                onclick="viewInfoCompany('${lst.company.companyCode}')"> ${lst.company.companyCode}</a></b></span>
                                                         <span class="d-block text-muted">Account number : ${lst.customer.customerBankAcc}</span>
                                                         <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
                                                         <span class="d-block text-muted">Phone number : ${lst.customer.customerPhone}</span>
                                                     </h6>
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold" style="color: red">Từ chối</h6>
-                                                </td>
-                                                <td ><b>${lst.saRequest.employeeThamdinh}</b>
-                                                </td>
-                                                <td >
-                                                    <fmt:parseDate value="${lst.saRequest.employeeThamdinhDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
-                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/>
+                                                    <b> ${lst.customer.customerName}</b>
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold"> <fmt:formatNumber value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2 ) }" type = "number"/> đ
-                                                        <span class="d-block text-muted font-weight-normal">Phí : <fmt:formatNumber value="${lst.saRequest.feeBorrow }" type = "number"/> đ </span>
+                                                    <b> ${lst.customer.companyCode}</b>
+                                                </td>
+                                                <td>
+                                                    <b> ${lst.customer.customerBankAcc}</b>
+                                                </td>
+                                                <td>
+                                                    <b> ${lst.customer.customerBankName}</b>
+                                                </td>
+                                                <td>
+                                                    <b> ${lst.customer.customerPhone}</b>
+                                                </td>
+                                                <td>
+                                                    <h6 class="mb-0 font-weight-bold" style="color: red">Từ chối</h6>
+                                                </td>
+                                                <td><b>${lst.saRequest.employeeThamdinh}</b>
+                                                </td>
+                                                <td>
+                                                    <fmt:parseDate value="${lst.saRequest.employeeThamdinhDate}"
+                                                                   pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob"
+                                                                   type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                    value="${patientDob}"/>
+                                                </td>
+                                                <td>
+                                                    <h6 class="mb-0 font-weight-bold"><fmt:formatNumber
+                                                            value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2 ) }"
+                                                            type="number"/> đ
+                                                        <span class="d-block text-muted font-weight-normal">Phí : <fmt:formatNumber
+                                                                value="${lst.saRequest.feeBorrow }"
+                                                                type="number"/> đ </span>
                                                     </h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="mb-0 font-weight-bold"><fmt:formatNumber
+                                                            value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2)}"
+                                                            type="number"/> đ
+                                                    </h6>
+                                                </td>
+                                                <td>
+                                                    <span class="d-block text-muted font-weight-normal"> <fmt:formatNumber
+                                                            value="${lst.saRequest.feeBorrow }"
+                                                            type="number"/> đ </span>
+
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -255,7 +299,8 @@
                 </div>
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
                     <h3><p>Mã yêu cầu: <span id="id"></span>9999</p></h3>
-                    <p>Ngày yêu cầu : <span id="day1"></span>/<span id="month1"></span>/<span id="year1"></span>&nbsp;&nbsp;<span id="hour"></span>:<span id="minute"></span>:<span id="second"></span></p>
+                    <p>Ngày yêu cầu : <span id="day1"></span>/<span id="month1"></span>/<span id="year1"></span>&nbsp;&nbsp;<span
+                            id="hour"></span>:<span id="minute"></span>:<span id="second"></span></p>
                     <p>Số điện thoại : <span id="customerPhone"></span></p>
                     <p>Số tiền ứng : <span id="borrow"></span>đ</p>
                     <p>Thuế : <span id="interestRate"></span>%</p>
@@ -279,7 +324,6 @@
 <script src="js/vendors.min.js"></script>
 
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
-<script src="js/pages/data-table.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
@@ -288,6 +332,24 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            pageLength: 10,
+            columnDefs: [
+                {
+                    visible: false,
+                    targets: [2, 3, 4, 5, 6, 11, 12]
+                },
+            ],
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12]
+                    }
+                },
+            ]
+        })
     });
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
@@ -295,6 +357,7 @@
                   String json = g.toJson(list);
                   %>
     var result = <%=json%>;
+
     function viewInfoOrder(id) {
         list = result.find(el => el.saRequest.id == id);
         console.log(list)
@@ -302,19 +365,18 @@
         let time = saRequest.createdDate.date;
         let second = saRequest.createdDate.time;
         Object.keys(saRequest).forEach((key) => {
-            if(key == "borrow" ){
+            if (key == "borrow") {
                 let value1 = saRequest[key];
                 $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
                 Object.keys(time).forEach((key) => {
                     console.log(time[key])
-                    $('#' + key+'1').text(time[key]);
+                    $('#' + key + '1').text(time[key]);
                 })
                 Object.keys(second).forEach((key) => {
                     console.log(second[key])
                     $('#' + key).text(second[key]);
                 })
-            }
-            else {
+            } else {
                 $('#' + key).text(saRequest[key]);
             }
         });
@@ -338,90 +400,90 @@
 
     function viewInfoCustomer(params) {
         let username = "sgfintech";
-        let password ="k6mzMtPJLPMi5crF";
+        let password = "k6mzMtPJLPMi5crF";
         result.forEach((customer) => {
             if (customer.customer.customerPhone == params) {
-                $.ajax ({
-                    url:  'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
+                $.ajax({
+                    url: 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
                     headers: {
                         "Access-Control-Allow-Origin": 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
-                        "Access-Control-Allow-Credentials" : true,
+                        "Access-Control-Allow-Credentials": true,
                     },
                     beforeSend: function (xhr) {
-                        xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+                        xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
                     },
                     crossDomain: true,
                     method: 'GET',
                     dataType: 'json',
-                    success: function(data){
+                    success: function (data) {
                         const imgCMND = JSON.parse(data.cmnd);
                         $('#imgCMND').empty();
-                        Object.keys(imgCMND).forEach((key)=>{
+                        Object.keys(imgCMND).forEach((key) => {
                             console.log(imgCMND[key])
-                            if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                            if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
                                 $('#imgCMND').append('Bổ sung hình ảnh');
-                            }else{
-                                $('#imgCMND').append('<img style="width: 100%" src="' + imgCMND[key] +'"/>');
+                            } else {
+                                $('#imgCMND').append('<img style="width: 100%" src="' + imgCMND[key] + '"/>');
                             }
                         });
                         const payslipObj = JSON.parse(data.payslip);
                         $('#imgPayslip').empty();
-                        Object.keys(payslipObj).forEach((key)=>{
+                        Object.keys(payslipObj).forEach((key) => {
                             console.log(payslipObj[key])
-                            if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                            if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
                                 $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] +'"/>');
+                            } else {
+                                $('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] + '"/>');
                             }
                         });
                         const salaryObj = JSON.parse(data.salary);
                         $('#imgSalary').empty();
-                        Object.keys(salaryObj).forEach((key)=>{
+                        Object.keys(salaryObj).forEach((key) => {
                             console.log(salaryObj[key]);
-                            if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                            if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
                                 $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] +'"/>');
+                            } else {
+                                $('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] + '"/>');
                             }
                         });
                         const healthObj = JSON.parse(data.health);
                         $('#imgHealth').empty();
-                        Object.keys(healthObj).forEach((key)=>{
+                        Object.keys(healthObj).forEach((key) => {
                             console.log(healthObj[key]);
-                            if (healthObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                            if (healthObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
                                 $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgHealth').append('<img style="width: 100%"  src="' + healthObj[key] +'"/>');
+                            } else {
+                                $('#imgHealth').append('<img style="width: 100%"  src="' + healthObj[key] + '"/>');
                             }
                         });
                         const appendixObj = JSON.parse(data.appendix);
                         $('#imgAppendix').empty();
-                        Object.keys(appendixObj).forEach((key)=>{
+                        Object.keys(appendixObj).forEach((key) => {
                             console.log(appendixObj[key]);
-                            if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                            if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
                                 $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] +'"/>');
+                            } else {
+                                $('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] + '"/>');
                             }
                         });
                         const socialObj = JSON.parse(data.social);
                         $('#imgSocial').empty();
-                        Object.keys(socialObj).forEach((key)=>{
+                        Object.keys(socialObj).forEach((key) => {
                             console.log(socialObj[key]);
-                            if (socialObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                            if (socialObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
                                 $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] +'"/>');
+                            } else {
+                                $('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] + '"/>');
                             }
                         });
                         const contractObj = JSON.parse(data.contract);
                         $('#imgContract').empty();
-                        Object.keys(contractObj).forEach((key)=>{
+                        Object.keys(contractObj).forEach((key) => {
                             console.log(contractObj[key]);
-                            if (contractObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
+                            if (contractObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
                                 $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] +'"/>');
+                            } else {
+                                $('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] + '"/>');
                             }
                         });
                     },

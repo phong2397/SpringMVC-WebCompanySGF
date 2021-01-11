@@ -83,8 +83,8 @@
                                                         -- Please Choose --
                                                     </option>
                                                     <c:forEach items="${views}" var="lst" varStatus="loop">
-                                                        <option  value="${lst.companyName}">
-                                                                ${lst.companyName}
+                                                        <option id="companyName" value="${lst.companyName}">
+                                                               <span > ${lst.companyName}</span>
                                                         </option>
                                                     </c:forEach>
                                                 </select>
@@ -94,11 +94,11 @@
                                             <div class="form-group">
                                                 <label style="color: black">Mã công ty </label>
                                                 <select id="company_code" class="form-control" onchange="onCompanyChanged(event)">
-                                                    <option id="companyCode">
+                                                    <option id="companyCode" >
                                                         -- Please Choose --
                                                     </option>
                                                 <c:forEach items="${views}" var="lst" varStatus="loop">
-                                                        <option  value="${lst.companyCode}">
+                                                        <option id="companyCode" value="${lst.companyCode}">
                                                                 ${lst.companyCode}
                                                         </option>
                                                 </c:forEach>
@@ -190,11 +190,11 @@
         $('#companyName').text(com.companyName);
     }
     function onCompanyName(e){
-        let value = e.target.value;
-        console.log(value)
-        let com = comList.find(e => e.companyName == value);
-        console.log(com)
-        $('#companyCode').text(com.companyCode);
+        let value1 = e.target.value;
+        console.log(value1)
+        let com1 = comList.find(e => e.companyName == value1);
+        console.log(com1)
+        $('#companyCode').text(com1.companyCode);
     }
 </script>
 </body>

@@ -114,20 +114,6 @@ public class MergeDataService {
         }
     }
 
-    public int countAll() {
-        String sql = "select COUNT(sa.status) from sgft_sa_request sa ";
-        if (StringUtil.isEmpty(jdbcTemplate)) {
-            jdbcTemplate = new JdbcTemplate(dataSource);
-        }
-        try {
-            int count = jdbcTemplate.queryForObject(sql, Integer.class);
-            return count;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return 0;
-        }
-    }
-
     public int countStatus(String status) {
         String sql = "select COUNT(sa.status) from sgft_sa_request sa where sa.status = ? ";
         if (StringUtil.isEmpty(jdbcTemplate)) {

@@ -13,27 +13,27 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-    if (session.getAttribute(Consts.Session_Euser) != null){
-        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    if (session.getAttribute(Consts.Session_Euser) != null) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")){
-        }else{
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")) {
+        } else {
             response.sendRedirect("404");
         }
-    } else{
+    } else {
         response.sendRedirect("login");
 
     }
 %>
-<jsp:include page="general/_head.jsp" />
+<jsp:include page="general/_head.jsp"/>
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <!-- Site wrapper -->
 <div class="wrapper">
 
-    <jsp:include page="general/_header.jsp" />
+    <jsp:include page="general/_header.jsp"/>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <jsp:include page="general/_menu.jsp" />
+    <jsp:include page="general/_menu.jsp"/>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <div class="container-full">
@@ -69,6 +69,7 @@
                                     <table class="table table-striped table-bordered no-margin">
                                         <thead>
                                         <tr>
+                                            <th></th>
                                             <th class="text-center">Mã sản phẩm</th>
                                             <th>Tên sản phẩm</th>
                                             <th class="text-left">Phí</th>
@@ -77,22 +78,56 @@
                                             <th class="text-left">Số lần ứng</th>
                                             <th class="text-left">Chi tiết sản phẩm</th>
                                             <th class="text-left">Trạng thái</th>
-
+                                            <th class="text-center">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                         <tr>
-                                            <td><a href="#"
-                                                   ><b>${lst.productCode}</b></a>
+                                            <td><a data-toggle="modal"><b>${lst.id}</b></a>
                                             </td>
-                                            <td><b>${lst.productName}</b></td>
-                                            <td class="text-left">${lst.productRate}%</td>
-                                            <td class="text-left"><fmt:formatNumber value="${lst.productAmountMin}" type = "number"/> đ</td>
-                                            <td class="text-left"><fmt:formatNumber value="2000000" type = "number"/> đ</td>
-                                            <td class="text-left"><b>${lst.limitCount}</b></td>
-                                            <td class="text-left"><b>${lst.productDetail}</b></td>
+                                            <td class="text-center">
+                                                <input type="text" id="productCode" value="${lst.productCode}"
+                                                       class="form-control"
+                                                >
+                                            </td>
+                                            <td>
+                                                <input type="text" value="${lst.productName}" class="form-control"
+                                                       name="productName" id="productName"></td>
+                                            <td class="text-left"><fmt:formatNumber type="number" maxFractionDigits="1"
+                                                                                    value="${lst.productRate}"
+                                                                                    var="rate"/>
+                                                <input type="text" value="${rate} %"
+                                                       class="form-control"
+                                                       id="productRate">
+                                            </td>
+                                            <td class="text-left"><fmt:formatNumber
+                                                    value="${lst.productAmountMin}" type="number" var="myNum"/><input
+                                                    type="text"
+                                                    value="${myNum} đ"
+                                                    class="form-control"
+                                                    id="productMin">
+
+                                            </td>
+                                            <td class="text-left"><fmt:formatNumber
+                                                    value="2000000" type="number" var="myNumMax"/><input type="text"
+                                                                                                         value="${myNumMax} đ"
+                                                                                                         class="form-control">
+                                            </td>
+                                            <td class="text-left"><b><input type="text"
+                                                                            value="${lst.limitCount} "
+                                                                            class="form-control"
+                                                                            id="limitCount"></b>
+                                            </td>
+                                            <td class="text-left"><b><input type="text"
+                                                                            value="${lst.productDetail}"
+                                                                            class="form-control"
+                                                                            id="productDetail"></b>
+                                            </td>
                                             <td class="text-left"><b style="color: #00E466">${lst.status}</b></td>
+                                            <td>
+                                                <button class="btn btn-rounded btn-info btn-accept">Update</button>
+                                            </td>
                                         </tr>
                                         </c:forEach>
                                         <tbody>
@@ -110,9 +145,9 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <jsp:include page="general/_footer.jsp" />
+    <jsp:include page="general/_footer.jsp"/>
     <!-- Control Sidebar -->
-    <jsp:include page="general/_controlSidebar.jsp" />
+    <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
@@ -121,70 +156,15 @@
 <script src="js/vendors.min.js"></script>
 
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
-<script src="js/pages/data-table.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
+<script type="text/javascript" src="js/funccauhinh.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
     });
-
-    <%--var result = <%=json%>;--%>
-    <%--function viewInfoCompany(params) {--%>
-    <%--    result.forEach((company) => {--%>
-    <%--        if (company.companies.companyCode == params) {--%>
-    <%--            let c = company.companies;--%>
-    <%--            Object.keys(c).forEach((key, _) => {--%>
-    <%--                let id = key;--%>
-    <%--                $('#' + id).text(c[key]);--%>
-    <%--            })--%>
-    <%--        }--%>
-    <%--    })--%>
-    <%--    console.log(result);--%>
-    <%--    // var index =--%>
-    <%--    $('#modal-center').modal('show');--%>
-    <%--}--%>
-    <%--function viewInfoContract(params) {--%>
-    <%--    result.forEach((contract) => {--%>
-    <%--        if (contract.contract.idContract == params) {--%>
-    <%--            let c = contract.contract;--%>
-    <%--            Object.keys(c).forEach((key) => {--%>
-    <%--                if (key == "remainAmountBorrow" ){--%>
-    <%--                    value = c[key]--%>
-    <%--                    $('#' + key).text(value.toLocaleString("vi-VN") + " đ");--%>
-    <%--                }--%>
-    <%--                else{--%>
-    <%--                    $('#' + key).text(c[key]);--%>
-    <%--                }--%>
-    <%--            })--%>
-    <%--        }--%>
-    <%--    })--%>
-    <%--    $('#modal').modal('show');--%>
-    <%--}--%>
-    <%--function viewInfoCustomer(params) {--%>
-    <%--    result.forEach((customer) => {--%>
-    <%--        if (customer.customer.customerPhone == params) {--%>
-    <%--            let c = customer.customer;--%>
-    <%--            const date = c.customerBirthday;--%>
-    <%--            Object.keys(c).forEach((key) => {--%>
-    <%--                if (key == "customerSalary" ){--%>
-    <%--                    value = c[key]--%>
-    <%--                    $('#' + key).text(value.toLocaleString("vi-VN") + " đ");--%>
-    <%--                    Object.keys(date).forEach((key) => {--%>
-    <%--                        $('#' + key).text(date[key]);--%>
-    <%--                    })--%>
-    <%--                }--%>
-    <%--                else{--%>
-    <%--                    $('#' + key).text(c[key]);--%>
-    <%--                }--%>
-    <%--            })--%>
-    <%--        }--%>
-    <%--    })--%>
-    <%--    console.log(result);--%>
-    <%--    $('#modal-right').modal('show');--%>
-    <%--}--%>
 </script>
 </body>
 

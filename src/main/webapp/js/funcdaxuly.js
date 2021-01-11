@@ -1,72 +1,7 @@
-$("body").on("click", ".btn-accept", function () {
-    var dataRequest = $("#saRequestID").text();
-    let data = {datarequest: dataRequest, status: 'act', step: '2'};
-    var result = sendOrder(data);
-    if (result === "success") {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Dữ liệu được cập nhật thành công.',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        $(this).parents("tr").remove();
-    } else {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
-            showConfirmButton: false,
-            timer: 3000
-        });
-    }
-});
-
-function sendOrder(data) {
-    try {
-        // This async call may fail.
-        let text = $.ajax({
-            type: "POST",
-            timeout: 100000,
-            url: "kyduyet",
-            data: data,
-            dataType: 'text',
-            async: false
-        }).responseText;
-        return text;
-    } catch (error) {
-        return "Không thể kết nối tới server";
-    }
-}
-
-$("body").on("click", ".btn-refuse", function () {
-    var dataRequest = $("#saRequestID").text();
-    let data = {datarequest: dataRequest, status: 'deni', step: '2'};
-    var result = sendOrder(data);
-    if (result === "success") {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Dữ liệu được cập nhật thành công.',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        $(this).parents("tr").remove();
-    } else {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
-            showConfirmButton: false,
-            timer: 3000
-        });
-    }
-});
-
 function viewInfoCompany(params) {
     result.forEach((company) => {
-        if (company.company.companyCode == params) {
-            let c = company.company;
+        if (company.companies.companyCode == params) {
+            let c = company.companies;
             Object.keys(c).forEach((key, _) => {
                 let id = key;
                 $('#' + id).text(c[key]);
@@ -78,30 +13,32 @@ function viewInfoCompany(params) {
     $('#modal-center').modal('show');
 }
 
-function viewInfoOrder(id) {
-    list = result.find(el => el.saRequest.id == id);
-    console.log(list)
-    const saRequest = list.saRequest;
-    let time = saRequest.employeeThamdinhDate.date;
-    let second = saRequest.employeeThamdinhDate.time;
-    Object.keys(saRequest).forEach((key) => {
-        if (key == "borrow") {
-            let value1 = saRequest[key] + (saRequest[key] * 0.02);
-            $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
-            Object.keys(time).forEach((key) => {
-                console.log(time[key])
-                $('#' + key + '1').text(time[key]);
+function viewInfoContract(params) {
+    result.forEach((contract) => {
+        if (contract.contract.idContract == params) {
+            let c = contract.contract;
+            let time = c.createdDate.date;
+            let second = c.createdDate.time;
+            console.log(second)
+            Object.keys(c).forEach((key) => {
+                if (key == "borrow") {
+                    value = c[key]
+                    $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                    Object.keys(time).forEach((key) => {
+                        console.log(time[key])
+                        $('#' + key + '1').text(time[key]);
+                    })
+                    Object.keys(second).forEach((key) => {
+                        console.log(second[key])
+                        $('#' + key).text(second[key]);
+                    })
+                } else {
+                    $('#' + key).text(c[key]);
+                }
             })
-            Object.keys(second).forEach((key) => {
-                console.log(second[key])
-                $('#' + key).text(second[key]);
-            })
-        } else {
-            $('#' + key).text(saRequest[key]);
         }
-    });
-    // var index =
-    $('#modal-left').modal('show');
+    })
+    $('#modal').modal('show');
 }
 
 function viewInfoCustomer(params) {
@@ -125,6 +62,7 @@ function viewInfoCustomer(params) {
                     const imgCMND = JSON.parse(data.cmnd);
                     $('#imgCMND').empty();
                     Object.keys(imgCMND).forEach((key) => {
+                        console.log(imgCMND[key])
                         if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
                             $('#imgCMND').append('Bổ sung hình ảnh');
                         } else {
@@ -132,8 +70,9 @@ function viewInfoCustomer(params) {
                         }
                     });
                     const payslipObj = JSON.parse(data.payslip);
-                    $('#imgPayslip').empty()
+                    $('#imgPayslip').empty();
                     Object.keys(payslipObj).forEach((key) => {
+                        console.log(payslipObj[key])
                         if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
                             $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
@@ -141,7 +80,7 @@ function viewInfoCustomer(params) {
                         }
                     });
                     const salaryObj = JSON.parse(data.salary);
-                    $('#imgSalary').empty()
+                    $('#imgSalary').empty();
                     Object.keys(salaryObj).forEach((key) => {
                         console.log(salaryObj[key]);
                         if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
@@ -151,7 +90,7 @@ function viewInfoCustomer(params) {
                         }
                     });
                     const healthObj = JSON.parse(data.health);
-                    $('#imgHealth').empty()
+                    $('#imgHealth').empty();
                     Object.keys(healthObj).forEach((key) => {
                         console.log(healthObj[key]);
                         if (healthObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
@@ -161,7 +100,7 @@ function viewInfoCustomer(params) {
                         }
                     });
                     const appendixObj = JSON.parse(data.appendix);
-                    $('#imgAppendix').empty()
+                    $('#imgAppendix').empty();
                     Object.keys(appendixObj).forEach((key) => {
                         console.log(appendixObj[key]);
                         if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
@@ -171,7 +110,7 @@ function viewInfoCustomer(params) {
                         }
                     });
                     const socialObj = JSON.parse(data.social);
-                    $('#imgSocial').empty()
+                    $('#imgSocial').empty();
                     Object.keys(socialObj).forEach((key) => {
                         console.log(socialObj[key]);
                         if (socialObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
@@ -181,7 +120,7 @@ function viewInfoCustomer(params) {
                         }
                     });
                     const contractObj = JSON.parse(data.contract);
-                    $('#imgContract').empty()
+                    $('#imgContract').empty();
                     Object.keys(contractObj).forEach((key) => {
                         console.log(contractObj[key]);
                         if (contractObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {

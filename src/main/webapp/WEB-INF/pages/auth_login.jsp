@@ -19,7 +19,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../images/favicon.ico">
 
-    <title>Crypto Tokenizer UI Interface & Cryptocurrency Admin Template</title>
+    <title>SG Fintech Web Admin</title>
 
     <!-- Vendors Style-->
     <link rel="stylesheet" href="css/vendors_css.css">
@@ -34,6 +34,7 @@
     .error {
         color: red;
     }
+
     .theme-primary {
         background-image: url("images/backgroun-image.jpeg");
     }
@@ -46,24 +47,25 @@
         <div class="auth-logo font-size-30">
             <a href="index.html" class="text-white"><b>SGFintech</b> Admin</a>
             <p>
-                <img src="images/SGFintech-Logo-r97Y8.png" width="15%" height="105%" >
+                <img src="images/SGFintech-Logo-r97Y8.png" width="15%" height="105%">
             </p>
         </div>
         <!-- /.login-logo -->
         <div class="auth-body">
             <!-- <p class="auth-msg text-white-50">Sign in to start your session</p> -->
 
-            <form id="demoForm" action="${pageContext.request.contextPath}/login" method="post" class="form-element"  >
+            <form id="demoForm" action="${pageContext.request.contextPath}/login" method="post" class="form-element">
                 <div class="form-group has-feedback">
                     <input name="user" id="user" class="form-control text-white plc-white" placeholder="Tên đăng nhập">
-                    <span class="ion ion-email form-control-feedback text-white" ></span>
+                    <span class="ion ion-email form-control-feedback text-white"></span>
                     <span style="color: red">${user}</span>
                     <%
                         session.removeAttribute(Consts.Check_User);
                     %>
                 </div>
                 <div class="form-group has-feedback">
-                    <input name="pass" id="pass" type="password" class="form-control text-white plc-white" placeholder="Mật khẩu">
+                    <input name="pass" id="pass" type="password" class="form-control text-white plc-white"
+                           placeholder="Mật khẩu">
                     <span class="ion ion-locked form-control-feedback text-white"></span>
                     <span style="color: red">${pass}</span>
                     <%
@@ -80,7 +82,8 @@
                     <!-- /.col -->
                     <div class="col-6">
                         <div class="fog-pwd">
-                            <a href="javascript:void(0)" class="text-white"><i class="ion ion-locked"></i> Quên mật khẩu?</a><br>
+                            <a href="javascript:void(0)" class="text-white"><i class="ion ion-locked"></i> Quên mật
+                                khẩu?</a><br>
                         </div>
                     </div>
                     <!-- /.col -->
@@ -101,7 +104,7 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("form#demoForm").validate({
             rules: {
                 user: {
