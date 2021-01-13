@@ -10,7 +10,7 @@ $("body").on("click", ".as", function () {
         let time = obj[key].saRequest.createdDate
         var rowElement = $('<tr></tr>');
         rowElement.append('<td><h5><a  href="#" onclick="viewInfoOrder(' + sa.saRequest.id + ')">' + sa.saRequest.id + '</a></h5></td>');
-        rowElement.append('<td><h5>' + time.date.day + '/' + time.date.month + '/' + time.date.year + ' ' + time.time.hour + ':' + time.time.minute + ':' + time.time.second + '</h5></td>');
+        rowElement.append('<td><h5>' + ("0" + (time.date.day)).slice(-2) + '/' + ("0" + (time.date.month)).slice(-2) + '/' + ("0" + (time.date.year)).slice(-2) + ' ' + ("0" + (time.time.hour)).slice(-2) + ':' + ("0" + (time.time.minute)).slice(-2) + ':' + ("0" + (time.time.second)).slice(-2) + '</h5></td>');
         $("#tbodytable").append(rowElement);
     })
 
@@ -52,7 +52,7 @@ function viewInfoCompany(params) {
             $("#companyShow").append('<p>Tên công ty :' + ' ' + c.companyName + '</p>');
             $("#companyShow").append('<p>Địa chỉ công ty :' + ' ' + c.companyAddress + '</p>');
             $("#companyShow").append('<p>Mã số thuế :' + ' ' + c.conpanyTax + '</p>');
-            $("#companyShow").append('<p>Ngày hoạt động :' + ' ' + c.createdDate.date.day + '/' + c.createdDate.date.month + '/' + c.createdDate.date.year + '  ' + c.createdDate.time.hour + ':' + c.createdDate.time.minute + ':' + c.createdDate.time.second + '</p>');
+            $("#companyShow").append('<p>Ngày hoạt động :' + ' ' + ("0" + (c.createdDate.date.day)).slice(-2) + '/' + ("0" + (c.createdDate.date.month)).slice(-2) + '/' + c.createdDate.date.year + ' ' + ' ' + ("0" + (c.createdDate.time.hour)).slice(-2) + ':' + ("0" + (c.createdDate.time.minute)).slice(-2) + ':' + ("0" + (c.createdDate.time.second)).slice(-2) + '</p>');
             $('#modal-center').modal('show');
         }
     })
@@ -63,42 +63,45 @@ function viewInfoCompany(params) {
 function viewInfoOrder(params) {
     list.forEach((order) => {
         if (order.id == params) {
-            let sa = order.status;
+            let sa = order.status
             console.log(sa)
             if (sa == 'done' || sa == 'act') {
+
                 $("#listView").empty();
                 $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
                 $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
                 $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
-                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + order.createdDate.date.day + '/' + order.createdDate.date.month + '/' + order.createdDate.date.year + '  ' + order.createdDate.time.hour + ':' + order.createdDate.time.minute + ':' + order.createdDate.time.second + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + ("0" + (order.createdDate.date.day)).slice(-2) + '/' + ("0" + (order.createdDate.date.month)).slice(-2) + '/' + order.createdDate.date.year + ' ' + ' ' + ("0" + (order.createdDate.time.hour)).slice(-2) + ':' + ("0" + (order.createdDate.time.minute)).slice(-2) + ':' + ("0" + (order.createdDate.time.second)).slice(-2) + '</p>');
                 $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
                 $("#listView").append('<p>Trạng thái :' + ' ' + '<b style="color: hotpink">' + order.status + '</b></p>');
                 $("#listView").append('<p>Người thẩm định :' + ' ' + order.employeeThamdinh + '</p>');
-                $("#listView").append('<p>Ngày thẩm định :' + ' ' + order.employeeThamdinhDate.date.day + '/' + order.employeeThamdinhDate.date.month + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + order.employeeThamdinhDate.time.hour + ':' + order.employeeThamdinhDate.time.minute + ':' + order.employeeThamdinhDate.time.second + '</p>');
+                $("#listView").append('<p>Ngày thẩm định :' + ' ' + ("0" + (order.employeeThamdinhDate.date.day)).slice(-2) + '/' + ("0" + (order.employeeThamdinhDate.date.month)).slice(-2) + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + ("0" + (order.employeeThamdinhDate.time.hour)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.minute)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.second)).slice(-2) + '</p>');
                 $("#listView").append('<p>Người duyệt đơn :' + ' ' + order.employeeDuyet + '</p>');
-                $("#listView").append('<p>Ngày duyệt đơn :' + ' ' + order.employeeDuyetDate.date.day + '/' + order.employeeDuyetDate.date.month + '/' + order.employeeDuyetDate.date.year + ' ' + ' ' + order.employeeDuyetDate.time.hour + ':' + order.employeeDuyetDate.time.minute + ':' + order.employeeDuyetDate.time.second + '</p>');
+                $("#listView").append('<p> :' + ' ' + order.employeeDuyetDate.date.day + '/' + order.employeeDuyetDate.date.month + '/' + order.employeeDuyetDate.date.year + ' ' + ' ' + order.employeeDuyetDate.time.hour + ':' + order.employeeDuyetDate.time.minute + ':' + order.employeeDuyetDate.time.second + '</p>');
+                $("#listView").append('<p>Ngày duyệt đơn :' + ' ' + ("0" + (order.employeeDuyetDate.date.day)).slice(-2) + '/' + ("0" + (order.employeeDuyetDate.date.month)).slice(-2) + '/' + order.employeeDuyetDate.date.year + ' ' + ' ' + ("0" + (order.employeeDuyetDate.time.hour)).slice(-2) + ':' + ("0" + (order.employeeDuyetDate.time.minute)).slice(-2) + ':' + ("0" + (order.employeeDuyetDate.time.second)).slice(-2) + '</p>');
+
                 $('#modal-left').modal('show');
             } else if (sa == 'wfs') {
                 $("#listView").empty();
                 $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
                 $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
                 $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
-                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + order.createdDate.date.day + '/' + order.createdDate.date.month + '/' + order.createdDate.date.year + '  ' + order.createdDate.time.hour + ':' + order.createdDate.time.minute + ':' + order.createdDate.time.second + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + ("0" + (order.createdDate.date.day)).slice(-2) + '/' + ("0" + (order.createdDate.date.month)).slice(-2) + '/' + order.createdDate.date.year + ' ' + ' ' + ("0" + (order.createdDate.time.hour)).slice(-2) + ':' + ("0" + (order.createdDate.time.minute)).slice(-2) + ':' + ("0" + (order.createdDate.time.second)).slice(-2) + '</p>');
                 $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
                 $("#listView").append('<p>Trạng thái :' + ' ' + '<b style="color: #0aa5df">' + order.status + '</b></p>');
                 $("#listView").append('<p>Người thẩm định :' + ' ' + order.employeeThamdinh + '</p>');
-                $("#listView").append('<p>Ngày thẩm định :' + ' ' + order.employeeThamdinhDate.date.day + '/' + order.employeeThamdinhDate.date.month + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + order.employeeThamdinhDate.time.hour + ':' + order.employeeThamdinhDate.time.minute + ':' + order.employeeThamdinhDate.time.second + '</p>');
+                $("#listView").append('<p>Ngày thẩm định :' + ' ' + ("0" + (order.employeeThamdinhDate.date.day)).slice(-2) + '/' + ("0" + (order.employeeThamdinhDate.date.month)).slice(-2) + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + ("0" + (order.employeeThamdinhDate.time.hour)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.minute)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.second)).slice(-2) + '</p>');
                 $('#modal-left').modal('show');
             } else if (sa == 'wait') {
                 $("#listView").empty();
                 $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
                 $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
                 $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
-                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + order.createdDate.date.day + '/' + order.createdDate.date.month + '/' + order.createdDate.date.year + ' ' + ' ' + order.createdDate.time.hour + ':' + order.createdDate.time.minute + ':' + order.createdDate.time.second + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + ("0" + (order.createdDate.date.day)).slice(-2) + '/' + ("0" + (order.createdDate.date.month)).slice(-2) + '/' + order.createdDate.date.year + ' ' + ' ' + ("0" + (order.createdDate.time.hour)).slice(-2) + ':' + ("0" + (order.createdDate.time.minute)).slice(-2) + ':' + ("0" + (order.createdDate.time.second)).slice(-2) + '</p>');
                 $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
@@ -109,19 +112,20 @@ function viewInfoOrder(params) {
                 $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
                 $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
                 $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
-                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + order.createdDate.date.day + '/' + order.createdDate.date.month + '/' + order.createdDate.date.year + ' ' + ' ' + order.createdDate.time.hour + ':' + order.createdDate.time.minute + ':' + order.createdDate.time.second + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + ("0" + (order.createdDate.date.day)).slice(-2) + '/' + ("0" + (order.createdDate.date.month)).slice(-2) + '/' + order.createdDate.date.year + ' ' + ' ' + ("0" + (order.createdDate.time.hour)).slice(-2) + ':' + ("0" + (order.createdDate.time.minute)).slice(-2) + ':' + ("0" + (order.createdDate.time.second)).slice(-2) + '</p>');
                 $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
                 $("#listView").append('<p>Trạng thái :' + ' ' + '<b style="color: red">' + order.status + '</b></p>');
                 $("#listView").append('<p>Người thẩm định :' + ' ' + order.employeeThamdinh + '</p>');
-                $("#listView").append('<p>Ngày thẩm định :' + ' ' + order.employeeThamdinhDate.date.day + '/' + order.employeeThamdinhDate.date.month + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + order.employeeThamdinhDate.time.hour + ':' + order.employeeThamdinhDate.time.minute + ':' + order.employeeThamdinhDate.time.second + '</p>');
-                $("#listView").append('<p>Nhận xét :' + ' ' + 'Bổ sung thông tin' + '</p>');
+                $("#listView").append('<p>Ngày thẩm định :' + ' ' + ("0" + (order.employeeThamdinhDate.date.day)).slice(-2) + '/' + ("0" + (order.employeeThamdinhDate.date.month)).slice(-2) + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + ("0" + (order.employeeThamdinhDate.time.hour)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.minute)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.second)).slice(-2) + '</p>');
+                $("#listView").append('<p>Nhận xét :' + ' ' + order.description + '</p>');
                 $('#modal-left').modal('show');
             }
         }
     })
 }
+
 
 //function view thông tin nhân viên theo số điện thoại
 function viewInfoCustomer(params) {

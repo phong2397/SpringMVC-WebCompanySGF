@@ -52,7 +52,7 @@ function viewInfoCompany(params) {
             $("#companyShow").append('<p>Tên công ty :' + ' ' + c.companyName + '</p>');
             $("#companyShow").append('<p>Địa chỉ công ty :' + ' ' + c.companyAddress + '</p>');
             $("#companyShow").append('<p>Mã số thuế :' + ' ' + c.conpanyTax + '</p>');
-            $("#companyShow").append('<p>Ngày hoạt động :' + ' ' + c.createdDate.date.day + '/' + c.createdDate.date.month + '/' + c.createdDate.date.year + '  ' + c.createdDate.time.hour + ':' + c.createdDate.time.minute + ':' + c.createdDate.time.second + '</p>');
+            $("#companyShow").append('<p>Ngày hoạt động :' + ' ' + ("0" + (c.createdDate.date.day)).slice(-2) + '/' + ("0" + (c.createdDate.date.month)).slice(-2) + '/' + c.createdDate.date.year + ' ' + ' ' + ("0" + (c.createdDate.time.hour)).slice(-2) + ':' + ("0" + (c.createdDate.time.minute)).slice(-2) + ':' + ("0" + (c.createdDate.time.second)).slice(-2) + '</p>');
             $('#modal-center').modal('show');
         }
     })
@@ -71,14 +71,14 @@ function viewInfoContract(params) {
                 $("#contractView").append('<h3><p>Mã hợp đồng :' + ' ' + contract.idContract + '</p></h3>');
                 $("#contractView").append('<p>Số điện thoại khách hàng :' + ' ' + contract.customerPhone + '</p>');
                 $("#contractView").append('<p>System Trace :' + ' ' + contract.systemTrace + '</p>');
-                $("#contractView").append('<p>Ngày ký duyệt :' + ' ' + contract.createdDate.date.day + '/' + contract.createdDate.date.month + '/' + contract.createdDate.date.year + '  ' + contract.createdDate.time.hour + ':' + contract.createdDate.time.minute + ':' + contract.createdDate.time.second + '</p>');
-                $("#contractView").append('<p>Hạn trả nợ :' + ' ' + contract.dateRepayment.date.day + '/' + contract.dateRepayment.date.month + '/' + contract.dateRepayment.date.year + '  ' + contract.dateRepayment.time.hour + ':' + contract.dateRepayment.time.minute + ':' + contract.dateRepayment.time.second + '</p>');
+                $("#contractView").append('<p>Ngày ký duyệt :' + ' ' + ("0" + (contract.createdDate.date.day)).slice(-2) + '/' + ("0" + (contract.createdDate.date.month)).slice(-2) + '/' + contract.createdDate.date.year + '  ' + ("0" + (contract.createdDate.time.hour)).slice(-2) + ':' + ("0" + (contract.createdDate.time.minute)).slice(-2) + ':' + ("0" + (contract.createdDate.time.second)).slice(-2) + '</p>');
+                $("#contractView").append('<p>Hạn trả nợ :' + ' ' + ("0" + (contract.dateRepayment.date.day)).slice(-2) + '/' + ("0" + (contract.dateRepayment.date.month)).slice(-2) + '/' + contract.dateRepayment.date.year + '  ' + ("0" + (contract.dateRepayment.time.hour)).slice(-2) + ':' + ("0" + (contract.dateRepayment.time.minute)).slice(-2) + ':' + ("0" + (contract.dateRepayment.time.second)).slice(-2) + '</p>');
                 $("#contractView").append('<p>Số tiền ứng :' + ' ' + contract.remainAmountBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#contractView").append('<p>Phí :' + ' ' + contract.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#contractView").append('<p>Số lần ứng :' + ' ' + contract.timeBorrow + '</p>');
                 $("#contractView").append('<p>Mã giao dịch :' + ' ' + contract.transactionId + '</p>');
                 $("#contractView").append('<p>Người gạch nợ :' + ' ' + contract.acceptedBy + '</p>');
-                $("#contractView").append('<p>Ngày gạch nợ :' + ' ' + contract.updatedDate.date.day + '/' + contract.updatedDate.date.month + '/' + contract.updatedDate.date.year + ' ' + ' ' + contract.updatedDate.time.hour + ':' + contract.updatedDate.time.minute + ':' + contract.updatedDate.time.second + '</p>');
+                $("#contractView").append('<p>Ngày gạch nợ :' + ' ' + ("0" + (contract.updatedDate.date.day)).slice(-2) + '/' + ("0" + (contract.updatedDate.date.month)).slice(-2) + '/' + contract.updatedDate.date.year + '  ' + ("0" + (contract.updatedDate.time.hour)).slice(-2) + ':' + ("0" + (contract.updatedDate.time.minute)).slice(-2) + ':' + ("0" + (contract.updatedDate.time.second)).slice(-2) + '</p>');
                 $("#contractView").append('<p>Trạng thái :' + ' ' + '<b style="color: hotpink">' + contract.status + '</b></p>');
                 $('#modalContract').modal('show');
             } else if (contrStatus == 'act') {
@@ -86,8 +86,8 @@ function viewInfoContract(params) {
                 $("#contractView").append('<h3><p>Mã hợp đồng :' + ' ' + contract.idContract + '</p></h3>');
                 $("#contractView").append('<p>Số điện thoại khách hàng :' + ' ' + contract.customerPhone + '</p>');
                 $("#contractView").append('<p>System Trace :' + ' ' + contract.systemTrace + '</p>');
-                $("#contractView").append('<p>Ngày ký duyệt :' + ' ' + contract.createdDate.date.day + '/' + contract.createdDate.date.month + '/' + contract.createdDate.date.year + '  ' + contract.createdDate.time.hour + ':' + contract.createdDate.time.minute + ':' + contract.createdDate.time.second + '</p>');
-                $("#contractView").append('<p>Hạn trả nợ :' + ' ' + contract.dateRepayment.date.day + '/' + contract.dateRepayment.date.month + '/' + contract.dateRepayment.date.year + '  ' + contract.dateRepayment.time.hour + ':' + contract.dateRepayment.time.minute + ':' + contract.dateRepayment.time.second + '</p>');
+                $("#contractView").append('<p>Ngày ký duyệt :' + ' ' + ("0" + (contract.createdDate.date.day)).slice(-2) + '/' + ("0" + (contract.createdDate.date.month)).slice(-2) + '/' + contract.createdDate.date.year + '  ' + ("0" + (contract.createdDate.time.hour)).slice(-2) + ':' + ("0" + (contract.createdDate.time.minute)).slice(-2) + ':' + ("0" + (contract.createdDate.time.second)).slice(-2) + '</p>');
+                $("#contractView").append('<p>Hạn trả nợ :' + ' ' + ("0" + (contract.dateRepayment.date.day)).slice(-2) + '/' + ("0" + (contract.dateRepayment.date.month)).slice(-2) + '/' + contract.dateRepayment.date.year + '  ' + ("0" + (contract.dateRepayment.time.hour)).slice(-2) + ':' + ("0" + (contract.dateRepayment.time.minute)).slice(-2) + ':' + ("0" + (contract.dateRepayment.time.second)).slice(-2) + '</p>');
                 $("#contractView").append('<p>Số tiền ứng :' + ' ' + contract.remainAmountBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#contractView").append('<p>Phí :' + ' ' + contract.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#contractView").append('<p>Số lần ứng :' + ' ' + contract.timeBorrow + '</p>');

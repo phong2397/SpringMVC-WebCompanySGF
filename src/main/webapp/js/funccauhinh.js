@@ -36,7 +36,7 @@ $("body").on("click", ".btn-accept", function () {
     }
 });
 
-//function ajax gọi đến value trong ProductController thực hiện điều chỉnh thông số sản phẩm
+//function ajax gọi đến value trong ProductController thực hiện caapj nhật thông số sản phẩm
 function sendOrder(data) {
     try {
         // This async call may fail.

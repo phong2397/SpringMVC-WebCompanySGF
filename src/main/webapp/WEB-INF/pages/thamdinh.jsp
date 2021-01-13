@@ -27,7 +27,6 @@
         }
     } else {
         response.sendRedirect("login");
-
     }
 %>
 <jsp:include page="general/_head.jsp"/>
