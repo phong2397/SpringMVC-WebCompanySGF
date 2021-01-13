@@ -62,6 +62,46 @@ $("body").on("click", ".btn-refuse", function () {
         });
     }
 });
+$("body").on("click", ".as", function () {
+    var datarequest = $(this).closest("tr").find('td:eq(1)  > h6  > b  > .as').text().trim();
+    let data = {dataRequest: datarequest};
+    var result = findHistoryModal(data);
+    var obj = JSON.parse(result);
+    $("#tbodytable").empty();
+    Object.keys(obj).forEach((key) => {
+        let sa = obj[key]
+        let time = obj[key].saRequest.createdDate
+        var rowElement = $('<tr></tr>');
+        rowElement.append('<td><h5><a  href="#" onclick="viewInfoOrder(' + sa.saRequest.id + ')">' + sa.saRequest.id + '</a></h5></td>');
+        rowElement.append('<td><h5>' + time.date.day + '/' + time.date.month + '/' + time.date.year + ' ' + time.time.hour + ':' + time.time.minute + ':' + time.time.second + '</h5></td>');
+        $("#tbodytable").append(rowElement);
+    })
+
+});
+
+function findHistoryModal(data) {
+    let result = "";
+    try {
+        $.ajax({
+            type: "POST",
+            timeout: 100000,
+            url: "findHistoryModal",
+            data: data,
+            async: false,
+            success: function (data, status, xhr) {
+                result = data;
+                return result;
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+                console.log(textStatus);
+                console.log(errorMessage);
+            }
+        })
+    } catch (error) {
+        return "Không thể kết nối tới server";
+    }
+    return result;
+}
 
 function viewInfoCompany(params) {
     result.forEach((company) => {
@@ -78,34 +118,68 @@ function viewInfoCompany(params) {
     $('#modal-center').modal('show');
 }
 
-function viewInfoOrder(id) {
-    list = result.find(el => el.saRequest.id == id);
-    console.log(list)
-    const saRequest = list.saRequest;
-    let time = saRequest.employeeThamdinhDate.date;
-    let second = saRequest.employeeThamdinhDate.time;
-    Object.keys(saRequest).forEach((key) => {
-        if (key == "borrow") {
-            let value1 = saRequest[key] + (saRequest[key] * 0.02);
-            $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
-            Object.keys(time).forEach((key) => {
-                console.log(time[key])
-                $('#' + key + '1').text(time[key]);
-            })
-            Object.keys(second).forEach((key) => {
-                console.log(second[key])
-                $('#' + key).text(second[key]);
-            })
-        } else if (key == "feeBorrow") {
-            let value = saRequest[key];
-            $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+function viewInfoOrder(params) {
+    list.forEach((order) => {
+        if (order.id == params) {
+            let sa = order.status
+            console.log(sa)
+            if (sa == 'done' || sa == 'act') {
+                $("#listView").empty();
+                $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
+                $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
+                $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + order.createdDate.date.day + '/' + order.createdDate.date.month + '/' + order.createdDate.date.year + '  ' + order.createdDate.time.hour + ':' + order.createdDate.time.minute + ':' + order.createdDate.time.second + '</p>');
+                $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
+                $("#listView").append('<p>Trạng thái :' + ' ' + '<b style="color: hotpink">' + order.status + '</b></p>');
+                $("#listView").append('<p>Người thẩm định :' + ' ' + order.employeeThamdinh + '</p>');
+                $("#listView").append('<p>Ngày thẩm định :' + ' ' + order.employeeThamdinhDate.date.day + '/' + order.employeeThamdinhDate.date.month + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + order.employeeThamdinhDate.time.hour + ':' + order.employeeThamdinhDate.time.minute + ':' + order.employeeThamdinhDate.time.second + '</p>');
+                $("#listView").append('<p>Người duyệt đơn :' + ' ' + order.employeeDuyet + '</p>');
+                $("#listView").append('<p>Ngày duyệt đơn :' + ' ' + order.employeeDuyetDate.date.day + '/' + order.employeeDuyetDate.date.month + '/' + order.employeeDuyetDate.date.year + ' ' + ' ' + order.employeeDuyetDate.time.hour + ':' + order.employeeDuyetDate.time.minute + ':' + order.employeeDuyetDate.time.second + '</p>');
+                $('#modal-left').modal('show');
+            } else if (sa == 'wfs') {
+                $("#listView").empty();
+                $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
+                $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
+                $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + order.createdDate.date.day + '/' + order.createdDate.date.month + '/' + order.createdDate.date.year + '  ' + order.createdDate.time.hour + ':' + order.createdDate.time.minute + ':' + order.createdDate.time.second + '</p>');
+                $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
+                $("#listView").append('<p>Trạng thái :' + ' ' + '<b style="color: #0aa5df">' + order.status + '</b></p>');
+                $("#listView").append('<p>Người thẩm định :' + ' ' + order.employeeThamdinh + '</p>');
+                $("#listView").append('<p>Ngày thẩm định :' + ' ' + order.employeeThamdinhDate.date.day + '/' + order.employeeThamdinhDate.date.month + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + order.employeeThamdinhDate.time.hour + ':' + order.employeeThamdinhDate.time.minute + ':' + order.employeeThamdinhDate.time.second + '</p>');
+                $('#modal-left').modal('show');
+            } else if (sa == 'wait') {
+                $("#listView").empty();
+                $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
+                $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
+                $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + order.createdDate.date.day + '/' + order.createdDate.date.month + '/' + order.createdDate.date.year + ' ' + ' ' + order.createdDate.time.hour + ':' + order.createdDate.time.minute + ':' + order.createdDate.time.second + '</p>');
+                $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
+                $("#listView").append('<p>Trạng thái :' + ' ' + '<b style="color: darkorange">' + order.status + '</b></p>');
+                $('#modal-left').modal('show');
+            } else if (sa == 'deni') {
+                $("#listView").empty();
+                $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
+                $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
+                $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + order.createdDate.date.day + '/' + order.createdDate.date.month + '/' + order.createdDate.date.year + ' ' + ' ' + order.createdDate.time.hour + ':' + order.createdDate.time.minute + ':' + order.createdDate.time.second + '</p>');
+                $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
+                $("#listView").append('<p>Trạng thái :' + ' ' + '<b style="color: red">' + order.status + '</b></p>');
+                $("#listView").append('<p>Người thẩm định :' + ' ' + order.employeeThamdinh + '</p>');
+                $("#listView").append('<p>Ngày thẩm định :' + ' ' + order.employeeThamdinhDate.date.day + '/' + order.employeeThamdinhDate.date.month + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + order.employeeThamdinhDate.time.hour + ':' + order.employeeThamdinhDate.time.minute + ':' + order.employeeThamdinhDate.time.second + '</p>');
+                $("#listView").append('<p>Nhận xét :' + ' ' + order.description + '</p>');
+                $('#modal-left').modal('show');
+            }
 
-        } else {
-            $('#' + key).text(saRequest[key]);
         }
-    });
-    // var index =
-    $('#modal-left').modal('show');
+    })
 }
 
 function viewInfoCustomer(params) {
@@ -126,6 +200,7 @@ function viewInfoCustomer(params) {
                 method: 'GET',
                 dataType: 'json',
                 success: function (data) {
+                    console.log(data)
                     const imgCMND = JSON.parse(data.cmnd);
                     $('#imgCMND').empty();
                     Object.keys(imgCMND).forEach((key) => {
@@ -214,3 +289,28 @@ function viewInfoCustomer(params) {
     console.log(result);
     $('#modal-right').modal('show');
 }
+
+$('#example').DataTable({
+    dom: 'Bfrtip',
+    pageLength: 10,
+    columnDefs: [
+        {
+            visible: false,
+            targets: [2, 3, 4, 9, 10]
+        },
+    ],
+    buttons: [
+        {
+            title: 'Danh sách ký duyệt',
+            extend: 'excelHtml5',
+            exportOptions: {
+                format: {
+                    customizeData: function (header, footer, body) {
+                        return body;
+                    }
+                },
+                columns: [0, 2, 3, 4, 5, 6, 7, 9, 10]
+            }
+        },
+    ]
+})

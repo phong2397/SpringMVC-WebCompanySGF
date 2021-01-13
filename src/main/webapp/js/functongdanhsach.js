@@ -190,7 +190,6 @@ function viewInfoCustomer(params) {
                     value = c[key]
                     $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
                     Object.keys(date).forEach((key) => {
-                        console.log(date[key])
                         $('#' + key).text(date[key]);
                     })
                 } else {
@@ -205,26 +204,29 @@ function viewInfoCustomer(params) {
 
 $('#example').DataTable({
     dom: 'Bfrtip',
+    lengthChange: false,
     pageLength: 10,
+    orderClasse: false,
+    stripeClasses: [],
     columnDefs: [
         {
             visible: false,
-            targets: [2, 3, 4, 5, 6, 8, 9, 11]
+            targets: [2, 3, 4, 5, 6, 12]
         },
     ],
     buttons: [
         {
-            title: 'Danh sách đã xử lý',
-            extend: 'excelHtml5',
+            title: 'Danh sách gạch nợ ',
+            extend: 'excel',
             exportOptions: {
-                format: {
-                    customizeData: function (header, footer, body) {
-                        return body;
-                    }
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    $('row c[r^="A"]', sheet).attr('s', '50');
+                    $('row c[r^="D"]', sheet).attr('s', '50');
                 },
-                columns: [0, 2, 3, 4, 5, 6, 8, 9, 11, 12, 14]
+                columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12],
 
             }
         },
     ]
-});
+})

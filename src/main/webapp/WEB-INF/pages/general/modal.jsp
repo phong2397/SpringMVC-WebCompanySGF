@@ -74,6 +74,61 @@
                 <p>Hình ảnh hợp đồng : </p>
                 <p id="imgContract"></p>
             </div>
+            <div class="modal-header">
+                <h5 class="modal-title">Lịch sử đơn hàng</h5>
+            </div>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                <table class="table table-lg invoice-archive">
+                    <thead>
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <th>Ngày yêu cầu</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbodytable">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer modal-footer-uniform">
+                <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<!-- Modal show info order -->
+<div class="modal modal-right fade" id="modal-left" tabindex="100">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông tin chi tiết đơn hàng</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b" id="listView">
+            </div>
+            <div class="modal-footer modal-footer-uniform">
+                <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<!-- Modal show info contract -->
+<div class="modal modal-right fade" id="modalContract" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông tin chi tiết hợp đồng </h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b" id="contractView">
+
+            </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
             </div>

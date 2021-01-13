@@ -3,6 +3,7 @@
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.sgfintech.entity.Useradmin" %>
 <%@ page import="com.sgfintech.util.Consts" %>
+<%@ page import="com.sgfintech.entity.Contract" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -75,11 +76,13 @@
                                         <tr>
                                             <th class="text-center">Mã đơn vay</th>
                                             <th>Thông tin khách hàng</th>
+                                            <th>Số điện thoại</th>
                                             <th>Tên khách hàng</th>
                                             <th>Mã công ty</th>
                                             <th>Số tài khoản</th>
                                             <th>Tên ngân hàng</th>
-                                            <th>Số điện thoại</th>
+                                            <th class="text-left">Số tiền tối thiểu</th>
+                                            <th class="text-left">Số tiền còn nợ</th>
                                             <th class="text-left">Số tiền tối thiểu</th>
                                             <th class="text-left">Số tiền còn nợ</th>
                                             <th class="text-left">Số tiền đã đóng</th>
@@ -98,15 +101,18 @@
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0">
-                                                        <a data-toggle="modal" href="#"
-                                                           onclick="viewInfoCustomer('${lst.customer.customerPhone}')"><b>${lst.customer.customerName}</b></a>
+                                                        <b> <a data-toggle="modal" href="#" id="cPhone" class="as"
+                                                               onclick="viewInfoCustomer('${lst.customer.customerPhone}')"> ${lst.customer.customerPhone}</a></b>
+                                                        <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
                                                         <span class="d-block text-muted">Company ID :<b><a
                                                                 data-toggle="modal" href="#"
                                                                 onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
-                                                        <span class="d-block text-muted">Account number: ${lst.customer.customerBankAcc}</span>
-                                                        <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
-                                                        <span class="d-block text-muted">Phone number : ${lst.customer.customerPhone}</span>
+                                                        <span class="d-block text-muted">Số tài khoản: ${lst.customer.customerBankAcc}</span>
+                                                        <span class="d-block text-muted">Chủ tài khoản : ${lst.customer.customerBankName}</span>
                                                     </h6>
+                                                </td>
+                                                <td>
+                                                    <b> ${lst.customer.customerPhone}</b>
                                                 </td>
                                                 <td>
                                                     <b> ${lst.customer.customerName}</b>
@@ -120,12 +126,13 @@
                                                 <td>
                                                     <b> ${lst.customer.customerBankName}</b>
                                                 </td>
-                                                <td>
-                                                    <b> ${lst.customer.customerPhone}</b>
-                                                </td>
                                                 <td><fmt:formatNumber value="${lst.contract.borrow}" type="number"/> đ
                                                 </td>
                                                 <td><fmt:formatNumber value="${lst.contract.borrow}" type="number"/> đ
+                                                </td>
+                                                <td>${lst.contract.borrow}
+                                                </td>
+                                                <td>${lst.contract.borrow}
                                                 </td>
                                                 <td>0</td>
                                                 <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
@@ -173,81 +180,31 @@
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <jsp:include page="general/modal.jsp"/>
-    <!-- Modal show info contract -->
-    <div class="modal modal-right fade" id="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Thông tin chi tiết hợp đồng </h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                    <h3><p>Mã hợp đồng : <span id="idContract"></span>9999</p></h3>
-                    <p>System Trace : <span id="systemTrace"></span></p>
-                    <p>Số điện thoại khách hàng : <span id="customerPhone"></span></p>
-                    <p>Số lần mượn : <span id="timeBorrow"></span></p>
-                    <p>Số tiền mượn : <span id="borrow"></span></p>
-                    <p>Phí mượn : <span id="feeBorrow"></span></p>
-                    <p>Mã giao dịch : <span id="transactionId"></span></p>
-                    <p>Trạng thái : <b style="color: #0b2c89"><span id="status"></span></b></p>
-                    <p>Người ký duyệt : <span id="acceptedBy"></span></p>
-                    <p>Ngày ký duyệt : <span id="day1"></span>/<span id="month1"></span>/<span id="year1"></span>&nbsp;&nbsp;<span
-                            id="hour"></span>:<span id="minute"></span>:<span id="second"></span></p>
-                </div>
-                <div class="modal-footer modal-footer-uniform">
-                    <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.modal -->
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
 <!-- Vendor JS -->
 <script src="js/vendors.min.js"></script>
-<script src="js/funcchothuhoi.js" type="text/javascript"></script>
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
+<script src="js/funcchothuhoi.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
-        $('#example').DataTable({
-            dom: 'Bfrtip',
-            pageLength: 10,
-            columnDefs: [
-                {
-                    visible: false,
-                    targets: [2, 3, 4, 5, 6]
-                },
-            ],
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        format: {
-                            customizeData: function (header, footer, body) {
-                                return body;
-                            }
-                        },
-                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-
-                    }
-                },
-            ]
-        })
     });
     <%
          List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");
          Gson g = new Gson();
          String json = g.toJson(list);
+         List<Contract> list1 = (List<Contract>) request.getAttribute("con");
+         Gson gs= new Gson();
+         String json1 = gs.toJson(list1);
      %>
     var result = <%=json%>;
+    var list = <%=json1%>;
 
 </script>
 </body>

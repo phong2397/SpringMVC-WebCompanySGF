@@ -105,7 +105,7 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script>
     $(document).ready(function () {
-        $("form#demoForm").validate({
+        $("#demoForm").validate({
             rules: {
                 user: {
                     required: true,

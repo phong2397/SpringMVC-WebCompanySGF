@@ -1,5 +1,4 @@
 $("body").on("click", ".btn-accept", function () {
-
     var id = $(this).closest("tr").find('td:eq(0)').text().replaceAll("\n", "").trim();
     var productCode = $(this).closest("tr").find('td:eq(1) input').val().trim();
     var productName = $(this).closest("tr").find('td:eq(2) input').val().trim();
@@ -23,7 +22,7 @@ $("body").on("click", ".btn-accept", function () {
             icon: 'success',
             title: 'Dữ liệu được cập nhật thành công.',
             showConfirmButton: false,
-            timer: 3000
+            timer: 100000
         });
     } else {
         Swal.fire({
@@ -31,7 +30,7 @@ $("body").on("click", ".btn-accept", function () {
             icon: 'error',
             title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
             showConfirmButton: false,
-            timer: 3000
+            timer: 100000
         });
     }
 });

@@ -1,8 +1,10 @@
 package com.sgfintech.controller;
 
+import com.google.gson.Gson;
 import com.sgfintech.dao.SaRequestDAO;
 import com.sgfintech.entity.SaRequest;
 import com.sgfintech.entity.Useradmin;
+import com.sgfintech.handler.CustomerHandler;
 import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.util.Consts;
@@ -39,6 +41,8 @@ public class ApprovalController {
         int countWFS = mergeDataService.countStatus("wfs");
         int countDeni = mergeDataService.countStatus("deni");
         List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("deni");
+        List<SaRequest> saRequest = saRequestDAO.findAll();
+        mm.addAttribute("sa", saRequest);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
         mm.addAttribute("countAct", countAct);
         mm.addAttribute("countWait", countWait);
@@ -54,12 +58,24 @@ public class ApprovalController {
         int countAct = mergeDataService.countStatus("act");
         int countDone = mergeDataService.countStatus("done");
         List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("wait");
+        List<SaRequest> sa = saRequestDAO.findAll();
+        mm.addAttribute("sa", sa);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
         mm.addAttribute("countWait", countWait);
         mm.addAttribute("countWFS", countWFS);
         mm.addAttribute("countAct", countAct);
         mm.addAttribute("countDone", countDone);
         return "thamdinh";
+    }
+
+    @RequestMapping(value = "/findHistoryModal", method = RequestMethod.POST)
+    public @ResponseBody
+    String findHistoryModal(HttpServletRequest request, HttpServletResponse response) {
+        String customerPhone = request.getParameter("dataRequest");
+        List<MergeDataOrder> result = mergeDataService.getSarequestModal(customerPhone);
+        Gson g = new Gson();
+        String responseStr = g.toJson(result);
+        return responseStr;
     }
 
     @RequestMapping(value = "/changes", method = RequestMethod.POST)

@@ -60,7 +60,9 @@ public class SignController {
         int countWFS = mergeDataService.countStatus("wfs");
         int countAct = mergeDataService.countStatus("act");
         int countDone = mergeDataService.countStatus("done");
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs",false);
+        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
+        List<SaRequest> saRequest = saRequestDAO.findAll();
+        mm.addAttribute("sa", saRequest);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
         mm.addAttribute("countWait", countWait);
         mm.addAttribute("countWFS", countWFS);

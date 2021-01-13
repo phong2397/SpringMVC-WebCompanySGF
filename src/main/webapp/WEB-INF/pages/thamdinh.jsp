@@ -3,6 +3,7 @@
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.sgfintech.entity.Useradmin" %>
 <%@ page import="com.sgfintech.util.Consts" %>
+<%@ page import="com.sgfintech.entity.SaRequest" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -64,10 +65,7 @@
 
             <!-- Main content -->
             <section class="content">
-
                 <div class="row">
-
-
                     <!-- /.col -->
                     <div class="col-xl-3 col-md-6 col-12">
                         <div class="box box-inverse box-warning">
@@ -191,6 +189,7 @@
                                         <tr>
                                             <th>Mã yêu cầu</th>
                                             <th>Thông tin khách hàng</th>
+                                            <th>Số điện thoại</th>
                                             <th>Tên khách hàng</th>
                                             <th>Mã công ty</th>
                                             <th>Trạng thái</th>
@@ -205,32 +204,31 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
-                                                <td><a data-toggle="modal" href="#" id="saRequestID"
+                                                <td><a data-toggle="modal" href="#"
+                                                       id="saRequestID"
                                                        onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0">
-                                                        <b> <a data-toggle="modal" href="#"
-                                                               onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
-                                                        <span class="d-block text-muted">Company ID :<b><a
+                                                    <h6 class="mb-0"><b>
+                                                        <a data-toggle="modal" href="#" id="cPhone" class="as"
+                                                           onclick="viewInfo('${lst.customer.customerPhone}')">${lst.saRequest.customerPhone}</a></b>
+                                                        <span class="d-block text-muted">Tên khách hàng :<b> ${lst.customer.customerName}</b></span>
+                                                        <span class="d-block text-muted">Mã công ty :<b><a
                                                                 data-toggle="modal" href="#"
                                                                 onclick="viewInfoCompany('${lst.company.companyCode}')">${lst.company.companyCode}</a></b></span>
                                                     </h6>
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0">
-                                                        <b> <a data-toggle="modal" href="#"
-                                                               onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
-                                                    </h6>
+                                                        ${lst.customer.customerPhone}
                                                 </td>
                                                 <td>
-                                                  <span
-                                                          class="d-block text-muted"><b><a
-                                                          data-toggle="modal" href="#"
-                                                          onclick="viewInfoCompany('${lst.company.companyCode}')">${lst.company.companyCode}</a></b></span>
+                                                        ${lst.customer.customerName}
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold">${lst.saRequest.status}</h6>
+                                                        ${lst.company.companyCode}
+                                                </td>
+                                                <td>
+                                                    <h6 class="mb-0 font-weight-bold">chờ thẩm định</h6>
                                                 </td>
                                                 <td>
                                                     <span class="badge badge-pill badge-primary">2 ngày</span>
@@ -240,7 +238,7 @@
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0 font-weight-bold"><fmt:formatNumber
-                                                            value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.02)}"
+                                                            value="${lst.saRequest.borrow}"
                                                             type="number"/> đ
                                                         <span class="d-block text-muted font-weight-normal">Phí : <fmt:formatNumber
                                                                 value="${lst.saRequest.feeBorrow }"
@@ -248,17 +246,12 @@
                                                     </h6>
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold"><fmt:formatNumber
-                                                            value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.02)}"
-                                                            type="number"/> đ
-                                                    </h6>
+                                                        ${lst.saRequest.borrow}
                                                 </td>
                                                 <td>
-                                                    <span class="d-block text-muted font-weight-normal"> <fmt:formatNumber
-                                                            value="${lst.saRequest.feeBorrow }"
-                                                            type="number"/> đ </span>
-
+                                                        ${lst.saRequest.feeBorrow }
                                                 </td>
+
                                                 <td>
                                                     <button class="btn btn-rounded btn-info btn-accept">Accept</button>
                                                     <button class="btn btn-rounded btn-dark btn-refuse">Refuse</button>
@@ -281,33 +274,6 @@
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <jsp:include page="general/modal.jsp"/>
-    <!-- Modal show info order -->
-    <div class="modal modal-right fade" id="modal-left" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Thông tin chi tiết đơn hàng</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                    <h3><p>Mã yêu cầu: <span id="id"></span></p></h3>
-                    <p>Ngày yêu cầu : <span id="day1"></span>/<span id="month1"></span>/<span id="year1"></span>&nbsp;&nbsp;<span
-                            id="hour"></span>:<span id="minute"></span>:<span id="second"></span></p>
-                    <p>Số điện thoại : <span id="customerPhone"></span></p>
-                    <p>Số tiền ứng : <span id="borrow"></span></p>
-                    <p>Phí : <span id="feeBorrow"></span></p>
-                    <p>Số lần ứng : <span id="timeBorrow"></span></p>
-                    <p>Trạng thái : <b style="color: #0b2c89"><span id="status"></span></b></p>
-                </div>
-                <div class="modal-footer modal-footer-uniform">
-                    <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.modal -->
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
@@ -326,39 +292,18 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
-        $('#example').DataTable({
-            dom: 'Bfrtip',
-            pageLength: 10,
-            columnDefs: [
-                {
-                    visible: false,
-                    targets: [2, 3, 8, 9]
-                },
-            ],
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        format: {
-                            customizeData: function (header, footer, body) {
-                                return body;
-                            }
-                        },
-                        columns: [0, 2, 3, 4, 5, 6, 8, 9]
 
-                    }
-                },
-            ]
-        })
     });
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
                   Gson g = new Gson();
                   String json = g.toJson(list);
+                    List<SaRequest> list1 = (List<SaRequest>) request.getAttribute("sa");
+                    Gson gs= new Gson();
+                    String json1 = gs.toJson(list1);
                   %>
     var result = <%=json%>;
-    console.log(result)
-
+    var list = <%=json1%>;
 </script>
 
 </body>
