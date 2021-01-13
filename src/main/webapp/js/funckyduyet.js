@@ -1,5 +1,6 @@
+//function xảy ra khi nhấn vào accept gọi đến data ajax , thực hiện thành công hiển thị popup alert thông báo success
 $("body").on("click", ".btn-accept", function () {
-    var dataRequest = $("#saRequestID").text();
+    var dataRequest = $(this).closest("tr").find('td:eq(0)').text().trim();
     let data = {datarequest: dataRequest, status: 'act', step: '2'};
     var result = sendOrder(data);
     if (result === "success") {
@@ -22,6 +23,7 @@ $("body").on("click", ".btn-accept", function () {
     }
 });
 
+//function ajax gọi đến value trong ApprovalController thực hiện cập nhật thông tin các đơn đang chờ trong bảng table saRequest
 function sendOrder(data) {
     try {
         // This async call may fail.
@@ -39,8 +41,9 @@ function sendOrder(data) {
     }
 }
 
+//function xảy ra khi nhấn vào refuse gọi đến data ajax , thực hiện thành công hiển thị popup alert thông báo lỗi
 $("body").on("click", ".btn-refuse", function () {
-    var dataRequest = $("#saRequestID").text();
+    var dataRequest = $(this).closest("tr").find('td:eq(0)').text().trim();
     let data = {datarequest: dataRequest, status: 'deni', step: '2'};
     var result = sendOrder(data);
     if (result === "success") {
@@ -62,6 +65,8 @@ $("body").on("click", ".btn-refuse", function () {
         });
     }
 });
+
+//function xảy ra khi nhấn vào số điện thoại trong column thứ 2 gọi đến data ajax thực hiện thành công hiển thị nội dung các đơn hàng và ngày yêu cầu vào modal
 $("body").on("click", ".as", function () {
     var datarequest = $(this).closest("tr").find('td:eq(1)  > h6  > b  > .as').text().trim();
     let data = {dataRequest: datarequest};
@@ -79,6 +84,7 @@ $("body").on("click", ".as", function () {
 
 });
 
+//function ajax gọi đến value trong TotalListController thực hiện truy vấn trả về danh sách contract đúng với số điện thoại đó
 function findHistoryModal(data) {
     let result = "";
     try {
@@ -103,6 +109,7 @@ function findHistoryModal(data) {
     return result;
 }
 
+//function view thông tin công ty khi nhấn vào mã công ty trong bảng
 function viewInfoCompany(params) {
     result.forEach((company) => {
         if (company.companies.companyCode == params) {
@@ -120,6 +127,7 @@ function viewInfoCompany(params) {
     $('#modal-center').modal('show');
 }
 
+//function view thông tin chi tiết mã đơn khi nhấn vào mã đơn vay trong bảng
 function viewInfoOrder(params) {
     list.forEach((order) => {
         if (order.id == params) {
@@ -184,6 +192,7 @@ function viewInfoOrder(params) {
     })
 }
 
+//function view thông tin nhân viên theo số điện thoại
 function viewInfoCustomer(params) {
     let username = "sgfintech";
     let password = "k6mzMtPJLPMi5crF";
@@ -294,11 +303,11 @@ function viewInfoCustomer(params) {
 
 $('#example').DataTable({
     dom: 'Bfrtip',
-    pageLength: 10,
+    pageLength: 10,// phân 10 kết quả cho mỗi trang
     columnDefs: [
         {
             visible: false,
-            targets: [2, 3, 4, 9, 10]
+            targets: [2, 3, 4, 9, 10]// ẩn đi các column đã chọn
         },
     ],
     buttons: [
@@ -311,7 +320,7 @@ $('#example').DataTable({
                         return body;
                     }
                 },
-                columns: [0, 2, 3, 4, 5, 6, 7, 9, 10]
+                columns: [0, 2, 3, 4, 5, 6, 7, 9, 10]// export excel các column đã chọn
             }
         },
     ]

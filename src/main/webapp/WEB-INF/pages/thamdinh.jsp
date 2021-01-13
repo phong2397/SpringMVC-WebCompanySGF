@@ -205,7 +205,6 @@
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
                                                 <td><a data-toggle="modal" href="#"
-                                                       id="saRequestID"
                                                        onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
                                                 <td>

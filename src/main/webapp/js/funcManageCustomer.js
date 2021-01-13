@@ -1,3 +1,4 @@
+//function xảy ra khi nhấn vào tìm kiếm gọi đến data ajax , thực hiện thành công hiển thị danh sách nhân viên ra table
 $("body").on("click", ".btn-outline", function () {
     $("#loading").show();
     var companyCode = $("#company_code").val();
@@ -45,6 +46,7 @@ $("body").on("click", ".btn-outline", function () {
     }
 });
 
+//function ajax gọi đến value trong CustomerController thực hiện truy vấn trả về danh sách nhân viên theo số mã công ty và tên công ty
 function ajaxPost(data) {
     let result = "";
     try {

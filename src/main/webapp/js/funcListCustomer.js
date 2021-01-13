@@ -1,3 +1,4 @@
+//function xảy ra khi nhấn vào tìm kiếm gọi đến data ajax , thực hiện thành công hiển thị danh sách nhân viên ra table
 $("body").on("click", ".btn-outline", function () {
     $("#loading").show();
     var customerName = $("#customerName").val();
@@ -50,6 +51,7 @@ $("body").on("click", ".btn-outline", function () {
 
 });
 
+//function ajax gọi đến value trong CustomerController thực hiện truy vấn trả về danh sách nhân viên theo số đth,tên nhân viên,số cmnd
 function ajaxPost(data) {
     let result = "";
     try {

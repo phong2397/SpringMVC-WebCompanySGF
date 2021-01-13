@@ -1,5 +1,7 @@
+//function xảy ra khi nhấn vào accept gọi đến data ajax , thực hiện thành công hiển thị popup alert thông báo success
 $("body").on("click", ".btn-accept", function () {
-    var dataRequest = $("#saRequestID").text();
+    var dataRequest = $(this).closest("tr").find('td:eq(0)').text().trim();
+    console.log(dataRequest)
     let data = {datarequest: dataRequest, status: 'wfs', step: '1'};
     var result = sendOrder(data);
     if (result === "success") {
@@ -23,6 +25,53 @@ $("body").on("click", ".btn-accept", function () {
     }
 });
 
+//function ajax gọi đến value trong ApprovalController thực hiện cập nhật thông tin các đơn đang chờ trong bảng table saRequest
+function sendOrder(data) {
+    try {
+        // This async call may fail.
+        let text = $.ajax({
+            type: "POST",
+            timeout: 100000,
+            url: "changes",
+            data: data,
+            dataType: 'text',
+            async: false
+        }).responseText;
+        return text;
+        console.log(text);
+    } catch (error) {
+        return "Không thể kết nối tới server";
+    }
+}
+
+//function xảy ra khi nhấn vào refuse gọi đến data ajax , thực hiện thành công hiển thị popup alert thông báo lỗi
+$("body").on("click", ".btn-refuse", function () {
+    $("#loading").show();
+    var dataRequest = $(this).closest("tr").find('td:eq(0)').text().trim();
+    console.log(dataRequest);
+    let data = {datarequest: dataRequest, status: 'deni', step: '1'};
+    var result = sendOrder(data);
+    if (result === "success") {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Dữ liệu được cập nhật thành công.',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        $("#loading").hide();
+        $(this).parents("tr").remove();
+    } else {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    }
+});
+//function xảy ra khi nhấn vào số điện thoại trong column thứ 2 gọi đến data ajax thực hiện thành công hiển thị nội dung các đơn hàng và ngày yêu cầu vào modal
 $("body").on("click", ".as", function () {
     var datarequest = $(this).closest("tr").find('td:eq(1)  > h6  > b  > .as').text().trim();
     let data = {dataRequest: datarequest};
@@ -40,6 +89,7 @@ $("body").on("click", ".as", function () {
 
 });
 
+//function ajax gọi đến value trong TotalListController thực hiện truy vấn trả về danh sách contract đúng với số điện thoại đó
 function findHistoryModal(data) {
     let result = "";
     try {
@@ -64,51 +114,7 @@ function findHistoryModal(data) {
     return result;
 }
 
-function sendOrder(data) {
-    try {
-        // This async call may fail.
-        let text = $.ajax({
-            type: "POST",
-            timeout: 100000,
-            url: "changes",
-            data: data,
-            dataType: 'text',
-            async: false
-        }).responseText;
-        return text;
-        console.log(text);
-    } catch (error) {
-        return "Không thể kết nối tới server";
-    }
-}
-
-$("body").on("click", ".btn-refuse", function () {
-    $("#loading").show();
-    var dataRequest = $("#saRequestID").text();
-    console.log(dataRequest);
-    let data = {datarequest: dataRequest, status: 'deni', step: '1'};
-    var result = sendOrder(data);
-    if (result === "success") {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Dữ liệu được cập nhật thành công.',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        $("#loading").hide();
-        $(this).parents("tr").remove();
-    } else {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
-            showConfirmButton: false,
-            timer: 3000
-        });
-    }
-});
-
+//function view thông tin chi tiết mã đơn khi nhấn vào mã đơn vay trong bảng
 function viewInfoOrder(params) {
     list.forEach((order) => {
         if (order.id == params) {
@@ -173,6 +179,7 @@ function viewInfoOrder(params) {
     })
 }
 
+//function view thông tin công ty khi nhấn vào mã công ty trong bảng
 function viewInfoCompany(params) {
     result.forEach((company) => {
         if (company.company.companyCode == params) {
@@ -190,6 +197,7 @@ function viewInfoCompany(params) {
     $('#modal-center').modal('show');
 }
 
+//function view thông tin nhân viên theo số điện thoại
 function viewInfo(phone) {
     let list = result.find(el => el.customer.customerPhone == phone);
     axios({
@@ -290,13 +298,14 @@ function viewInfo(phone) {
     $('#modal-right').modal('show');
 }
 
+// function sử dụng framework datatable của Jquery
 $('#example').DataTable({
     dom: 'Bfrtip',
-    pageLength: 10,
+    pageLength: 10,// phân 10 kết quả cho mỗi trang
     columnDefs: [
         {
             visible: false,
-            targets: [2, 3, 4, 9, 10]
+            targets: [2, 3, 4, 9, 10] // ẩn đi các column đã chọn
         },
     ],
     buttons: [
@@ -309,7 +318,7 @@ $('#example').DataTable({
                         return body;
                     }
                 },
-                columns: [0, 2, 3, 4, 5, 6, 7, 9, 10]
+                columns: [0, 2, 3, 4, 5, 6, 7, 9, 10] // export excel các column đã chọn
 
             }
         },

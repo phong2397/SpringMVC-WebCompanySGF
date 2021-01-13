@@ -243,13 +243,11 @@
                                                 </td>
                                                 <td><b>${lst.saRequest.employeeThamdinh}</b>
                                                 </td>
-                                                <td>
-                                                    <fmt:parseDate value="${lst.saRequest.employeeThamdinhDate}"
-                                                                   pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob"
+                                                <td><fmt:parseDate value=" ${lst.saRequest.employeeThamdinhDate}"
+                                                                   pattern="yyyy-MM-dd'T'HH:mm:ss" var="day"
                                                                    type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                                    value="${patientDob}"/>
-                                                </td>
+                                                                    value="${day}"/></td>
                                                 <td>
                                                     <h6 class="mb-0 font-weight-bold"><fmt:formatNumber
                                                             value="${lst.saRequest.borrow }"
@@ -306,14 +304,11 @@
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
                   Gson g = new Gson();
                   String json = g.toJson(list);
-                  %>
-    var result = <%=json%>;
-    <%
-
-                   List<SaRequest> list1 = (List<SaRequest>) request.getAttribute("sa");
+                      List<SaRequest> list1 = (List<SaRequest>) request.getAttribute("sa");
                  Gson gs= new Gson();
                  String json1 = gs.toJson(list1);
-                   %>
+                  %>
+    var result = <%=json%>;
     var list = <%=json1%>;
 
 </script>

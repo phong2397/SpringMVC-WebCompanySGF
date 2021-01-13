@@ -37,7 +37,9 @@
                 </button>
             </div>
             <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                <p>Họ Tên : <span id="customerName"></span></p>
+                <h3><p>Họ Tên : <span id="customerName"></span></p></h3>
+                <h4><p>Số điện thoại : <span id="customerPhone"></span></p>
+                </h4>
                 <p>Mã nhân viên : <span id="customerCode"></span></p>
                 <p>Email : <span id="customerEmail"></span></p>
                 <p>Mức lương : <span id="customerSalary"></span></p>
@@ -83,7 +85,6 @@
                     </tr>
                     </thead>
                     <tbody id="tbodytable">
-
                     </tbody>
                 </table>
             </div>
@@ -95,7 +96,7 @@
 </div>
 <!-- /.modal -->
 <!-- Modal show info order -->
-<div class="modal modal-right fade" id="modal-left" tabindex="100">
+<div class="modal modal-fill fade" id="modal-left" tabindex="100">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -114,7 +115,7 @@
 </div>
 <!-- /.modal -->
 <!-- Modal show info contract -->
-<div class="modal modal-right fade" id="modalContract" tabindex="-1">
+<div class="modal modal-fill fade" id="modalContract" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

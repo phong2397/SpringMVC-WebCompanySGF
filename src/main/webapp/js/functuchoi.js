@@ -1,3 +1,4 @@
+//function xảy ra khi nhấn vào số điện thoại trong column thứ 2 gọi đến data ajax thực hiện thành công hiển thị nội dung các đơn hàng và ngày yêu cầu vào modal
 $("body").on("click", ".as", function () {
     var datarequest = $(this).closest("tr").find('td:eq(1)  > h6  > b  > .as').text().trim();
     let data = {dataRequest: datarequest};
@@ -15,6 +16,7 @@ $("body").on("click", ".as", function () {
 
 });
 
+//function ajax gọi đến value trong TotalListController thực hiện truy vấn trả về danh sách contract đúng với số điện thoại đó
 function findHistoryModal(data) {
     let result = "";
     try {
@@ -39,6 +41,7 @@ function findHistoryModal(data) {
     return result;
 }
 
+//function view thông tin công ty khi nhấn vào mã công ty trong bảng
 function viewInfoCompany(params) {
     result.forEach((company) => {
         if (company.company.companyCode == params) {
@@ -56,6 +59,7 @@ function viewInfoCompany(params) {
     $('#modal-center').modal('show');
 }
 
+//function view thông tin chi tiết mã đơn khi nhấn vào mã đơn vay trong bảng
 function viewInfoOrder(params) {
     list.forEach((order) => {
         if (order.id == params) {
@@ -119,6 +123,7 @@ function viewInfoOrder(params) {
     })
 }
 
+//function view thông tin nhân viên theo số điện thoại
 function viewInfoCustomer(params) {
     let username = "sgfintech";
     let password = "k6mzMtPJLPMi5crF";
@@ -227,13 +232,14 @@ function viewInfoCustomer(params) {
     $('#modal-right').modal('show');
 }
 
+// function sử dụng framework datatable của Jquery
 $('#example').DataTable({
     dom: 'Bfrtip',
-    pageLength: 20,
+    pageLength: 10,// phân 10 kết quả cho mỗi trang
     columnDefs: [
         {
             visible: false,
-            targets: [2, 3, 4, 5, 6, 11, 12]
+            targets: [2, 3, 4, 5, 6, 11, 12]// ẩn đi các column đã chọn
         },
     ],
     buttons: [
@@ -241,7 +247,7 @@ $('#example').DataTable({
             title: 'Danh sách từ chối ',
             extend: 'excelHtml5',
             exportOptions: {
-                columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12]
+                columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12]// export excel các column đã chọn
             }
         },
     ]

@@ -1,5 +1,6 @@
+//function xảy ra khi nhấn vào số điện thoại trong column thứ 2 gọi đến data ajax thực hiện thành công hiển thị nội dung các đơn hàng và ngày yêu cầu
 $("body").on("click", ".as", function () {
-    var datarequest = $(this).closest("tr").find('td:eq(1)  > h6  > b  > .as').text().trim();
+    var datarequest = $(this).closest("tr").find('td:eq(1)  > h6  > b  > .as').text().trim();// tìm đến số điện thoai của td thứ 1
     let data = {dataRequest: datarequest};
     var result = findHistoryModal(data);
     var obj = JSON.parse(result);
@@ -15,6 +16,7 @@ $("body").on("click", ".as", function () {
 
 });
 
+//function ajax gọi đến value trong TotalListController thực hiện truy vấn trả về danh sách contract đúng với số điện thoại đó
 function findHistoryModal(data) {
     let result = "";
     try {
@@ -39,6 +41,7 @@ function findHistoryModal(data) {
     return result;
 }
 
+//function view thông tin công ty khi nhấn vào mã công ty trong bảng
 function viewInfoCompany(params) {
     result.forEach((company) => {
         if (company.companies.companyCode == params) {
@@ -56,6 +59,7 @@ function viewInfoCompany(params) {
     $('#modal-center').modal('show');
 }
 
+//function view thông tin chi tiết hợp đồng khi nhấn vào mã hợp đồng trong bảng
 function viewInfoContract(params) {
     list.forEach((contract) => {
         if (contract.idContract == params) {
@@ -69,7 +73,7 @@ function viewInfoContract(params) {
                 $("#contractView").append('<p>System Trace :' + ' ' + contract.systemTrace + '</p>');
                 $("#contractView").append('<p>Ngày ký duyệt :' + ' ' + contract.createdDate.date.day + '/' + contract.createdDate.date.month + '/' + contract.createdDate.date.year + '  ' + contract.createdDate.time.hour + ':' + contract.createdDate.time.minute + ':' + contract.createdDate.time.second + '</p>');
                 $("#contractView").append('<p>Hạn trả nợ :' + ' ' + contract.dateRepayment.date.day + '/' + contract.dateRepayment.date.month + '/' + contract.dateRepayment.date.year + '  ' + contract.dateRepayment.time.hour + ':' + contract.dateRepayment.time.minute + ':' + contract.dateRepayment.time.second + '</p>');
-                $("#contractView").append('<p>Số tiền ứng :' + ' ' + contract.borrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#contractView").append('<p>Số tiền ứng :' + ' ' + contract.remainAmountBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#contractView").append('<p>Phí :' + ' ' + contract.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#contractView").append('<p>Số lần ứng :' + ' ' + contract.timeBorrow + '</p>');
                 $("#contractView").append('<p>Mã giao dịch :' + ' ' + contract.transactionId + '</p>');
@@ -84,7 +88,7 @@ function viewInfoContract(params) {
                 $("#contractView").append('<p>System Trace :' + ' ' + contract.systemTrace + '</p>');
                 $("#contractView").append('<p>Ngày ký duyệt :' + ' ' + contract.createdDate.date.day + '/' + contract.createdDate.date.month + '/' + contract.createdDate.date.year + '  ' + contract.createdDate.time.hour + ':' + contract.createdDate.time.minute + ':' + contract.createdDate.time.second + '</p>');
                 $("#contractView").append('<p>Hạn trả nợ :' + ' ' + contract.dateRepayment.date.day + '/' + contract.dateRepayment.date.month + '/' + contract.dateRepayment.date.year + '  ' + contract.dateRepayment.time.hour + ':' + contract.dateRepayment.time.minute + ':' + contract.dateRepayment.time.second + '</p>');
-                $("#contractView").append('<p>Số tiền ứng :' + ' ' + contract.borrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#contractView").append('<p>Số tiền ứng :' + ' ' + contract.remainAmountBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#contractView").append('<p>Phí :' + ' ' + contract.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#contractView").append('<p>Số lần ứng :' + ' ' + contract.timeBorrow + '</p>');
                 $("#contractView").append('<p>Mã giao dịch :' + ' ' + contract.transactionId + '</p>');
@@ -95,6 +99,7 @@ function viewInfoContract(params) {
     })
 }
 
+//function view thông tin khách hàng theo số điện thoại
 function viewInfoCustomer(params) {
     let username = "sgfintech";
     let password = "k6mzMtPJLPMi5crF";
@@ -205,13 +210,14 @@ function viewInfoCustomer(params) {
     $('#modal-right').modal('show');
 }
 
+// function sử dụng framework datatable của Jquery
 $('#example').DataTable({
     dom: 'Bfrtip',
-    pageLength: 20,
+    pageLength: 20,//Phân 20 kết quả cho mỗi trang
     columnDefs: [
         {
             visible: false,
-            targets: [2, 3, 4, 5, 6, 9, 10]
+            targets: [2, 3, 4, 5, 6, 9, 10] // ẩn đi các column đã chọn
         },
     ],
     buttons: [
@@ -224,7 +230,7 @@ $('#example').DataTable({
                         return body;
                     }
                 },
-                columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14]
+                columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14] // chỉ export excel các cột đã chọn
 
             }
         },
