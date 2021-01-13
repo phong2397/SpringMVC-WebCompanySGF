@@ -105,16 +105,18 @@ function findHistoryModal(data) {
 
 function viewInfoCompany(params) {
     result.forEach((company) => {
-        if (company.company.companyCode == params) {
-            let c = company.company;
-            Object.keys(c).forEach((key, _) => {
-                let id = key;
-                $('#' + id).text(c[key]);
-            })
+        if (company.companies.companyCode == params) {
+            let c = company.companies;
+            console.log(c);
+            $("#companyShow").empty();
+            $("#companyShow").append('<h3><p>Mã công ty :' + ' ' + c.companyCode + '</p></h3>');
+            $("#companyShow").append('<p>Tên công ty :' + ' ' + c.companyName + '</p>');
+            $("#companyShow").append('<p>Địa chỉ công ty :' + ' ' + c.companyAddress + '</p>');
+            $("#companyShow").append('<p>Mã số thuế :' + ' ' + c.conpanyTax + '</p>');
+            $("#companyShow").append('<p>Ngày hoạt động :' + ' ' + c.createdDate.date.day + '/' + c.createdDate.date.month + '/' + c.createdDate.date.year + '  ' + c.createdDate.time.hour + ':' + c.createdDate.time.minute + ':' + c.createdDate.time.second + '</p>');
+            $('#modal-center').modal('show');
         }
     })
-    console.log(result);
-    // var index =
     $('#modal-center').modal('show');
 }
 

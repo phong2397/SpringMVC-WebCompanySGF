@@ -16,11 +16,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                <h3><p>Mã công ty : <span id="companyCode"></span></p></h3>
-                <p>Tên công ty : <span id="companyName"></span></p>
-                <p>Địa chỉ công ty : <span id="companyAddress"></span></p>
-                <p>Mã số thuế : <span id="conpanyTax"></span></p>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b" id="companyShow">
+
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
