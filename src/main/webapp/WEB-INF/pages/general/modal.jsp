@@ -80,7 +80,7 @@
                 <table class="table table-lg invoice-archive">
                     <thead>
                     <tr>
-                        <th>Mã đơn hàng</th>
+                        <th>Mã yêu cầu</th>
                         <th>Ngày yêu cầu</th>
                     </tr>
                     </thead>

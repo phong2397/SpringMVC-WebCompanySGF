@@ -189,15 +189,26 @@
                                             <th>Mã yêu cầu</th>
                                             <th>Thông tin khách hàng</th>
                                             <th>Số điện thoại</th>
+
                                             <th>Tên khách hàng</th>
+
                                             <th>Mã công ty</th>
+
+                                            <th>Số tài khoản</th>
+
+                                            <th>Tên ngân hàng</th>
+
                                             <th>Trạng thái</th>
+
                                             <th>Thời gian còn lại</th>
+
                                             <th>Thời gian ứng</th>
+
                                             <th>Tổng số tiền ứng</th>
                                             <th>Số tiền ứng</th>
                                             <th>Tiền phí</th>
                                             <th>Actions</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -207,23 +218,31 @@
                                                        onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0"><b>
-                                                        <a data-toggle="modal" href="#" id="cPhone" class="as"
-                                                           onclick="viewInfo('${lst.customer.customerPhone}')">${lst.saRequest.customerPhone}</a></b>
-                                                        <span class="d-block text-muted">Tên khách hàng :<b> ${lst.customer.customerName}</b></span>
+                                                    <h6>
+                                                        <b> <a data-toggle="modal" href="#" id="cPhone" class="as"
+                                                               onclick="viewInfoCustomer('${lst.customer.customerPhone}')"> ${lst.customer.customerPhone}</a></b>
+                                                        <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
                                                         <span class="d-block text-muted">Mã công ty :<b><a
                                                                 data-toggle="modal" href="#"
-                                                                onclick="viewInfoCompany('${lst.company.companyCode}')">${lst.company.companyCode}</a></b></span>
+                                                                onclick="viewInfoCompany('${lst.company.companyCode}')"> ${lst.company.companyCode}</a></b></span>
+                                                        <span class="d-block text-muted">Account number : ${lst.customer.customerBankAcc}</span>
+                                                        <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
                                                     </h6>
                                                 </td>
                                                 <td>
-                                                        ${lst.customer.customerPhone}
+                                                    <b> ${lst.customer.customerPhone}</b>
                                                 </td>
                                                 <td>
-                                                        ${lst.customer.customerName}
+                                                    <b> ${lst.customer.customerName}</b>
                                                 </td>
                                                 <td>
-                                                        ${lst.company.companyCode}
+                                                    <b> ${lst.customer.companyCode}</b>
+                                                </td>
+                                                <td>
+                                                    <b> ${lst.customer.customerBankAcc}</b>
+                                                </td>
+                                                <td>
+                                                    <b> ${lst.customer.customerBankName}</b>
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0 font-weight-bold">chờ thẩm định</h6>
@@ -236,7 +255,7 @@
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0 font-weight-bold"><fmt:formatNumber
-                                                            value="${lst.saRequest.borrow}"
+                                                            value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.02) }"
                                                             type="number"/> đ
                                                         <span class="d-block text-muted font-weight-normal">Phí : <fmt:formatNumber
                                                                 value="${lst.saRequest.feeBorrow }"
@@ -285,11 +304,37 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script src="js/functhamdinh.js" type="text/javascript"></script>
+<script src="js/funcTiepnhanyeucau.js" type="text/javascript"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
+        // function sử dụng framework datatable của Jquery
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            pageLength: 10,// phân 10 kết quả cho mỗi trang
+            columnDefs: [
+                {
+                    visible: false,
+                    targets: [2, 3, 4, 5, 6, 10, 11, 12] // ẩn đi các column đã chọn
+                },
+            ],
+            buttons: [
+                {
+                    title: 'Danh sách thẩm định',
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        format: {
+                            customizeData: function (header, footer, body) {
+                                return body;
+                            }
+                        },
+                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12] // export excel các column đã chọn
+
+                    }
+                },
+            ]
+        })
 
     });
     <%

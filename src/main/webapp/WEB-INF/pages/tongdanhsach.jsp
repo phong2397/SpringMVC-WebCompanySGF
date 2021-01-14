@@ -139,7 +139,7 @@
                                             <th>Mã hệ thống (System Trace)</th>
                                             <th>Status</th>
                                             <th>Mã giao dịch (Transaction ID)</th>
-                                            <th>Ngày thanh toán</th>
+                                            <th>Ngày gạch nợ</th>
                                             <th>Số tiền còn nợ</th>
                                             <th>Số tiền còn nợ</th>
                                         </tr>
@@ -155,7 +155,7 @@
                                                         <b> <a data-toggle="modal" href="#" id="cPhone" class="as"
                                                                onclick="viewInfoCustomer('${lst.customer.customerPhone}')"> ${lst.customer.customerPhone}</a></b>
                                                         <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
-                                                        <span class="d-block text-muted">Company ID :<b><a
+                                                        <span class="d-block text-muted">Mã công ty :<b><a
                                                                 data-toggle="modal" href="#"
                                                                 onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
                                                         <span class="d-block text-muted">Số tài khoản: ${lst.customer.customerBankAcc}</span>
@@ -181,7 +181,7 @@
                                                 <td>${lst.contract.systemTrace}</td>
                                                 <td><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
                                                 <td>${lst.contract.transactionId}</td>
-                                                <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
+                                                <td><fmt:parseDate value=" ${lst.contract.createdDate}"
                                                                    pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob"
                                                                    type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
@@ -222,12 +222,41 @@
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Crypto Tokenizer Admin App -->
-<script src="js/functongdanhsach.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/funcThuhoino.js"></script>
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide()
+        // function sử dụng framework datatable của Jquery
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            lengthChange: false,
+            pageLength: 10,// phân 10 kết quả cho mỗi trang
+            orderClasse: false,
+            stripeClasses: [],
+            columnDefs: [
+                {
+                    visible: false,
+                    targets: [2, 3, 4, 5, 6, 12] // ẩn đi các column đã chọn
+                },
+            ],
+            buttons: [
+                {
+                    title: 'Danh sách gạch nợ ',
+                    extend: 'excel',
+                    exportOptions: {
+                        customize: function (xlsx) {
+                            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                            $('row c[r^="A"]', sheet).attr('s', '50');
+                            $('row c[r^="D"]', sheet).attr('s', '50');
+                        },
+                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12],// export excel các column đã chọn
+
+                    }
+                },
+            ]
+        })
     });
     <%
              List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");

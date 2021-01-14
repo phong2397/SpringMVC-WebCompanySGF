@@ -1,9 +1,8 @@
-//function xảy ra khi nhấn vào accept gọi đến data ajax , thực hiện thành công hiển thị popup alert thông báo success
+//function kyduyet xảy ra khi nhấn vào accept gọi đến data ajax , thực hiện thành công hiển thị popup alert thông báo success
 $("body").on("click", ".btn-accept", function () {
     var dataRequest = $(this).closest("tr").find('td:eq(0)').text().trim();
-    console.log(dataRequest)
-    let data = {datarequest: dataRequest, status: 'wfs', step: '1'};
-    var result = sendOrder(data);
+    let data = {datarequest: dataRequest, status: 'act', step: '2'};
+    var result = sendOrderKyduyet(data);
     if (result === "success") {
         Swal.fire({
             position: 'top-end',
@@ -12,7 +11,6 @@ $("body").on("click", ".btn-accept", function () {
             showConfirmButton: false,
             timer: 3000
         });
-        $("#loading").hide();
         $(this).parents("tr").remove();
     } else {
         Swal.fire({
@@ -25,32 +23,29 @@ $("body").on("click", ".btn-accept", function () {
     }
 });
 
-//function ajax gọi đến value trong ApprovalController thực hiện cập nhật thông tin các đơn đang chờ trong bảng table saRequest
-function sendOrder(data) {
+//function ajax gọi đến value trong SignController thực hiện cập nhật thông tin các đơn đang chờ trong bảng table saRequest
+function sendOrderKyduyet(data) {
     try {
         // This async call may fail.
         let text = $.ajax({
             type: "POST",
             timeout: 100000,
-            url: "changes",
+            url: "kyduyet",
             data: data,
             dataType: 'text',
             async: false
         }).responseText;
         return text;
-        console.log(text);
     } catch (error) {
         return "Không thể kết nối tới server";
     }
 }
 
-//function xảy ra khi nhấn vào refuse gọi đến data ajax , thực hiện thành công hiển thị popup alert thông báo lỗi
+//function kyduyet  xảy ra khi nhấn vào refuse gọi đến data ajax , thực hiện thành công hiển thị popup alert thông báo lỗi
 $("body").on("click", ".btn-refuse", function () {
-    $("#loading").show();
     var dataRequest = $(this).closest("tr").find('td:eq(0)').text().trim();
-    console.log(dataRequest);
-    let data = {datarequest: dataRequest, status: 'deni', step: '1'};
-    var result = sendOrder(data);
+    let data = {datarequest: dataRequest, status: 'deni', step: '2'};
+    var result = sendOrderKyduyet(data);
     if (result === "success") {
         Swal.fire({
             position: 'top-end',
@@ -59,7 +54,6 @@ $("body").on("click", ".btn-refuse", function () {
             showConfirmButton: false,
             timer: 3000
         });
-        $("#loading").hide();
         $(this).parents("tr").remove();
     } else {
         Swal.fire({
@@ -86,10 +80,9 @@ $("body").on("click", ".as", function () {
         rowElement.append('<td><h5>' + ("0" + (time.date.day)).slice(-2) + '/' + ("0" + (time.date.month)).slice(-2) + '/' + ("0" + (time.date.year)).slice(-2) + ' ' + ("0" + (time.time.hour)).slice(-2) + ':' + ("0" + (time.time.minute)).slice(-2) + ':' + ("0" + (time.time.second)).slice(-2) + '</h5></td>');
         $("#tbodytable").append(rowElement);
     })
-
 });
 
-//function ajax gọi đến value trong ApprovalController thực hiện truy vấn trả về danh sách contract đúng với số điện thoại đó
+//function ajax gọi đến value trong TotalListController thực hiện truy vấn trả về danh sách contract đúng với số điện thoại đó
 function findHistoryModal(data) {
     let result = "";
     try {
@@ -114,6 +107,24 @@ function findHistoryModal(data) {
     return result;
 }
 
+//function view thông tin công ty khi nhấn vào mã công ty trong bảng
+function viewInfoCompany(params) {
+    result.forEach((company) => {
+        if (company.company.companyCode == params) {
+            let c = company.company;
+            console.log(c.createdDate.date)
+            $("#companyShow").empty();
+            $("#companyShow").append('<h3><p>Mã công ty :' + ' ' + c.companyCode + '</p></h3>');
+            $("#companyShow").append('<p>Tên công ty :' + ' ' + c.companyName + '</p>');
+            $("#companyShow").append('<p>Địa chỉ công ty :' + ' ' + c.companyAddress + '</p>');
+            $("#companyShow").append('<p>Mã số thuế :' + ' ' + c.conpanyTax + '</p>');
+            $("#companyShow").append('<p>Ngày hoạt động :' + ' ' + ("0" + (c.createdDate.date.day)).slice(-2) + '/' + ("0" + (c.createdDate.date.month)).slice(-2) + '/' + c.createdDate.date.year + ' ' + ' ' + ("0" + (c.createdDate.time.hour)).slice(-2) + ':' + ("0" + (c.createdDate.time.minute)).slice(-2) + ':' + ("0" + (c.createdDate.time.second)).slice(-2) + '</p>');
+            $('#modal-center').modal('show');
+        }
+    })
+    $('#modal-center').modal('show');
+}
+
 //function view thông tin chi tiết mã đơn khi nhấn vào mã đơn vay trong bảng
 function viewInfoOrder(params) {
     list.forEach((order) => {
@@ -121,7 +132,6 @@ function viewInfoOrder(params) {
             let sa = order.status
             console.log(sa)
             if (sa == 'done' || sa == 'act') {
-
                 $("#listView").empty();
                 $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
                 $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
@@ -181,148 +191,112 @@ function viewInfoOrder(params) {
     })
 }
 
-//function view thông tin công ty khi nhấn vào mã công ty trong bảng
-function viewInfoCompany(params) {
-    result.forEach((company) => {
-        if (company.company.companyCode == params) {
-            let c = company.company;
-            console.log(c.createdDate.date)
-            $("#companyShow").empty();
-            $("#companyShow").append('<h3><p>Mã công ty :' + ' ' + c.companyCode + '</p></h3>');
-            $("#companyShow").append('<p>Tên công ty :' + ' ' + c.companyName + '</p>');
-            $("#companyShow").append('<p>Địa chỉ công ty :' + ' ' + c.companyAddress + '</p>');
-            $("#companyShow").append('<p>Mã số thuế :' + ' ' + c.conpanyTax + '</p>');
-            $("#companyShow").append('<p>Ngày yêu cầu :' + ' ' + ("0" + (c.createdDate.date.day)).slice(-2) + '/' + ("0" + (c.createdDate.date.month)).slice(-2) + '/' + c.createdDate.date.year + ' ' + ' ' + ("0" + (c.createdDate.time.hour)).slice(-2) + ':' + ("0" + (c.createdDate.time.minute)).slice(-2) + ':' + ("0" + (c.createdDate.time.second)).slice(-2) + '</p>');
-            $('#modal-center').modal('show');
-        }
-    })
-    $('#modal-center').modal('show');
-}
-
 //function view thông tin nhân viên theo số điện thoại
-function viewInfo(phone) {
-    let list = result.find(el => el.customer.customerPhone == phone);
-    axios({
-        method: 'GET',
-        url: 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + phone,
-        headers: {
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-            'Access-Control-Allow-Origin': 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + phone,
-        },
-        auth: {
-            username: "sgfintech",
-            password: "k6mzMtPJLPMi5crF"
-        }
-    })
-        .then(function (response) {
-            const imgCMND = JSON.parse(response.data.cmnd)
-            $('#imgCMND').empty();
-            Object.keys(imgCMND).forEach((key) => {
-                if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
-                    $('#imgCMND').append('Bổ sung hình ảnh');
-                } else {
-                    $('#imgCMND').append('<img style="width: 100%" src="' + imgCMND[key] + '"/>');
-                }
+function viewInfoCustomer(params) {
+    let username = "sgfintech";
+    let password = "k6mzMtPJLPMi5crF";
+    result.forEach((customer) => {
+        if (customer.customer.customerPhone == params) {
+            $.ajax({
+                url: 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
+                headers: {
+                    "Access-Control-Allow-Origin": 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
+                    "Access-Control-Allow-Credentials": true,
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+                },
+                crossDomain: true,
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data)
+                    const imgCMND = JSON.parse(data.cmnd);
+                    $('#imgCMND').empty();
+                    Object.keys(imgCMND).forEach((key) => {
+                        if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
+                            $('#imgCMND').append('Bổ sung hình ảnh');
+                        } else {
+                            $('#imgCMND').append('<img style="width: 100%" src="' + imgCMND[key] + '"/>');
+                        }
+                    });
+                    const payslipObj = JSON.parse(data.payslip);
+                    $('#imgPayslip').empty()
+                    Object.keys(payslipObj).forEach((key) => {
+                        if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
+                            $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
+                        } else {
+                            $('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] + '"/>');
+                        }
+                    });
+                    const salaryObj = JSON.parse(data.salary);
+                    $('#imgSalary').empty()
+                    Object.keys(salaryObj).forEach((key) => {
+                        console.log(salaryObj[key]);
+                        if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
+                            $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
+                        } else {
+                            $('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] + '"/>');
+                        }
+                    });
+                    const healthObj = JSON.parse(data.health);
+                    $('#imgHealth').empty()
+                    Object.keys(healthObj).forEach((key) => {
+                        console.log(healthObj[key]);
+                        if (healthObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
+                            $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
+                        } else {
+                            $('#imgHealth').append('<img style="width: 100%"  src="' + healthObj[key] + '"/>');
+                        }
+                    });
+                    const appendixObj = JSON.parse(data.appendix);
+                    $('#imgAppendix').empty()
+                    Object.keys(appendixObj).forEach((key) => {
+                        console.log(appendixObj[key]);
+                        if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
+                            $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
+                        } else {
+                            $('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] + '"/>');
+                        }
+                    });
+                    const socialObj = JSON.parse(data.social);
+                    $('#imgSocial').empty()
+                    Object.keys(socialObj).forEach((key) => {
+                        console.log(socialObj[key]);
+                        if (socialObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
+                            $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
+                        } else {
+                            $('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] + '"/>');
+                        }
+                    });
+                    const contractObj = JSON.parse(data.contract);
+                    $('#imgContract').empty()
+                    Object.keys(contractObj).forEach((key) => {
+                        console.log(contractObj[key]);
+                        if (contractObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
+                            $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
+                        } else {
+                            $('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] + '"/>');
+                        }
+                    });
+                },
             });
-            const payslipObj = JSON.parse(response.data.payslip);
-            $('#imgPayslip').empty()
-            Object.keys(payslipObj).forEach((key) => {
-                console.log(payslipObj[key]);
-                if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
-                    $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
+            let c = customer.customer;
+            const date = c.customerBirthday;
+            Object.keys(c).forEach((key) => {
+                if (key == "customerSalary") {
+                    value = c[key]
+                    $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                    Object.keys(date).forEach((key) => {
+                        $('#' + key).text(date[key]);
+                    })
                 } else {
-                    $('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] + '"/>');
+                    $('#' + key).text(c[key]);
                 }
-            });
-            const salaryObj = JSON.parse(response.data.salary);
-            $('#imgSalary').empty()
-            Object.keys(salaryObj).forEach((key) => {
-                if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
-                    $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
-                } else {
-                    $('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] + '"/>');
-                }
-
-            });
-            const healthObj = JSON.parse(response.data.health);
-            $('#imgHealth').empty()
-            Object.keys(healthObj).forEach((key) => {
-                if (healthObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
-                    $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
-                } else {
-                    $('#imgHealth').append('<img style="width: 100%"  src="' + healthObj[key] + '"/>');
-                }
-            });
-            const appendixObj = JSON.parse(response.data.appendix);
-            $('#imgAppendix').empty()
-            Object.keys(appendixObj).forEach((key) => {
-                if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
-                    $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
-                } else {
-                    $('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] + '"/>');
-                }
-            });
-            const socialObj = JSON.parse(response.data.social);
-            $('#imgSocial').empty()
-            Object.keys(socialObj).forEach((key) => {
-                if (socialObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
-                    $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
-                } else {
-                    $('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] + '"/>');
-                }
-            });
-            const contractObj = JSON.parse(response.data.contract);
-            $('#imgContract').empty()
-            Object.keys(contractObj).forEach((key) => {
-                if (contractObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
-                    $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
-                } else {
-                    $('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] + '"/>');
-                }
-            });
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    let c = list.customer;
-    const date = c.customerBirthday;
-    Object.keys(c).forEach((key) => {
-        if (key == "customerSalary") {
-            value = c[key]
-            $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
-            Object.keys(date).forEach((key) => {
-                $('#' + key).text(date[key]);
             })
-        } else {
-            $('#' + key).text(c[key]);
         }
     })
+    console.log(result);
     $('#modal-right').modal('show');
 }
 
-// function sử dụng framework datatable của Jquery
-$('#example').DataTable({
-    dom: 'Bfrtip',
-    pageLength: 10,// phân 10 kết quả cho mỗi trang
-    columnDefs: [
-        {
-            visible: false,
-            targets: [2, 3, 4, 9, 10] // ẩn đi các column đã chọn
-        },
-    ],
-    buttons: [
-        {
-            title: 'Danh sách thẩm định',
-            extend: 'excelHtml5',
-            exportOptions: {
-                format: {
-                    customizeData: function (header, footer, body) {
-                        return body;
-                    }
-                },
-                columns: [0, 2, 3, 4, 5, 6, 7, 9, 10] // export excel các column đã chọn
-
-            }
-        },
-    ]
-})
