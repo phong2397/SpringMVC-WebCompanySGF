@@ -5,6 +5,8 @@ package com.sgfintech.util;
  */
 public final class Consts {
     public static final String Session_Result = "result";
+    public static final String Check_User = "user";
+    public static final String Check_Pass = "pass";
     public static final String Session_Euser = "euser";
 
 

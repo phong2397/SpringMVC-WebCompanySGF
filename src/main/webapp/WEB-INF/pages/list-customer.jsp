@@ -183,7 +183,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
-
     });
 </script>
 </body>

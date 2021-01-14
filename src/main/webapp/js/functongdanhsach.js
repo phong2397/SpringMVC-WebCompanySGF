@@ -13,6 +13,7 @@ $("body").on("click", ".as", function () {
         rowElement.append('<td><h5>' + ("0" + (time.date.day)).slice(-2) + '/' + ("0" + (time.date.month)).slice(-2) + '/' + ("0" + (time.date.year)).slice(-2) + ' ' + ("0" + (time.time.hour)).slice(-2) + ':' + ("0" + (time.time.minute)).slice(-2) + ':' + ("0" + (time.time.second)).slice(-2) + '</h5></td>');
         $("#tbodytable").append(rowElement);
     })
+
 });
 
 //function ajax gọi đến value trong TotalListController thực hiện truy vấn trả về danh sách contract đúng với số điện thoại đó
@@ -40,64 +41,6 @@ function findHistoryModal(data) {
     return result;
 }
 
-//function xảy ra khi nhấn vào submit payment gọi đến data ajax , thực hiện thành công hiển thị popup alert thông báo
-$("body").on("click", ".btn-success", function () {
-    $("#loading").show();
-    var dataRequest = $("#idContract").text(); // tìm id contract
-    console.log(dataRequest)
-    let data = {datarequest: dataRequest, status: 'done'};
-    var result = submitWithdraw(data);
-    if (result === "success") {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Dữ liệu được cập nhật thành công.',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        $("#loading").hide();
-        $("#tr-" + selectedContractId).remove();
-    } else {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
-            showConfirmButton: false,
-            timer: 3000
-        });
-    }
-});
-
-//function ajax gọi đến value trong  WriteoffController thực hiện cập nhật thông tin chờ gạch nợ trong bảng table contract
-function submitWithdraw(data) {
-    try {
-        // This async call may fail.
-        let text = $.ajax({
-            type: "POST",
-            timeout: 100000,
-            url: "gachno",
-            data: data,
-            dataType: 'text',
-            async: false
-        }).responseText;
-        return text;
-    } catch (error) {
-        return "Không thể kết nối tới server";
-    }
-}
-
-//in hóa đơn theo div id
-function printDiv(divName) {
-    var printContents = document.getElementById(divName).innerHTML;
-    var originalContents = document.body.innerHTML;
-
-    document.body.innerHTML = printContents;
-
-    window.print();
-
-    document.body.innerHTML = originalContents;
-}
-
 //function view thông tin công ty khi nhấn vào mã công ty trong bảng
 function viewInfoCompany(params) {
     result.forEach((company) => {
@@ -116,35 +59,6 @@ function viewInfoCompany(params) {
     $('#modal-center').modal('show');
 }
 
-
-// function view thông tin nhân viên và chi tiết hợp đồng vào hóa đơn
-function viewInfo(idContract, custPhone) {
-    selectedContractId = idContract;
-    console.log(selectedContractId)
-
-    let viewInvoice = result.find(el => el.customer.customerPhone == custPhone);
-    console.log(viewInfo)
-    const cust = viewInvoice.customer;
-
-    Object.keys(cust).forEach((key) => {
-        $('#' + key).text(cust[key]);
-    });
-    viewInvoice = result.find(el => el.contract.idContract == idContract);
-    const contract = viewInvoice.contract;
-    Object.keys(contract).forEach((key) => {
-        if (key == "remainAmountBorrow") {
-            let value = (2 / 100 * contract[key]) + contract[key];
-            $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
-
-        } else if (key == "borrow") {
-            let value1 = contract[key];
-            $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
-        } else {
-            $('#' + key).text(contract[key]);
-        }
-    });
-    $('#main').slideDown("slow");
-}
 
 //function view thông tin chi tiết hợp đồng khi nhấn vào mã hợp đồng trong bảng
 function viewInfoContract(params) {
@@ -186,7 +100,7 @@ function viewInfoContract(params) {
     })
 }
 
-//function view thông tin nhân viên theo số điện thoại
+//function view thông tin khách hàng theo số điện thoạis
 function viewInfoCustomer(params) {
     let username = "sgfintech";
     let password = "k6mzMtPJLPMi5crF";
@@ -284,7 +198,6 @@ function viewInfoCustomer(params) {
                     value = c[key]
                     $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
                     Object.keys(date).forEach((key) => {
-                        console.log(date[key])
                         $('#' + key).text(date[key]);
                     })
                 } else {
@@ -300,24 +213,27 @@ function viewInfoCustomer(params) {
 // function sử dụng framework datatable của Jquery
 $('#example').DataTable({
     dom: 'Bfrtip',
+    lengthChange: false,
     pageLength: 10,// phân 10 kết quả cho mỗi trang
+    orderClasse: false,
+    stripeClasses: [],
     columnDefs: [
         {
             visible: false,
-            targets: [2, 3, 4, 5, 6, 9, 10] // ẩn đi các column đã chọn
+            targets: [2, 3, 4, 5, 6, 12] // ẩn đi các column đã chọn
         },
     ],
     buttons: [
         {
-            title: 'Danh sách nợ ',
-            extend: 'excelHtml5',
+            title: 'Danh sách gạch nợ ',
+            extend: 'excel',
             exportOptions: {
-                format: {
-                    customizeData: function (header, footer, body) {
-                        return body;
-                    }
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    $('row c[r^="A"]', sheet).attr('s', '50');
+                    $('row c[r^="D"]', sheet).attr('s', '50');
                 },
-                columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15] // export excel các column đã chọn
+                columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12],// export excel các column đã chọn
 
             }
         },

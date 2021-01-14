@@ -56,18 +56,18 @@ public class SignController {
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
-        int countAll = mergeDataService.countAll();
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
         int countAct = mergeDataService.countStatus("act");
-        int countDeni = mergeDataService.countStatus("deni");
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs",false);
+        int countDone = mergeDataService.countStatus("done");
+        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
+        List<SaRequest> saRequest = saRequestDAO.findAll();
+        mm.addAttribute("sa", saRequest);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("countAll", countAll);
         mm.addAttribute("countWait", countWait);
         mm.addAttribute("countWFS", countWFS);
         mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countDeni", countDeni);
+        mm.addAttribute("countDone", countDone);
         return "kyduyet";
     }
 

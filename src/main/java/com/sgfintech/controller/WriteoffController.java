@@ -34,9 +34,20 @@ public class WriteoffController {
     @Autowired
     SaRequestDAO saRequestDAO;
 
+    @RequestMapping(value = {"/chothuhoi"}, method = RequestMethod.GET)
+    public String chothuhoi(ModelMap mm) {
+        List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("act", true, "");
+        List<Contract> contract = contractDAO.findAll();
+        mm.addAttribute("con", contract);
+        mm.addAttribute(Consts.Attr_ResultView, listdata);
+        return "chothuhoi";
+    }
+
     @RequestMapping(value = {"/gachno"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm) {
         List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("act", true, "");
+        List<Contract> contract = contractDAO.findAll();
+        mm.addAttribute("con", contract);
         mm.addAttribute(Consts.Attr_ResultView, listdata);
         return "gachno";
     }
@@ -54,12 +65,11 @@ public class WriteoffController {
             sa.setStatus(status);
             ct.setStatus(status);
             ct.setBorrow(0l);
-            ct.setBorrow(0l);
-            ct.setDateRepayment(LocalDateTime.now());
+            ct.setDateRepayment(LocalDateTime.now().plusDays(30));
             ct.setUpdatedDate(LocalDateTime.now());
             contractDAO.update(ct);
             saRequestDAO.update(sa);
-              return "success";
+            return "success";
         } catch (Exception ex) {
             return "error";
         }

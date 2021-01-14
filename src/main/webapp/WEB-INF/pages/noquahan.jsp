@@ -3,6 +3,7 @@
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.sgfintech.entity.Useradmin" %>
 <%@ page import="com.sgfintech.util.Consts" %>
+<%@ page import="com.sgfintech.entity.Contract" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -16,29 +17,29 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-    if (session.getAttribute(Consts.Session_Euser) != null){
-        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    if (session.getAttribute(Consts.Session_Euser) != null) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thuhoi")|| role.equals("truongthuhoi")){
-        }else{
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thuhoi") || role.equals("truongthuhoi")) {
+        } else {
             response.sendRedirect("404");
         }
-    } else{
+    } else {
         response.sendRedirect("login");
 
     }
 %>
-<jsp:include page="general/_head.jsp" />
+<jsp:include page="general/_head.jsp"/>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 
 <!-- Site wrapper -->
 <div class="wrapper">
 
-    <jsp:include page="general/_header.jsp" />
+    <jsp:include page="general/_header.jsp"/>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <jsp:include page="general/_menu.jsp" />
+    <jsp:include page="general/_menu.jsp"/>
 
 
     <!-- Content Wrapper. Contains page content -->
@@ -73,41 +74,83 @@
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered no-margin">
+                                    <table id="example" class="table table-bordered no-margin">
                                         <thead>
                                         <tr>
                                             <th>Mã đơn vay</th>
                                             <th>Thông tin khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Mã công ty</th>
+                                            <th>Số tài khoản</th>
+                                            <th>Tên ngân hàng</th>
                                             <th>Thông tin công ty</th>
-                                            <th >Số tiền còn nợ</th>
+                                            <th>Mã công ty</th>
+                                            <th>Tên công ty</th>
+                                            <th>Số tiền còn nợ</th>
+                                            <th>Số tiền còn nợ</th>
                                             <th>Ngày cần tất toán</th>
-                                            <th class="text-right">Phí phạt</th>
+                                            <th>Phí phạt</th>
+                                            <th>Phí phạt</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
-                                            <tr>
-                                                <td><a href="#"
-                                                       onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
-                                                </td>                                                <td>
-                                                    <h6 class="mb-0">
-                                                        <a  href="#"
-                                                            onclick="viewInfoCustomer('${lst.customer.customerPhone}')"	><b>${lst.customer.customerName}</b></a>
-                                                        <span class="d-block text-muted">Company ID :<b><a data-toggle="modal" href="#" onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
-                                                        <span class="d-block text-muted">Account number: ${lst.customer.customerBankAcc}</span>
-                                                        <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
-                                                        <span class="d-block text-muted">Phone number : ${lst.customer.customerPhone}</span>
-                                                    </h6>
-                                                </td>
-                                                <td>
-                                                <span class="d-block text-muted">Company Number : ${lst.companies.companyCode}</span>
-                                                 <span class="d-block text-muted">Company Name: ${lst.companies.companyName}</span>
-                                                 </td>
-                                                <td><fmt:formatNumber value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow*0.2)}" type = "number"/> đ</td>
-                                                <td><fmt:parseDate value=" ${lst.contract.dateRepayment}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
-                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
-                                                <td class="text-right"><span class="label label-danger">13.54%</span></td>
-                                            </tr>
+                                        <tr>
+                                            <td><a href="#"
+                                                   onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
+                                            </td>
+                                            <td>
+                                                <h6 class="mb-0">
+                                                    <b> <a data-toggle="modal" href="#" id="cPhone" class="as"
+                                                           onclick="viewInfoCustomer('${lst.customer.customerPhone}')"> ${lst.customer.customerPhone}</a></b>
+                                                    <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
+                                                    <span class="d-block text-muted">Company ID :<b><a
+                                                            data-toggle="modal" href="#"
+                                                            onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
+                                                    <span class="d-block text-muted">Số tài khoản: ${lst.customer.customerBankAcc}</span>
+                                                    <span class="d-block text-muted">Chủ tài khoản : ${lst.customer.customerBankName}</span>
+                                                </h6>
+                                            </td>
+                                            <td>
+                                                <b> ${lst.customer.customerPhone}</b>
+                                            </td>
+                                            <td>
+                                                <b> ${lst.customer.customerName}</b>
+                                            </td>
+                                            <td>
+                                                <b> ${lst.customer.companyCode}</b>
+                                            </td>
+                                            <td>
+                                                <b> ${lst.customer.customerBankAcc}</b>
+                                            </td>
+                                            <td>
+                                                <b> ${lst.customer.customerBankName}</b>
+                                            </td>
+                                            <td>
+                                                <span class="d-block text-muted">Mã công ty : ${lst.companies.companyCode}</span>
+                                                <span class="d-block text-muted">Tên công ty: ${lst.companies.companyName}</span>
+                                            </td>
+                                            <td>
+                                                <span class="d-block text-muted"> ${lst.companies.companyCode}</span>
+                                            </td>
+                                            <td>
+                                                <span class="d-block text-muted"> ${lst.companies.companyName}</span>
+                                            </td>
+                                            <td><fmt:formatNumber
+                                                    value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow*0.02)}"
+                                                    type="number"/> đ
+                                            </td>
+                                            <td>${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow*0.02)}
+                                            </td>
+                                            <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
+                                                               pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob"
+                                                               type="date"/>
+                                                <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                value="${patientDob}"/></td>
+                                            <td><span class="label label-danger">13.54 %</span></td>
+                                            <td><span class="label label-danger">13.54</span></td>
+                                        </tr>
                                         </c:forEach>
                                         <tbody>
 
@@ -127,40 +170,11 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <jsp:include page="general/_footer.jsp" />
+    <jsp:include page="general/_footer.jsp"/>
     <!-- Control Sidebar -->
-    <jsp:include page="general/_controlSidebar.jsp" />
+    <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <jsp:include page="general/modal.jsp"/>
-    <!-- Modal show info contract -->
-    <div class="modal modal-right fade" id="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Thông tin chi tiết hợp đồng </h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                    <h3><p>Mã hợp đồng : <span id="idContract"></span>9999</p></h3>
-                    <p>System Trace : <span id="systemTrace"></span></p>
-                    <p>Số điện thoại khách hàng : <span id="customerPhone"></span></p>
-                    <p>Số lần mượn : <span id="timeBorrow"></span></p>
-                    <p>Số tiền mượn : <span id="remainAmountBorrow"></span></p>
-                    <p>Phí mượn : <span id="feeBorrow"></span></p>
-                    <p>Mã giao dịch : <span id="transactionId"></span></p>
-                    <p>Trạng thái : <b style="color: #0b2c89"><span id="status"></span></b></p>
-                    <p>Người ký duyệt :  <span id="acceptedBy"></span></p>
-                    <p>Ngày ký duyệt :  <span id="day1"></span>/<span id="month1"></span>/<span id="year1"></span>&nbsp;&nbsp;<span id="hour"></span>:<span id="minute"></span>:<span id="second"></span></p>
-                </div>
-                <div class="modal-footer modal-footer-uniform">
-                    <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.modal -->
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
@@ -169,9 +183,8 @@
 <script src="js/pages/data-table.js"></script>
 <!-- Vendor JS -->
 <script src="js/vendors.min.js"></script>
-
+<script src="js/funcnoquahan.js" type="text/javascript"></script>
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
-<script src="js/pages/data-table.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
@@ -184,159 +197,13 @@
              List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");
              Gson g = new Gson();
              String json = g.toJson(list);
+             List<Contract> list1 = (List<Contract>) request.getAttribute("con");
+             Gson gs= new Gson();
+             String json1 = gs.toJson(list1);
          %>
     var result = <%=json%>;
-    function viewInfoCompany(params) {
-        result.forEach((company) => {
-            if (company.companies.companyCode == params) {
-                let c = company.companies;
-                Object.keys(c).forEach((key, _) => {
-                    let id = key;
-                    $('#' + id).text(c[key]);
-                })
-            }
-        })
-        console.log(result);
-        // var index =
-        $('#modal-center').modal('show');
-    }
-    function viewInfoContract(params) {
-        result.forEach((contract) => {
-            if (contract.contract.idContract == params) {
-                let c = contract.contract;
-                let time = c.createdDate.date;
-                let second = c.createdDate.time;
-                console.log(second)
-                Object.keys(c).forEach((key) => {
-                    if (key == "borrow" ){
-                        value = c[key]
-                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
-                        Object.keys(time).forEach((key) => {
-                            console.log(time[key])
-                            $('#' + key+'1').text(time[key]);
-                        })
-                        Object.keys(second).forEach((key) => {
-                            console.log(second[key])
-                            $('#' + key).text(second[key]);
-                        })
-                    }
-                    else{
-                        $('#' + key).text(c[key]);
-                    }
-                })
-            }
-        })
-        $('#modal').modal('show');
-    }
-    function viewInfoCustomer(params) {
-        let username = "sgfintech";
-        let password ="k6mzMtPJLPMi5crF";
-        result.forEach((customer) => {
-            if (customer.customer.customerPhone == params) {
-                $.ajax ({
-                    url:  'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
-                    headers: {
-                        "Access-Control-Allow-Origin": 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
-                        "Access-Control-Allow-Credentials" : true,
-                    },
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
-                    },
-                    crossDomain: true,
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function(data){
-                        const imgCMND = JSON.parse(data.cmnd);
-                        $('#imgCMND').empty();
-                        Object.keys(imgCMND).forEach((key)=>{
-                            console.log(imgCMND[key])
-                            if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgCMND').append('Bổ sung hình ảnh');
-                            }else{
-                                $('#imgCMND').append('<img style="width: 100%" src="' + imgCMND[key] +'"/>');
-                            }
-                        });
-                        const payslipObj = JSON.parse(data.payslip);
-                        $('#imgPayslip').empty();
-                        Object.keys(payslipObj).forEach((key)=>{
-                            console.log(payslipObj[key])
-                            if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] +'"/>');
-                            }
-                        });
-                        const salaryObj = JSON.parse(data.salary);
-                        $('#imgSalary').empty();
-                        Object.keys(salaryObj).forEach((key)=>{
-                            console.log(salaryObj[key]);
-                            if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] +'"/>');
-                            }
-                        });
-                        const healthObj = JSON.parse(data.health);
-                        $('#imgHealth').empty();
-                        Object.keys(healthObj).forEach((key)=>{
-                            console.log(healthObj[key]);
-                            if (healthObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgHealth').append('<img style="width: 100%"  src="' + healthObj[key] +'"/>');
-                            }
-                        });
-                        const appendixObj = JSON.parse(data.appendix);
-                        $('#imgAppendix').empty();
-                        Object.keys(appendixObj).forEach((key)=>{
-                            console.log(appendixObj[key]);
-                            if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] +'"/>');
-                            }
-                        });
-                        const socialObj = JSON.parse(data.social);
-                        $('#imgSocial').empty();
-                        Object.keys(socialObj).forEach((key)=>{
-                            console.log(socialObj[key]);
-                            if (socialObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] +'"/>');
-                            }
-                        });
-                        const contractObj = JSON.parse(data.contract);
-                        $('#imgContract').empty();
-                        Object.keys(contractObj).forEach((key)=>{
-                            console.log(contractObj[key]);
-                            if (contractObj[key] == 'http://dev.sgft.info:8080/upload/'+params+'@'){
-                                $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
-                            }else{
-                                $('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] +'"/>');
-                            }
-                        });
-                    },
-                });
-                let c = customer.customer;
-                const date = c.customerBirthday;
-                Object.keys(c).forEach((key) => {
-                    if (key == "customerSalary" ){
-                        value = c[key]
-                        $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
-                        Object.keys(date).forEach((key) => {
-                            $('#' + key).text(date[key]);
-                        })
-                    }
-                    else{
-                        $('#' + key).text(c[key]);
-                    }
-                })
-            }
-        })
-        console.log(result);
-        $('#modal-right').modal('show');
-    }
+    var list = <%=json1%>;
+
 </script>
 </body>
 </html>

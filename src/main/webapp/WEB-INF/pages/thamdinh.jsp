@@ -3,6 +3,7 @@
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.sgfintech.entity.Useradmin" %>
 <%@ page import="com.sgfintech.util.Consts" %>
+<%@ page import="com.sgfintech.entity.SaRequest" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -26,7 +27,6 @@
         }
     } else {
         response.sendRedirect("login");
-
     }
 %>
 <jsp:include page="general/_head.jsp"/>
@@ -64,35 +64,7 @@
 
             <!-- Main content -->
             <section class="content">
-
                 <div class="row">
-
-                    <div class="col-xl-3 col-md-6 col-12 ">
-                        <div class="box box-inverse box-success">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Tổng số yêu cầu</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countAll}</div>
-                                    <span>Tổng số lượt yêu cầu trong ngày</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
                     <!-- /.col -->
                     <div class="col-xl-3 col-md-6 col-12">
                         <div class="box box-inverse box-warning">
@@ -146,6 +118,32 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xl-3 col-md-6 col-12 ">
+                        <div class="box box-inverse box-success">
+                            <div class="box-body">
+                                <div class="flexbox">
+                                    <h5>Đã ký duyệt</h5>
+                                    <div class="dropdown">
+											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
+                                                    class="ion-android-more-vertical rotate-90"></i></span>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
+                                                Details</a>
+                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
+                                                new</a>
+                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
+                                                Refresh</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center my-2">
+                                    <div class="font-size-60">${countAct}</div>
+                                    <span>Yêu cầu đã được giải ngân</span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                     <!-- /.col -->
                     <div class="col-xl-3 col-md-6 col-12 ">
                         <div class="box box-inverse " style="background-color: hotpink">
@@ -167,7 +165,7 @@
                                 </div>
 
                                 <div class="text-center my-2">
-                                    <div class="font-size-60">${countAct}</div>
+                                    <div class="font-size-60">${countDone}</div>
                                     <span>Yêu cầu tất toán thành công</span>
                                 </div>
                             </div>
@@ -189,51 +187,69 @@
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
-                                            <th>Ngày yêu cầu</th>
                                             <th>Thông tin khách hàng</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Mã công ty</th>
                                             <th>Trạng thái</th>
                                             <th>Thời gian còn lại</th>
                                             <th>Thời gian ứng</th>
+                                            <th>Tổng số tiền ứng</th>
                                             <th>Số tiền ứng</th>
-                                            <th >Actions</th>
+                                            <th>Tiền phí</th>
+                                            <th>Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
-                                                <td><a data-toggle="modal" href="#" id="saRequestID"
+                                                <td><a data-toggle="modal" href="#"
                                                        onclick="viewInfoOrder('${lst.saRequest.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
-                                                <td><fmt:parseDate value="${lst.saRequest.createdDate}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob" type="date"/>
-                                                        <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/>
                                                 <td>
-                                                    <h6 class="mb-0">
-                                                        <b> <a data-toggle="modal" href="#"
-                                                               onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerName}</a></b>
-                                                        <span class="d-block text-muted">Company ID :<b><a
+                                                    <h6 class="mb-0"><b>
+                                                        <a data-toggle="modal" href="#" id="cPhone" class="as"
+                                                           onclick="viewInfo('${lst.customer.customerPhone}')">${lst.saRequest.customerPhone}</a></b>
+                                                        <span class="d-block text-muted">Tên khách hàng :<b> ${lst.customer.customerName}</b></span>
+                                                        <span class="d-block text-muted">Mã công ty :<b><a
                                                                 data-toggle="modal" href="#"
-                                                                onclick="viewInfoCompany('${lst.company.companyCode}')"> ${lst.company.companyCode}</a></b></span>
-                                                        <span class="d-block text-muted">Account number : ${lst.customer.customerBankAcc}</span>
-                                                        <span class="d-block text-muted">Owner : ${lst.customer.customerBankName}</span>
-                                                        <span class="d-block text-muted">Phone number : ${lst.customer.customerPhone}</span>
+                                                                onclick="viewInfoCompany('${lst.company.companyCode}')">${lst.company.companyCode}</a></b></span>
                                                     </h6>
                                                 </td>
-                                                <td class="text-center">
-                                                    <h6 class="mb-0 font-weight-bold" style="color: #0b2c89"> chờ thẩm
-                                                        định</h6>
+                                                <td>
+                                                        ${lst.customer.customerPhone}
                                                 </td>
-                                                <td class="text-center">
+                                                <td>
+                                                        ${lst.customer.customerName}
+                                                </td>
+                                                <td>
+                                                        ${lst.company.companyCode}
+                                                </td>
+                                                <td>
+                                                    <h6 class="mb-0 font-weight-bold">chờ thẩm định</h6>
+                                                </td>
+                                                <td>
                                                     <span class="badge badge-pill badge-primary">2 ngày</span>
                                                 </td>
-                                                <td>${lst.saRequest.timeBorrow} month
+                                                <td>
+                                                        ${lst.saRequest.timeBorrow} tháng
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0 font-weight-bold"><fmt:formatNumber
-                                                            value="${lst.saRequest.borrow + (lst.saRequest.borrow * 0.2)}"
+                                                            value="${lst.saRequest.borrow}"
                                                             type="number"/> đ
-                                                        <span class="d-block text-muted font-weight-normal">Phí: 2 % </span>
+                                                        <span class="d-block text-muted font-weight-normal">Phí : <fmt:formatNumber
+                                                                value="${lst.saRequest.feeBorrow }"
+                                                                type="number"/> đ </span>
                                                     </h6>
                                                 </td>
+                                                <td>
+                                                        ${lst.saRequest.borrow}
+                                                </td>
+                                                <td>
+                                                        ${lst.saRequest.feeBorrow }
+                                                </td>
+
                                                 <td>
                                                     <button class="btn btn-rounded btn-info btn-accept">Accept</button>
                                                     <button class="btn btn-rounded btn-dark btn-refuse">Refuse</button>
@@ -256,31 +272,6 @@
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <jsp:include page="general/modal.jsp"/>
-    <!-- Modal show info order -->
-    <div class="modal modal-right fade" id="modal-left" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Thông tin chi tiết đơn hàng</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                    <h3><p>Mã yêu cầu: <span id="id"></span>9999</p></h3>
-                    <p>Số điện thoại : <span id="customerPhone"></span></p>
-                    <p>Số tiền ứng : <span id="borrow"></span></p>
-                    <p>Phí : <span id="interestRate"></span>%</p>
-                    <p>Số lần ứng : <span id="timeBorrow"></span></p>
-                    <p>Trạng thái : <b style="color: #0b2c89"><span id="status"></span></b></p>
-                </div>
-                <div class="modal-footer modal-footer-uniform">
-                    <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.modal -->
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
@@ -299,39 +290,18 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
-        $('#example').DataTable( {
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'copyHtml5',
-                    exportOptions: {
-                        columns: [ 0, ':visible' ]
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [ 0, 1, 2,3,4, 5,6]
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: [ 0, 1, 2,3,4, 5,6 ]
-                    }
-                },
-                'colvis'
-            ]
-        } );
+
     });
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
                   Gson g = new Gson();
                   String json = g.toJson(list);
+                    List<SaRequest> list1 = (List<SaRequest>) request.getAttribute("sa");
+                    Gson gs= new Gson();
+                    String json1 = gs.toJson(list1);
                   %>
     var result = <%=json%>;
-    console.log(result)
-
+    var list = <%=json1%>;
 </script>
 
 </body>

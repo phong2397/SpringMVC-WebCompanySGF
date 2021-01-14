@@ -1,5 +1,7 @@
 package com.sgfintech.controller;
 
+import com.sgfintech.dao.ContractDAO;
+import com.sgfintech.entity.Contract;
 import com.sgfintech.handler.MergeDataWithdraw;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.util.Consts;
@@ -19,9 +21,14 @@ public class OverdueController {
     @Autowired
     MergeDataService mergeDataService;
 
+    @Autowired
+    ContractDAO contractDAO;
+
     @RequestMapping(value = {"/noquahan"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm) {
         List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("act", true, "");
+        List<Contract> contract = contractDAO.findAll();
+        mm.addAttribute("con", contract);
         mm.addAttribute(Consts.Attr_ResultView, listdata);
         return "noquahan";
     }

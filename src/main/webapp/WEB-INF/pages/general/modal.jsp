@@ -16,11 +16,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                <h3><p>Mã công ty : <span id="companyCode"></span></p></h3>
-                <p>Tên công ty : <span id="companyName"></span></p>
-                <p>Địa chỉ công ty : <span id="companyAddress"></span></p>
-                <p>Mã số thuế : <span id="conpanyTax"></span></p>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b" id="companyShow">
+
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
@@ -40,13 +37,15 @@
                 </button>
             </div>
             <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                <p>Họ Tên : <span id="customerName"></span></p>
+                <h3><p>Họ Tên : <span id="customerName"></span></p></h3>
+                <h4><p>Số điện thoại : <span id="customerPhone"></span></p>
+                </h4>
                 <p>Mã nhân viên : <span id="customerCode"></span></p>
                 <p>Email : <span id="customerEmail"></span></p>
                 <p>Mức lương : <span id="customerSalary"></span></p>
                 <p>Giới tính : <span id="customerGender"></span></p>
                 <p>Ngày sinh : <span id="day"></span>/<span id="month"></span>/<span id="year"></span></p>
-                <p>Tên ngân hàng : <span id="customerBank"></span></p>
+                <p>Chủ tài khoản : <span id="customerBank"></span></p>
                 <p>Số tài khoản : <span id="customerBankAcc"></span></p>
                 <p>Tên ngân hàng : <span id="customerBankName"></span></p>
                 <p>Số CMND : <span id="customerId"></span></p>
@@ -73,6 +72,60 @@
                 <p id="imgSocial"></p>
                 <p>Hình ảnh hợp đồng : </p>
                 <p id="imgContract"></p>
+            </div>
+            <div class="modal-header">
+                <h5 class="modal-title">Lịch sử đơn hàng</h5>
+            </div>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                <table class="table table-lg invoice-archive">
+                    <thead>
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <th>Ngày yêu cầu</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbodytable">
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer modal-footer-uniform">
+                <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<!-- Modal show info order -->
+<div class="modal modal-fill fade" id="modal-left" tabindex="100">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông tin chi tiết đơn hàng</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b" id="listView">
+            </div>
+            <div class="modal-footer modal-footer-uniform">
+                <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<!-- Modal show info contract -->
+<div class="modal modal-fill fade" id="modalContract" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông tin chi tiết hợp đồng </h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b" id="contractView">
+
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>

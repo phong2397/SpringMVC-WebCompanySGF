@@ -1,8 +1,10 @@
 package com.sgfintech.controller;
 
+import com.google.gson.Gson;
 import com.sgfintech.dao.SaRequestDAO;
 import com.sgfintech.entity.SaRequest;
 import com.sgfintech.entity.Useradmin;
+import com.sgfintech.handler.CustomerHandler;
 import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.util.Consts;
@@ -34,13 +36,15 @@ public class ApprovalController {
 
     @RequestMapping(value = {"/tuchoi"}, method = RequestMethod.GET)
     public String declinePage(ModelMap mm, HttpServletRequest request) {
-        int countAll = mergeDataService.countAll();
+        int countAct = mergeDataService.countStatus("act");
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
         int countDeni = mergeDataService.countStatus("deni");
         List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("deni");
+        List<SaRequest> saRequest = saRequestDAO.findAll();
+        mm.addAttribute("sa", saRequest);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("countAll", countAll);
+        mm.addAttribute("countAct", countAct);
         mm.addAttribute("countWait", countWait);
         mm.addAttribute("countWFS", countWFS);
         mm.addAttribute("countDeni", countDeni);
@@ -49,19 +53,29 @@ public class ApprovalController {
 
     @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
-        int countAll = mergeDataService.countAll();
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
         int countAct = mergeDataService.countStatus("act");
-        int countDeni = mergeDataService.countStatus("deni");
+        int countDone = mergeDataService.countStatus("done");
         List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("wait");
+        List<SaRequest> sa = saRequestDAO.findAll();
+        mm.addAttribute("sa", sa);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("countAll", countAll);
         mm.addAttribute("countWait", countWait);
         mm.addAttribute("countWFS", countWFS);
         mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countDeni", countDeni);
+        mm.addAttribute("countDone", countDone);
         return "thamdinh";
+    }
+
+    @RequestMapping(value = "/findHistoryModal", method = RequestMethod.POST)
+    public @ResponseBody
+    String findHistoryModal(HttpServletRequest request, HttpServletResponse response) {
+        String customerPhone = request.getParameter("dataRequest");
+        List<MergeDataOrder> result = mergeDataService.getSarequestModal(customerPhone);
+        Gson g = new Gson();
+        String responseStr = g.toJson(result);
+        return responseStr;
     }
 
     @RequestMapping(value = "/changes", method = RequestMethod.POST)
@@ -74,9 +88,9 @@ public class ApprovalController {
             SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
             Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
             sa.setStatus(status.trim());
-                sa.setEmployeeThamdinh(u.getUserLogin());
-                sa.setEmployeeThamdinhDate(LocalDateTime.now());
-                sa.setUpdatedDate(LocalDateTime.now());
+            sa.setEmployeeThamdinh(u.getUserLogin());
+            sa.setEmployeeThamdinhDate(LocalDateTime.now());
+            sa.setUpdatedDate(LocalDateTime.now());
             saRequestDAO.update(sa);
             return "success";
         } catch (Exception ex) {
