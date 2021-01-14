@@ -59,8 +59,8 @@ public class ApprovalController {
         int countDone = mergeDataService.countStatus("done");
         List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("wait");
         List<SaRequest> sa = saRequestDAO.findAll();
-        mm.addAttribute("sa", sa);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+        mm.addAttribute("sa", sa);
         mm.addAttribute("countWait", countWait);
         mm.addAttribute("countWFS", countWFS);
         mm.addAttribute("countAct", countAct);

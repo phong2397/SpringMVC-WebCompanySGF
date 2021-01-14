@@ -316,7 +316,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [2, 3, 4, 5, 6, 10, 11, 12] // ẩn đi các column đã chọn
+                    targets: [2, 3, 4, 5, 6, 11, 12] // ẩn đi các column đã chọn
                 },
             ],
             buttons: [

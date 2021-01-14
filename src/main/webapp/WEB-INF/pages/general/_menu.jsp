@@ -8,8 +8,8 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
-    if (session.getAttribute(Consts.Session_Euser) != null){
-        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    if (session.getAttribute(Consts.Session_Euser) != null) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
 %>
 <aside class="main-sidebar">
@@ -17,7 +17,7 @@
     <section class="sidebar">
         <!-- sidebar menu-->
         <ul class="sidebar-menu" data-widget="tree">
-            <% if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")) {  %>
+            <% if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")) { %>
             <li>
                 <a href="index.html">
                     <img src="images/svg-icon/sidebar-menu/dashboard.svg" class="svg-icon" alt="">
@@ -104,13 +104,18 @@
                 </a>
             </li>
             <li>
+                <a href="taoquyenuser.html">
+                    <img src="images/svg-icon/apps.svg" class="svg-icon" alt="">
+                    <span>Tạo người dùng phân quyền</span>
+                </a>
+            </li>
+            <li>
                 <a href="${pageContext.request.contextPath}/logout">
                     <img src="images/svg-icon/sidebar-menu/logout.svg" class="svg-icon" alt="">
                     <span>Log Out</span>
                 </a>
             </li>
-            <% }
-            else if (role.equals("upload")) { %>
+            <% } else if (role.equals("upload")) { %>
             <li>
                 <a href="index.html">
                     <img src="images/svg-icon/sidebar-menu/dashboard.svg" class="svg-icon" alt="">
@@ -142,7 +147,7 @@
                     <span>Log Out</span>
                 </a>
             </li>
-            <% }  else if (role.equals("thamdinh")) {
+            <% } else if (role.equals("thamdinh")) {
             %>
             <li>
                 <a href="index.html">
@@ -163,7 +168,7 @@
                     <span>Log Out</span>
                 </a>
             </li>
-            <% }  else if (role.equals("kyduyet")) {
+            <% } else if (role.equals("kyduyet")) {
             %>
             <li>
                 <a href="index.html">
@@ -184,7 +189,7 @@
                     <span>Log Out</span>
                 </a>
             </li>
-            <% }  else if (role.equals("thuhoi")) {
+            <% } else if (role.equals("thuhoi")) {
             %>
             <li>
                 <a href="index.html">
@@ -218,7 +223,7 @@
                     <span>Log Out</span>
                 </a>
             </li>
-            <% }  else if (role.equals("truongthuhoi")) {
+            <% } else if (role.equals("truongthuhoi")) {
             %>
             <li>
                 <a href="index.html">
@@ -265,7 +270,7 @@
 <!-- sidebar
 <%
 
-    } else{
+    } else {
         response.sendRedirect("login");
 
     }
