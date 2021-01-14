@@ -96,7 +96,7 @@ public class CustomerController {
         if (userRole.equals("root")) {
             return "errorRoot";
         } else {
-            if (userRole.equals("") && userPass.equals("") && userLogin.equals("")) {
+            if (userRole.equals("") || userPass.equals("") || userLogin.equals("")) {
                 return "error";
             }
             try {
