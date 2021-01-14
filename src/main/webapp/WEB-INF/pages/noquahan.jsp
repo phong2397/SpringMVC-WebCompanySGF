@@ -105,7 +105,7 @@
                                                     <b> <a data-toggle="modal" href="#" id="cPhone" class="as"
                                                            onclick="viewInfoCustomer('${lst.customer.customerPhone}')"> ${lst.customer.customerPhone}</a></b>
                                                     <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
-                                                    <span class="d-block text-muted">Company ID :<b><a
+                                                    <span class="d-block text-muted">Mã công ty :<b><a
                                                             data-toggle="modal" href="#"
                                                             onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
                                                     <span class="d-block text-muted">Số tài khoản: ${lst.customer.customerBankAcc}</span>
@@ -183,7 +183,7 @@
 <script src="js/pages/data-table.js"></script>
 <!-- Vendor JS -->
 <script src="js/vendors.min.js"></script>
-<script src="js/funcnoquahan.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/funcThuhoino.js"></script>
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Crypto Tokenizer Admin App -->
@@ -192,6 +192,32 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
+        // function sử dụng framework datatable của Jquery
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            pageLength: 10,// phân 10 kết quả cho mỗi trang
+            columnDefs: [
+                {
+                    visible: false,
+                    targets: [2, 3, 4, 5, 6, 8, 9, 11] // ẩn đi các column đã chọn
+                },
+            ],
+            buttons: [
+                {
+                    title: 'Danh sách đã xử lý',
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        format: {
+                            customizeData: function (header, footer, body) {
+                                return body;
+                            }
+                        },
+                        columns: [0, 2, 3, 4, 5, 6, 8, 9, 11, 12, 14] // chỉ export excel các cột đã chọn
+
+                    }
+                },
+            ]
+        });
     });
     <%
              List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");

@@ -215,7 +215,7 @@
                                                         <b> <a data-toggle="modal" href="#" id="cPhone" class="as"
                                                                onclick="viewInfoCustomer('${lst.customer.customerPhone}')"> ${lst.customer.customerPhone}</a></b>
                                                         <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
-                                                        <span class="d-block text-muted">Company ID :<b><a
+                                                        <span class="d-block text-muted">Mã công ty :<b><a
                                                                 data-toggle="modal" href="#"
                                                                 onclick="viewInfoCompany('${lst.company.companyCode}')"> ${lst.company.companyCode}</a></b></span>
                                                         <span class="d-block text-muted">Account number : ${lst.customer.customerBankAcc}</span>
@@ -294,11 +294,31 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script src="js/functuchoi.js" type="text/javascript"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/funcTiepnhanyeucau.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
-
+        // function sử dụng framework datatable của Jquery
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            pageLength: 10,// phân 10 kết quả cho mỗi trang
+            columnDefs: [
+                {
+                    visible: false,
+                    targets: [2, 3, 4, 5, 6, 11, 12]// ẩn đi các column đã chọn
+                },
+            ],
+            buttons: [
+                {
+                    title: 'Danh sách từ chối ',
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12]// export excel các column đã chọn
+                    }
+                },
+            ]
+        })
     });
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");

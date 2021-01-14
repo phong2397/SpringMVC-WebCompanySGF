@@ -104,7 +104,7 @@
                                                         <b> <a data-toggle="modal" href="#" id="cPhone" class="as"
                                                                onclick="viewInfoCustomer('${lst.customer.customerPhone}')"> ${lst.customer.customerPhone}</a></b>
                                                         <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
-                                                        <span class="d-block text-muted">Company ID :<b><a
+                                                        <span class="d-block text-muted">Mã công ty :<b><a
                                                                 data-toggle="modal" href="#"
                                                                 onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
                                                         <span class="d-block text-muted">Số tài khoản: ${lst.customer.customerBankAcc}</span>
@@ -190,10 +190,37 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script src="js/funcchothuhoi.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/funcThuhoino.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
+        // function sử dụng framework datatable của Jquery
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            pageLength: 20, //Phân 20 kết quả cho mỗi trang
+            columnDefs: [
+                {
+                    visible: false,
+                    targets: [2, 3, 4, 5, 6, 9, 10] // ẩn đi các column đã chọn
+                },
+            ],
+            buttons: [
+                {
+                    title: 'Danh sách chờ thu hồi ',
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        format: {
+                            customizeData: function (header, footer, body) {
+                                return body;
+                            }
+                        },
+                        columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15] // export excel các column đã chọn
+
+                    }
+                },
+            ]
+        })
+
     });
     <%
          List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");
