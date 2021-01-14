@@ -11,14 +11,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <%
-    if (session.getAttribute(Consts.Session_Euser) != null){
-        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    if (session.getAttribute(Consts.Session_Euser) != null) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
-        }else{
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")) {
+        } else {
             response.sendRedirect("404");
         }
-    } else{
+    } else {
         response.sendRedirect("login");
 
     }
@@ -120,7 +120,7 @@
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-                                    <table  id="example" class="table table-lg invoice-archive">
+                                    <table id="example" class="table table-lg invoice-archive" width="100%">
                                         <thead>
                                         <tr>
                                             <th>Họ Tên</th>
@@ -191,17 +191,17 @@
             success: function (data) {
                 try {
                     $("#resultTable").show();
-                    var obj = JSON.parse(data + "") ;
+                    var obj = JSON.parse(data + "");
                     var body = $("#tbodytable");
                     body.empty();
-                    Object.keys(obj).forEach((key)=>{
+                    Object.keys(obj).forEach((key) => {
                         var e = obj[key];
                         var rowElement = $('<tr></tr>');
                         rowElement.append('<td>' + e.customerName + '</td>');
                         rowElement.append('<td>' + e.customerId + '</td>');
-                        rowElement.append('<td>' + e.customerBirthday.day + "/" + e.customerBirthday.month + "/" + e.customerBirthday.year  + '</td>');
+                        rowElement.append('<td>' + e.customerBirthday.day + "/" + e.customerBirthday.month + "/" + e.customerBirthday.year + '</td>');
                         rowElement.append('<td>' + e.customerPhone + '</td>');
-                        rowElement.append('<td>' + e.customerContractExpired.date.day + "/" + e.customerContractExpired.date.month + "/" + e.customerContractExpired.date.year +  '</td>');
+                        rowElement.append('<td>' + e.customerContractExpired.date.day + "/" + e.customerContractExpired.date.month + "/" + e.customerContractExpired.date.year + '</td>');
                         rowElement.append('<td>' + e.customerContract + '</td>');
                         rowElement.append('<td>' + e.status + '</td>');
                         rowElement.append('<td>' + e.customerBankAcc + '</td>');
@@ -221,11 +221,11 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'Lỗi trong quá trình thực thi' +'' +data,
+                        text: 'Lỗi trong quá trình thực thi' + '' + data,
                     })
                 }
             },
-            error : function (data) {
+            error: function (data) {
                 $("#loading").hide();
                 alert(data);
                 Swal.fire({

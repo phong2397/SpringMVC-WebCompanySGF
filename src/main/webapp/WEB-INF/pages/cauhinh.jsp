@@ -66,7 +66,7 @@
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered no-margin">
+                                    <table class="table table-striped table-bordered no-margin" width="100%">
                                         <thead>
                                         <tr>
                                             <th></th>

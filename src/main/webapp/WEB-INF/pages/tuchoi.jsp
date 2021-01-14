@@ -186,7 +186,7 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table id="example" class="table table-lg invoice-archive">
+                                    <table id="example" class="table table-lg invoice-archive" width="100%">
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>

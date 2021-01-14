@@ -16,14 +16,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if (session.getAttribute(Consts.Session_Euser) != null){
-        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    if (session.getAttribute(Consts.Session_Euser) != null) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
-        }else{
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")) {
+        } else {
             response.sendRedirect("404");
         }
-    } else{
+    } else {
         response.sendRedirect("login");
 
     }
@@ -31,15 +31,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<jsp:include page="general/_head.jsp" />
+<jsp:include page="general/_head.jsp"/>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <div class="wrapper">
 
-    <jsp:include page="general/_header.jsp" />
+    <jsp:include page="general/_header.jsp"/>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <jsp:include page="general/_menu.jsp" />
+    <jsp:include page="general/_menu.jsp"/>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -73,18 +73,20 @@
                             <!-- /.box-header -->
                             <form class="form">
                                 <div class="box-body">
-                                    <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin công ty </h4>
+                                    <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin công ty
+                                    </h4>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label style="color:black">Tên công ty</label><br>
-                                                <select id="company_name" class="form-control" onchange="onCompanyName(event)">
+                                                <select id="company_name" class="form-control"
+                                                        onchange="onCompanyName(event)">
                                                     <option id="companyName">
                                                         -- Please Choose --
                                                     </option>
                                                     <c:forEach items="${views}" var="lst" varStatus="loop">
                                                         <option id="companyName" value="${lst.companyName}">
-                                                               <span > ${lst.companyName}</span>
+                                                            <span> ${lst.companyName}</span>
                                                         </option>
                                                     </c:forEach>
                                                 </select>
@@ -93,18 +95,19 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label style="color: black">Mã công ty </label>
-                                                <select id="company_code" class="form-control" onchange="onCompanyChanged(event)">
-                                                    <option id="companyCode" >
+                                                <select id="company_code" class="form-control"
+                                                        onchange="onCompanyChanged(event)">
+                                                    <option id="companyCode">
                                                         -- Please Choose --
                                                     </option>
-                                                <c:forEach items="${views}" var="lst" varStatus="loop">
+                                                    <c:forEach items="${views}" var="lst" varStatus="loop">
                                                         <option id="companyCode" value="${lst.companyCode}">
                                                                 ${lst.companyCode}
                                                         </option>
-                                                </c:forEach>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
-                                            </div>
+                                        </div>
 
                                     </div>
                                     <button type="button"
@@ -116,7 +119,7 @@
                         </div>
                         <!-- /.box -->
                     </div>
-                    <div class="col-lg-12 col-12" >
+                    <div class="col-lg-12 col-12">
                         <div class="box">
                             <div class="box-header with-border">
                                 <h4 class="box-title">Danh sách khách hàng </h4>
@@ -124,7 +127,7 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table class="table table-lg invoice-archive">
+                                    <table class="table table-lg invoice-archive" width="100%">
                                         <thead>
                                         <tr>
                                             <th>Mã công ty</th>
@@ -151,9 +154,9 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <jsp:include page="general/_footer.jsp" />
+    <jsp:include page="general/_footer.jsp"/>
     <!-- Control Sidebar -->
-    <jsp:include page="general/_controlSidebar.jsp" />
+    <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
 
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
@@ -182,14 +185,16 @@
         String json = g.toJson(list);
     %>
     var comList = <%=json%>;
-    function onCompanyChanged(e){
+
+    function onCompanyChanged(e) {
         let value = e.target.value;
         console.log(value)
         let com = comList.find(e => e.companyCode == value);
         console.log(com)
         $('#companyName').text(com.companyName);
     }
-    function onCompanyName(e){
+
+    function onCompanyName(e) {
         let value1 = e.target.value;
         console.log(value1)
         let com1 = comList.find(e => e.companyName == value1);
