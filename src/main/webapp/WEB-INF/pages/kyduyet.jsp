@@ -236,10 +236,10 @@
                                                     <b> ${lst.customer.customerBankName}</b>
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold">chờ ký</h6>
+                                                    <h6 class="mb-0 font-weight-bold" style="color: #007bff">chờ ký</h6>
                                                 </td>
                                                 <td>
-                                                    <span class="badge badge-pill badge-primary">2 ngày</span>
+                                                    <span class="badge badge-pill badge-info">2 ngày</span>
                                                 </td>
                                                 <td>
                                                         ${lst.saRequest.timeBorrow} tháng

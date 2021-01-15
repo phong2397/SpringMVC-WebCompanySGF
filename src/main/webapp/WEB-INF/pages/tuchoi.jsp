@@ -27,7 +27,6 @@
         }
     } else {
         response.sendRedirect("login");
-
     }
 %>
 <jsp:include page="general/_head.jsp"/>
@@ -62,10 +61,8 @@
                     </div>
                 </div>
             </div>
-
             <!-- Main content -->
             <section class="content">
-
                 <div class="row">
                     <!-- /.col -->
                     <div class="col-xl-3 col-md-6 col-12">
@@ -173,6 +170,7 @@
                             </div>
                         </div>
                     </div>
+
 
                 </div>
 
@@ -299,26 +297,13 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
-        // function sử dụng framework datatable của Jquery
-        $('#example').DataTable({
-            dom: 'Bfrtip',
-            pageLength: 10,// phân 10 kết quả cho mỗi trang
-            columnDefs: [
-                {
-                    visible: false,
-                    targets: [2, 3, 4, 5, 6, 11, 12]// ẩn đi các column đã chọn
-                },
-            ],
-            buttons: [
-                {
-                    title: 'Danh sách từ chối ',
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12]// export excel các column đã chọn
-                    }
-                },
-            ]
-        })
+        <%--    $.ajax({--%>
+        <%--        type: 'GET',--%>
+        <%--        url: '${pageContext.request.contextPath}/declineCount',--%>
+        <%--        data: {--%>
+        <%--            status: "deni"--%>
+        <%--        },--%>
+        <%--    });--%>
     });
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
@@ -330,6 +315,26 @@
                   %>
     var result = <%=json%>;
     var list = <%=json1%>;
+    // function sử dụng framework datatable của Jquery
+    $('#example').DataTable({
+        dom: 'Bfrtip',
+        pageLength: 10,// phân 10 kết quả cho mỗi trang
+        columnDefs: [
+            {
+                visible: false,
+                targets: [2, 3, 4, 5, 6, 11, 12]// ẩn đi các column đã chọn
+            },
+        ],
+        buttons: [
+            {
+                title: 'Danh sách từ chối ',
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12]// export excel các column đã chọn
+                }
+            },
+        ]
+    })
 
 </script>
 

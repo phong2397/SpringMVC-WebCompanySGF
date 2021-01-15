@@ -189,26 +189,17 @@
                                             <th>Mã yêu cầu</th>
                                             <th>Thông tin khách hàng</th>
                                             <th>Số điện thoại</th>
-
                                             <th>Tên khách hàng</th>
-
                                             <th>Mã công ty</th>
-
                                             <th>Số tài khoản</th>
-
                                             <th>Tên ngân hàng</th>
-
                                             <th>Trạng thái</th>
-
                                             <th>Thời gian còn lại</th>
-
                                             <th>Thời gian ứng</th>
-
                                             <th>Tổng số tiền ứng</th>
                                             <th>Số tiền ứng</th>
                                             <th>Tiền phí</th>
                                             <th>Actions</th>
-
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -245,7 +236,8 @@
                                                     <b> ${lst.customer.customerBankName}</b>
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold">chờ thẩm định</h6>
+                                                    <h6 class="mb-0 font-weight-bold" style="color: #ffc107">chờ
+                                                        thẩm định</h6>
                                                 </td>
                                                 <td>
                                                     <span class="badge badge-pill badge-primary">2 ngày</span>

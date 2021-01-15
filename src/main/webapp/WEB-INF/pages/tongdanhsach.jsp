@@ -179,7 +179,8 @@
                                                 </td>
                                                 </td>
                                                 <td>${lst.contract.systemTrace}</td>
-                                                <td><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
+                                                <td><h6 class="mb-0" style="color:#28a745"><b> Gạch nợ </b></h6>
+                                                </td>
                                                 <td>${lst.contract.transactionId}</td>
                                                 <td><fmt:parseDate value=" ${lst.contract.createdDate}"
                                                                    pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob"
