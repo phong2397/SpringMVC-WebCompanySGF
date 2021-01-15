@@ -51,6 +51,15 @@ public class ApprovalController {
         return "tuchoi";
     }
 
+
+    @RequestMapping(value = {"/countdecline"}, method = RequestMethod.GET)
+    public String countdecline(ModelMap mm, HttpServletRequest request) {
+        String status = request.getParameter("status");
+        int countStatus = mergeDataService.countStatus(status);
+        mm.addAttribute("countStatus", countStatus);
+        return "tuchoi";
+    }
+
     @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
         int countWait = mergeDataService.countStatus("wait");

@@ -44,7 +44,12 @@
                 </a>
             </li>
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Tiếp nhận yêu cầu</li>
-
+            <li>
+                <a href="tuchoi.html">
+                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
+                    <span>Từ chối</span>
+                </a>
+            </li>
             <li>
                 <a href="thamdinh.html">
                     <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
@@ -65,12 +70,6 @@
                 </a>
             </li>
             <li>
-                <a href="gachno.html">
-                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
-                    <span>Gạch nợ</span>
-                </a>
-            </li>
-            <li>
                 <a href="daxuly.html">
                     <img src="images/svg-icon/sidebar-menu/ico.svg" class="svg-icon" alt="">
                     <span>Đã xử lý</span>
@@ -83,7 +82,7 @@
                 </a>
             </li>
 
-            <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Kế toán kiểm toán</li>
+            <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Phòng kế toán</li>
             <li>
                 <a href="tongdanhsach.html">
                     <img src="images/svg-icon/sidebar-menu/tickers.svg" class="svg-icon" alt="">
@@ -91,9 +90,9 @@
                 </a>
             </li>
             <li>
-                <a href="tuchoi.html">
-                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
-                    <span>Từ chối</span>
+                <a href="gachno.html">
+                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
+                    <span>Gạch nợ</span>
                 </a>
             </li>
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Cấu hình sản phẩm</li>
@@ -163,6 +162,12 @@
                 </a>
             </li>
             <li>
+                <a href="tuchoi.html">
+                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
+                    <span>Từ chối</span>
+                </a>
+            </li>
+            <li>
                 <a href="${pageContext.request.contextPath}/logout">
                     <img src="images/svg-icon/sidebar-menu/logout.svg" class="svg-icon" alt="">
                     <span>Log Out</span>
@@ -174,6 +179,12 @@
                 <a href="index.html">
                     <img src="images/svg-icon/sidebar-menu/dashboard.svg" class="svg-icon" alt="">
                     <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="tuchoi.html">
+                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
+                    <span>Từ chối</span>
                 </a>
             </li>
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Tiếp nhận yêu cầu</li>
@@ -236,12 +247,6 @@
                 <a href="chothuhoi.html">
                     <img src="images/svg-icon/sidebar-menu/reports.svg" class="svg-icon" alt="">
                     <span>Chờ thu hồi</span>
-                </a>
-            </li>
-            <li>
-                <a href="gachno.html">
-                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
-                    <span>Gạch nợ</span>
                 </a>
             </li>
             <li>

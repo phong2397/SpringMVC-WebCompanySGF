@@ -108,6 +108,7 @@
                                                 </option>
                                             </select>
                                         </div>
+
                                         <button type="submit" class="btn btn-default">Đăng ký</button>
                                     </form>
                                 </div>

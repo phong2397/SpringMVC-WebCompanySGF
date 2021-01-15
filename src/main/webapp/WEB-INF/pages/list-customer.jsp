@@ -4,7 +4,8 @@
 <%@ page import="com.sgfintech.entity.Useradmin" %>
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>\
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+\
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%--
@@ -16,14 +17,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    if (session.getAttribute(Consts.Session_Euser) != null){
-        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    if (session.getAttribute(Consts.Session_Euser) != null) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")){
-        }else{
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload")) {
+        } else {
             response.sendRedirect("404");
         }
-    } else{
+    } else {
         response.sendRedirect("login");
 
     }
@@ -31,15 +32,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<jsp:include page="general/_head.jsp" />
+<jsp:include page="general/_head.jsp"/>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <div class="wrapper">
 
-    <jsp:include page="general/_header.jsp" />
+    <jsp:include page="general/_header.jsp"/>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <jsp:include page="general/_menu.jsp" />
+    <jsp:include page="general/_menu.jsp"/>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -71,7 +72,7 @@
                     <div class="col-lg-12 col-12">
                         <div class="box">
                             <!-- /.box-header -->
-                            <form class="form-control" >
+                            <form class="form-control">
                                 <div class="box-body">
                                     <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin khách hàng
                                     </h4>
@@ -79,26 +80,29 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Số điện thoại</label>
-                                                <input  type="text" class="form-control" name="customerPhone" id="customerPhone"
+                                                <input type="text" class="form-control" name="customerPhone"
+                                                       id="customerPhone"
                                                        placeholder="Tên công ty">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Số CMND</label>
-                                                <input type="text" class="form-control" name="customerId" id="customerId"
+                                                <input type="text" class="form-control" name="customerId"
+                                                       id="customerId"
                                                        placeholder="Số CMND">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Họ và tên</label>
-                                                <input type="text" class="form-control" name="customerName" id="customerName"
+                                                <input type="text" class="form-control" name="customerName"
+                                                       id="customerName"
                                                        placeholder="Họ và tên">
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-rounded btn-primary btn-outline" >
+                                    <button type="button" class="btn btn-rounded btn-primary btn-outline">
                                         <i class="ti-save-alt"></i> Tìm kiếm
                                     </button>
                                 </div>
@@ -113,7 +117,7 @@
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-                                    <table id="example" class="table table-lg invoice-archive">
+                                    <table id="example" class="table table-lg invoice-archive" width="100%">
                                         <thead>
                                         <tr>
                                             <th>Mã công ty</th>
@@ -140,9 +144,9 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <jsp:include page="general/_footer.jsp" />
+    <jsp:include page="general/_footer.jsp"/>
     <!-- Control Sidebar -->
-    <jsp:include page="general/_controlSidebar.jsp" />
+    <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <div class="modal modal-right fade" id="modal-right" tabindex="-1">
         <div class="modal-dialog">
@@ -155,7 +159,7 @@
                 </div>
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
                     <p>Họ Tên : <img src="" id="customerImageFront" alt=""></p>
-                    <p>Email :  <img src="" id="customerImageBack" alt=""></p>
+                    <p>Email : <img src="" id="customerImageBack" alt=""></p>
 
                 </div>
                 <div class="modal-footer modal-footer-uniform">

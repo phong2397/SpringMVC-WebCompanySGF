@@ -126,7 +126,7 @@
                             <div class="box-body p-15">
                                 <div class="table-responsive">
                                     <table id="example" class="table table-lg invoice-archive"
-                                           data-page-size="10">
+                                           data-page-size="10" width="100%">
                                         <thead>
                                         <tr>
                                             <th>Mã đơn vay</th>
@@ -179,7 +179,8 @@
                                                 </td>
                                                 </td>
                                                 <td>${lst.contract.systemTrace}</td>
-                                                <td><h6 class="mb-0" style="color:red"><b> Gạch nợ </b></h6></td>
+                                                <td><h6 class="mb-0" style="color:#28a745"><b> Gạch nợ </b></h6>
+                                                </td>
                                                 <td>${lst.contract.transactionId}</td>
                                                 <td><fmt:parseDate value=" ${lst.contract.createdDate}"
                                                                    pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob"

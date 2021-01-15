@@ -76,7 +76,7 @@
                         </div>
                         <div class="box-body">
                             <div class="table-responsive">
-                                <table id="example" class="table table-striped table-bordered no-margin">
+                                <table id="example" class="table table-striped table-bordered no-margin" width="100%">
                                     <thead>
                                     <tr>
                                         <th class="text-center">Mã đơn vay</th>

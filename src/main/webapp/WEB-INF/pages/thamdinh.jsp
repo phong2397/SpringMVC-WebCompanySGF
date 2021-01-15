@@ -47,14 +47,14 @@
             <div class="content-header">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="page-title">Danh sách xét duyệt</h3>
+                        <h3 class="page-title">Danh sách thẩm định</h3>
                         <div class="d-inline-block align-items-center">
                             <nav>
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a>
                                     </li>
                                     <li class="breadcrumb-item" aria-current="page">Tiếp nhận yêu cầu</li>
-                                    <li class="breadcrumb-item active" aria-current="page">Xét duyệt</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Thẩm định</li>
                                 </ol>
                             </nav>
                         </div>
@@ -183,32 +183,23 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table id="example" class="table table-lg invoice-archive">
+                                    <table id="example" class="table table-lg invoice-archive" width="100%">
                                         <thead>
                                         <tr>
                                             <th>Mã yêu cầu</th>
                                             <th>Thông tin khách hàng</th>
                                             <th>Số điện thoại</th>
-
                                             <th>Tên khách hàng</th>
-
                                             <th>Mã công ty</th>
-
                                             <th>Số tài khoản</th>
-
                                             <th>Tên ngân hàng</th>
-
                                             <th>Trạng thái</th>
-
                                             <th>Thời gian còn lại</th>
-
                                             <th>Thời gian ứng</th>
-
                                             <th>Tổng số tiền ứng</th>
                                             <th>Số tiền ứng</th>
                                             <th>Tiền phí</th>
                                             <th>Actions</th>
-
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -245,7 +236,8 @@
                                                     <b> ${lst.customer.customerBankName}</b>
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0 font-weight-bold">chờ thẩm định</h6>
+                                                    <h6 class="mb-0 font-weight-bold" style="color: #ffc107">chờ
+                                                        thẩm định</h6>
                                                 </td>
                                                 <td>
                                                     <span class="badge badge-pill badge-primary">2 ngày</span>
