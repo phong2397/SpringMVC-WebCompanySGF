@@ -20,7 +20,6 @@
         }
     } else {
         response.sendRedirect("login");
-
     }
 %>
 <jsp:include page="general/_head.jsp"/>
@@ -97,11 +96,11 @@
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-rounded btn-warning btn-outline mr-1">
-                                        <i class="ti-trash"></i> Cancel
+                                        <i class="ti-trash"></i> Hủy
                                     </button>
                                     <button type="button" onclick="submitform();"
                                             class="btn btn-rounded btn-primary btn-outline">
-                                        <i class="ti-save-alt"></i> Save
+                                        <i class="ti-save-alt"></i> Lưu
                                     </button>
                                 </div>
 

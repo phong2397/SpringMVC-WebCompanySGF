@@ -90,6 +90,19 @@ Waves
 @import url(icons/iconsmind/style.css);
 @import url(../assets/vendor_components/animate/animate.css);
 
+table.dataTable tr th.select-checkbox.selected::after {
+    content: "✔";
+    margin-top: -11px;
+    margin-left: -4px;
+    text-align: center;
+    text-shadow: rgb(176, 190, 217) 1px 1px, rgb(176, 190, 217) -1px -1px, rgb(176, 190, 217) 1px -1px, rgb(176, 190, 217) -1px 1px;
+}
+
+.error {
+    color: #F00;
+    background-color: #FFF;
+}
+
 html {
     height: 100%;
     font-size: 14px;
@@ -23990,7 +24003,7 @@ time {
 }
 
 .sel-coin-type-outer input[type=radio], .sel-coin-type-outer input[type=checkbox] {
-    display: none;
+    /*display: ;*/
 }
 
 .sel-coin-type-outer label {
@@ -26298,7 +26311,7 @@ textarea.form-control {
     top: 0;
     right: 0;
     bottom: 0;
-    width: 30%;
+    width: 100%;
     max-width: 100%;
     margin: 0;
     -webkit-transform: translate(100%, 0) !important;
@@ -26337,6 +26350,15 @@ textarea.form-control {
 .modal-footer {
     border-top-color: #d5dfea;
     display: inline-block;
+}
+
+.img {
+    border-radius: 4px;
+    padding: 5px;
+    max-width: 100%;
+    max-height: 100%;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 .model_img {

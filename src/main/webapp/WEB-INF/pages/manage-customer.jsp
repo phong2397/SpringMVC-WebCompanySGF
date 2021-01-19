@@ -82,7 +82,7 @@
                                                 <select id="company_name" class="form-control"
                                                         onchange="onCompanyName(event)">
                                                     <option id="companyName">
-                                                        -- Please Choose --
+                                                        -- Vui lòng chọn --
                                                     </option>
                                                     <c:forEach items="${views}" var="lst" varStatus="loop">
                                                         <option id="companyName" value="${lst.companyName}">

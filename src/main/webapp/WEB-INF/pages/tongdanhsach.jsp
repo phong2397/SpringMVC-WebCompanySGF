@@ -67,7 +67,7 @@
                     <div class="col-lg-3 col-6">
                         <a class="box box-link-shadow text-center" href="javascript:void(0)">
                             <div class="box-body">
-                                <div class="font-size-24">+${countDone}</div>
+                                <div class="font-size-24">${countDone}</div>
                                 <span>Tổng số lượng gạch nợ</span>
                             </div>
                             <div class="box-body bg-info">
@@ -159,7 +159,7 @@
                                                                 data-toggle="modal" href="#"
                                                                 onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
                                                         <span class="d-block text-muted">Số tài khoản: ${lst.customer.customerBankAcc}</span>
-                                                        <span class="d-block text-muted">Chủ tài khoản : ${lst.customer.customerBankName}</span>
+                                                        <span class="d-block text-muted">Tên ngân hàng : ${lst.customer.customerBankName}</span>
                                                     </h6>
                                                 </td>
                                                 <td>
@@ -232,10 +232,16 @@
         // function sử dụng framework datatable của Jquery
         $('#example').DataTable({
             dom: 'Bfrtip',
-            lengthChange: false,
+            language: {
+                emptyTable: "Không có dữ liệu",
+                search: "Tìm kiếm:",
+                paginate: {
+                    previous: "Trang trước",
+                    next: "Trang sau",
+                }
+            },
+            order: [[0, "desc"]],
             pageLength: 10,// phân 10 kết quả cho mỗi trang
-            orderClasse: false,
-            stripeClasses: [],
             columnDefs: [
                 {
                     visible: false,

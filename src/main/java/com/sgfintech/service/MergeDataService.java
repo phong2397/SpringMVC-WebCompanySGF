@@ -114,6 +114,40 @@ public class MergeDataService {
         }
     }
 
+    public List<MergeDataOrder> getDataTongTiepNhan() {
+        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com  where sa.company_code = com.company_code and sa.company_code  = cu.company_code and sa.customer_phone = cu.customer_phone";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            Object[] param = new Object[]{};
+            List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
+                    (rs, arg1) -> {
+                        Customer c = new CustomerMapper().mapRow(rs, arg1);
+                        SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new MergeDataOrder(c, s, com);
+                    });
+            return resultList;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public int countAll() {
+        String sql = "select COUNT(sa.status) from sgft_sa_request sa  ";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            int count = jdbcTemplate.queryForObject(sql, new Object[]{}, Integer.class);
+            return count;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
+
     public int countStatus(String status) {
         String sql = "select COUNT(sa.status) from sgft_sa_request sa where sa.status = ? ";
         if (StringUtil.isEmpty(jdbcTemplate)) {
@@ -163,13 +197,34 @@ public class MergeDataService {
         }
     }
 
-    public List<MergeDataOrder> getSarequestModal(String customerPhone) {
-        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where cu.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.customer_phone = ? ORDER BY sa.id DESC";
+    public List<MergeDataOrder> getUserThamdinh(String status, String empThamdinh) {
+        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where cu.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status = ? and sa.employee_thamdinh = ?  ORDER BY sa.id DESC";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         try {
-            Object[] param = new Object[]{customerPhone};
+            Object[] param = new Object[]{status, empThamdinh};
+            List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
+                    (rs, arg1) -> {
+                        Customer c = new CustomerMapper().mapRow(rs, arg1);
+                        SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new MergeDataOrder(c, s, com);
+                    });
+            return resultList;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<MergeDataOrder> getUserDuyet(String status, String empDuyet) {
+        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where cu.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status = ? and sa.employee_duyet = ?  ORDER BY sa.id DESC";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            Object[] param = new Object[]{status, empDuyet};
             List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {
                         Customer c = new CustomerMapper().mapRow(rs, arg1);

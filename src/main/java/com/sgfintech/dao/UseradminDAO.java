@@ -1,6 +1,7 @@
 package com.sgfintech.dao;
 
 import com.sgfintech.entity.Companies;
+import com.sgfintech.entity.SaRequest;
 import com.sgfintech.entity.Useradmin;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,6 +33,11 @@ public class UseradminDAO {
     public void update(final Useradmin useradmin) {
         Session session = this.sessionFactory.getCurrentSession();
         session.update(useradmin);
+    }
+    
+    public Useradmin findById(final long id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        return session.find(Useradmin.class, id);
     }
 
     public void save(Useradmin useradmin) {

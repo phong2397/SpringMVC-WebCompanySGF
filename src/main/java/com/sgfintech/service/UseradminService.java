@@ -37,4 +37,36 @@ public class UseradminService {
         }
         return u;
     }
+
+    public Useradmin checkexistUser(String userLogin) {
+        Useradmin u = new Useradmin();
+        if (jdbcTemplate == null) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        String sql = "select user_login from sgft_useradmin where user_login = ?";
+        Object[] param = new Object[]{userLogin};
+        UseradminMapper mapper = new UseradminMapper();
+        try {
+            u = jdbcTemplate.queryForObject(sql, param, mapper);
+        } catch (Exception ex) {
+            u = null;
+        }
+        return u;
+    }
+
+    public Useradmin checkPass(String userPass) {
+        Useradmin u = new Useradmin();
+        if (jdbcTemplate == null) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        String sql = "select * from sgft_useradmin where pass_word = ?";
+        Object[] param = new Object[]{userPass};
+        UseradminMapper mapper = new UseradminMapper();
+        try {
+            u = jdbcTemplate.queryForObject(sql, param, mapper);
+        } catch (Exception ex) {
+            u = null;
+        }
+        return u;
+    }
 }

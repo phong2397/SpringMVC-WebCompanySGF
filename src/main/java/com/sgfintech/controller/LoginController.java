@@ -41,13 +41,12 @@ public class LoginController {
         if (StringUtil.isEmpty(u)) {
             session.setAttribute(Consts.Check_User, "User không tồn tại trên hệ thống");
             return "redirect:login";
-        }else{
+        } else {
             String hp = StringUtil.hashPw(pass);
             if (!hp.equals(u.getPassWord())) {
                 session.setAttribute(Consts.Check_Pass, "Mật khẩu không chính xác");
                 return "redirect:login";
-            }
-            else {
+            } else {
                 u.setPassWord("");
                 session.setAttribute(Consts.Session_Euser, u);
                 return "redirect:home";
@@ -55,8 +54,9 @@ public class LoginController {
         }
 
     }
+
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpSession session ) {
+    public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/login";
     }

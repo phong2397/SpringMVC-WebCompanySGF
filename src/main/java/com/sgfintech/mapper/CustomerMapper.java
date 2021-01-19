@@ -46,6 +46,9 @@ public class CustomerMapper implements RowMapper<Customer> {
         if (!StringUtil.isEmpty(rs.getDate("customer_id_date"))) {
             c.setCustomerIdDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_id_date")));
         }
+        if (!StringUtil.isEmpty(rs.getDate("customer_contract_expired"))) {
+            c.setCustomerContractExpired(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_contract_expired")));
+        }
         if (!StringUtil.isEmpty(rs.getDate("created_date"))) {
             c.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("created_date")));
         }
@@ -89,6 +92,9 @@ public class CustomerMapper implements RowMapper<Customer> {
         c.setStatus(rs.getString("status"));
         if (!StringUtil.isEmpty(rs.getDate("customer_id_date"))) {
             c.setCustomerIdDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_id_date")));
+        }
+        if (!StringUtil.isEmpty(rs.getDate("customer_contract_expired"))) {
+            c.setCustomerContractExpired(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("customer_contract_expired")));
         }
         if (!StringUtil.isEmpty(rs.getDate("created_date"))) {
             c.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("created_date")));

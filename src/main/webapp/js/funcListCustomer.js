@@ -33,9 +33,19 @@ $("body").on("click", ".btn-outline", function () {
                 'Tên ngân hàng :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerBankName + '</span><br>' +
                 'Chủ tài khoản :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerBank + '</span><br>' +
                 'Số tài khoản :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerBankAcc + '</span></td>');
-            rowElement.append('<td>' +
-                'Loại HĐLĐ :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerContract + '</span><br>' +
-                'Trạng thái HĐLĐ :' + ' ' + '<b style=" font-weight: 300 bold;color: forestgreen">' + e.customer.status + '</b></td>');
+            if (obj[key].customer.status == "wait") {
+                rowElement.append('<td>' +
+                    'Loại HĐLĐ :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerContract + '</span><br>' +
+                    'Trạng thái HĐLĐ :' + ' ' + '<b style=" font-weight: 300 bold;color: forestgreen">' + 'đang chờ' + '</b></td>');
+            } else if (obj[key].customer.status == "expried") {
+                rowElement.append('<td>' +
+                    'Loại HĐLĐ :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerContract + '</span><br>' +
+                    'Trạng thái HĐLĐ :' + ' ' + '<b style=" font-weight: 300 bold;color: forestgreen">' + 'hết thời hạn' + '</b></td>');
+            } else if (obj[key].customer.status == "active") {
+                rowElement.append('<td>' +
+                    'Loại HĐLĐ :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerContract + '</span><br>' +
+                    'Trạng thái HĐLĐ :' + ' ' + '<b style=" font-weight: 300 bold;color: forestgreen">' + 'đang hoạt động' + '</b></td>');
+            }
             body.append(rowElement);
             $("#loading").hide();
         })

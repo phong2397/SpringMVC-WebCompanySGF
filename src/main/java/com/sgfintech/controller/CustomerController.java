@@ -7,7 +7,9 @@ import com.sgfintech.dao.UseradminDAO;
 import com.sgfintech.entity.*;
 import com.sgfintech.handler.CustomerHandler;
 import com.sgfintech.service.MergeDataService;
+import com.sgfintech.service.UseradminService;
 import com.sgfintech.util.Consts;
+import com.sgfintech.util.StringUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,10 @@ public class CustomerController {
 
     @Autowired
     UseradminDAO useradminDAO;
+
+    @Autowired
+    private UseradminService useradminService;
+
 
     @RequestMapping(value = {"/list-customer"}, method = RequestMethod.GET)
     public String listCustomer(Model model) {
@@ -93,6 +99,7 @@ public class CustomerController {
         String userLogin = request.getParameter("userLogin");
         String userPass = request.getParameter("userPass");
         String userRole = request.getParameter("userRole");
+
         if (userRole.equals("root")) {
             return "errorRoot";
         } else {
@@ -100,21 +107,63 @@ public class CustomerController {
                 return "error";
             }
             try {
-                MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-                messageDigest.update(userPass.getBytes(), 0, userPass.length());
-                String hashedPass = new BigInteger(1, messageDigest.digest()).toString(16);
-                Useradmin u = new Useradmin();
-                u.setStatus("0");
-                u.setCount(0l);
-                u.setRole(userRole);
-                u.setUserLogin(userLogin);
-                u.setPassWord(hashedPass);
-                useradminDAO.save(u);
-                return "success";
+                Useradmin u = useradminService.checkUser(userLogin);
+                if (!StringUtil.isEmpty(u)) {
+                    return "errorExist";
+                } else {
+                    MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+                    messageDigest.update(userPass.getBytes(), 0, userPass.length());
+                    String hashedPass = new BigInteger(1, messageDigest.digest()).toString(16);
+                    Useradmin user = new Useradmin();
+                    user.setStatus("0");
+                    user.setCount(0l);
+                    user.setRole(userRole);
+                    user.setUserLogin(userLogin);
+                    user.setPassWord(hashedPass);
+                    useradminDAO.save(user);
+                    return "success";
+                }
+
             } catch (Exception ex) {
                 return "error";
             }
 
         }
     }
+
+    @RequestMapping(value = "/changePassAdmin", method = RequestMethod.POST)
+    public @ResponseBody
+    String changePassAdmin(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String password = request.getParameter("password");
+        String oldpassword = request.getParameter("oldpassword");
+        String data = request.getParameter("id");
+        try {
+            if (password.equals("") || oldpassword.equals("")) {
+                return "error";
+            } else {
+                if (data == "1") {
+                    return "errorRoot";
+                } else {
+                    Useradmin u = useradminService.checkPass(StringUtil.hashPw(oldpassword));
+
+                    if (StringUtil.isEmpty(u)) {
+                        return "errorNoExist";
+                    } else {
+                        Useradmin user = useradminDAO.findById(Long.parseLong(data));
+                        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+                        messageDigest.update(password.getBytes(), 0, password.length());
+                        String hashedPass = new BigInteger(1, messageDigest.digest()).toString(16);
+                        user.setPassWord(hashedPass);
+                        useradminDAO.update(user);
+                        return "success";
+                    }
+                }
+
+            }
+        } catch (Exception ex) {
+            return "error";
+        }
+    }
+
+
 }

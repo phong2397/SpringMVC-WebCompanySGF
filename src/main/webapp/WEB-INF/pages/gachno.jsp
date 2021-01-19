@@ -304,7 +304,16 @@
         // function sử dụng framework datatable của Jquery
         $('#example').DataTable({
             dom: 'Bfrtip',
-            pageLength: 10,// phân 10 kết quả cho mỗi trang
+            pageLength: 10,
+            language: {
+                emptyTable: "Không có dữ liệu",
+                search: "Tìm kiếm:",
+                paginate: {
+                    previous: "Trang trước",
+                    next: "Trang sau",
+                }
+            },
+            order: [[0, "desc"]],// phân 10 kết quả cho mỗi trang
             columnDefs: [
                 {
                     visible: false,
