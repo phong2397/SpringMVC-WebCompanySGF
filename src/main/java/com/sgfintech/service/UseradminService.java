@@ -39,4 +39,21 @@ public class UseradminService {
         return u;
     }
 
+    public String randomUserDuyet() {
+        if (jdbcTemplate == null) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        String sql = "select user_login from sgft_useradmin where role = ? order by rand() limit 1";
+        Object[] param = new Object[]{"kyduyet"};
+        String result = "";
+        try {
+            result = jdbcTemplate.queryForObject(sql, param, String.class);
+            return result;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
+
 }

@@ -8,6 +8,7 @@ import com.sgfintech.entity.Useradmin;
 import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.service.SaRequestService;
+import com.sgfintech.service.UseradminService;
 import com.sgfintech.util.Consts;
 import com.sgfintech.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,6 +168,9 @@ public class ApprovalController {
         }
     }
 
+    @Autowired
+    UseradminService useradminService;
+
     @RequestMapping(value = "/changes", method = RequestMethod.POST)
     public @ResponseBody
     String changeStatusOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -182,6 +186,7 @@ public class ApprovalController {
                 sa.setStatus(status.trim());
                 sa.setDescription(textDecline);
                 sa.setEmployeeThamdinh(employeeThamdinh);
+                sa.setEmployeeDuyet(useradminService.randomUserDuyet());
                 sa.setEmployeeThamdinhDate(LocalDateTime.now());
                 sa.setUpdatedDate(LocalDateTime.now());
                 saRequestDAO.update(sa);
