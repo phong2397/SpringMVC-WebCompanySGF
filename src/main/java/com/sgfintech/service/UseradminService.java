@@ -39,35 +39,4 @@ public class UseradminService {
         return u;
     }
 
-    public Useradmin findByResetToken(String token) {
-        Useradmin u = new Useradmin();
-        if (jdbcTemplate == null) {
-            jdbcTemplate = new JdbcTemplate(dataSource);
-        }
-        String sql = "select * from sgft_useradmin where reset_password_token = ?";
-        Object[] param = new Object[]{token};
-        UseradminMapper mapper = new UseradminMapper();
-        try {
-            u = jdbcTemplate.queryForObject(sql, param, mapper);
-        } catch (Exception ex) {
-            u = null;
-        }
-        return u;
-    }
-
-    public Useradmin checkPass(String userPass) {
-        Useradmin u = new Useradmin();
-        if (jdbcTemplate == null) {
-            jdbcTemplate = new JdbcTemplate(dataSource);
-        }
-        String sql = "select * from sgft_useradmin where pass_word = ?";
-        Object[] param = new Object[]{userPass};
-        UseradminMapper mapper = new UseradminMapper();
-        try {
-            u = jdbcTemplate.queryForObject(sql, param, mapper);
-        } catch (Exception ex) {
-            u = null;
-        }
-        return u;
-    }
 }

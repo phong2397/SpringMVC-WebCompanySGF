@@ -39,7 +39,7 @@ public class LoginController {
         String pass = request.getParameter("pass");
         Useradmin u = useradminService.checkUser(user);
         if (StringUtil.isEmpty(u)) {
-            session.setAttribute(Consts.Check_User, "User không tồn tại trên hệ thống");
+            session.setAttribute(Consts.Check_User, "Tài khoản không tồn tại trên hệ thống");
             return "redirect:login";
         } else {
             String hp = StringUtil.hashPw(pass);

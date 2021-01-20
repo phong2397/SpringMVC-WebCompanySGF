@@ -231,10 +231,10 @@
                                                 </td>
 
                                                 <td>
-                                                    <b> ${lst.saRequest.timeBorrow}</b>
+                                                        ${lst.saRequest.timeBorrow}
                                                 </td>
                                                 <td>
-                                                    <b> ${lst.saRequest.employeeThamdinh}</b>
+                                                        ${lst.saRequest.employeeThamdinh}
                                                 </td>
                                                 <td>
                                                         ${lst.saRequest.borrow}
@@ -267,10 +267,10 @@
                                                 </td>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${empty  lst.saRequest.employeeDuyet}"><b>Chưa có
+                                                        <c:when test="${empty  lst.saRequest.employeeDuyet}">Chưa có
                                                             người duyệt</b></c:when>
                                                         <c:otherwise>
-                                                            <b> ${lst.saRequest.employeeDuyet}</b>
+                                                            ${lst.saRequest.employeeDuyet}
                                                         </c:otherwise>
 
                                                     </c:choose>

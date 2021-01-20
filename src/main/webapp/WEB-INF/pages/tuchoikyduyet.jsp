@@ -243,7 +243,7 @@
                                                 </td>
                                                 <td>
                                                     <fmt:parseDate value=" ${lst.saRequest.createdDate}"
-                                                                   pattern="yyyy-MM-dd'T'HH:mm:ss" var="day"
+                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="day"
                                                                    type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                     value="${day}"/>

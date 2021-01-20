@@ -5,6 +5,7 @@ package com.sgfintech.handler;
  */
 
 import com.sgfintech.entity.Customer;
+import com.sgfintech.util.StringUtil;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -81,8 +82,8 @@ public class ExcelHelper {
             }
             c.setCompanyCode(companyCode);
             c.setCustomerName(row.getCell(0).getStringCellValue());
-             c.setCustomerId(row.getCell(1).getStringCellValue());
-             c.setCustomerBirthday(sdf.parse(row.getCell(2).getStringCellValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            c.setCustomerId(row.getCell(1).getStringCellValue());
+            c.setCustomerBirthday(sdf.parse(row.getCell(2).getStringCellValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
             c.setCustomerPhone(row.getCell(3).getStringCellValue());
             c.setCustomerContractExpired(LocalDateTime.ofInstant(sdf.parse(row.getCell(4).getStringCellValue()).toInstant(),
                     ZoneId.systemDefault()));
@@ -91,11 +92,9 @@ public class ExcelHelper {
             c.setStatus(
                     (n == 0) ? "active" : "expried"
             );
-
             c.setCustomerBankAcc(row.getCell(7).getStringCellValue());
             c.setCustomerBankName(row.getCell(8).getStringCellValue());
             c.setCustomerBank(row.getCell(9).getStringCellValue());
-
 
             /*
 //            c.setCustomer

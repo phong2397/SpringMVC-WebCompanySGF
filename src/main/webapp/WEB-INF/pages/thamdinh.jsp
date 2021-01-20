@@ -21,7 +21,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh") || role.equals("kyduyet")) {
         } else {
             response.sendRedirect("404");
         }
@@ -318,7 +318,7 @@
                 </div>
                 <div class="modal-footer modal-footer-uniform">
                     <button type="button" onclick="chiadon(this)" class="btn btn-rounded btn-warning btn-update"
-                            data-dismiss="modal">Cập nhật
+                            data-dismiss="modal">Xác nhận
                     </button>
                     <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng</button>
                 </div>
