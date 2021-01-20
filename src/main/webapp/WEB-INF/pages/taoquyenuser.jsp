@@ -132,7 +132,8 @@
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-bordered no-margin" width="100%">
+                                    <table id="example" class="table table-striped table-bordered no-margin"
+                                           width="100%">
                                         <thead>
                                         <tr>
                                             <th class="text-center">No.</th>
@@ -165,9 +166,9 @@
                                                                 value="${day}"/>
                                             </td>
                                             <td class="text-left">
-                                                <button class="btn btn-facebook" onclick="viewChangePass('${lst.id}')">
-                                                    Thay đổi mật khẩu
-                                                </button>
+                                                    <%--                                                <button class="btn btn-facebook" onclick="viewChangePass('${lst.id}')">--%>
+                                                    <%--                                                    Thay đổi mật khẩu--%>
+                                                    <%--                                                </button>--%>
                                                 <button class="btn btn-danger"
                                                         onclick="showReset('${lst.id}','${lst.userLogin}')">
                                                     Đặt lại mật khẩu
@@ -176,7 +177,6 @@
                                         </tr>
                                         </c:when>
                                         <c:otherwise>
-
                                         </c:otherwise>
 
                                         </c:choose>
@@ -225,54 +225,68 @@
     var result = <%=json%>;
     $(document).ready(function () {
         $("#loading").hide();
-        $("#pass").validate({
-            rules: {
-                oldpassword: {
-                    minlength: 5,
-                    maxlength: 15
-                },
-                password: {
-                    minlength: 5,
-                    maxlength: 15
-                },
-                repassword: {
-                    equalTo: "#password"
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            ordering: false,
+            order: [[0, "desc"]],
+            language: {
+                emptyTable: "Không có dữ liệu",
+                search: "Tìm kiếm:",
+                paginate: {
+                    previous: "Trang trước",
+                    next: "Trang sau",
                 }
             },
-            messages: {
-                oldpassword: {
-                    minlength: "Hãy nhập ít nhất 4 ký tự",
-                    minlength: "Hãy nhập tối nhất 15 ký tự"
-                },
-                password: {
-                    minlength: "Hãy nhập ít nhất 4 ký tự",
-                    minlength: "Hãy nhập tối nhất 15 ký tự"
-                },
-                repassword: {
-                    equalTo: "Mật khẩu không khớp"
-                }
-            }
+            pageLength: 10,
         });
+    });
+    $("#pass").validate({
+        rules: {
+            oldpassword: {
+                required: true,
+            },
+            password: {
+                required: true,
+                minlength: 10,
+            },
+            repassword: {
+                equalTo: "#password"
+            }
+        },
+        messages: {
+            oldpassword: {
+                required: "Yêu cầu nhập mật khẩu hiện tại",
+            },
+            password: {
+                required: "Yêu cầu nhập mật khẩu mới",
+                minlength: "Hãy nhập ít nhất 8 ký tự",
+            },
+            repassword: {
+                equalTo: "Mật khẩu không khớp"
+            }
+        }
     });
     $("#demoForm").validate({
         rules: {
             login: {
-                minlength: 3,
-                maxlength: 15,
+                minlength: 4,
+                maxlength: 18,
+                email: true
             },
             pass: {
-                minlength: 3,
-                maxlength: 15
+                minlength: 8,
+                maxlength: 18
             },
         },
         messages: {
             login: {
-                minlength: "Hãy nhập ít nhất 3 ký tự",
-                maxlength: "Hãy nhập tối đa 15 ký tự"
+                minlength: "Hãy nhập ít nhất 4 ký tự",
+                maxlength: "Hãy nhập tối đa 18 ký tự",
+                email: "Xin vui lòng nhập đúng định dạng email"
             },
             pass: {
-                minlength: "Hãy nhập ít nhất 3 ký tự",
-                minlength: "Hãy nhập tối nhất 15 ký tự"
+                minlength: "Hãy nhập ít nhất 8 ký tự",
+                minlength: "Hãy nhập tối nhất 18 ký tự"
             },
         }
 
@@ -291,53 +305,94 @@
         $('#modalChangePass').modal('show');
     }
 
+    $("body").on("click", ".btn-update-change-password", function () {
+        if ($("#pass").valid()) {
+            var id = $("#id").text();
+            var userPass = $("#password").val();
+            var olduserPass = $("#oldpassword").val();
+            console.log(userPass)
+            let data = {
+                id: id,
+                password: userPass,
+                oldpassword: olduserPass
+            };
+            var result = changePass(data);
+            if (result === "success") {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Dữ liệu được cập nhật thành công.',
+                    showConfirmButton: false,
+                    timer: 100000
+                });
+            } else if (result === "errorNoExist") {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Password nhập sai',
+                    showConfirmButton: false,
+                    timer: 100000
+                });
+            } else {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Không được để trống',
+                    showConfirmButton: false,
+                    timer: 100000
+                });
+            }
+        }
+    });
     $("body").on("click", ".btn-default", function () {
-        var userLogin = $("#user_login").val();
-        console.log(userLogin)
-        var userPass = $("#user_pass").val();
-        console.log(userPass)
-        var userRole = $("#user_role").val();
-        console.log(userRole)
+        if ($("#demoForm").valid()) {
+            var userLogin = $("#user_login").val();
+            console.log(userLogin)
+            var userPass = $("#user_pass").val();
+            console.log(userPass)
+            var userRole = $("#user_role").val();
+            console.log(userRole)
 
-        let data = {
-            userLogin: userLogin,
-            userPass: userPass,
-            userRole: userRole,
+            let data = {
+                userLogin: userLogin,
+                userPass: userPass,
+                userRole: userRole,
 
-        };
-        var result = submitUser(data);
-        if (result === "success") {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Dữ liệu được cập nhật thành công.',
-                showConfirmButton: false,
-                timer: 100000
-            });
-        } else if (result === "errorRoot") {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Không thể tạo role root',
-                showConfirmButton: false,
-                timer: 100000
-            });
-        } else if (result === "errorExist") {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Tên đăng nhập đã tồn tại',
-                showConfirmButton: false,
-                timer: 100000
-            });
-        } else {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Không được để trống',
-                showConfirmButton: false,
-                timer: 100000
-            });
+            };
+            var result = submitUser(data);
+            if (result === "success") {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Dữ liệu được cập nhật thành công.',
+                    showConfirmButton: false,
+                    timer: 100000
+                });
+            } else if (result === "errorRoot") {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Không thể tạo role root',
+                    showConfirmButton: false,
+                    timer: 100000
+                });
+            } else if (result === "errorExist") {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Tên đăng nhập đã tồn tại',
+                    showConfirmButton: false,
+                    timer: 100000
+                });
+            } else {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Không được để trống',
+                    showConfirmButton: false,
+                    timer: 100000
+                });
+            }
         }
     });
 
@@ -351,9 +406,6 @@
                 data: data,
                 dataType: 'text',
                 async: false,
-                beforeSubmit: function () {
-                    return $("#demoForm").valid();
-                },
             }).responseText;
             return text;
             console.log(text);
@@ -386,8 +438,6 @@
         $("#modalresetPass").modal('show');
         $("#userName").text(name);
         $("#idReset").text(id)
-
-
     }
 
     function ajaxresetPass(data) {
@@ -443,51 +493,7 @@
         }
     };
 
-    $("body").on("click", ".btn-update-change-password", function () {
-        var id = $("#id").text();
-        var userPass = $("#password").val();
-        var olduserPass = $("#oldpassword").val();
-        console.log(userPass)
-        let data = {
-            id: id,
-            password: userPass,
-            oldpassword: olduserPass
-        };
-        var result = changePass(data);
-        if (result === "success") {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Dữ liệu được cập nhật thành công.',
-                showConfirmButton: false,
-                timer: 100000
-            });
-        } else if (result === "errorNoExist") {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Password nhập sai',
-                showConfirmButton: false,
-                timer: 100000
-            });
-        } else if (result === "errorRoot") {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Không thể thay đổi mật khẩu Root',
-                showConfirmButton: false,
-                timer: 100000
-            });
-        } else {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'error',
-                title: 'Không được để trống',
-                showConfirmButton: false,
-                timer: 100000
-            });
-        }
-    });
+
 </script>
 </body>
 

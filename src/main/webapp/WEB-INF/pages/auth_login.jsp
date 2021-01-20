@@ -109,19 +109,16 @@
             rules: {
                 user: {
                     required: true,
+                    // email: true
                 },
                 pass: {
                     required: true,
-                    maxlength: 15
                 },
             },
             messages: {
-                user: {
-                    required: "Bắt buộc nhập username",
-                },
+                // user: "Please enter a valid email address",
                 pass: {
                     required: "Bắt buộc nhập password",
-                    minlength: "Hãy nhập tối nhất 15 ký tự"
                 },
             }
         });

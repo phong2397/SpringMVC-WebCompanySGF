@@ -157,28 +157,21 @@ public class CustomerController {
         String oldpassword = request.getParameter("oldpassword");
         String data = request.getParameter("id");
         try {
-            if (password.equals("") || oldpassword.equals("")) {
-                return "error";
+
+            Useradmin u = useradminService.checkPass(StringUtil.hashPw(oldpassword));
+
+            if (StringUtil.isEmpty(u)) {
+                return "errorNoExist";
             } else {
-                if (data == "1") {
-                    return "errorRoot";
-                } else {
-                    Useradmin u = useradminService.checkPass(StringUtil.hashPw(oldpassword));
-
-                    if (StringUtil.isEmpty(u)) {
-                        return "errorNoExist";
-                    } else {
-                        Useradmin user = useradminDAO.findById(Long.parseLong(data));
-                        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-                        messageDigest.update(password.getBytes(), 0, password.length());
-                        String hashedPass = new BigInteger(1, messageDigest.digest()).toString(16);
-                        user.setPassWord(hashedPass);
-                        useradminDAO.update(user);
-                        return "success";
-                    }
-                }
-
+                Useradmin user = useradminDAO.findById(Long.parseLong(data));
+                MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+                messageDigest.update(password.getBytes(), 0, password.length());
+                String hashedPass = new BigInteger(1, messageDigest.digest()).toString(16);
+                user.setPassWord(hashedPass);
+                useradminDAO.update(user);
+                return "success";
             }
+
         } catch (Exception ex) {
             return "error";
         }

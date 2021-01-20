@@ -155,6 +155,7 @@ public class SignController {
         String data = request.getParameter("datarequest"); //id cua order request
         String status = request.getParameter("status");
         String step = request.getParameter("step");
+        String textdecline = request.getParameter("textDecline");
         String employeeDuyet = request.getParameter("employeeDuyet");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
@@ -187,6 +188,7 @@ public class SignController {
                     saRequestDAO.update(sa);
                     return "success";
                 } else if (status.equals("deni")) {
+                    sa.setDescription(textdecline);
                     sa.setEmployeeDuyet(employeeDuyet);
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
                     sa.setUpdatedDate(LocalDateTime.now());
