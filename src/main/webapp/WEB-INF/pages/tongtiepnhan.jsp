@@ -184,6 +184,7 @@
                                     <table id="example" class="table table-lg invoice-archive" width="100%">
                                         <thead>
                                         <tr>
+                                            <th></th>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
                                             <th>Số CMND</th>
@@ -206,6 +207,7 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
+                                                <td></td>
                                                 <td><a data-toggle="modal" href="#"
                                                        onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
@@ -335,7 +337,7 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script src="js/funcKyduyet.js" type="text/javascript"></script>
+<script src="js/funcTongtiepnhan.js" type="text/javascript"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -350,12 +352,21 @@
                     next: "Trang sau",
                 }
             },
-            order: [[0, "desc"]],
+            order: [[1, "desc"]],
             pageLength: 10,
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            },
             columnDefs: [
                 {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0
+                },
+                {
                     visible: false,
-                    targets: [6, 9, 16]
+                    targets: [7, 10, 17]
                 },
             ],
             buttons: [
@@ -368,7 +379,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 10, 11, 12, 13, 15]
+                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17]
                     }
                 },
             ]

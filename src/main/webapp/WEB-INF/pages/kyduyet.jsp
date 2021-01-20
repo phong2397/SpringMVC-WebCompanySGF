@@ -19,7 +19,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("kyduyet")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("kyduyet") || role.equals("thamdinh")) {
         } else {
             response.sendRedirect("404");
         }
@@ -288,11 +288,11 @@
                                                 </td>
                                                 <td>
                                                     <fmt:formatNumber
-                                                            value="${lst.saRequest.borrow  * 0.02}"
+                                                            value="${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }"
                                                             type="number"/> đ
                                                 </td>
                                                 <td>
-                                                        ${lst.saRequest.borrow}
+                                                        ${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -349,7 +349,7 @@
                 </div>
                 <div class="modal-footer modal-footer-uniform">
                     <button type="button" onclick="chiadon(this)" class="btn btn-rounded btn-warning btn-update"
-                            data-dismiss="modal">Cập nhật
+                            data-dismiss="modal">Xác nhận
                     </button>
                     <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng</button>
                 </div>

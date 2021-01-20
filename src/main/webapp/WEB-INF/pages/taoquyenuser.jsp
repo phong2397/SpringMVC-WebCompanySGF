@@ -271,7 +271,7 @@
                 email: true
             },
             pass: {
-                minlength: 8,
+                minlength: 4,
                 maxlength: 30
             },
         },
@@ -282,8 +282,8 @@
                 email: "Xin vui lòng nhập đúng định dạng email"
             },
             pass: {
-                minlength: "Hãy nhập ít nhất 8 ký tự",
-                minlength: "Hãy nhập tối nhất 30 ký tự"
+                minlength: "Hãy nhập ít nhất 4 ký tự",
+                maxlength: "Hãy nhập tối đa 30 ký tự"
             },
         }
 

@@ -158,6 +158,12 @@
                 </a>
             </li>
             <li>
+                <a href="kyduyetlogin.html">
+                    <img src="images/svg-icon/sidebar-menu/charts3.svg" class="svg-icon" alt="">
+                    <span>Duyệt giải ngân</span>
+                </a>
+            </li>
+            <li>
                 <a href="tuchoithamdinh.html">
                     <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
                     <span>Từ chối</span>
@@ -179,6 +185,12 @@
             <% } else if (role.equals("kyduyet")) {
             %>
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Quản lý đơn hàng</li>
+            <li>
+                <a href="thamdinh.html">
+                    <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
+                    <span>Quản lý xét duyệt</span>
+                </a>
+            </li>
             <li>
                 <a href="kyduyetlogin.html">
                     <img src="images/svg-icon/sidebar-menu/charts3.svg" class="svg-icon" alt="">
