@@ -95,7 +95,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${views}" var="lst" varStatus="loop">
+                                        <c:forEach items="${con}" var="lst" varStatus="loop">
                                             <tr>
                                                 <td class="text-left"><a data-toggle="modal" href="#"
                                                                          onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
