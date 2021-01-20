@@ -142,7 +142,7 @@
                                                 <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                 value="${patientDob}"/></td>
                                             <td class="text-left">1</td>
-                                            <td class="text-left">ROOT</td>
+                                            <td class="text-left">Nam</td>
                                             <td class="text-left"><fmt:parseDate value="${year}" pattern="dd-MM-yyyy"
                                                                                  var="patientDob" type="date"/>
                                                 <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>

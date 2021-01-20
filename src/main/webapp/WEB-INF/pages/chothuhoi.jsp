@@ -137,7 +137,7 @@
                                                 </td>
                                                 <td>0</td>
                                                 <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
-                                                                   pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob"
+                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
                                                                    type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                     value="${patientDob}"/>

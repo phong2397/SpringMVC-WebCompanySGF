@@ -280,11 +280,7 @@
                                                     </c:choose>
                                                 </td>
                                                 <td>
-                                                    <fmt:parseDate value=" ${lst.saRequest.createdDate}"
-                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="day"
-                                                                   type="date"/>
-                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                                    value="${day}"/>
+                                                    05/02/2021
                                                 </td>
                                                 <td>
                                                     <fmt:formatNumber

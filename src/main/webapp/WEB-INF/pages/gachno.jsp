@@ -140,13 +140,13 @@
                                         </td>
                                         <td>0</td>
                                         <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
-                                                           pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob"
+                                                           pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
                                                            type="date"/>
                                             <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                             value="${patientDob}"/>
                                         </td>
                                         <td>1</td>
-                                        <td>ROOT</td>
+                                        <td>Nam</td>
                                         <td><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob"
                                                            type="date"/>
                                             <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
@@ -301,7 +301,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
-        // function sử dụng framework datatable của Jquery
         $('#example').DataTable({
             dom: 'Bfrtip',
             pageLength: 10,
@@ -313,11 +312,11 @@
                     next: "Trang sau",
                 }
             },
-            order: [[0, "desc"]],// phân 10 kết quả cho mỗi trang
+            order: [[0, "desc"]],
             columnDefs: [
                 {
                     visible: false,
-                    targets: [2, 3, 4, 5, 6, 9, 10] // ẩn đi các column đã chọn
+                    targets: [2, 3, 4, 5, 6, 9, 10]
                 },
             ],
             buttons: [
@@ -330,7 +329,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15] // export excel các column đã chọn
+                        columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15]
 
                     }
                 },
