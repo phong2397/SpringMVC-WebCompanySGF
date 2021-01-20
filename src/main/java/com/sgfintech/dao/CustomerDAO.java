@@ -73,7 +73,6 @@ public class CustomerDAO {
                 list) {
             statelessSession.insert(c);
         }
-
         statelessSession.close();
     }
 

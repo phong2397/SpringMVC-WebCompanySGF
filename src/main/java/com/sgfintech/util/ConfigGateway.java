@@ -10,6 +10,18 @@ import java.util.Properties;
 public class ConfigGateway {
     private static String GATEWAY_URL = "";
 
+    private static String EMAIL_USER = "";
+
+    private static String EMAIL_PASSWORD = "";
+
+    public static String getEmailUser() {
+        return EMAIL_USER;
+    }
+
+    public static String getEmailPassword() {
+        return EMAIL_PASSWORD;
+    }
+
     public static String getGatewayUrl() {
         return GATEWAY_URL;
     }
@@ -19,6 +31,8 @@ public class ConfigGateway {
         try (InputStream input = ConfigGateway.class.getClassLoader().getResourceAsStream("paymentgateway.properties")) {
             prop.load(input);
             GATEWAY_URL = prop.getProperty("payment.url");
+            EMAIL_USER = prop.getProperty("email.user");
+            EMAIL_PASSWORD = prop.getProperty("email.password");
         } catch (IOException e) {
             e.printStackTrace();
         }
