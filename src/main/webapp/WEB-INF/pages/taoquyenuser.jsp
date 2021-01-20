@@ -166,9 +166,6 @@
                                                                 value="${day}"/>
                                             </td>
                                             <td class="text-left">
-                                                    <%--                                                <button class="btn btn-facebook" onclick="viewChangePass('${lst.id}')">--%>
-                                                    <%--                                                    Thay đổi mật khẩu--%>
-                                                    <%--                                                </button>--%>
                                                 <button class="btn btn-danger"
                                                         onclick="showReset('${lst.id}','${lst.userLogin}')">
                                                     Đặt lại mật khẩu
@@ -270,80 +267,29 @@
         rules: {
             login: {
                 minlength: 4,
-                maxlength: 18,
+                maxlength: 30,
                 email: true
             },
             pass: {
                 minlength: 8,
-                maxlength: 18
+                maxlength: 30
             },
         },
         messages: {
             login: {
                 minlength: "Hãy nhập ít nhất 4 ký tự",
-                maxlength: "Hãy nhập tối đa 18 ký tự",
+                maxlength: "Hãy nhập tối đa 30 ký tự",
                 email: "Xin vui lòng nhập đúng định dạng email"
             },
             pass: {
                 minlength: "Hãy nhập ít nhất 8 ký tự",
-                minlength: "Hãy nhập tối nhất 18 ký tự"
+                minlength: "Hãy nhập tối nhất 30 ký tự"
             },
         }
 
     });
 
-    function viewChangePass(params) {
-        result.forEach((useradmin) => {
-            if (useradmin.id == params) {
-                console.log(useradmin.id)
-                Object.keys(useradmin).forEach((key) => {
-                    $('#' + key).text(useradmin[key]);
-                    console.log(useradmin[key])
-                })
-            }
-        })
-        $('#modalChangePass').modal('show');
-    }
 
-    $("body").on("click", ".btn-update-change-password", function () {
-        if ($("#pass").valid()) {
-            var id = $("#id").text();
-            var userPass = $("#password").val();
-            var olduserPass = $("#oldpassword").val();
-            console.log(userPass)
-            let data = {
-                id: id,
-                password: userPass,
-                oldpassword: olduserPass
-            };
-            var result = changePass(data);
-            if (result === "success") {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Dữ liệu được cập nhật thành công.',
-                    showConfirmButton: false,
-                    timer: 100000
-                });
-            } else if (result === "errorNoExist") {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'error',
-                    title: 'Password nhập sai',
-                    showConfirmButton: false,
-                    timer: 100000
-                });
-            } else {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'error',
-                    title: 'Không được để trống',
-                    showConfirmButton: false,
-                    timer: 100000
-                });
-            }
-        }
-    });
     $("body").on("click", ".btn-default", function () {
         if ($("#demoForm").valid()) {
             var userLogin = $("#user_login").val();
@@ -406,24 +352,6 @@
                 data: data,
                 dataType: 'text',
                 async: false,
-            }).responseText;
-            return text;
-            console.log(text);
-        } catch (error) {
-            return "Không thể kết nối tới server";
-        }
-    }
-
-    function changePass(data) {
-        try {
-            // This async call may fail.
-            let text = $.ajax({
-                type: "POST",
-                timeout: 100000,
-                url: "changePassAdmin",
-                data: data,
-                dataType: 'text',
-                async: false
             }).responseText;
             return text;
             console.log(text);

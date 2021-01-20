@@ -116,9 +116,9 @@
                 },
             },
             messages: {
-                // user: "Please enter a valid email address",
+                user: "Bắt buộc nhập tài khoản đăng nhập",
                 pass: {
-                    required: "Bắt buộc nhập password",
+                    required: "Bắt buộc nhập mật khẩu",
                 },
             }
         });

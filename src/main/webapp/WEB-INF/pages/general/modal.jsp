@@ -165,37 +165,7 @@
     </div>
 </div>
 <!-- /.modal -->
-<!-- Modal change password -->
-<div class="modal modal-fill fade" id="modalChangePass" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 style="color: #0b0b0b">Thay đổi mật khẩu mới </h4>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="font-weight: bold; color: #0b0b0b" id="changePass">
-                <form id="pass">
-                    <span id="id" style="display: none"></span>
-                    <label for="oldpassword">Mật khẩu cũ</label>
-                    <input type="password" id="oldpassword" name="oldpassword" required class="form-control"><br>
-                    <label for="repassword">Mật khẩu mới</label>
-                    <input type="password" id="password" name="password" required class="form-control">
-                    <label for="repassword">Nhập lại mật khẩu mới</label>
-                    <input type="password" id="repassword" name="repassword" required class="form-control">
-                </form>
-            </div>
-            <div class="modal-footer modal-footer-uniform">
-                <button type="button" class="btn btn-rounded btn-warning btn-update-change-password"
-                        data-dismiss="modal">Cập nhật
-                </button>
-                <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /.modal -->
+
 <!-- Modal reset password -->
 <div class="modal modal-fill fade" id="modalresetPass" tabindex="-1">
     <div class="modal-dialog">

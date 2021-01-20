@@ -22,9 +22,9 @@ public class MailService {
         return useradminService.checkUser(email);
     }
 
-    public Useradmin findUserByResetToken(String resetToken) {
-        return useradminService.findByResetToken(resetToken);
-    }
+//    public Useradmin findUserByResetToken(String resetToken) {
+//        return useradminService.findByResetToken(resetToken);
+//    }
 
 
 }

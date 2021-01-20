@@ -150,6 +150,19 @@ public class CustomerController {
         }
     }
 
+    @RequestMapping(value = {"/thaydoimatkhau"}, method = RequestMethod.GET)
+    public String thaydoimatkhau(ModelMap mm, HttpSession session) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (!StringUtil.isEmpty(u)) {
+            Useradmin user = useradminDAO.findById(u.getId());
+            mm.addAttribute(Consts.Attr_ResultView, user);
+            return "thaydoimatkhau";
+        } else {
+            return "redirect:login";
+        }
+    }
+
+
     @RequestMapping(value = "/changePassAdmin", method = RequestMethod.POST)
     public @ResponseBody
     String changePassAdmin(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -157,19 +170,16 @@ public class CustomerController {
         String oldpassword = request.getParameter("oldpassword");
         String data = request.getParameter("id");
         try {
-
-            Useradmin u = useradminService.checkPass(StringUtil.hashPw(oldpassword));
-
-            if (StringUtil.isEmpty(u)) {
-                return "errorNoExist";
-            } else {
-                Useradmin user = useradminDAO.findById(Long.parseLong(data));
+            Useradmin user = useradminDAO.findById(Long.parseLong(data));
+            if (user.getPassWord().equals(StringUtil.hashPw(oldpassword))) {
                 MessageDigest messageDigest = MessageDigest.getInstance("MD5");
                 messageDigest.update(password.getBytes(), 0, password.length());
                 String hashedPass = new BigInteger(1, messageDigest.digest()).toString(16);
                 user.setPassWord(hashedPass);
                 useradminDAO.update(user);
                 return "success";
+            } else {
+                return "errorNoExist";
             }
 
         } catch (Exception ex) {

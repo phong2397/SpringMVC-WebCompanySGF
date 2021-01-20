@@ -164,6 +164,12 @@
                 </a>
             </li>
             <li>
+                <a href="thaydoimatkhau.html">
+                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
+                    <span>Thay đổi mật khẩu</span>
+                </a>
+            </li>
+            <li>
                 <a href="${pageContext.request.contextPath}/logout">
                     <img src="images/svg-icon/sidebar-menu/logout.svg" class="svg-icon" alt="">
                     <span>Đăng xuất</span>
@@ -183,6 +189,12 @@
                 <a href="tuchoikyduyet.html">
                     <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
                     <span>Từ chối</span>
+                </a>
+            </li>
+            <li>
+                <a href="thaydoimatkhau.html">
+                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
+                    <span>Thay đổi mật khẩu</span>
                 </a>
             </li>
             <li>

@@ -76,9 +76,6 @@ public class ExcelHelper {
         Row row;
         for (int rowCount = 1; rowCount <= sheet.getLastRowNum(); rowCount++) {
             Customer c = new Customer();
-            if (StringUtil.isEmpty(c.getCustomerBank()) || StringUtil.isEmpty(c.getCustomerId()) || StringUtil.isEmpty(c.getCustomerPhone())) {
-                break;
-            }
             row = sheet.getRow(rowCount);
             if (row == null) {
                 continue;
@@ -127,7 +124,6 @@ public class ExcelHelper {
 
              */
             lstCust.add(c);
-
         }
         return lstCust;
     }
