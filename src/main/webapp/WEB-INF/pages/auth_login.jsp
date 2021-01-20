@@ -82,7 +82,7 @@
                     <!-- /.col -->
                     <div class="col-6">
                         <div class="fog-pwd">
-                            <a href="javascript:void(0)" class="text-white"><i class="ion ion-locked"></i> Quên mật
+                            <a href="forgotpass.html"><i class="ion ion-locked"></i> Quên mật
                                 khẩu?</a><br>
                         </div>
                     </div>
@@ -109,7 +109,6 @@
             rules: {
                 user: {
                     required: true,
-                    maxlength: 15,
                 },
                 pass: {
                     required: true,
@@ -119,7 +118,6 @@
             messages: {
                 user: {
                     required: "Bắt buộc nhập username",
-                    maxlength: "Hãy nhập tối đa 15 ký tự"
                 },
                 pass: {
                     required: "Bắt buộc nhập password",

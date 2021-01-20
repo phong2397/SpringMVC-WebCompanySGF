@@ -66,15 +66,18 @@ public class SignController {
         int countWFS = mergeDataService.countStatus("wfs");
         int countDone = mergeDataService.countStatus("done");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-        String empDuyet = u.getUserLogin();
-        List<MergeDataOrder> listXetduyetLogin = mergeDataService.getUserDuyet("wfs", empDuyet);
-        mm.addAttribute(Consts.Attr_ResultView, listXetduyetLogin);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countDone", countDone);
-        return "kyduyetlogin";
-
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            String empDuyet = u.getUserLogin();
+            List<MergeDataOrder> listXetduyetLogin = mergeDataService.getUserDuyet("wfs", empDuyet);
+            mm.addAttribute(Consts.Attr_ResultView, listXetduyetLogin);
+            mm.addAttribute("countAct", countAct);
+            mm.addAttribute("countWait", countWait);
+            mm.addAttribute("countWFS", countWFS);
+            mm.addAttribute("countDone", countDone);
+            return "kyduyetlogin";
+        }
     }
 
     @RequestMapping(value = {"/tuchoikyduyet"}, method = RequestMethod.GET)
@@ -84,16 +87,20 @@ public class SignController {
         int countWFS = mergeDataService.countStatus("wfs");
         int countDeni = mergeDataService.countStatus("deni");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-        String empDuyet = u.getUserLogin();
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getUserDuyet("deni", empDuyet);
-        List<SaRequest> saRequest = saRequestDAO.findAll();
-        mm.addAttribute("sa", saRequest);
-        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countDeni", countDeni);
-        return "tuchoikyduyet";
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            String empDuyet = u.getUserLogin();
+            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getUserDuyet("deni", empDuyet);
+            List<SaRequest> saRequest = saRequestDAO.findAll();
+            mm.addAttribute("sa", saRequest);
+            mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+            mm.addAttribute("countAct", countAct);
+            mm.addAttribute("countWait", countWait);
+            mm.addAttribute("countWFS", countWFS);
+            mm.addAttribute("countDeni", countDeni);
+            return "tuchoikyduyet";
+        }
     }
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)

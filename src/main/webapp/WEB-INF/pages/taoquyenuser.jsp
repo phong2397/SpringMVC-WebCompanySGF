@@ -145,10 +145,10 @@
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
+                                        <c:choose>
+                                        <c:when test="${lst.userLogin ne 'root'}">
                                         <tr>
-                                            <td class="text-center"><a data-toggle="modal"
-                                            ><b>${lst.id}</b></a>
-                                            </td>
+                                            <td class="text-center">${lst.id}</td>
                                             <td class="text-center">
                                                     ${lst.userLogin}
                                             </td>
@@ -168,8 +168,19 @@
                                                 <button class="btn btn-facebook" onclick="viewChangePass('${lst.id}')">
                                                     Thay đổi mật khẩu
                                                 </button>
+                                                <button class="btn btn-danger"
+                                                        onclick="showReset('${lst.id}','${lst.userLogin}')">
+                                                    Đặt lại mật khẩu
+                                                </button>
                                             </td>
                                         </tr>
+                                        </c:when>
+                                        <c:otherwise>
+
+                                        </c:otherwise>
+
+                                        </c:choose>
+
                                         </c:forEach>
                                         <tbody>
                                     </table>
@@ -191,6 +202,7 @@
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <jsp:include page="general/modal.jsp"/>
+
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
@@ -213,29 +225,6 @@
     var result = <%=json%>;
     $(document).ready(function () {
         $("#loading").hide();
-
-        $("#demoForm").validate({
-            rules: {
-                login: {
-                    minlength: 3,
-                    maxlength: 15,
-                },
-                pass: {
-                    minlength: 3,
-                    maxlength: 15
-                },
-            },
-            messages: {
-                login: {
-                    minlength: "Hãy nhập ít nhất 3 ký tự",
-                    maxlength: "Hãy nhập tối đa 15 ký tự"
-                },
-                pass: {
-                    minlength: "Hãy nhập ít nhất 3 ký tự",
-                    minlength: "Hãy nhập tối nhất 15 ký tự"
-                },
-            }
-        });
         $("#pass").validate({
             rules: {
                 oldpassword: {
@@ -264,6 +253,28 @@
                 }
             }
         });
+    });
+    $("#demoForm").validate({
+        rules: {
+            login: {
+                minlength: 3,
+                maxlength: 15,
+            },
+            pass: {
+                minlength: 3,
+                maxlength: 15
+            },
+        },
+        messages: {
+            login: {
+                minlength: "Hãy nhập ít nhất 3 ký tự",
+                maxlength: "Hãy nhập tối đa 15 ký tự"
+            },
+            pass: {
+                minlength: "Hãy nhập ít nhất 3 ký tự",
+                minlength: "Hãy nhập tối nhất 15 ký tự"
+            },
+        }
 
     });
 
@@ -339,7 +350,10 @@
                 url: "changeUserAdmin",
                 data: data,
                 dataType: 'text',
-                async: false
+                async: false,
+                beforeSubmit: function () {
+                    return $("#demoForm").valid();
+                },
             }).responseText;
             return text;
             console.log(text);
@@ -366,7 +380,70 @@
         }
     }
 
-    $("body").on("click", ".btn-warning", function () {
+    function showReset(id, name) {
+        console.log(id)
+        console.log(name)
+        $("#modalresetPass").modal('show');
+        $("#userName").text(name);
+        $("#idReset").text(id)
+
+
+    }
+
+    function ajaxresetPass(data) {
+        try {
+            // This async call may fail.
+            let text = $.ajax({
+                type: "POST",
+                timeout: 100000,
+                url: "resetPassAdmin",
+                data: data,
+                dataType: 'text',
+                async: false
+            }).responseText;
+            return text;
+            console.log(text);
+        } catch (error) {
+            return "Không thể kết nối tới server";
+        }
+    }
+
+    function resetPass() {
+        var _id = $('#idReset').text();
+        console.log('id 1: ', _id)
+        let data = {
+            idata: _id,
+        };
+        var result = ajaxresetPass(data);
+        console.log(result)
+        if (result === "success") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Dữ liệu được cập nhật thành công.',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        } else if (result === "errorRoot") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Không có quyền đặt lại mật khẩu',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        } else {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Có lỗi không thể thực thi',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        }
+    };
+
+    $("body").on("click", ".btn-update-change-password", function () {
         var id = $("#id").text();
         var userPass = $("#password").val();
         var olduserPass = $("#oldpassword").val();
@@ -393,7 +470,7 @@
                 showConfirmButton: false,
                 timer: 100000
             });
-        } else if (result === "errorRoor") {
+        } else if (result === "errorRoot") {
             Swal.fire({
                 position: 'top-end',
                 icon: 'error',

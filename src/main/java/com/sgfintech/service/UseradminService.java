@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 /**
  * @author lucnguyen.hcmut@gmail.com
@@ -38,13 +39,13 @@ public class UseradminService {
         return u;
     }
 
-    public Useradmin checkexistUser(String userLogin) {
+    public Useradmin findByResetToken(String token) {
         Useradmin u = new Useradmin();
         if (jdbcTemplate == null) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
-        String sql = "select user_login from sgft_useradmin where user_login = ?";
-        Object[] param = new Object[]{userLogin};
+        String sql = "select * from sgft_useradmin where reset_password_token = ?";
+        Object[] param = new Object[]{token};
         UseradminMapper mapper = new UseradminMapper();
         try {
             u = jdbcTemplate.queryForObject(sql, param, mapper);

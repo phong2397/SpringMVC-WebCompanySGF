@@ -63,16 +63,21 @@ public class ApprovalController {
         int countWFS = mergeDataService.countStatus("wfs");
         int countDeni = mergeDataService.countStatus("deni");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-        String empThamdinh = u.getUserLogin();
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getUserThamdinh("deni", empThamdinh);
-        List<SaRequest> saRequest = saRequestDAO.findAll();
-        mm.addAttribute("sa", saRequest);
-        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countDeni", countDeni);
-        return "tuchoithamdinh";
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            String empThamdinh = u.getUserLogin();
+            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getUserThamdinh("deni", empThamdinh);
+            List<SaRequest> saRequest = saRequestDAO.findAll();
+            mm.addAttribute("sa", saRequest);
+            mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+            mm.addAttribute("countAct", countAct);
+            mm.addAttribute("countWait", countWait);
+            mm.addAttribute("countWFS", countWFS);
+            mm.addAttribute("countDeni", countDeni);
+            return "tuchoithamdinh";
+        }
+
     }
 
     @RequestMapping(value = {"/thamdinhlogin"}, method = RequestMethod.GET)
@@ -82,14 +87,19 @@ public class ApprovalController {
         int countWFS = mergeDataService.countStatus("wfs");
         int countDone = mergeDataService.countStatus("done");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-        String empThamdinh = u.getUserLogin();
-        List<MergeDataOrder> listThamdinhLogin = mergeDataService.getUserThamdinh("wait", empThamdinh);
-        mm.addAttribute(Consts.Attr_ResultView, listThamdinhLogin);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countDone", countDone);
-        return "thamdinhlogin";
+        if (u == null) {
+            return "redirect:login";
+        } else {
+
+            String empThamdinh = u.getUserLogin();
+            List<MergeDataOrder> listThamdinhLogin = mergeDataService.getUserThamdinh("wait", empThamdinh);
+            mm.addAttribute(Consts.Attr_ResultView, listThamdinhLogin);
+            mm.addAttribute("countAct", countAct);
+            mm.addAttribute("countWait", countWait);
+            mm.addAttribute("countWFS", countWFS);
+            mm.addAttribute("countDone", countDone);
+            return "thamdinhlogin";
+        }
     }
 
     @RequestMapping(value = {"/tongtiepnhan"}, method = RequestMethod.GET)

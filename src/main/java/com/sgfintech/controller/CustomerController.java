@@ -131,6 +131,25 @@ public class CustomerController {
         }
     }
 
+    @RequestMapping(value = "/resetPassAdmin", method = RequestMethod.POST)
+    public @ResponseBody
+    String resetPassAdmin(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String data = request.getParameter("idata");
+        String defaultPass = "1234567";
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        try {
+            Useradmin user = useradminDAO.findById(Long.parseLong(data));
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(defaultPass.getBytes(), 0, defaultPass.length());
+            String hashedPass = new BigInteger(1, messageDigest.digest()).toString(16);
+            user.setPassWord(hashedPass);
+            useradminDAO.update(user);
+            return "success";
+        } catch (Exception ex) {
+            return "error";
+        }
+    }
+
     @RequestMapping(value = "/changePassAdmin", method = RequestMethod.POST)
     public @ResponseBody
     String changePassAdmin(HttpServletRequest request, HttpServletResponse response, HttpSession session) {

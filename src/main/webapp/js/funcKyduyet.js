@@ -393,11 +393,10 @@ function viewInfoCustomer(params, id, comId) {
         $("#saInfo").append('<p>Số tiền tạm ứng : <span style="color:grey;">' + sa.borrow.toLocaleString('vi-VN') + 'đ' + '</span></p>');
         $("#saInfo").append('<p>Ngày yêu cầu :' + '<span style="color:grey;"> ' + ("0" + (sa.createdDate.date.day)).slice(-2) + '/' + ("0" + (sa.createdDate.date.month)).slice(-2) + '/' + sa.createdDate.date.year + ' ' + ' ' + ("0" + (sa.createdDate.time.hour)).slice(-2) + ':' + ("0" + (sa.createdDate.time.minute)).slice(-2) + ':' + ("0" + (sa.createdDate.time.second)).slice(-2) + '</span></p>');
         $("#danhgia").empty();
-        $("#danhgia").append('<h4>Đánh giá</h4>');
-        $("#danhgia").append('<div class="row">');
+        $("#labelDanhgia").empty();
+        $("#labelDanhgia").append('Đánh giá');
         $("#danhgia").append('<div class="col-4"><p>Duyệt đồng ý : Thông tin đầy đủ</p><button class="btn btn-rounded btn-info btn-accept">Đồng ý</button> </div>');
         $("#danhgia").append(' <div class="col-4"><p>Duyệt từ chối :</p> <select id = "reason" class = "form-control" > <option selected disabled hidden> --Lí do từ chối-- </option><option value="CMND không hợp lệ">CMND không hợp lệ </option> <option value="Bảo hiểm y tế hết hạn">Bảo hiểm y tế hết hạn </option> <option value="Mã bảo hiểm y tế không có thông tin">Mã bảo hiểm y tế không có thông tin </option> <option value="Mã bảo hiểm y tế không phải  thuộc mã DN(doanh nghiệp)">Mã bảo hiểm y tế không phải thuộc mã DN(doanh nghiệp) </option> <option value="Mức lương trong phiếu lương không trùng khớp với hệ thống"> Mức lương trongphiếu lương không trùng khớp với hệ thống </option> <option value="Sai vị trí công tác/chức vụ">Sai vị trí công tác/chức vụ </option> </select> <button class="btn btn-rounded btn-dark btn-refuse" style="margin-top:4%">Từ chối </button> </div>');
-        $("#danhgia").append('</div>');
     }
     list = result.find(el => el.company.id == comId);
     console.log(list)

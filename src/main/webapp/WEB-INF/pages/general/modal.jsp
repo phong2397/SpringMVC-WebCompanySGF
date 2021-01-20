@@ -41,7 +41,7 @@
 
                 </div>
                 <div class="row">
-                    <div class="col-4 ">
+                    <div class="col-3 ">
                         <h4><b>*</b>&nbsp;&nbsp;Thông tin cá nhân</h4>
                         <p>Họ và tên : <span id="customerName" style="color:grey;"></span></p>
                         <p>Giới tính : <span id="customerGender" style="color:grey;"></span></p>
@@ -51,7 +51,7 @@
                         <p>Địa chỉ thường trú : <span id="customerAddress" style="color:grey;"></span></p>
                         <p>Địa chỉ tạm trú : <span id="customerAddressTemp" style="color:grey;"></span></p>
                     </div>
-                    <div class="col-2 ">
+                    <div class="col-3 ">
                         <h4><b>*</b>&nbsp;&nbsp;Liên lạc</h4>
                         <p>Số điện thoại : <span id="customerPhone" style="color:grey;"></span></p>
                         <p>Email : <span id="customerEmail" style="color:grey;"></span></p>
@@ -96,10 +96,9 @@
                         <p id="imgContract"></p></div>
                 </div>
                 <hr>
-                <div class="container-fluid" id="danhgia">
-
+                <h4 id="labelDanhgia"></h4>
+                <div class="row" id="danhgia">
                 </div>
-                <hr>
                 <div class="modal-footer modal-footer-uniform">
                     <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang</button>
                 </div>
@@ -188,7 +187,33 @@
                 </form>
             </div>
             <div class="modal-footer modal-footer-uniform">
-                <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal">Cập nhật</button>
+                <button type="button" class="btn btn-rounded btn-warning btn-update-change-password"
+                        data-dismiss="modal">Cập nhật
+                </button>
+                <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<!-- Modal reset password -->
+<div class="modal modal-fill fade" id="modalresetPass" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 style="color: #0b0b0b">Đặt lại mật khẩu </h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                <label>Bạn có chắc chắn đặt lại mật khẩu của "<b id="userName"></b>"?</label>
+                <span id="idReset" style="display: none"></span>
+            </div>
+            <div class="modal-footer modal-footer-uniform">
+                <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal" onclick="resetPass()">
+                    Đồng ý
+                </button>
                 <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang</button>
             </div>
         </div>
