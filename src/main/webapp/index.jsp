@@ -63,7 +63,7 @@
     $(document).ready(function () {
         setTimeout(function () {
             $('body').addClass('loaded');
-            window.location.replace("login");
+            window.location.replace("import");
         }, 3000);
     });
 </script>

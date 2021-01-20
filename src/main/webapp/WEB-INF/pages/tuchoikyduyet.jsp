@@ -21,7 +21,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("kyduyet")) {
         } else {
             response.sendRedirect("404");
         }
@@ -379,10 +379,6 @@
     var result = <%=json%>;
     var list = <%=json1%>;
     // function sử dụng framework datatable của Jquery
-
-
 </script>
-
 </body>
-
 </html>

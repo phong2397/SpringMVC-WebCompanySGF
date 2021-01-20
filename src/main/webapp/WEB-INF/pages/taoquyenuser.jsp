@@ -1,5 +1,7 @@
 <%@ page import="com.sgfintech.entity.Useradmin" %>
 <%@ page import="com.sgfintech.util.Consts" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.google.gson.Gson" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -73,6 +75,10 @@
                                             <input type="text" id="user_login" name="login" class="form-control"
                                                    placeholder="Tên đăng nhập"
                                                    name="email">
+                                            <span style="color: red">${check}</span>
+                                            <%
+                                                session.removeAttribute("check");
+                                            %>
                                         </div>
                                         <div class="form-group">
                                             <label>Mật khẩu</label>
@@ -83,7 +89,7 @@
                                             <label>Role:</label>
                                             <select id="user_role" class="form-control">
                                                 <option selected disabled hidden>
-                                                    -- Please Choose --
+                                                    -- Vui lòng chọn --
                                                 </option>
                                                 <option value="upload">
                                                     <span> upload</span>
@@ -118,6 +124,73 @@
                         <!-- /.box -->
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h4 class="box-title">Danh sách người sử dụng</h4>
+                            </div>
+                            <div class="box-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered no-margin" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">No.</th>
+                                            <th class="text-center">Tên đăng nhập</th>
+                                            <th class="text-left">Quyền sử dụng</th>
+                                            <th class="text-left">Trạng thái</th>
+                                            <th class="text-left">Ngày tạo</th>
+                                            <th class="text-left">Hành động</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${views}" var="lst" varStatus="loop">
+                                        <c:choose>
+                                        <c:when test="${lst.userLogin ne 'root'}">
+                                        <tr>
+                                            <td class="text-center">${lst.id}</td>
+                                            <td class="text-center">
+                                                    ${lst.userLogin}
+                                            </td>
+                                            <td class="text-left">${lst.role}
+                                            </td>
+                                            <td class="text-left" style="color:#00aa00;">
+                                                <b> Đã kích hoạt</b>
+                                            </td>
+                                            <td class="text-left">
+                                                <fmt:parseDate value=" ${lst.createdDate}"
+                                                               pattern="yyyy-MM-dd'T'HH:mm" var="day"
+                                                               type="date"/>
+                                                <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                value="${day}"/>
+                                            </td>
+                                            <td class="text-left">
+                                                <button class="btn btn-facebook" onclick="viewChangePass('${lst.id}')">
+                                                    Thay đổi mật khẩu
+                                                </button>
+                                                <button class="btn btn-danger"
+                                                        onclick="showReset('${lst.id}','${lst.userLogin}')">
+                                                    Đặt lại mật khẩu
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </c:when>
+                                        <c:otherwise>
+
+                                        </c:otherwise>
+
+                                        </c:choose>
+
+                                        </c:forEach>
+                                        <tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                </div>
             </section>
             <!-- /.content -->
         </div>
@@ -128,6 +201,8 @@
     <!-- Control Sidebar -->
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
+    <jsp:include page="general/modal.jsp"/>
+
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
@@ -139,36 +214,83 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script type="text/javascript">
+    <%
+              List<Useradmin> list = (List<Useradmin>) request.getAttribute("views");
+              Gson g = new Gson();
+              String json = g.toJson(list);
+              %>
+    var result = <%=json%>;
     $(document).ready(function () {
         $("#loading").hide();
-        $("#demoForm").validate({
+        $("#pass").validate({
             rules: {
-                login: {
-                    minlength: 3,
-                    maxlength: 15,
-                },
-                pass: {
-                    minlength: 3,
+                oldpassword: {
+                    minlength: 5,
                     maxlength: 15
                 },
+                password: {
+                    minlength: 5,
+                    maxlength: 15
+                },
+                repassword: {
+                    equalTo: "#password"
+                }
             },
             messages: {
-                login: {
-                    minlength: "Hãy nhập ít nhất 3 ký tự",
-                    maxlength: "Hãy nhập tối đa 15 ký tự"
-                },
-                pass: {
-                    minlength: "Hãy nhập ít nhất 3 ký tự",
+                oldpassword: {
+                    minlength: "Hãy nhập ít nhất 4 ký tự",
                     minlength: "Hãy nhập tối nhất 15 ký tự"
                 },
+                password: {
+                    minlength: "Hãy nhập ít nhất 4 ký tự",
+                    minlength: "Hãy nhập tối nhất 15 ký tự"
+                },
+                repassword: {
+                    equalTo: "Mật khẩu không khớp"
+                }
             }
         });
     });
-    //function xảy ra khi nhấn vào accept gọi đến data ajax , thực hiện thành công hiển thị popup alert thông báo success và cập nhật vào talbe product
+    $("#demoForm").validate({
+        rules: {
+            login: {
+                minlength: 3,
+                maxlength: 15,
+            },
+            pass: {
+                minlength: 3,
+                maxlength: 15
+            },
+        },
+        messages: {
+            login: {
+                minlength: "Hãy nhập ít nhất 3 ký tự",
+                maxlength: "Hãy nhập tối đa 15 ký tự"
+            },
+            pass: {
+                minlength: "Hãy nhập ít nhất 3 ký tự",
+                minlength: "Hãy nhập tối nhất 15 ký tự"
+            },
+        }
+
+    });
+
+    function viewChangePass(params) {
+        result.forEach((useradmin) => {
+            if (useradmin.id == params) {
+                console.log(useradmin.id)
+                Object.keys(useradmin).forEach((key) => {
+                    $('#' + key).text(useradmin[key]);
+                    console.log(useradmin[key])
+                })
+            }
+        })
+        $('#modalChangePass').modal('show');
+    }
+
     $("body").on("click", ".btn-default", function () {
         var userLogin = $("#user_login").val();
         console.log(userLogin)
@@ -176,10 +298,12 @@
         console.log(userPass)
         var userRole = $("#user_role").val();
         console.log(userRole)
+
         let data = {
             userLogin: userLogin,
             userPass: userPass,
-            userRole: userRole
+            userRole: userRole,
+
         };
         var result = submitUser(data);
         if (result === "success") {
@@ -198,6 +322,14 @@
                 showConfirmButton: false,
                 timer: 100000
             });
+        } else if (result === "errorExist") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Tên đăng nhập đã tồn tại',
+                showConfirmButton: false,
+                timer: 100000
+            });
         } else {
             Swal.fire({
                 position: 'top-end',
@@ -209,7 +341,6 @@
         }
     });
 
-    //function ajax gọi đến value trong ProductController thực hiện caapj nhật thông số sản phẩm
     function submitUser(data) {
         try {
             // This async call may fail.
@@ -217,6 +348,27 @@
                 type: "POST",
                 timeout: 100000,
                 url: "changeUserAdmin",
+                data: data,
+                dataType: 'text',
+                async: false,
+                beforeSubmit: function () {
+                    return $("#demoForm").valid();
+                },
+            }).responseText;
+            return text;
+            console.log(text);
+        } catch (error) {
+            return "Không thể kết nối tới server";
+        }
+    }
+
+    function changePass(data) {
+        try {
+            // This async call may fail.
+            let text = $.ajax({
+                type: "POST",
+                timeout: 100000,
+                url: "changePassAdmin",
                 data: data,
                 dataType: 'text',
                 async: false
@@ -227,6 +379,115 @@
             return "Không thể kết nối tới server";
         }
     }
+
+    function showReset(id, name) {
+        console.log(id)
+        console.log(name)
+        $("#modalresetPass").modal('show');
+        $("#userName").text(name);
+        $("#idReset").text(id)
+
+
+    }
+
+    function ajaxresetPass(data) {
+        try {
+            // This async call may fail.
+            let text = $.ajax({
+                type: "POST",
+                timeout: 100000,
+                url: "resetPassAdmin",
+                data: data,
+                dataType: 'text',
+                async: false
+            }).responseText;
+            return text;
+            console.log(text);
+        } catch (error) {
+            return "Không thể kết nối tới server";
+        }
+    }
+
+    function resetPass() {
+        var _id = $('#idReset').text();
+        console.log('id 1: ', _id)
+        let data = {
+            idata: _id,
+        };
+        var result = ajaxresetPass(data);
+        console.log(result)
+        if (result === "success") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Dữ liệu được cập nhật thành công.',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        } else if (result === "errorRoot") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Không có quyền đặt lại mật khẩu',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        } else {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Có lỗi không thể thực thi',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        }
+    };
+
+    $("body").on("click", ".btn-update-change-password", function () {
+        var id = $("#id").text();
+        var userPass = $("#password").val();
+        var olduserPass = $("#oldpassword").val();
+        console.log(userPass)
+        let data = {
+            id: id,
+            password: userPass,
+            oldpassword: olduserPass
+        };
+        var result = changePass(data);
+        if (result === "success") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Dữ liệu được cập nhật thành công.',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        } else if (result === "errorNoExist") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Password nhập sai',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        } else if (result === "errorRoot") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Không thể thay đổi mật khẩu Root',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        } else {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Không được để trống',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        }
+    });
 </script>
 </body>
 

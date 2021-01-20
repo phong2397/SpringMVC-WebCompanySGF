@@ -90,8 +90,6 @@
                                             <th>Số tiền còn nợ</th>
                                             <th>Số tiền còn nợ</th>
                                             <th>Ngày cần tất toán</th>
-                                            <th>Phí phạt</th>
-                                            <th>Phí phạt</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -109,7 +107,7 @@
                                                             data-toggle="modal" href="#"
                                                             onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
                                                     <span class="d-block text-muted">Số tài khoản: ${lst.customer.customerBankAcc}</span>
-                                                    <span class="d-block text-muted">Chủ tài khoản : ${lst.customer.customerBankName}</span>
+                                                    <span class="d-block text-muted">Tên ngân hàng : ${lst.customer.customerBankName}</span>
                                                 </h6>
                                             </td>
                                             <td>
@@ -148,8 +146,6 @@
                                                                type="date"/>
                                                 <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                 value="${patientDob}"/></td>
-                                            <td><span class="label label-danger">13.54 %</span></td>
-                                            <td><span class="label label-danger">13.54</span></td>
                                         </tr>
                                         </c:forEach>
                                         <tbody>
@@ -195,6 +191,14 @@
         // function sử dụng framework datatable của Jquery
         $('#example').DataTable({
             dom: 'Bfrtip',
+            language: {
+                search: "Tìm kiếm:",
+                paginate: {
+                    previous: "Trang trước",
+                    next: "Trang sau",
+                }
+            },
+            order: [[0, "desc"]],
             pageLength: 10,// phân 10 kết quả cho mỗi trang
             columnDefs: [
                 {
@@ -212,7 +216,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 2, 3, 4, 5, 6, 8, 9, 11, 12, 14] // chỉ export excel các cột đã chọn
+                        columns: [0, 2, 3, 4, 5, 6, 8, 9, 11, 12] // chỉ export excel các cột đã chọn
 
                     }
                 },

@@ -20,7 +20,6 @@
         }
     } else {
         response.sendRedirect("login");
-
     }
 %>
 <jsp:include page="general/_head.jsp"/>
@@ -62,9 +61,9 @@
                 <form method="post" enctype="multipart/form-data" class="form">
                     <div class="box">
                         <div class="box-header">
-                            <h4 class="box-title">Dropzone</h4>
-                            <h6 class="box-subtitle">For multiple file upload put class <code>.dropzone</code> to form.
-                            </h6>
+                            <h5>Nhấn vào nút hoặc kéo thả file excel vào khoảng trống bên dưới để
+                                nhập cho nhân sự.
+                            </h5>
                         </div>
                         <div class="box-body">
                             <div class="dropzone">
@@ -97,11 +96,11 @@
                                         </div>
                                     </div>
                                     <button type="button" class="btn btn-rounded btn-warning btn-outline mr-1">
-                                        <i class="ti-trash"></i> Cancel
+                                        <i class="ti-trash"></i> Hủy
                                     </button>
                                     <button type="button" onclick="submitform();"
                                             class="btn btn-rounded btn-primary btn-outline">
-                                        <i class="ti-save-alt"></i> Save
+                                        <i class="ti-save-alt"></i> Lưu
                                     </button>
                                 </div>
 

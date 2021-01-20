@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.sgfintech.dao.ContractDAO;
 import com.sgfintech.dao.SaRequestDAO;
+import com.sgfintech.dao.UseradminDAO;
 import com.sgfintech.entity.Contract;
 import com.sgfintech.entity.Customer;
 import com.sgfintech.entity.SaRequest;
@@ -13,7 +14,9 @@ import com.sgfintech.handler.RequestGateway;
 import com.sgfintech.handler.SignatureRSA;
 import com.sgfintech.service.CustomerService;
 import com.sgfintech.service.MergeDataService;
+import com.sgfintech.service.SaRequestService;
 import com.sgfintech.util.Consts;
+import com.sgfintech.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -28,10 +31,7 @@ import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author lucnguyen.hcmut@gmail.com
@@ -54,6 +54,55 @@ public class SignController {
     @Autowired
     private ApplicationContext context;
 
+    @Autowired
+    UseradminDAO useradminDAO;
+    @Autowired
+    SaRequestService saRequestService;
+
+    @RequestMapping(value = {"/kyduyetlogin"}, method = RequestMethod.GET)
+    public String kyduyetlogin(ModelMap mm, HttpServletRequest request, HttpSession session) {
+        int countAct = mergeDataService.countStatus("act");
+        int countWait = mergeDataService.countStatus("wait");
+        int countWFS = mergeDataService.countStatus("wfs");
+        int countDone = mergeDataService.countStatus("done");
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            String empDuyet = u.getUserLogin();
+            List<MergeDataOrder> listXetduyetLogin = mergeDataService.getUserDuyet("wfs", empDuyet);
+            mm.addAttribute(Consts.Attr_ResultView, listXetduyetLogin);
+            mm.addAttribute("countAct", countAct);
+            mm.addAttribute("countWait", countWait);
+            mm.addAttribute("countWFS", countWFS);
+            mm.addAttribute("countDone", countDone);
+            return "kyduyetlogin";
+        }
+    }
+
+    @RequestMapping(value = {"/tuchoikyduyet"}, method = RequestMethod.GET)
+    public String declineKyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+        int countAct = mergeDataService.countStatus("act");
+        int countWait = mergeDataService.countStatus("wait");
+        int countWFS = mergeDataService.countStatus("wfs");
+        int countDeni = mergeDataService.countStatus("deni");
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            String empDuyet = u.getUserLogin();
+            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getUserDuyet("deni", empDuyet);
+            List<SaRequest> saRequest = saRequestDAO.findAll();
+            mm.addAttribute("sa", saRequest);
+            mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+            mm.addAttribute("countAct", countAct);
+            mm.addAttribute("countWait", countWait);
+            mm.addAttribute("countWFS", countWFS);
+            mm.addAttribute("countDeni", countDeni);
+            return "tuchoikyduyet";
+        }
+    }
+
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm, HttpServletRequest request) {
         int countWait = mergeDataService.countStatus("wait");
@@ -61,6 +110,8 @@ public class SignController {
         int countAct = mergeDataService.countStatus("act");
         int countDone = mergeDataService.countStatus("done");
         List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
+        List<Useradmin> admin = useradminDAO.findAll();
+        mm.addAttribute("admin", admin);
         List<SaRequest> saRequest = saRequestDAO.findAll();
         mm.addAttribute("sa", saRequest);
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
@@ -71,6 +122,32 @@ public class SignController {
         return "kyduyet";
     }
 
+    @RequestMapping(value = "/updateEmployeeDuyet", method = RequestMethod.POST)
+    public @ResponseBody
+    String updateEmployeeDuyet(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        List<SaRequest> lst = new ArrayList<>();
+        String[] data = request.getParameterValues("datarequest[]");
+        System.out.println(data);
+
+        String employeeDuyet = request.getParameter("employeeDuyet");
+        for (String d : data) {
+            SaRequest s = new SaRequest();
+            s.setId(Long.parseLong(d));
+            s.setEmployeeDuyet(employeeDuyet);
+            lst.add(s);
+        }
+        try {
+            int[][] countUpdate = saRequestService.updateemployeeDuyetById(lst);
+            if (countUpdate.length < 1) {
+                return "error";
+            } else {
+                return "success";
+            }
+        } catch (Exception ex) {
+            return "error";
+        }
+    }
+
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.POST)
     public @ResponseBody
     String handlerOrderRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -78,92 +155,49 @@ public class SignController {
         String data = request.getParameter("datarequest"); //id cua order request
         String status = request.getParameter("status");
         String step = request.getParameter("step");
+        String employeeDuyet = request.getParameter("employeeDuyet");
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
             SaRequest sa = saRequestDAO.findById(Long.parseLong(data)); //sa.getBorrow();
             Customer cu = customerService.getCustomerByPhone(sa.getCustomerPhone());
             String uuid = UUID.randomUUID().toString();
             String requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-            /*
-            Date date = new Date();
-            String partnerCode = "VAYSV";
-            String requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(date);
-            String requestTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-            Integer operation = 9001;
-            String uuid = UUID.randomUUID().toString();
-            JsonObject j = new JsonObject();
-            j.addProperty("RequestId", requestId);
-            j.addProperty("RequestTime", requestTime);
-            j.addProperty("PartnerCode", partnerCode);
-            j.addProperty("Operation", operation);
-            j.addProperty("BankNo", "970457");
-            j.addProperty("AccNo", "100100132448");
-            j.addProperty("AccType", "0");
-            String messageCheck = requestId + "|" + requestTime + "|" + partnerCode + "|" + operation + "|970457|100100132448|0";
-            String sign = signatureRSA.sign(messageCheck);
-            j.addProperty("Signature", sign);
-
-            String resultCheck = RequestGateway.checkUser(j);
-            //todo thuc hien chuyen khoan
-            Gson g = new Gson();
-            JsonObject resultRes = g.fromJson(resultCheck, JsonObject.class);
-//            if (!(resultRes.get("ResponseCode").getAsInt() == 200)) {
-//                return "error";
-//            }
-            j = new JsonObject();
-            date = new Date();
-            requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(date);
-            requestTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
-            operation = 9002;
-            j.addProperty("RequestId", requestId);
-            j.addProperty("RequestTime", requestTime);
-            j.addProperty("PartnerCode", partnerCode);
-            j.addProperty("Operation", operation);
-            j.addProperty("ReferenceId", uuid);
-            j.addProperty("BankNo", "970457");
-            j.addProperty("AccNo", "100100132448");
-            j.addProperty("AccType", "0");
-            j.addProperty("RequestAmount", sa.getBorrow() + "");
-            String memo = "Hach toan cho khach hang " + cu.getCustomerName();
-            j.addProperty("Memo", memo);
-            j.addProperty("AccountName", "CONG TY TNHH THIET KE ZIOVI");
-            j.addProperty("ContractNumber", "123456789");
-            messageCheck = requestId + "|" + requestTime + "|" + partnerCode + "|" + operation + "|" + uuid + "|970457|100100132448|0|" + sa.getBorrow() + "|" + memo;
-            sign = signatureRSA.sign(messageCheck);
-            j.addProperty("Signature", sign);
-            resultCheck = RequestGateway.checkUser(j);
-            resultRes = g.fromJson(resultCheck, JsonObject.class);
-//            if (!(resultRes.get("ResponseCode").getAsInt() == 200)) {
-//                return "error";
-//            } else {
-//            }
-
-             */
-            Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-            if (status.equals("act")) {
-                Contract ct = new Contract();
-                ct.setIdContract(sa.getId());
-                ct.setSystemTrace(uuid);
-                ct.setCustomerPhone(cu.getCustomerPhone());
-                ct.setBorrow(sa.getBorrow());
-                ct.setTimeBorrow(sa.getTimeBorrow());
-                ct.setRemainAmountBorrow(sa.getBorrow());
-                ct.setFeeBorrow(sa.getFeeBorrow());
-//          ct.setTransactionId(resultRes.get("TransactionId").getAsString());
-                ct.setTransactionId(requestId);
-                ct.setStatus(status);
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, +30);
-                ct.setDateRepayment(LocalDateTime.now().plusDays(30));
-                ct.setCreatedDate(sa.getUpdatedDate());
-                ct.setAcceptedBy(u.getUserLogin());
-                contractDAO.save(ct);
+            if (!StringUtil.isEmpty(employeeDuyet) && u.getUserLogin().equals(employeeDuyet)) {
+                if (status.equals("act")) {
+                    Contract ct = new Contract();
+                    ct.setIdContract(sa.getId());
+                    ct.setSystemTrace(uuid);
+                    ct.setCustomerPhone(cu.getCustomerPhone());
+                    ct.setBorrow(sa.getBorrow());
+                    ct.setTimeBorrow(sa.getTimeBorrow());
+                    ct.setRemainAmountBorrow(sa.getBorrow());
+                    ct.setFeeBorrow(sa.getFeeBorrow());
+                    ct.setTransactionId(requestId);
+                    ct.setStatus(status);
+                    Calendar cal = Calendar.getInstance();
+                    cal.add(Calendar.DATE, +30);
+                    ct.setDateRepayment(LocalDateTime.now().plusDays(30));
+                    ct.setCreatedDate(sa.getUpdatedDate());
+                    ct.setAcceptedBy(employeeDuyet);
+                    contractDAO.save(ct);
+                    sa.setEmployeeDuyet(employeeDuyet);
+                    sa.setEmployeeDuyetDate(LocalDateTime.now());
+                    sa.setUpdatedDate(LocalDateTime.now());
+                    sa.setStatus(status);
+                    saRequestDAO.update(sa);
+                    return "success";
+                } else if (status.equals("deni")) {
+                    sa.setEmployeeDuyet(employeeDuyet);
+                    sa.setEmployeeDuyetDate(LocalDateTime.now());
+                    sa.setUpdatedDate(LocalDateTime.now());
+                    sa.setStatus(status);
+                    saRequestDAO.update(sa);
+                    return "success";
+                }
+                return "errorStatus";
+            } else {
+                return "errorEmployee";
             }
-            sa.setEmployeeDuyet(u.getUserLogin());
-            sa.setEmployeeDuyetDate(LocalDateTime.now());
-            sa.setUpdatedDate(LocalDateTime.now());
-            sa.setStatus(status);
-            saRequestDAO.update(sa);
-            return "success";
             //todo virtual account va tao collection point
         } catch (Exception ex) {
             return "error";

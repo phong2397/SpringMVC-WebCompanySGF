@@ -109,7 +109,7 @@
                                                             data-toggle="modal" href="#"
                                                             onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
                                                     <span class="d-block text-muted">Số tài khoản: ${lst.customer.customerBankAcc}</span>
-                                                    <span class="d-block text-muted">Chủ tài khoản : ${lst.customer.customerBankName}</span>
+                                                    <span class="d-block text-muted">Tên ngân hàng : ${lst.customer.customerBankName}</span>
                                                 </h6>
                                             </td>
                                             <td>
@@ -189,6 +189,15 @@
         // function sử dụng framework datatable của Jquery
         $('#example').DataTable({
             dom: 'Bfrtip',
+            order: [[0, "desc"]],
+            language: {
+                emptyTable: "Không có dữ liệu",
+                search: "Tìm kiếm:",
+                paginate: {
+                    previous: "Trang trước",
+                    next: "Trang sau",
+                }
+            },
             pageLength: 20,//Phân 20 kết quả cho mỗi trang
             columnDefs: [
                 {

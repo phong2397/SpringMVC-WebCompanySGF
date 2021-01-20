@@ -19,6 +19,7 @@ public class UseradminMapper implements RowMapper<Useradmin> {
         u.setRole(rs.getString("role"));
         u.setStatus(rs.getString("status"));
         u.setCount(rs.getLong("count"));
+        u.setResetPasswordToken(rs.getString("reset_password_token"));
         return u;
     }
 }
