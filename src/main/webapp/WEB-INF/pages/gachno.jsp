@@ -63,9 +63,9 @@
                 </div>
             </div>
             <div class="px-30 my-15 no-print">
-                <div class="callout callout-success" style="margin-bottom: 0!important;">
+                <div class="callout callout-warning" style="margin-bottom: 0!important;">
                     <h4><i class="fa fa-info"></i> Note:</h4>
-                    Có thể hóa đơn gạch nợ bằng tay. Vui lòng click vào Button PRINT để lưu giữ chứng từ
+                    Có thể hóa đơn gạch nợ bằng tay. Vui lòng bấm vào nút In Hóa Đơn để lưu giữ chứng từ
                 </div>
             </div>
             <div class="row">
@@ -140,13 +140,13 @@
                                         </td>
                                         <td>0</td>
                                         <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
-                                                           pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob"
+                                                           pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
                                                            type="date"/>
                                             <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                             value="${patientDob}"/>
                                         </td>
                                         <td>1</td>
-                                        <td>ROOT</td>
+                                        <td>-</td>
                                         <td><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob"
                                                            type="date"/>
                                             <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
@@ -270,7 +270,7 @@
                     <div class="row no-print">
                         <div class="col-12">
                             <button type="button" class="btn btn-rounded btn-success pull-right"><i
-                                    class="fa fa-credit-card"></i> Submit Payment
+                                    class="fa fa-credit-card"></i> Gạch nợ
                             </button>
                         </div>
                     </div>
@@ -301,7 +301,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
-        // function sử dụng framework datatable của Jquery
         $('#example').DataTable({
             dom: 'Bfrtip',
             pageLength: 10,
@@ -313,11 +312,11 @@
                     next: "Trang sau",
                 }
             },
-            order: [[0, "desc"]],// phân 10 kết quả cho mỗi trang
+            order: [[0, "desc"]],
             columnDefs: [
                 {
                     visible: false,
-                    targets: [2, 3, 4, 5, 6, 9, 10] // ẩn đi các column đã chọn
+                    targets: [2, 3, 4, 5, 6, 9, 10]
                 },
             ],
             buttons: [
@@ -330,7 +329,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15] // export excel các column đã chọn
+                        columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15]
 
                     }
                 },

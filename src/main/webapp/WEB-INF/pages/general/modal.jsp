@@ -61,11 +61,9 @@
                         <p> Chủ tài khoản : <span id="customerBank" style="color:grey;"></span></p>
                         <p>Số tài khoản : <span id="customerBankAcc" style="color:grey;"></span></p>
                         <p> Tên ngân hàng : <span id="customerBankName" style="color:grey;"></span></p></div>
-                    <div class="col-3 "><h4><b>*</b>&nbsp;&nbsp;Thông tin người thân</h4>
-                        <p>Mối quan hệ : <span id="customerRelative" style="color:grey;"></span></p>
-                        <p>Số điện thoại người thân : <span id="customerRelativePhone" style="color:grey;"></span></p>
+                    <div class="col-3 " id="relativeInfo">
                     </div>
-                    <div class="col-3 " id="saInfo"></p>
+                    <div class="col-3 " id="saInfo">
                     </div>
                 </div>
                 <hr>
@@ -85,7 +83,8 @@
                                 id="yearid" style="color:grey;"></span></p>
                         <p>- Nơi cấp : <span id="customerIdLocation" style="color:grey;"></span></p></div>
                     <div class="col-3 "><p id="imgHealth"></p><br>
-                        <p>- Số bảo hiểm y tế : <span id="customerHealthInsurance" style="color:grey;"></span></p></div>
+                        <p>- Số bảo hiểm y tế : <span id="customerHealthInsurance" style="color:grey;"></span></p>
+                    </div>
                     <div class="col-3 "><p id="imgPayslip"></p></div>
                     <div class="col-3 ">
                         <p>Hình ảnh phụ lục :</p>
@@ -99,12 +98,15 @@
                 <h4 id="labelDanhgia"></h4>
                 <div class="row" id="danhgia">
                 </div>
+                <hr>
                 <div class="modal-footer modal-footer-uniform">
-                    <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang</button>
+                    <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <!-- /.modal -->
 <!-- Modal show info order -->
@@ -165,32 +167,49 @@
     </div>
 </div>
 <!-- /.modal -->
-<!-- Modal change password -->
-<div class="modal modal-fill fade" id="modalChangePass" tabindex="-1">
+<!-- Modal xác nhận thẩm định -->
+<div class="modal modal-fill fade" id="thamdinhVerify" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 style="color: #0b0b0b">Thay đổi mật khẩu mới </h4>
+                <h4 style="color: #0b0b0b">Thẩm định hồ sơ</h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style="font-weight: bold; color: #0b0b0b" id="changePass">
-                <form id="pass">
-                    <span id="id" style="display: none"></span>
-                    <label for="oldpassword">Mật khẩu cũ</label>
-                    <input type="password" id="oldpassword" name="oldpassword" required class="form-control"><br>
-                    <label for="repassword">Mật khẩu mới</label>
-                    <input type="password" id="password" name="password" required class="form-control">
-                    <label for="repassword">Nhập lại mật khẩu mới</label>
-                    <input type="password" id="repassword" name="repassword" required class="form-control">
-                </form>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                <label>Bạn có chắc chắn thẩm định cho đơn "<b style="color: black" id="ida"></b>"?</label>
             </div>
             <div class="modal-footer modal-footer-uniform">
-                <button type="button" class="btn btn-rounded btn-warning btn-update-change-password"
-                        data-dismiss="modal">Cập nhật
+                <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal"
+                        onclick="verifyThamdinh()">
+                    Xác nhận
                 </button>
-                <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang</button>
+                <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<!-- Modal xác nhận ky duyet -->
+<div class="modal modal-fill fade" id="kyduyetVerify" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 style="color: #0b0b0b">Ký duyệt </h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                <label>Bạn có chắc chắn ký duyệt cho đơn "<b style="color: black" id="ids"></b>"?</label>
+            </div>
+            <div class="modal-footer modal-footer-uniform">
+                <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal"
+                        onclick="verifyKyduyet()">
+                    Xác nhận
+                </button>
+                <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Hủy</button>
             </div>
         </div>
     </div>
@@ -211,7 +230,8 @@
                 <span id="idReset" style="display: none"></span>
             </div>
             <div class="modal-footer modal-footer-uniform">
-                <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal" onclick="resetPass()">
+                <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal"
+                        onclick="resetPass()">
                     Đồng ý
                 </button>
                 <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang</button>

@@ -5,6 +5,7 @@ package com.sgfintech.handler;
  */
 
 import com.sgfintech.entity.Customer;
+import com.sgfintech.util.StringUtil;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -76,27 +77,27 @@ public class ExcelHelper {
         for (int rowCount = 1; rowCount <= sheet.getLastRowNum(); rowCount++) {
             Customer c = new Customer();
             row = sheet.getRow(rowCount);
-            if (row == null) {
+            try {
+                c.setCompanyCode(companyCode);
+                c.setCustomerName(row.getCell(0).getStringCellValue());
+                c.setCustomerId(row.getCell(1).getStringCellValue());
+                c.setCustomerBirthday(sdf.parse(row.getCell(2).getStringCellValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                c.setCustomerPhone(row.getCell(3).getStringCellValue());
+                c.setCustomerContractExpired(LocalDateTime.ofInstant(sdf.parse(row.getCell(4).getStringCellValue()).toInstant(),
+                        ZoneId.systemDefault()));
+                c.setCustomerContract((long) (row.getCell(5).getNumericCellValue()));
+                int n = (int) row.getCell(6).getNumericCellValue();
+                c.setStatus(
+                        (n == 0) ? "active" : "expried"
+                );
+                c.setCustomerBankAcc(row.getCell(7).getStringCellValue());
+                c.setCustomerBankName(row.getCell(8).getStringCellValue());
+                c.setCustomerBank(row.getCell(9).getStringCellValue());
+                lstCust.add(c);
+            } catch (Exception exception) {
+                exception.printStackTrace();
                 continue;
             }
-            c.setCompanyCode(companyCode);
-            c.setCustomerName(row.getCell(0).getStringCellValue());
-             c.setCustomerId(row.getCell(1).getStringCellValue());
-             c.setCustomerBirthday(sdf.parse(row.getCell(2).getStringCellValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            c.setCustomerPhone(row.getCell(3).getStringCellValue());
-            c.setCustomerContractExpired(LocalDateTime.ofInstant(sdf.parse(row.getCell(4).getStringCellValue()).toInstant(),
-                    ZoneId.systemDefault()));
-            c.setCustomerContract((long) (row.getCell(5).getNumericCellValue()));
-            int n = (int) row.getCell(6).getNumericCellValue();
-            c.setStatus(
-                    (n == 0) ? "active" : "expried"
-            );
-
-            c.setCustomerBankAcc(row.getCell(7).getStringCellValue());
-            c.setCustomerBankName(row.getCell(8).getStringCellValue());
-            c.setCustomerBank(row.getCell(9).getStringCellValue());
-
-
             /*
 //            c.setCustomer
 //            c.setCustomerPhone(row.getCell(count++).getStringCellValue());
@@ -124,7 +125,7 @@ public class ExcelHelper {
 //                    ZoneId.systemDefault()));
 
              */
-            lstCust.add(c);
+
         }
         return lstCust;
     }

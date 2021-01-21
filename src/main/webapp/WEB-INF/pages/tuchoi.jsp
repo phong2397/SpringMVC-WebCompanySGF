@@ -243,7 +243,7 @@
                                                 </td>
                                                 <td>
                                                     <fmt:parseDate value=" ${lst.saRequest.createdDate}"
-                                                                   pattern="yyyy-MM-dd'T'HH:mm:ss" var="day"
+                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="day"
                                                                    type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                     value="${day}"/>
@@ -323,7 +323,7 @@
                     next: "Trang sau",
                 }
             },
-            pageLength: 10,// phân 10 kết quả cho mỗi trang
+            pageLength: 10,
             select: {
                 style: 'multi',
                 selector: 'td:first-child'
@@ -336,7 +336,7 @@
                 },
                 {
                     visible: false,
-                    targets: [7, 10]// ẩn đi các column đã chọn
+                    targets: [7, 10]
                 },
             ],
             buttons: [
@@ -344,7 +344,7 @@
                     title: 'Danh sách từ chối ',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15]// export excel các column đã chọn
+                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15]
                     }
                 },
             ]

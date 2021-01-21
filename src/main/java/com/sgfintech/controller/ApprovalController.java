@@ -8,6 +8,7 @@ import com.sgfintech.entity.Useradmin;
 import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.service.SaRequestService;
+import com.sgfintech.service.UseradminService;
 import com.sgfintech.util.Consts;
 import com.sgfintech.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,6 +139,25 @@ public class ApprovalController {
         return "thamdinh";
     }
 
+    @RequestMapping(value = {"/thamdinhnoaction"}, method = RequestMethod.GET)
+    public String thamdinhnoaction(ModelMap mm, HttpServletRequest request) {
+        int countWait = mergeDataService.countStatus("wait");
+        int countWFS = mergeDataService.countStatus("wfs");
+        int countAct = mergeDataService.countStatus("act");
+        int countDone = mergeDataService.countStatus("done");
+        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("wait");
+        List<SaRequest> sa = saRequestDAO.findAll();
+        List<Useradmin> admin = useradminDAO.findAll();
+        mm.addAttribute("admin", admin);
+        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+        mm.addAttribute("sa", sa);
+        mm.addAttribute("countWait", countWait);
+        mm.addAttribute("countWFS", countWFS);
+        mm.addAttribute("countAct", countAct);
+        mm.addAttribute("countDone", countDone);
+        return "thamdinhnoaction";
+    }
+
     @Autowired
     SaRequestService saRequestService;
 
@@ -167,6 +187,9 @@ public class ApprovalController {
         }
     }
 
+    @Autowired
+    UseradminService useradminService;
+
     @RequestMapping(value = "/changes", method = RequestMethod.POST)
     public @ResponseBody
     String changeStatusOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -182,6 +205,7 @@ public class ApprovalController {
                 sa.setStatus(status.trim());
                 sa.setDescription(textDecline);
                 sa.setEmployeeThamdinh(employeeThamdinh);
+                sa.setEmployeeDuyet(useradminService.randomUserDuyet());
                 sa.setEmployeeThamdinhDate(LocalDateTime.now());
                 sa.setUpdatedDate(LocalDateTime.now());
                 saRequestDAO.update(sa);
@@ -194,4 +218,29 @@ public class ApprovalController {
         }
     }
 
+    @RequestMapping(value = "/updateStatusDecline", method = RequestMethod.POST)
+    public @ResponseBody
+    String updatestatusDecline(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String data = request.getParameter("datarequest");
+        String status = request.getParameter("status");
+        String step = request.getParameter("step");
+        String textDecline = request.getParameter("textDecline");
+        String employee = request.getParameter("employee");
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        try {
+            if (!StringUtil.isEmpty(employee) && u.getUserLogin().equals(employee)) {
+                SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+                sa.setStatus(status.trim());
+                sa.setDescription(textDecline);
+                sa.setEmployeeThamdinhDate(LocalDateTime.now());
+                sa.setUpdatedDate(LocalDateTime.now());
+                saRequestDAO.update(sa);
+                return "success";
+            } else {
+                return "errorEmployee";
+            }
+        } catch (Exception ex) {
+            return "error";
+        }
+    }
 }

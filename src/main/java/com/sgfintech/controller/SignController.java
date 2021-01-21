@@ -122,6 +122,25 @@ public class SignController {
         return "kyduyet";
     }
 
+    @RequestMapping(value = {"/kyduyetnoaction"}, method = RequestMethod.GET)
+    public String kyduyetnoaction(ModelMap mm, HttpServletRequest request) {
+        int countWait = mergeDataService.countStatus("wait");
+        int countWFS = mergeDataService.countStatus("wfs");
+        int countAct = mergeDataService.countStatus("act");
+        int countDone = mergeDataService.countStatus("done");
+        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
+        List<Useradmin> admin = useradminDAO.findAll();
+        mm.addAttribute("admin", admin);
+        List<SaRequest> saRequest = saRequestDAO.findAll();
+        mm.addAttribute("sa", saRequest);
+        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+        mm.addAttribute("countWait", countWait);
+        mm.addAttribute("countWFS", countWFS);
+        mm.addAttribute("countAct", countAct);
+        mm.addAttribute("countDone", countDone);
+        return "kyduyetnoaction";
+    }
+
     @RequestMapping(value = "/updateEmployeeDuyet", method = RequestMethod.POST)
     public @ResponseBody
     String updateEmployeeDuyet(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -155,6 +174,7 @@ public class SignController {
         String data = request.getParameter("datarequest"); //id cua order request
         String status = request.getParameter("status");
         String step = request.getParameter("step");
+        String textdecline = request.getParameter("textDecline");
         String employeeDuyet = request.getParameter("employeeDuyet");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
@@ -187,6 +207,7 @@ public class SignController {
                     saRequestDAO.update(sa);
                     return "success";
                 } else if (status.equals("deni")) {
+                    sa.setDescription(textdecline);
                     sa.setEmployeeDuyet(employeeDuyet);
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
                     sa.setUpdatedDate(LocalDateTime.now());
