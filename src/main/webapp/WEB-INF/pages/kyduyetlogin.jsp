@@ -390,7 +390,7 @@
             ],
             buttons: [
                 {
-                    title: 'Danh sách từ chối ',
+                    title: 'Danh sách chờ duyệt',
                     extend: 'excelHtml5',
                     exportOptions: {
                         columns: [0, 1, 2, 3, 4, 5, 6, 8, 10, 11, 12, 13, 15]

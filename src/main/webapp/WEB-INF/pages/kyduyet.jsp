@@ -69,10 +69,7 @@
 
             <!-- Main content -->
             <section class="content">
-
                 <div class="row">
-
-
                     <!-- /.col -->
                     <div class="col-xl-3 col-md-6 col-12">
                         <div class="box box-inverse box-warning">
@@ -186,6 +183,7 @@
                         <div class="box">
                             <div class="box-header with-border">
                                 <h4 class="box-title">Danh sách chờ duyệt</h4><br>
+
                                 <button class="btn btn-primary">Chia đơn</button>
                             </div>
                             <div class="box-body">
@@ -220,6 +218,7 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr id="tr-${lst.saRequest.id}">
+
                                                 <td><input type="checkbox" class="checkEmployee"
                                                            value="${lst.saRequest.id}"/></td>
                                                 <td><a data-toggle="modal" href="#"
@@ -371,6 +370,7 @@
 <script type="text/javascript">
     var selectedsaId;
     $(document).ready(function () {
+
         $("#loading").hide();
         $("body").on("click", ".btn-primary", function () {
             $('#modalThamdinh').modal('show');
@@ -396,7 +396,7 @@
             ],
             buttons: [
                 {
-                    title: 'Danh sách từ chối ',
+                    title: 'Danh sách giải ngân ',
                     extend: 'excelHtml5',
                     exportOptions: {
                         columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17]// export excel các column đã chọn

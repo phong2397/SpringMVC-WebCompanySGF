@@ -4,9 +4,6 @@
 <%@ page import="com.sgfintech.entity.Useradmin" %>
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ page import="com.sgfintech.entity.SaRequest" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -14,24 +11,26 @@
   Time: 16:42
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html lang="en">
 <%
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh") || role.equals("kyduyet")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("kyduyet") || role.equals("thamdinh")) {
         } else {
             response.sendRedirect("404");
         }
     } else {
         response.sendRedirect("login");
+
     }
 %>
+<!DOCTYPE html>
+<html lang="en">
 <jsp:include page="general/_head.jsp"/>
-
-<body class="hold-transition light-skin sidebar-mini theme-primary">
 <style type="text/css">
     input[type="checkbox"] {
         left: inherit !important;
@@ -40,10 +39,9 @@
         opacity: 100 !important;
     }
 </style>
+<body class="hold-transition light-skin sidebar-mini theme-primary">
 <div class="wrapper">
-
     <jsp:include page="general/_header.jsp"/>
-
     <!-- Left side column. contains the logo and sidebar -->
     <jsp:include page="general/_menu.jsp"/>
 
@@ -54,15 +52,14 @@
             <div class="content-header">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="page-title">Thẩm định hồ sơ</h3>
+                        <h3 class="page-title">Danh sách chờ duyệt</h3>
                         <div class="d-inline-block align-items-center">
                             <nav>
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a>
                                     </li>
-                                    <li class="breadcrumb-item" aria-current="page">Tiếp nhận yêu cầu</li>
-                                    <li class="breadcrumb-item active" aria-current="page">Số lượng đơn chờ xét duyệt
-                                    </li>
+                                    <li class="breadcrumb-item" aria-current="page">Quản lý đơn hàng</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Số lượng đơn chờ duyệt</li>
                                 </ol>
                             </nav>
                         </div>
@@ -185,16 +182,16 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <h4 class="box-title">Số lượng đơn chờ xét duyệt</h4><br>
-                                <button class="btn btn-primary">Chia đơn</button>
+                                <h4 class="box-title">Danh sách chờ duyệt</h4><br>
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
+
                                     <table id="example" class="table table-lg invoice-archive" width="100%">
                                         <thead>
                                         <tr>
-                                            <th><input type="checkbox"
-                                                       id="rootcheckbox"></th>
+                                        <tr>
+                                            <th></th>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
                                             <th>Số CMND</th>
@@ -207,15 +204,21 @@
                                             <th>Mức phí</th>
                                             <th>Mức phí</th>
                                             <th>Thời gian yêu cầu tạm ứng</th>
+                                            <th>Trạng thái</th>
+                                            <th>Nhân viên xét duyệt</th>
+                                            <th>Ngày thanh toán</th>
+                                            <th>Số tiền thanh toán</th>
+                                            <th>Số tiền thanh toán</th>
+                                        </tr>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr id="tr-${lst.saRequest.id}">
-                                                <td><input type="checkbox" class="checkEmployee"
-                                                           value="${lst.saRequest.id}"/></td>
+
+                                                <td></td>
                                                 <td><a data-toggle="modal" href="#"
-                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
+                                                       onclick="viewInfoNoaction('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
                                                 <td>
                                                         ${lst.customer.customerName}
@@ -230,14 +233,8 @@
                                                 <td>
                                                         ${lst.saRequest.timeBorrow}
                                                 </td>
-                                                <td id="empColumn-${lst.saRequest.id}">
-                                                    <c:choose>
-                                                        <c:when test="${empty  lst.saRequest.employeeThamdinh}">-</c:when>
-                                                        <c:otherwise>
-                                                            ${lst.saRequest.employeeThamdinh}
-                                                        </c:otherwise>
-
-                                                    </c:choose>
+                                                <td>
+                                                        ${lst.saRequest.employeeThamdinh}
                                                 </td>
                                                 <td>
                                                         ${lst.saRequest.borrow}
@@ -265,24 +262,49 @@
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                     value="${day}"/>
                                                 </td>
+                                                <td>
+                                                    Thông qua
+                                                </td>
+                                                <td id="employeeDuyet-${lst.saRequest.id}">
+                                                    <c:choose>
+                                                        <c:when test="${empty  lst.saRequest.employeeDuyet}">-</c:when>
+                                                        <c:otherwise>
+                                                            ${lst.saRequest.employeeDuyet}
+                                                        </c:otherwise>
 
+                                                    </c:choose>
+                                                </td>
+                                                <td>
+                                                    05/02/2021
+                                                </td>
+                                                <td>
+                                                    <fmt:formatNumber
+                                                            value="${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }"
+                                                            type="number"/> đ
+                                                </td>
+                                                <td>
+                                                        ${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }
+                                                </td>
                                             </tr>
-
                                         </c:forEach>
                                         </tbody>
                                     </table>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- /.row -->
             </section>
+            <!-- /.content -->
         </div>
     </div>
-
+    <!-- /.content-wrapper -->
     <jsp:include page="general/_footer.jsp"/>
     <!-- Control Sidebar -->
     <jsp:include page="general/_controlSidebar.jsp"/>
+
     <!-- /.control-sidebar -->
     <jsp:include page="general/modal.jsp"/>
     <!-- Modal show employee thamdinh -->
@@ -290,21 +312,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 style="color: #0b0b0b">Chỉ định thẩm định</h4>
+                    <h4 style="color: #0b0b0b">Chỉ định ký duyệt</h4>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
                     <div class="form-group">
-                        <label style="color:black">Chọn nhân viên thẩm định</label><br>
+                        <label style="color:black">Chọn nhân viên ký duyệt</label><br>
                         <select id="userLogin" class="form-control">
                             <option selected disabled hidden>
                                 -- Vui lòng chọn --
                             </option>
                             <c:forEach items="${admin}" var="lst" varStatus="loop">
                                 <c:choose>
-                                    <c:when test="${lst.role eq 'thamdinh'}">
+                                    <c:when test="${lst.role eq 'kyduyet'}">
                                         <option value="${lst.userLogin}">
                                             <span> ${lst.userLogin}</span>
                                         </option>
@@ -339,10 +361,12 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script src="js/funcTiepnhanyeucau.js" type="text/javascript"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="js/funcKyduyet.js">
+</script>
 <script type="text/javascript">
+    var selectedsaId;
     $(document).ready(function () {
+
         $("#loading").hide();
         $("body").on("click", ".btn-primary", function () {
             $('#modalThamdinh').modal('show');
@@ -359,31 +383,43 @@
                     next: "Trang sau",
                 }
             },
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            },
             pageLength: 10,
             columnDefs: [
                 {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0
+                },
+                {
                     visible: false,
-                    targets: [7, 10]
+                    targets: [7, 10, 17]
                 },
             ],
             buttons: [
                 {
-                    title: 'Danh sách chờ xét duyệt',
+                    title: 'Danh sách chờ duyệt',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12]
+                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17]
                     }
                 },
             ]
-        });
+        })
     });
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
                   Gson g = new Gson();
                   String json = g.toJson(list);
+                    List<SaRequest> list1 = (List<SaRequest>) request.getAttribute("sa");
+                    Gson gs= new Gson();
+                    String json1 = gs.toJson(list1);
                   %>
     var result = <%=json%>;
-    var selectedsaId;
+    var list = <%=json1%>;
 
 
 </script>

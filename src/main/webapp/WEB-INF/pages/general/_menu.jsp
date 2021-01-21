@@ -72,7 +72,7 @@
             <li>
                 <a href="daxuly.html">
                     <img src="images/svg-icon/sidebar-menu/ico.svg" class="svg-icon" alt="">
-                    <span>Đã xử lý</span>
+                    <span>Khách hàng thanh toán</span>
                 </a>
             </li>
             <li>
@@ -158,7 +158,7 @@
                 </a>
             </li>
             <li>
-                <a href="kyduyetlogin.html">
+                <a href="kyduyetnoaction.html">
                     <img src="images/svg-icon/sidebar-menu/charts3.svg" class="svg-icon" alt="">
                     <span>Duyệt giải ngân</span>
                 </a>
@@ -186,7 +186,7 @@
             %>
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Quản lý đơn hàng</li>
             <li>
-                <a href="thamdinh.html">
+                <a href="thamdinhnoaction.html">
                     <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
                     <span>Quản lý xét duyệt</span>
                 </a>

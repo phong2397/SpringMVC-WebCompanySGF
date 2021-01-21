@@ -201,7 +201,7 @@
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
-                                            <tr>
+                                            <tr id="tr-${lst.saRequest.id}">
                                                 <td></td>
                                                 <td><a data-toggle="modal" href="#"
                                                        onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
@@ -378,7 +378,7 @@
                   %>
     var result = <%=json%>;
     var list = <%=json1%>;
-    // function sử dụng framework datatable của Jquery
+    var selectedsaId;
 </script>
 </body>
 </html>

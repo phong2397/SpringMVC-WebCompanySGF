@@ -142,7 +142,7 @@
                                             <td>${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow*0.02)}
                                             </td>
                                             <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
-                                                               pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob"
+                                                               pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
                                                                type="date"/>
                                                 <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                 value="${patientDob}"/></td>
@@ -208,7 +208,7 @@
             ],
             buttons: [
                 {
-                    title: 'Danh sách đã xử lý',
+                    title: 'Danh sách nợ quá hạn',
                     extend: 'excelHtml5',
                     exportOptions: {
                         format: {
