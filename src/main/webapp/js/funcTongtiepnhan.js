@@ -123,7 +123,6 @@ $("body").on("click", ".btn-refuse", function () {
 });
 
 
-//function view thông tin nhân viên theo số điện thoại
 function viewInfoCustomer(phone, id, comId) {
     selectedsaId = id;
     console.log(selectedsaId)
@@ -214,7 +213,22 @@ function viewInfoCustomer(phone, id, comId) {
     console.log(c)
     const date = c.customerBirthday;
     const idDate = c.customerIdDate.date;
-    console.log(idDate)
+    $("#relativeInfo").empty();
+    $("#relativeInfo").append(' <h4><b>*</b>&nbsp;&nbsp;Thông tin người thân</h4>');
+    if (c.customerRelative) {
+        $("#relativeInfo").append('<p>Mối quan hệ : <span id="customerRelative" style="color:grey;">' + c.customerRelative + '</span></p>');
+    } else {
+        $("#relativeInfo").append('<p>Mối quan hệ : <span  style="color:grey;">Không có thông tin</span></p>');
+
+    }
+    if (c.customerRelativePhone) {
+        $("#relativeInfo").append('<p>Số điện thoại người thân : <span id="customerRelativePhone" style="color:grey;">' + c.customerRelativePhone + '</span></p>')
+
+    } else {
+        $("#relativeInfo").append('<p>Số điện thoại người thân : <span  style="color:grey;">Không có thông tin</span></p>')
+
+    }
+    ;
     Object.keys(c).forEach((key) => {
         if (key == "customerSalary") {
             value = c[key]

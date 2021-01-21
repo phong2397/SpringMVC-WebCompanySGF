@@ -186,15 +186,13 @@
                         <div class="box">
                             <div class="box-header with-border">
                                 <h4 class="box-title">Số lượng đơn chờ xét duyệt</h4><br>
-                                <button class="btn btn-primary">Chia đơn</button>
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
                                     <table id="example" class="table table-lg invoice-archive" width="100%">
                                         <thead>
                                         <tr>
-                                            <th><input type="checkbox"
-                                                       id="rootcheckbox"></th>
+                                            <th></th>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
                                             <th>Số CMND</th>
@@ -212,10 +210,9 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr id="tr-${lst.saRequest.id}">
-                                                <td><input type="checkbox" class="checkEmployee"
-                                                           value="${lst.saRequest.id}"/></td>
+                                                <td></td>
                                                 <td><a data-toggle="modal" href="#"
-                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
+                                                       onclick="viewInfoNoaction('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
                                                 <td>
                                                         ${lst.customer.customerName}
@@ -359,8 +356,17 @@
                     next: "Trang sau",
                 }
             },
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            },
             pageLength: 10,
             columnDefs: [
+                {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0
+                },
                 {
                     visible: false,
                     targets: [7, 10]
@@ -368,7 +374,7 @@
             ],
             buttons: [
                 {
-                    title: 'Danh sách chờ xét duyệt',
+                    title: 'Danh sách đơn chờ xét duyệt',
                     extend: 'excelHtml5',
                     exportOptions: {
                         columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12]

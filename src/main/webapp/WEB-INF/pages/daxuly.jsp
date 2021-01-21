@@ -49,14 +49,14 @@
             <div class="content-header">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="page-title">Đơn đã xử lý</h3>
+                        <h3 class="page-title">Khách hàng thanh toán</h3>
                         <div class="d-inline-block align-items-center">
                             <nav>
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a>
                                     </li>
                                     <li class="breadcrumb-item" aria-current="page">Thu hồi nợ</li>
-                                    <li class="breadcrumb-item active" aria-current="page">Đơn đã xử lý</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Khách hàng thanh toán</li>
                                 </ol>
                             </nav>
                         </div>
@@ -142,7 +142,7 @@
                                                 <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                 value="${patientDob}"/></td>
                                             <td class="text-left">1</td>
-                                            <td class="text-left">Nam</td>
+                                            <td class="text-left">-</td>
                                             <td class="text-left"><fmt:parseDate value="${year}" pattern="dd-MM-yyyy"
                                                                                  var="patientDob" type="date"/>
                                                 <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
@@ -207,7 +207,7 @@
             ],
             buttons: [
                 {
-                    title: 'Danh sách đã xử lý',
+                    title: 'Danh sách khách hàng thanh toán',
                     extend: 'excelHtml5',
                     exportOptions: {
                         format: {

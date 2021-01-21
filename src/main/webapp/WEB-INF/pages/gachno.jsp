@@ -63,9 +63,9 @@
                 </div>
             </div>
             <div class="px-30 my-15 no-print">
-                <div class="callout callout-success" style="margin-bottom: 0!important;">
+                <div class="callout callout-warning" style="margin-bottom: 0!important;">
                     <h4><i class="fa fa-info"></i> Note:</h4>
-                    Có thể hóa đơn gạch nợ bằng tay. Vui lòng click vào Button PRINT để lưu giữ chứng từ
+                    Có thể hóa đơn gạch nợ bằng tay. Vui lòng bấm vào nút In Hóa Đơn để lưu giữ chứng từ
                 </div>
             </div>
             <div class="row">
@@ -146,7 +146,7 @@
                                                             value="${patientDob}"/>
                                         </td>
                                         <td>1</td>
-                                        <td>Nam</td>
+                                        <td>-</td>
                                         <td><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob"
                                                            type="date"/>
                                             <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
@@ -270,7 +270,7 @@
                     <div class="row no-print">
                         <div class="col-12">
                             <button type="button" class="btn btn-rounded btn-success pull-right"><i
-                                    class="fa fa-credit-card"></i> Submit Payment
+                                    class="fa fa-credit-card"></i> Gạch nợ
                             </button>
                         </div>
                     </div>

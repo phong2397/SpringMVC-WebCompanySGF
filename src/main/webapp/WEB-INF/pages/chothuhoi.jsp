@@ -102,9 +102,8 @@
                                                 </td>
                                                 <td>
                                                     <h6 class="mb-0">
-                                                        <b> <a data-toggle="modal" href="#" id="cPhone" class="as"
-                                                               onclick="viewInfoCustomer('${lst.customer.customerPhone}')"> ${lst.customer.customerPhone}</a></b>
-                                                        <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
+                                                            ${lst.customer.customerPhone}
+                                                        <span class="d-block text-muted">Tên khách hàng :${lst.customer.customerName}</span>
                                                         <span class="d-block text-muted">Mã công ty :<b><a
                                                                 data-toggle="modal" href="#"
                                                                 onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
@@ -143,7 +142,7 @@
                                                                     value="${patientDob}"/>
                                                 </td>
                                                 <td>1</td>
-                                                <td>ROOT</td>
+                                                <td>-</td>
                                                 <td><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob"
                                                                    type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>

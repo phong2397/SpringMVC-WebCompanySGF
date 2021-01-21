@@ -5,7 +5,7 @@
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-\
+
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%--
@@ -79,10 +79,10 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Số điện thoại</label>
+                                                <label>Số điện thoại </label>
                                                 <input type="text" class="form-control" name="customerPhone"
                                                        id="customerPhone"
-                                                       placeholder="Tên công ty">
+                                                       placeholder="Số điện thoại">
                                             </div>
                                         </div>
                                         <div class="col-md-6">

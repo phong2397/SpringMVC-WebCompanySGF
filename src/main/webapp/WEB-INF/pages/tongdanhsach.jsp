@@ -45,7 +45,7 @@
             <div class="content-header">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="page-title">Tổng danh sách thu hồi nợ</h3>
+                        <h3 class="page-title">Tổng danh sách đã thanh toán</h3>
                         <div class="d-inline-block align-items-center">
                             <nav>
                                 <ol class="breadcrumb">
@@ -119,7 +119,7 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <h4 class="box-title">Danh sách gạch nợ</h4>
+                                <h4 class="box-title">Danh sách đã thanh toán</h4>
                                 <h6 class="box-subtitle">Danh sách khách hàng được gạch nợ tự động và xác nhận gạch
                                     nợ bởi kế toán trưởng</h6>
                             </div>
@@ -250,7 +250,7 @@
             ],
             buttons: [
                 {
-                    title: 'Danh sách gạch nợ ',
+                    title: 'Danh sách đã thanh toán',
                     extend: 'excel',
                     exportOptions: {
                         customize: function (xlsx) {

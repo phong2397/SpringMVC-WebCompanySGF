@@ -52,7 +52,8 @@ public class ImportController implements ServletContextAware {
     CustomerDAO customerDAO;
 
     @RequestMapping(value = "/import", method = RequestMethod.POST)
-    public @ResponseBody String process(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response) {
+    public @ResponseBody
+    String process(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response) {
         String companyCode = request.getParameter("macongty");
         String companyName = request.getParameter("tencongty");
         try {
@@ -80,7 +81,7 @@ public class ImportController implements ServletContextAware {
                 //todo compare 2 list
                 List<Customer> customerList = customerDAO.getAllItemByCode(companyCode);
                 List<Customer> importDB = CompareListHandler.compareList(customerList, lstCustomer);
-                customerDAO.saveAllStateless(importDB);
+                customerDAO.saveAll(importDB);
                 return new Gson().toJson(importDB);
             }
         } catch (Exception ex) {
