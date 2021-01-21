@@ -61,8 +61,7 @@
                 <form method="post" enctype="multipart/form-data" class="form">
                     <div class="box">
                         <div class="box-header">
-                            <h5>Nhấn vào nút hoặc kéo thả file excel vào khoảng trống bên dưới để
-                                nhập cho nhân sự.
+                            <h5>Nhấn vào nút chọn file vào khoảng trống bên dưới để nhập cho nhân sự.
                             </h5>
                         </div>
                         <div class="box-body">
@@ -80,20 +79,27 @@
                                     <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin công ty
                                     </h4>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Tên công ty</label>
                                                 <input id="tencongty" type="text" class="form-control"
                                                        placeholder="Tên công ty">
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Mã Công ty</label>
                                                 <input id="macongty" type="text" class="form-control"
-                                                       placeholder="Mã công ty">
+                                                       placeholder="Số điện thoại công ty">
                                             </div>
                                         </div>
+                                        <%--                                        <div class="col-md-4">--%>
+                                        <%--                                            <div class="form-group">--%>
+                                        <%--                                                <label>Số điện thoại công ty</label>--%>
+                                        <%--                                                <input id="companyPhone" type="text" class="form-control"--%>
+                                        <%--                                                       placeholder="Mã công ty">--%>
+                                        <%--                                            </div>--%>
+                                        <%--                                        </div>--%>
                                     </div>
                                     <button type="button" class="btn btn-rounded btn-warning btn-outline mr-1">
                                         <i class="ti-trash"></i> Hủy
@@ -178,6 +184,7 @@
         formData.append('file', $('#importFile')[0].files[0]);
         var tenconty = $("#tencongty").val();
         var macongty = $("#macongty").val();
+        // var sodienthoai = $("#companyPhone")
         var filePath = $("#importFile").val();
         $.ajax({
             url: 'import?tencongty=' + tenconty + '&macongty=' + macongty,

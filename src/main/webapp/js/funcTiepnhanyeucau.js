@@ -573,7 +573,7 @@ function viewInfoCustomer(phone, id, comId) {
         $("#labelDanhgia").append('Đánh giá');
         $("#danhgia").append('<div class="col-4"><p>Thẩm định hồ sơ : Thông tin đầy đủ</p> <button class="btn btn-rounded btn-info btn-accept" onclick="showmodalThamdinh()">Đồng ý</button> </div>');
         $("#danhgia").append(' <div class="col-4"><p>Thẩm định từ chối :</p><select id = "reason" class = "form-control" > <option selected disabled hidden> --Lí do từ chối-- </option><option value="CMND không hợp lệ">CMND không hợp lệ </option> <option value="Bảo hiểm y tế hết hạn">Bảo hiểm y tế hết hạn </option> <option value="Mã bảo hiểm y tế không có thông tin">Mã bảo hiểm y tế không có thông tin </option> <option value="Mã bảo hiểm y tế không phải  thuộc mã DN(doanh nghiệp)">Mã bảo hiểm y tế không phải thuộc mã DN(doanh nghiệp) </option> <option value="Mức lương trong phiếu lương không trùng khớp với hệ thống"> Mức lương trong phiếu lương không trùng khớp với hệ thống </option> <option value="Sai vị trí công tác/chức vụ">Sai vị trí công tác/chức vụ </option> </select> <button class="btn btn-rounded btn-dark btn-refuse" style="margin-top:4%">Từ chối </button> </div>');
-    } else if (sa.status === "deni" && kd == null) {
+    } else if (sa.status === "deni" || kd == null) {
         $("#saInfo").empty();
         $("#saInfo").append('<h4><b>*</b>&nbsp;&nbsp;Thông tin yêu cầu</h4>');
         $("#saInfo").append('<p>Tên khách hàng : <span style="color:grey;">' + list.customer.customerName + '</span></p>');
@@ -593,7 +593,7 @@ function viewInfoCustomer(phone, id, comId) {
         $("#danhgia").empty();
         $("#danhgia").append('<button class="btn btn-rounded btn-info btn-accept" onclick="updateDeclineThamdinh()" >Cập nhật lại</button> ');
 
-    } else if (sa.status === "deni" && kd != null) {
+    } else if (sa.status === "deni" || kd != null) {
         $("#saInfo").empty();
         $("#saInfo").append('<h4><b>*</b>&nbsp;&nbsp;Thông tin yêu cầu</h4>');
         $("#saInfo").append('<p>Tên khách hàng : <span style="color:grey;">' + list.customer.customerName + '</span></p>');
