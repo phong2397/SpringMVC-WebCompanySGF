@@ -1,6 +1,9 @@
 package com.sgfintech.service;
 
+import com.sgfintech.entity.Customer;
 import com.sgfintech.entity.SaRequest;
+import com.sgfintech.mapper.CustomerMapper;
+import com.sgfintech.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
@@ -54,4 +57,6 @@ public class SaRequestService {
         });
         return updateCounts;
     }
+
+
 }

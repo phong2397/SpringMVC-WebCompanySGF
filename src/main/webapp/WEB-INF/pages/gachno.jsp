@@ -16,7 +16,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("truongthuhoi")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")) {
         } else {
             response.sendRedirect("404");
         }
@@ -86,15 +86,16 @@
                                         <th>Mã công ty</th>
                                         <th>Số tài khoản</th>
                                         <th>Tên ngân hàng</th>
-                                        <th class="text-left">Số tiền tối thiểu</th>
+                                        <th class="text-left">Số tiền tạm ứng</th>
                                         <th class="text-left">Số tiền còn nợ</th>
-                                        <th class="text-left">Số tiền tối thiểu</th>
+                                        <th class="text-left">Số tiền tạm ứng</th>
                                         <th class="text-left">Số tiền còn nợ</th>
                                         <th class="text-left">Số tiền đã đóng</th>
                                         <th class="text-left">Hạn thanh toán</th>
                                         <th class="text-left">Kỳ thanh toán</th>
-                                        <th class="text-left">Nhân viên nhắc nợ</th>
                                         <th class="text-left">Ngày nhắc nợ</th>
+                                        <th class="text-left">Trạng thái đơn</th>
+                                        <th class="text-left">Trạng thái cổng thanh toán</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -146,10 +147,13 @@
                                                             value="${patientDob}"/>
                                         </td>
                                         <td>1</td>
-                                        <td>-</td>
                                         <td><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob"
                                                            type="date"/>
                                             <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
+
+                                        <td>Đã giải ngân</td>
+                                        <td>-</td>
+
                                     </tr>
                                     </c:forEach>
                                     <tbody>
@@ -209,7 +213,7 @@
                         <!-- /.col -->
                         <div class="col-sm-12 invoice-col mb-15">
                             <div class="invoice-details row no-margin">
-                                <div class="col-md-6 col-lg-3"><b>Mã đơn vay:</b><span id="idContract"></span>
+                                <div class="col-md-6 col-lg-3"><b>Mã đơn hàng:&nbsp;</b><span id="idContract"></span>
                                 </div>
                                 <div class="col-md-6 col-lg-3"><b>Thông tin giao dịch:</b>
                                     <span id="transactionId"></span></div>
@@ -329,7 +333,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15]
+                        columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16]
 
                     }
                 },

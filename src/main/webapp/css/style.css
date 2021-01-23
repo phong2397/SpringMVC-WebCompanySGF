@@ -26307,6 +26307,8 @@ textarea.form-control {
 }
 
 .modal-right .modal-dialog {
+    font-weight: bold;
+    color: black;
     position: absolute;
     top: 0;
     right: 0;

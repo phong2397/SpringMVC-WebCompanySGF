@@ -20,7 +20,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("nvthamdinh") || role.equals("nvkyduyet") || role.equals("nvnhacphi") || role.equals("nvthuphi") || role.equals("tnthamdinh") || role.equals("tncollection")) {
         } else {
             response.sendRedirect("404");
         }
@@ -183,7 +183,7 @@
                                                 </td>
                                                 <td>${lst.contract.transactionId}</td>
                                                 <td><fmt:parseDate value=" ${lst.contract.createdDate}"
-                                                                   pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob"
+                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
                                                                    type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                     value="${patientDob}"/></td>

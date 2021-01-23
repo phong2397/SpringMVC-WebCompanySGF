@@ -87,10 +87,15 @@ public class CustomerController {
     }
 
     @RequestMapping(value = {"/taoquyenuser"}, method = RequestMethod.GET)
-    public String createUser(ModelMap mm) {
-        List<Useradmin> listdata = useradminDAO.findAll();
-        mm.addAttribute(Consts.Attr_ResultView, listdata);
-        return "taoquyenuser";
+    public String createUser(ModelMap mm, HttpSession session) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            List<Useradmin> listdata = useradminDAO.findAll();
+            mm.addAttribute(Consts.Attr_ResultView, listdata);
+            return "taoquyenuser";
+        }
     }
 
     @RequestMapping(value = "/changeUserAdmin", method = RequestMethod.POST)

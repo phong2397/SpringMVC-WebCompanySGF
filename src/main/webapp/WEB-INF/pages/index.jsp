@@ -10,28 +10,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <%
-    if (session.getAttribute(Consts.Session_Euser) != null){
-        Useradmin u= (Useradmin)session.getAttribute(Consts.Session_Euser);
+    if (session.getAttribute(Consts.Session_Euser) != null) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if(role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("upload") || role.equals("thuhoi") || role.equals("truongthuhoi")|| role.equals("kyduyet")|| role.equals("thamdinh") ){
-        }else{
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("nvthamdinh") || role.equals("nvkyduyet") || role.equals("nvnhacphi") || role.equals("nvthuphi") || role.equals("tnthamdinh") || role.equals("tncollection")) {
+        } else {
             response.sendRedirect("404");
         }
-    } else{
+    } else {
         response.sendRedirect("login");
 
     }
 %>
-<jsp:include page="general/_head.jsp" />
+<jsp:include page="general/_head.jsp"/>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary fixed">
 
 <div class="wrapper">
 
-    <jsp:include page="general/_header.jsp" />
+    <jsp:include page="general/_header.jsp"/>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <jsp:include page="general/_menu.jsp" />
+    <jsp:include page="general/_menu.jsp"/>
 
     <!-- Content Wrapper. Contains page content main content -->
     <!-- Handler this -->
@@ -135,12 +135,14 @@
                                             <th>#12457</th>
                                             <td>11.00AM 1/12/2020</td>
                                             <td><span class="label label-success">Complete</span></td>
-                                            <td></i> SGF </td>
+                                            <td></i> SGF</td>
                                             <td>1.000.000 VNĐ</td>
                                             <td>1</td>
                                             <td>ANHNGACTS</td>
-                                            <td>Nguyễn Văn A (SGF - NHÂN VIÊN - 0989 999 999) </td>
-                                            <td><button type="button" class="btn btn-info">Info</button></td>
+                                            <td>Nguyễn Văn A (SGF - NHÂN VIÊN - 0989 999 999)</td>
+                                            <td>
+                                                <button type="button" class="btn btn-info">Info</button>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>#12586</th>
@@ -150,8 +152,10 @@
                                             <td>1.000.000 VNĐ</td>
                                             <td>1</td>
                                             <td>PTNGOCCHAU</td>
-                                            <td>Nguyễn Văn B (SGF - NHÂN VIÊN - 0989 999 999) </td>
-                                            <td><button type="button" class="btn btn-info">Info</button></td>
+                                            <td>Nguyễn Văn B (SGF - NHÂN VIÊN - 0989 999 999)</td>
+                                            <td>
+                                                <button type="button" class="btn btn-info">Info</button>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>#13258</th>
@@ -161,8 +165,10 @@
                                             <td>1.000.000 VNĐ</td>
                                             <td>1</td>
                                             <td>PTNGOCCHAU</td>
-                                            <td>Nguyễn Văn C (SGF - NHÂN VIÊN - 0989 999 999) </td>
-                                            <td><button type="button" class="btn btn-info">Info</button></td>
+                                            <td>Nguyễn Văn C (SGF - NHÂN VIÊN - 0989 999 999)</td>
+                                            <td>
+                                                <button type="button" class="btn btn-info">Info</button>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>#13586</th>
@@ -172,8 +178,10 @@
                                             <td>1.000.000 VNĐ</td>
                                             <td>1</td>
                                             <td>PTNGOCCHAU</td>
-                                            <td>Nguyễn Văn D (SGF - NHÂN VIÊN - 0989 999 999) </td>
-                                            <td><button type="button" class="btn btn-info">Info</button></td>
+                                            <td>Nguyễn Văn D (SGF - NHÂN VIÊN - 0989 999 999)</td>
+                                            <td>
+                                                <button type="button" class="btn btn-info">Info</button>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>#14578</th>
@@ -183,8 +191,10 @@
                                             <td>1.000.000 VNĐ</td>
                                             <td>1</td>
                                             <td>ANHNGACTS</td>
-                                            <td>Nguyễn Thị A (SGF - NHÂN VIÊN - 0989 999 999) </td>
-                                            <td><button type="button" class="btn btn-info">Info</button></td>
+                                            <td>Nguyễn Thị A (SGF - NHÂN VIÊN - 0989 999 999)</td>
+                                            <td>
+                                                <button type="button" class="btn btn-info">Info</button>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>#15623</th>
@@ -194,8 +204,10 @@
                                             <td>1.000.000 VNĐ</td>
                                             <td>1</td>
                                             <td>ANHNGACTS</td>
-                                            <td>Nguyễn Thị B (SGF - NHÂN VIÊN - 0989 999 999) </td>
-                                            <td><button type="button" class="btn btn-info">Info</button></td>
+                                            <td>Nguyễn Thị B (SGF - NHÂN VIÊN - 0989 999 999)</td>
+                                            <td>
+                                                <button type="button" class="btn btn-info">Info</button>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>#15685</th>
@@ -205,8 +217,10 @@
                                             <td>1.000.000 VNĐ</td>
                                             <td>1</td>
                                             <td>ANHNGACTS</td>
-                                            <td>Nguyễn Thị AA (SGF - NHÂN VIÊN - 0989 999 999) </td>
-                                            <td><button type="button" class="btn btn-info">Info</button></td>
+                                            <td>Nguyễn Thị AA (SGF - NHÂN VIÊN - 0989 999 999)</td>
+                                            <td>
+                                                <button type="button" class="btn btn-info">Info</button>
+                                            </td>
                                         </tr>
                                         <!-- Repeat -->
                                         <tr>
@@ -217,8 +231,10 @@
                                             <td>1.000.000 VNĐ</td>
                                             <td>1</td>
                                             <td>ANHNGACTS</td>
-                                            <td>Nguyễn Thị E (SGF - NHÂN VIÊN - 0989 999 999) </td>
-                                            <td><button type="button" class="btn btn-info">Info</button></td>
+                                            <td>Nguyễn Thị E (SGF - NHÂN VIÊN - 0989 999 999)</td>
+                                            <td>
+                                                <button type="button" class="btn btn-info">Info</button>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>#16785</th>
@@ -228,8 +244,10 @@
                                             <td>1.000.000 VNĐ</td>
                                             <td>1</td>
                                             <td>ANHNGACTS</td>
-                                            <td>Nguyễn Thị G (SGF - NHÂN VIÊN - 0989 999 999) </td>
-                                            <td><button type="button" class="btn btn-info">Info</button></td>
+                                            <td>Nguyễn Thị G (SGF - NHÂN VIÊN - 0989 999 999)</td>
+                                            <td>
+                                                <button type="button" class="btn btn-info">Info</button>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -254,10 +272,12 @@
                                 <div>
                                     <div class="toolbar">
                                         <button id="one_month"
-                                                class="btn btn-rounded btn-sm btn-primary">1M</button>
+                                                class="btn btn-rounded btn-sm btn-primary">1M
+                                        </button>
                                         <button id="six_months" class="btn btn-rounded btn-sm btn-info">6M</button>
                                         <button id="one_year"
-                                                class="btn btn-rounded btn-sm active btn-success">1Y</button>
+                                                class="btn btn-rounded btn-sm active btn-success">1Y
+                                        </button>
                                         <button id="ytd" class="btn btn-rounded btn-sm btn-danger">YTD</button>
                                         <button id="all" class="btn btn-rounded btn-sm btn-warning">ALL</button>
                                     </div>
@@ -268,10 +288,10 @@
                         <div class="box">
                             <div class="box-header">
                                 <ul class="nav nav-pills">
-                                    <li class=" nav-item"> <a href="#navpills2-1" class="nav-link active"
-                                                              data-toggle="tab" aria-expanded="false">Buy BTC</a> </li>
-                                    <li class="nav-item"> <a href="#navpills2-2" class="nav-link" data-toggle="tab"
-                                                             aria-expanded="false">Sell BTC</a> </li>
+                                    <li class=" nav-item"><a href="#navpills2-1" class="nav-link active"
+                                                             data-toggle="tab" aria-expanded="false">Buy BTC</a></li>
+                                    <li class="nav-item"><a href="#navpills2-2" class="nav-link" data-toggle="tab"
+                                                            aria-expanded="false">Sell BTC</a></li>
                                 </ul>
                             </div>
                             <div class="box-body">
@@ -310,8 +330,10 @@
                                             </div>
                                         </div>
                                         <button type="button"
-                                                class="waves-effect waves-light btn btn-success mt-10 d-block w-p100">Buy
-                                            ETH</button>
+                                                class="waves-effect waves-light btn btn-success mt-10 d-block w-p100">
+                                            Buy
+                                            ETH
+                                        </button>
                                     </div>
                                     <div id="navpills2-2" class="tab-pane">
                                         <div class="input-group mb-15">
@@ -347,8 +369,10 @@
                                             </div>
                                         </div>
                                         <button type="button"
-                                                class="waves-effect waves-light btn btn-danger mt-10 d-block w-p100">Sell
-                                            ETH</button>
+                                                class="waves-effect waves-light btn btn-danger mt-10 d-block w-p100">
+                                            Sell
+                                            ETH
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -360,9 +384,9 @@
         </div>
     </div>
     <!-- /.content-wrapper -->
-    <jsp:include page="general/_footer.jsp" />
+    <jsp:include page="general/_footer.jsp"/>
     <!-- Control Sidebar -->
-    <jsp:include page="general/_controlSidebar.jsp" />
+    <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
@@ -375,7 +399,7 @@
 <script src="js/pages/dashboard9.js"></script>
 <script src="js/demo.js"></script>
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $(document).ready(function () {
         $("#loading").hide();
     });
 </script>

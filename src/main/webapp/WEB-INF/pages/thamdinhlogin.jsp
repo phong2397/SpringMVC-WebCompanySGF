@@ -21,7 +21,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thamdinh")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("nvthamdinh") || role.equals("nvkyduyet") || role.equals("nvnhacphi") || role.equals("nvthuphi") || role.equals("tnthamdinh") || role.equals("tncollection")) {
         } else {
             response.sendRedirect("404");
         }
@@ -192,6 +192,7 @@
                                     <table id="example" class="table table-lg invoice-archive" width="100%">
                                         <thead>
                                         <tr>
+                                            <th></th>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
                                             <th>Số CMND</th>
@@ -209,7 +210,9 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr id="tr-${lst.saRequest.id}">
-                                                <td><a data-toggle="modal" href="#"
+                                                <td>
+                                                </td>
+                                                <td><a data-toggle="modal" href="#" class="as"
                                                        onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
                                                 <td>
@@ -227,8 +230,7 @@
                                                 </td>
                                                 <td id="addColumn">
                                                     <c:choose>
-                                                        <c:when test="${empty  lst.saRequest.employeeThamdinh}"><b>Chưa
-                                                            có người thẩm định</b></c:when>
+                                                        <c:when test="${empty  lst.saRequest.employeeThamdinh}">-</c:when>
                                                         <c:otherwise>
                                                             ${lst.saRequest.employeeThamdinh}
                                                         </c:otherwise>
@@ -281,41 +283,7 @@
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <jsp:include page="general/modal.jsp"/>
-    <!-- Modal show employee thamdinh -->
-    <div class="modal modal-fill fade" id="modalThamdinh" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 style="color: #0b0b0b">Chọn người thẩm định</h4>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                    <div class="form-group">
-                        <label style="color:black">Tên người thẩm định</label><br>
-                        <select id="userLogin" class="form-control">
-                            <option selected disabled hidden>
-                                -- Vui lòng chọn --
-                            </option>
-                            <c:forEach items="${admin}" var="lst" varStatus="loop">
-                                <option value="${lst.userLogin}">
-                                    <span> ${lst.userLogin}</span>
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer modal-footer-uniform">
-                    <button type="button" onclick="chiadon(this)" class="btn btn-rounded btn-warning btn-update"
-                            data-dismiss="modal">Cập nhật
-                    </button>
-                    <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /.modal -->
+
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
@@ -349,11 +317,20 @@
                     next: "Trang sau",
                 }
             },
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            },
             pageLength: 10,
             columnDefs: [
                 {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0
+                },
+                {
                     visible: false,
-                    targets: [6, 9]
+                    targets: [7, 10]
                 },
             ],
             buttons: [
@@ -361,18 +338,22 @@
                     title: 'Danh sách chờ xét duyệt',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 10, 11]
+                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12]
                     }
                 },
             ]
         });
     });
     <%
-                  List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
-                  Gson g = new Gson();
-                  String json = g.toJson(list);
-                  %>
+                    List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
+                    Gson g = new Gson();
+                    String json = g.toJson(list);
+                      List<SaRequest> list1 = (List<SaRequest>) request.getAttribute("sa");
+                      Gson gs= new Gson();
+                      String json1 = gs.toJson(list1);
+                    %>
     var result = <%=json%>;
+    var list = <%=json1%>;
     var selectedsaId;
 
 

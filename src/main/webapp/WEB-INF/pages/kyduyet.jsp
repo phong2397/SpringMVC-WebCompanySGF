@@ -19,7 +19,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("kyduyet") || role.equals("thamdinh")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("nvthamdinh") || role.equals("nvkyduyet") || role.equals("nvnhacphi") || role.equals("nvthuphi") || role.equals("tnthamdinh") || role.equals("tncollection")) {
         } else {
             response.sendRedirect("404");
         }
@@ -183,8 +183,16 @@
                         <div class="box">
                             <div class="box-header with-border">
                                 <h4 class="box-title">Danh sách chờ duyệt</h4><br>
+                                <%
+                                    Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+                                    String role = u.getRole();
+                                    if (role.equals("root") || role.equals("tnthamdinh")) { %>
+                                <button class="btn btn-primary" data-toggle="modal" href="#modalKyduyet">Chia đơn
+                                </button>
+                                <% } else {
+                                }
+                                %>
 
-                                <button class="btn btn-primary">Chia đơn</button>
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
@@ -221,8 +229,15 @@
 
                                                 <td><input type="checkbox" class="checkEmployee"
                                                            value="${lst.saRequest.id}"/></td>
-                                                <td><a data-toggle="modal" href="#"
-                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
+                                                <td><%
+                                                    if (role.equals("root") || role.equals("tnthamdinh")) { %>
+                                                    <a data-toggle="modal" href="#" class="as"
+                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')">${lst.saRequest.id}</a>
+                                                    <% } else {%>
+                                                    <a data-toggle="modal" href="#" class="as"
+                                                       onclick="viewInfoNoaction('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')">${lst.saRequest.id}</a>
+                                                    <% }%>
+
                                                 </td>
                                                 <td>
                                                         ${lst.customer.customerName}
@@ -312,7 +327,7 @@
     <!-- /.control-sidebar -->
     <jsp:include page="general/modal.jsp"/>
     <!-- Modal show employee thamdinh -->
-    <div class="modal modal-fill fade" id="modalThamdinh" tabindex="-1">
+    <div class="modal modal-fill fade" id="modalKyduyet" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -330,7 +345,7 @@
                             </option>
                             <c:forEach items="${admin}" var="lst" varStatus="loop">
                                 <c:choose>
-                                    <c:when test="${lst.role eq 'kyduyet'}">
+                                    <c:when test="${lst.role eq 'nvkyduyet'}">
                                         <option value="${lst.userLogin}">
                                             <span> ${lst.userLogin}</span>
                                         </option>
@@ -365,16 +380,26 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="js/funcKyduyet.js">
 </script>
 <script type="text/javascript">
+    <%
+                List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
+                Gson g = new Gson();
+                String json = g.toJson(list);
+
+                  List<SaRequest> listSa = (List<SaRequest>) request.getAttribute("sa");
+                  Gson gSa= new Gson();
+                  String jsonSa = gSa.toJson(listSa);
+                %>
+    var result = <%=json%>;
+    var saList = <%=jsonSa%>;
+    console.log(saList)
     var selectedsaId;
     $(document).ready(function () {
 
         $("#loading").hide();
-        $("body").on("click", ".btn-primary", function () {
-            $('#modalThamdinh').modal('show');
-        })
         $('#example').DataTable({
             dom: 'Bfrtip',
             ordering: false,
@@ -387,11 +412,11 @@
                     next: "Trang sau",
                 }
             },
-            pageLength: 10,// phân 10 kết quả cho mỗi trang
+            pageLength: 10,
             columnDefs: [
                 {
                     visible: false,
-                    targets: [7, 10, 17]// ẩn đi các column đã chọn
+                    targets: [7, 10, 17]
                 },
             ],
             buttons: [
@@ -399,22 +424,12 @@
                     title: 'Danh sách giải ngân ',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17]// export excel các column đã chọn
+                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17]
                     }
                 },
             ]
         })
     });
-    <%
-                  List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
-                  Gson g = new Gson();
-                  String json = g.toJson(list);
-                    List<SaRequest> list1 = (List<SaRequest>) request.getAttribute("sa");
-                    Gson gs= new Gson();
-                    String json1 = gs.toJson(list1);
-                  %>
-    var result = <%=json%>;
-    var list = <%=json1%>;
 
 
 </script>

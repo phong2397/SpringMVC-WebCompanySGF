@@ -72,6 +72,8 @@ public class SignController {
             String empDuyet = u.getUserLogin();
             List<MergeDataOrder> listXetduyetLogin = mergeDataService.getUserDuyet("wfs", empDuyet);
             mm.addAttribute(Consts.Attr_ResultView, listXetduyetLogin);
+            List<SaRequest> saRequest = saRequestDAO.findAll();
+            mm.addAttribute("sa", saRequest);
             mm.addAttribute("countAct", countAct);
             mm.addAttribute("countWait", countWait);
             mm.addAttribute("countWFS", countWFS);
@@ -104,41 +106,27 @@ public class SignController {
     }
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
-    public String welcomePage(ModelMap mm, HttpServletRequest request) {
+    public String welcomePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
         int countAct = mergeDataService.countStatus("act");
         int countDone = mergeDataService.countStatus("done");
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
-        List<Useradmin> admin = useradminDAO.findAll();
-        mm.addAttribute("admin", admin);
-        List<SaRequest> saRequest = saRequestDAO.findAll();
-        mm.addAttribute("sa", saRequest);
-        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countDone", countDone);
-        return "kyduyet";
-    }
-
-    @RequestMapping(value = {"/kyduyetnoaction"}, method = RequestMethod.GET)
-    public String kyduyetnoaction(ModelMap mm, HttpServletRequest request) {
-        int countWait = mergeDataService.countStatus("wait");
-        int countWFS = mergeDataService.countStatus("wfs");
-        int countAct = mergeDataService.countStatus("act");
-        int countDone = mergeDataService.countStatus("done");
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
-        List<Useradmin> admin = useradminDAO.findAll();
-        mm.addAttribute("admin", admin);
-        List<SaRequest> saRequest = saRequestDAO.findAll();
-        mm.addAttribute("sa", saRequest);
-        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countDone", countDone);
-        return "kyduyetnoaction";
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
+            List<Useradmin> admin = useradminDAO.findAll();
+            mm.addAttribute("admin", admin);
+            List<SaRequest> saRequest = saRequestDAO.findAll();
+            mm.addAttribute("sa", saRequest);
+            mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+            mm.addAttribute("countWait", countWait);
+            mm.addAttribute("countWFS", countWFS);
+            mm.addAttribute("countAct", countAct);
+            mm.addAttribute("countDone", countDone);
+            return "kyduyet";
+        }
     }
 
     @RequestMapping(value = "/updateEmployeeDuyet", method = RequestMethod.POST)
@@ -174,7 +162,6 @@ public class SignController {
         String data = request.getParameter("datarequest"); //id cua order request
         String status = request.getParameter("status");
         String step = request.getParameter("step");
-        String textdecline = request.getParameter("textDecline");
         String employeeDuyet = request.getParameter("employeeDuyet");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
@@ -207,7 +194,6 @@ public class SignController {
                     saRequestDAO.update(sa);
                     return "success";
                 } else if (status.equals("deni")) {
-                    sa.setDescription(textdecline);
                     sa.setEmployeeDuyet(employeeDuyet);
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
                     sa.setUpdatedDate(LocalDateTime.now());

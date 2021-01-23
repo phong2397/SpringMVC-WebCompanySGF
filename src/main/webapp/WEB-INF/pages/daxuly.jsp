@@ -16,7 +16,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("thuhoi") || role.equals("truongthuhoi")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")) {
         } else {
             response.sendRedirect("404");
         }

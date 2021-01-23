@@ -5,9 +5,11 @@ import com.sgfintech.dao.SaRequestDAO;
 import com.sgfintech.dao.UseradminDAO;
 import com.sgfintech.entity.SaRequest;
 import com.sgfintech.entity.Useradmin;
+import com.sgfintech.handler.CustomerHandler;
 import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.service.SaRequestService;
+import com.sgfintech.service.UseradminService;
 import com.sgfintech.util.Consts;
 import com.sgfintech.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ public class ApprovalController {
 
     @Autowired
     UseradminDAO useradminDAO;
+
+    @Autowired
+    UseradminService useradminService;
 
     @RequestMapping(value = {"/tuchoi"}, method = RequestMethod.GET)
     public String declinePage(ModelMap mm, HttpServletRequest request) {
@@ -90,10 +95,11 @@ public class ApprovalController {
         if (u == null) {
             return "redirect:login";
         } else {
-
             String empThamdinh = u.getUserLogin();
             List<MergeDataOrder> listThamdinhLogin = mergeDataService.getUserThamdinh("wait", empThamdinh);
             mm.addAttribute(Consts.Attr_ResultView, listThamdinhLogin);
+            List<SaRequest> sa = saRequestDAO.findAll();
+            mm.addAttribute("sa", sa);
             mm.addAttribute("countAct", countAct);
             mm.addAttribute("countWait", countWait);
             mm.addAttribute("countWFS", countWFS);
@@ -120,41 +126,27 @@ public class ApprovalController {
     }
 
     @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
-    public String thamdinhPage(ModelMap mm, HttpServletRequest request) {
+    public String thamdinhPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
         int countAct = mergeDataService.countStatus("act");
         int countDone = mergeDataService.countStatus("done");
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("wait");
-        List<SaRequest> sa = saRequestDAO.findAll();
-        List<Useradmin> admin = useradminDAO.findAll();
-        mm.addAttribute("admin", admin);
-        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("sa", sa);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countDone", countDone);
-        return "thamdinh";
-    }
-
-    @RequestMapping(value = {"/thamdinhnoaction"}, method = RequestMethod.GET)
-    public String thamdinhnoaction(ModelMap mm, HttpServletRequest request) {
-        int countWait = mergeDataService.countStatus("wait");
-        int countWFS = mergeDataService.countStatus("wfs");
-        int countAct = mergeDataService.countStatus("act");
-        int countDone = mergeDataService.countStatus("done");
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("wait");
-        List<SaRequest> sa = saRequestDAO.findAll();
-        List<Useradmin> admin = useradminDAO.findAll();
-        mm.addAttribute("admin", admin);
-        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("sa", sa);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countDone", countDone);
-        return "thamdinhnoaction";
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("wait");
+            List<SaRequest> sa = saRequestDAO.findAll();
+            List<Useradmin> admin = useradminDAO.findAll();
+            mm.addAttribute("admin", admin);
+            mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+            mm.addAttribute("sa", sa);
+            mm.addAttribute("countWait", countWait);
+            mm.addAttribute("countWFS", countWFS);
+            mm.addAttribute("countAct", countAct);
+            mm.addAttribute("countDone", countDone);
+            return "thamdinh";
+        }
     }
 
     @Autowired
@@ -186,6 +178,16 @@ public class ApprovalController {
         }
     }
 
+    @RequestMapping(value = "/findHistoryModal", method = RequestMethod.POST)
+    public @ResponseBody
+    String findHistoryModal(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String phone = request.getParameter("phone");
+        List<MergeDataOrder> result = mergeDataService.findhistoryModal(phone);
+        Gson g = new Gson();
+        String responseStr = g.toJson(result);
+        return responseStr;
+    }
+
     @RequestMapping(value = "/changes", method = RequestMethod.POST)
     public @ResponseBody
     String changeStatusOrder(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -202,6 +204,7 @@ public class ApprovalController {
                 sa.setDescription(textDecline);
                 sa.setEmployeeThamdinh(employeeThamdinh);
                 sa.setEmployeeThamdinhDate(LocalDateTime.now());
+                sa.setEmployeeDuyet(useradminService.randomUserXetDuyet());
                 sa.setUpdatedDate(LocalDateTime.now());
                 saRequestDAO.update(sa);
                 return "success";
@@ -212,6 +215,7 @@ public class ApprovalController {
             return "error";
         }
     }
+
 
     @RequestMapping(value = "/updateStatusDecline", method = RequestMethod.POST)
     public @ResponseBody
@@ -228,6 +232,7 @@ public class ApprovalController {
                 sa.setStatus(status.trim());
                 sa.setDescription(textDecline);
                 sa.setEmployeeThamdinhDate(LocalDateTime.now());
+                sa.setEmployeeDuyet(employee);
                 sa.setUpdatedDate(LocalDateTime.now());
                 saRequestDAO.update(sa);
                 return "success";
@@ -238,4 +243,5 @@ public class ApprovalController {
             return "error";
         }
     }
+
 }

@@ -18,7 +18,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("tnthamdinh") || role.equals("tncollection")) {
         } else {
             response.sendRedirect("404");
         }
@@ -91,27 +91,43 @@
                                                 <option selected disabled hidden>
                                                     -- Vui lòng chọn --
                                                 </option>
+                                                <%
+                                                    Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+                                                    if (u.getRole().equals("tnthamdinh")) {
+                                                %>
+                                                <option value="nvthamdinh">
+                                                    <span>Nhân viên thẩm định</span>
+                                                </option>
+                                                <option value="nvkyduyet">
+                                                    <span>Nhân viên ký duyệt</span>
+                                                </option>
+                                                <% } else if (u.getRole().equals("root")) {
+                                                %>
                                                 <option value="upload">
-                                                    <span> upload</span>
+                                                    <span>upload</span>
                                                 </option>
-                                                <option value="thamdinh">
-                                                    <span> thamdinh</span>
-                                                </option>
-                                                <option value="kyduyet">
-                                                    <span> kyduyet</span>
-                                                </option>
-                                                <option value="thuhoi">
-                                                    <span> thuhoi</span>
+                                                <option value="tnthamdinh">
+                                                    <span>Trưởng nhóm thẩm định</span>
                                                 </option>
                                                 <option value="ketoan">
-                                                    <span> ketoan</span>
+                                                    <span>Kế toán</span>
                                                 </option>
                                                 <option value="ketoantruong">
-                                                    <span> ketoantruong</span>
+                                                    <span>Kế toán trưởng</span>
                                                 </option>
-                                                <option value="truongthuhoi">
-                                                    <span> truongthuhoi</span>
+                                                <option value="tncollection">
+                                                    <span> Trưởng nhóm collection</span>
                                                 </option>
+                                                <% } else if (u.getRole().equals("tncollection")) {
+                                                %>
+                                                <option value="nvnhacphi">
+                                                    <span> Nhân viên nhắc phí</span>
+                                                </option>
+                                                <option value="nvthuphi">
+                                                    <span>Nhân viên thu phí</span>
+                                                </option>
+                                                <% }%>
+
                                             </select>
                                         </div>
 

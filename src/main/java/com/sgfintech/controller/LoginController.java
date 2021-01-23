@@ -34,7 +34,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String checkLogin(HttpServletRequest request, HttpSession session) {
+    public String checkLogin(HttpServletRequest request, HttpSession session, ModelMap mm) {
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
         Useradmin u = useradminService.checkUser(user);
