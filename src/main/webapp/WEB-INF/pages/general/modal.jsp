@@ -109,24 +109,44 @@
                         </div>
                         <div class="row">
                             <div class="col-3 ">
-                                <p id="imgCMND"></p><br>
+                                <div class="slide-container">
+                                    <p id="imgCMND"></p>
+                                </div>
+                                <br>
                                 <p>- Số CMND : <span id="customerId" style="color:grey;"></span></p>
                                 <p>- Ngày cấp : <span id="dayid" style="color:grey;"></span>/<span id="monthid"
                                                                                                    style="color:grey;"></span>/<span
                                         id="yearid" style="color:grey;"></span></p>
                                 <p>- Nơi cấp : <span id="customerIdLocation" style="color:grey;"></span></p></div>
-                            <div class="col-3 "><p id="imgHealth"></p><br>
+                            <div class="col-3 ">
+                                <div class="slide-container">
+                                    <p id="imgHealth"></p>
+                                </div>
+                                <br>
                                 <p>- Số bảo hiểm y tế : <span id="customerHealthInsurance" style="color:grey;"></span>
                                 </p>
                             </div>
-                            <div class="col-3 "><p id="imgPayslip"></p></div>
+                            <div class="col-3 ">
+                                <div class="slide-container">
+                                    <p id="imgPayslip"></p>
+                                </div>
+                            </div>
                             <div class="col-3 ">
                                 <p>Hình ảnh phụ lục :</p>
-                                <p id="imgAppendix"></p><br>
+                                <div class="slide-container">
+                                    <p id="imgAppendix"></p>
+                                </div>
+                                <p id=""></p><br>
                                 <p>Hình ảnh bảo hiểm xã hội :</p>
-                                <p id="imgSocial"></p><br>
+                                <div class="slide-container">
+                                    <p id="imgSocial"></p>
+                                </div>
+                                <br>
                                 <p>Hình ảnh hợp đồng lao động :</p>
-                                <p id="imgContract"></p></div>
+                                <div class="slide-container">
+                                    <p id="imgContract"></p>
+                                </div>
+                            </div>
                         </div>
                         <hr>
                         <h4 id="labelDanhgia"></h4>
@@ -273,6 +293,215 @@
                 </button>
                 <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang</button>
             </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<!-- Modal show info customer -->
+<div tabindex="-1" class="modal modal-right fade" id="modalRepayment" role="dialog" aria-hidden="true"
+     aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="tabbable">
+                    <!-- Nav Tabs, Modal Nav Bar -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item active">
+                            <a class="nav-link active" href="#basicInfo" data-toggle="tab">
+                                Thông tin khách hàng
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#impact" data-toggle="tab">
+                                Tình trạng tác động
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link " href="#plan" data-toggle="tab">
+                                Kế hoạch trả
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#document" data-toggle="tab">
+                                Thông tin thẩm định và hình ảnh
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+                <!-- Close Button -->
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Panes -->
+
+            <div class="modal-body">
+                <div class="tab-content">
+                    <div class="tab-pane" id="impact">
+                        <h4>&nbsp;&nbsp;Ghi chép tình trạng </h4>
+                        <div class="box-body">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Số hợp đồng : </label>
+                                    <span id="idContractimp"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Số điện thoại di động : </label>
+                                    <span id="customerPhoneimp"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Kết quả thu thập
+                                        : </label><select id="chkveg" data-style="btn-default"
+                                                          class="selectpicker form-control" multiple>
+                                    <option value="Khách hàng có bắt máy">
+                                        <span>Khách hàng có bắt máy</span>
+                                    </option>
+                                    <option value="Thuê bao không liên lạc được">
+                                        <span>Thuê bao không liên lạc được</span>
+                                    </option>
+                                    <option value="Hứa thanh toán">
+                                        <span>Hứa thanh toán</span>
+                                    </option>
+                                    <option value="Đã thanh toán( KH nói đã thanh toán nhưng tiền chưa về )">
+                                        <span>Đã thanh toán( KH nói đã thanh toán nhưng tiền chưa về )</span>
+                                    </option>
+                                    <option value="Khách hàng không hợp tác thanh toán ">
+                                        <span>Khách hàng không hợp tác thanh toán </span>
+                                    </option>
+                                    <option value="Có đổ chuông, không nghe máy/ kẹt máy hoặc hộp thư thoại">
+                                        <span>Có đổ chuông, không nghe máy/kẹt máy hoặc hộp thư thoại </span>
+                                    </option>
+                                    <option value="Khách hàng không có khả năng trả nợ">
+                                        <span>Khách hàng không có khả năng trả nợ</span>
+                                    </option>
+                                    <option value="Khách bị giam tù hoặc đã chết/ bệnh/ tai nạn">
+                                        <span>Khách bị giam tù hoặc đã chết/ bệnh/tai nạn</span>
+                                    </option>
+                                    <option value="Đang chờ nhận tiền lương">
+                                        <span>Đang chờ nhận tiền lương</span>
+                                    </option>
+                                    <option value="Không thể thanh toán do thất nghiệp/ vay nhiều">
+                                        <span>Không thể thanh toán do thất nghiệp/ vay nhiều</span>
+                                    </option>
+                                    <option value="Không thể thanh toán muốn chia nhỏ ra từng phần">
+                                        <span>Không thể thanh toán muốn chia nhỏ ra từng phần</span>
+                                    </option>
+                                    <option value="Khác: những TH không có ở trên">
+                                        <span>Khác: những TH không có ở trên</span>
+                                    </option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Diễn giải : </label>
+                                    <textarea class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-rounded btn-primary">
+                                Xác nhận
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane" id="plan">
+                        <table class="table table-striped table-bordered no-margin"
+                               width="100%">
+                            <thead>
+                            <tr>
+                                <th class="text-center">Trạng thái thanh toán</th>
+                                <th class="text-center">Thời gian cần thanh toán</th>
+                                <th class="text-left">Số tiền tạm ứng</th>
+                                <th class="text-left">Phí dịch vụ</th>
+                                <th class="text-left">Mức phí</th>
+                                <th class="text-left">Thời gian tạm ứng</th>
+                                <th class="text-left">Tổng số tiền phải trả</th>
+                            </tr>
+                            </thead>
+                            <tbody id="planShow">
+
+                            <tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="document">
+                        <h4>Chứng từ : Hình ảnh </h4>
+                        <div class="row">
+                            <div class="col-3 ">CMND <br>(Hình ảnh 2 mặt)</div>
+                            <div class="col-3 ">BHYT <br>(Hình ảnh 1 mặt)</div>
+                            <div class="col-3 ">Phiếu lương <br>(Hình ảnh 1 mặt của 3 phiếu lương gần nhất)</div>
+                            <div class="col-3 ">Chứng từ bổ sung</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3 ">
+                                <div class="slide-container">
+                                    <p id="imgCMNDc"></p>
+                                </div>
+                            </div>
+
+                            <div class="col-3 "><p id="imgHealthc"></p><br>
+                            </div>
+                            <div class="col-3 ">
+                                <div class="slide-container"><p id="imgPayslipc"></p></div>
+                            </div>
+                            <div class="col-3 ">
+                                <p>Hình ảnh phụ lục :</p>
+                                <div class="slide-container">
+                                    <p id="imgAppendixc"></p></div>
+                                <br>
+                                <p>Hình ảnh bảo hiểm xã hội :</p>
+                                <div class="slide-container">
+                                    <p id="imgSocialc"></p></div>
+                                <br>
+                                <p>Hình ảnh hợp đồng lao động :</p>
+                                <div class="slide-container">
+                                    <p id="imgContractc"></p></div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane active" id="basicInfo">
+                        <h4>&nbsp;&nbsp;Thông tin khách hàng</h4>
+                        <div class="row">
+                            <div class="col-3 ">
+                                <p>Họ và tên : <span id="customerNamec" style="color:grey;"></span></p>
+                                <p>Địa chỉ thường trú : <span id="customerAddressc" style="color:grey;"></span></p>
+                            </div>
+                            <div class="col-3">
+                                <p>Số CMND : <span id="customerIdc" style="color:grey;"></span></p>
+                                <p>Địa chỉ tạm trú : <span id="customerAddressTempc" style="color:grey;"></span></p>
+                            </div>
+                            <div class="col-2 ">
+                                <p>Ngày sinh : <span id="dayc" style="color:grey;"></span>/<span id="monthc"
+                                                                                                 style="color:grey;"></span>/<span
+                                        id="yearc" style="color:grey;"></span></p>
+                                <p>Email : <span id="customerEmailc" style="color:grey;"></span></p>
+                            </div>
+                            <div class="col-2 ">
+                                <p>Vị trí công việc : <span id="customerPositionc" style="color:grey;"></span></p>
+                                <p>Mức lương : <span id="customerSalaryc" style="color:grey;"></span></p>
+                            </div>
+                            <div class="col-2 ">
+                                <p>Tên công ty : <span id="companyName" style="color:grey;"></span></p>
+                                <p>Số điện thoại công ty : <span id="companyPhone" style="color:grey;"></span></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer modal-footer-uniform">
+                <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang
+                </button>
+            </div>
+
         </div>
     </div>
 </div>

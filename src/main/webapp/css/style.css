@@ -26331,6 +26331,11 @@ textarea.form-control {
     border-radius: 0;
 }
 
+.slide-container {
+    overflow: auto;
+    white-space: nowrap;
+}
+
 .modal-content {
     border-radius: 0;
     -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.125);
@@ -26359,8 +26364,7 @@ textarea.form-control {
     padding: 5px;
     max-width: 100%;
     max-height: 100%;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    margin-right: 5px;
 }
 
 .model_img {

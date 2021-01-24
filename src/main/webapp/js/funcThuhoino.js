@@ -126,15 +126,15 @@ function viewInfo(idContract, custPhone) {
     $('#main').slideDown("slow");
 }
 
-function viewInfoCustomer(params) {
+function viewInfoCustomer(phone, comId, idContract) {
     let username = "sgfintech";
     let password = "k6mzMtPJLPMi5crF";
     result.forEach((customer) => {
-        if (customer.customer.customerPhone == params) {
+        if (customer.customer.customerPhone == phone) {
             $.ajax({
-                url: 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
+                url: 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + phone,
                 headers: {
-                    "Access-Control-Allow-Origin": 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + params,
+                    "Access-Control-Allow-Origin": 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + phone,
                     "Access-Control-Allow-Credentials": true,
                 },
                 beforeSend: function (xhr) {
@@ -145,73 +145,72 @@ function viewInfoCustomer(params) {
                 dataType: 'json',
                 success: function (data) {
                     const imgCMND = JSON.parse(data.cmnd);
-                    $('#imgCMND').empty();
+                    $('#imgCMNDc').empty();
                     Object.keys(imgCMND).forEach((key) => {
-                        console.log(imgCMND[key])
-                        if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
-                            $('#imgCMND').append('Bổ sung hình ảnh');
+                        if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                            $('#imgCMNDc').append('Bổ sung hình ảnh');
                         } else {
-                            $('#imgCMND').append('<img style="width: 100%" src="' + imgCMND[key] + '"/>');
+                            $('#imgCMNDc').append('<img class="img" src="' + imgCMND[key] + '"/>');
                         }
                     });
                     const payslipObj = JSON.parse(data.payslip);
-                    $('#imgPayslip').empty();
+                    $('#imgPayslipc').empty();
                     Object.keys(payslipObj).forEach((key) => {
                         console.log(payslipObj[key])
-                        if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
-                            $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
+                        if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                            $('#imgPayslipc').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
-                            $('#imgPayslip').append('<img style="width: 100%" src="' + payslipObj[key] + '"/>');
+                            $('#imgPayslipc').append('<img class="img" src="' + payslipObj[key] + '"/>');
                         }
                     });
                     const salaryObj = JSON.parse(data.salary);
-                    $('#imgSalary').empty();
+                    $('#imgSalaryc').empty();
                     Object.keys(salaryObj).forEach((key) => {
                         console.log(salaryObj[key]);
-                        if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
-                            $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
+                        if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                            $('#imgSalaryc').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
-                            $('#imgSalary').append('<img style="width: 100%" src="' + salaryObj[key] + '"/>');
+                            $('#imgSalaryc').append('<img class="img" src="' + salaryObj[key] + '"/>');
                         }
                     });
                     const healthObj = JSON.parse(data.health);
-                    $('#imgHealth').empty();
+                    $('#imgHealthc').empty();
                     Object.keys(healthObj).forEach((key) => {
                         console.log(healthObj[key]);
-                        if (healthObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
-                            $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
+                        if (healthObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                            $('#imgHealthc').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
-                            $('#imgHealth').append('<img style="width: 100%"  src="' + healthObj[key] + '"/>');
+                            $('#imgHealthc').append('<img class="img"  src="' + healthObj[key] + '"/>');
                         }
                     });
                     const appendixObj = JSON.parse(data.appendix);
-                    $('#imgAppendix').empty();
+                    $('#imgAppendixc').empty();
                     Object.keys(appendixObj).forEach((key) => {
                         console.log(appendixObj[key]);
-                        if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
-                            $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
+                        if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                            $('#imgAppendixc').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
-                            $('#imgAppendix').append('<img style="width: 100%" src="' + appendixObj[key] + '"/>');
+                            $('#imgAppendixc').append('<img class="img" src="' + appendixObj[key] + '"/>');
                         }
                     });
                     const socialObj = JSON.parse(data.social);
-                    $('#imgSocial').empty();
+                    $('#imgSocialc').empty();
                     Object.keys(socialObj).forEach((key) => {
                         console.log(socialObj[key]);
-                        if (socialObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
-                            $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
+                        if (socialObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                            $('#imgSocialc').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
-                            $('#imgSocial').append('<img style="width: 100%" src="' + socialObj[key] + '"/>');
+                            $('#imgSocialc').append('<img class="img" src="' + socialObj[key] + '"/>');
                         }
                     });
                     const contractObj = JSON.parse(data.contract);
-                    $('#imgContract').empty();
+                    $('#imgContractc').empty();
                     Object.keys(contractObj).forEach((key) => {
                         console.log(contractObj[key]);
-                        if (contractObj[key] == 'http://dev.sgft.info:8080/upload/' + params + '@') {
-                            $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
+                        if (contractObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                            $('#imgContractc').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
-                            $('#imgContract').append('<img style="width: 100%" src="' + contractObj[key] + '"/>');
+                            $('#imgContractc').append('<img style="width: 100%" src="' + contractObj[key] + '"/>');
                         }
                     });
                 },
@@ -221,19 +220,63 @@ function viewInfoCustomer(params) {
             Object.keys(c).forEach((key) => {
                 if (key == "customerSalary") {
                     value = c[key]
-                    $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+                    $('#' + key + 'c').text(value.toLocaleString("vi-VN") + " đ");
                     Object.keys(date).forEach((key) => {
-                        console.log(date[key])
-                        $('#' + key).text(date[key]);
+                        if (key == "monthc" || key == "dayc") {
+                            value1 = "0" + date[key]
+                            $('#' + key + 'c').text(value1.slice(-2));
+                        } else {
+                            $('#' + key + 'c').text(date[key]);
+                        }
+
                     })
                 } else {
-                    $('#' + key).text(c[key]);
+                    $('#' + key + 'c').text(c[key]);
                 }
             })
+
         }
     })
-    console.log(result);
-    $('#modal-right').modal('show');
+    list = result.find(el => el.companies.id == comId);
+    let com = list.companies;
+    console.log(com)
+    Object.keys(com).forEach((key) => {
+        $('#' + key).text(com[key]);
+        if (key = "companyPhone") {
+            valuephone = com[key]
+            console.log(valuephone)
+            if (value !== "undefined" && valuephone) {
+                $('#' + key).text(com[key]);
+            } else {
+                $('#' + key).text('Số điện thoại không có');
+            }
+        }
+    })
+
+    list = result.find(el => el.contract.idContract == idContract);
+    let con = list.contract;
+    let time = con.createdDate;
+    $('#planShow').empty();
+    var rowElement = $('<tr></tr>');
+    rowElement.append('<td class="text-center">' + 'Nhắc hạn' + '</td>');
+    rowElement.append('<td class="text-center"><h5>' + '05/02/2021' + ' đ</h5></td>');
+    rowElement.append('<td><h5>' + con.borrow.toLocaleString("vi-VN") + ' đ</h5></td>');
+    rowElement.append('<td><h5>' + '2 %' + '</h5></td>');
+    rowElement.append('<td><h5>' + (con.borrow * 0.02).toLocaleString("vi-VN") + ' đ</h5></td>');
+    rowElement.append('<td><h5>' + ("0" + (time.date.day)).slice(-2) + '/' + ("0" + (time.date.month)).slice(-2) + '/' + time.date.year + ' ' + ("0" + (time.time.hour)).slice(-2) + ':' + ("0" + (time.time.minute)).slice(-2) + ':' + ("0" + (time.time.second)).slice(-2) + '</h5></td>');
+    rowElement.append('<td><h5>' + (con.borrow + (con.borrow * 0.02)).toLocaleString("vi-VN") + ' đ</h5></td>');
+    $('#planShow').append(rowElement);
+    Object.keys(con).forEach((key) => {
+        console.log(con[key])
+
+        $('#' + key + 'imp').text(con[key]);
+    })
+
+
+    $('#modalRepayment').modal('show');
 }
 
+$("#rootcheckbox").click(function () {
+    $('input:checkbox').not(this).prop('checked', this.checked);
+});
 

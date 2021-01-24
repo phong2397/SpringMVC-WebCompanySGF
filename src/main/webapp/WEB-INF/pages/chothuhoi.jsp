@@ -34,7 +34,18 @@
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <!-- Site wrapper -->
 <div class="wrapper">
+    <style type="text/css">
+        input[type="checkbox"] {
+            left: inherit !important;
+            /*position: absolute !important;*/
+            display: block !important;
+            opacity: 100 !important;
+        }
 
+        .multiselect-container > li > a > label {
+            padding: 4px 20px 3px 20px;
+        }
+    </style>
     <jsp:include page="general/_header.jsp"/>
     <!-- Left side column. contains the logo and sidebar -->
     <jsp:include page="general/_menu.jsp"/>
@@ -46,14 +57,15 @@
             <div class="content-header">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="page-title">Chờ thu hồi</h3>
+                        <h3 class="page-title">Tổng danh sách khách hàng</h3>
                         <div class="d-inline-block align-items-center">
                             <nav>
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a>
                                     </li>
-                                    <li class="breadcrumb-item" aria-current="page">Thu hồi nợ</li>
-                                    <li class="breadcrumb-item active" aria-current="page">Chờ thu hồi</li>
+                                    <li class="breadcrumb-item" aria-current="page">Repayment</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Tổng danh sách khách hàng
+                                    </li>
                                 </ol>
                             </nav>
                         </div>
@@ -64,10 +76,110 @@
             <!-- Main content -->
             <section class="content">
                 <div class="row">
+                    <div class="col-lg-12 col-12">
+                        <div class="box">
+                            <!-- /.box-header -->
+                            <form class="form-control">
+                                <div class="box-body">
+                                    <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin khách hàng
+                                    </h4>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Họ và tên khách hàng</label>
+                                                <input type="text" class="form-control" name="customerPhone"
+                                                       id="customerName"
+                                                       placeholder="Số điện thoại">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Ngày trễ hạn</label>
+                                                <input type="text" class="form-control" name="customerId"
+                                                       id="ngaytrehan"
+                                                       placeholder="Số CMND">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Giai đoạn trễ hạn</label>
+                                                <input type="text" class="form-control" name="customerName"
+                                                       id="gdtrehan"
+                                                       placeholder="Họ và tên">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Ngày gọi cuối cùng</label>
+                                                <input type="text" class="form-control" name="customerName"
+                                                       id="lastcallday"
+                                                       placeholder="Họ và tên">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Ngày hứa thanh toán</label>
+                                                <input type="text" class="form-control" name="customerName"
+                                                       id="promiseday"
+                                                       placeholder="Họ và tên">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Số điện thoại</label>
+                                                <input type="text" class="form-control" name="customerName"
+                                                       id="phone"
+                                                       placeholder="Họ và tên">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Số hợp đồng</label>
+                                                <input type="text" class="form-control" name="customerName"
+                                                       id="idContract"
+                                                       placeholder="Họ và tên">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Tình trạng</label>
+                                                <input type="text" class="form-control" name="customerName"
+                                                       id="status"
+                                                       placeholder="Họ và tên">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Số CMND</label>
+                                                <input type="text" class="form-control" name="customerId"
+                                                       id="customerId"
+                                                       placeholder="Số CMND">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Số lần tạm ứng</label>
+                                                <input type="text" class="form-control" name="customerId"
+                                                       id=""
+                                                       placeholder="Số CMND">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-rounded btn-primary btn-outline">
+                                        <i class="ti-save-alt"></i> Tìm kiếm
+                                    </button>
+                                    <button type="button" class="btn btn-rounded btn-warning btn-outline btn-reset">
+                                        <i class="ti-back-right"></i> Đặt lại
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.box -->
+                    </div>
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <h4 class="box-title">Danh sách nhắc nợ</h4>
+                                <h4 class="box-title">Danh sách khách hàng</h4>
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
@@ -75,85 +187,83 @@
                                            width="100%">
                                         <thead>
                                         <tr>
-                                            <th class="text-center">Mã đơn vay</th>
-                                            <th>Thông tin khách hàng</th>
+                                            <th><input type="checkbox"
+                                                       id="rootcheckbox"></th>
+                                            <th class="text-center">Mã đơn</th>
+                                            <th>Giai đoạn trễ hạn</th>
+                                            <th>Ngày trễ hạn</th>
+                                            <th>Số hợp đồng</th>
+                                            <th>Họ tên khách hàng</th>
                                             <th>Số điện thoại</th>
-                                            <th>Tên khách hàng</th>
-                                            <th>Mã công ty</th>
-                                            <th>Số tài khoản</th>
-                                            <th>Tên ngân hàng</th>
-                                            <th class="text-left">Số tiền tối thiểu</th>
-                                            <th class="text-left">Số tiền còn nợ</th>
-                                            <th class="text-left">Số tiền tối thiểu</th>
-                                            <th class="text-left">Số tiền còn nợ</th>
-                                            <th class="text-left">Số tiền đã đóng</th>
-                                            <th class="text-left">Hạn thanh toán</th>
-                                            <th class="text-left">Kỳ thanh toán</th>
-                                            <th class="text-left">Nhân viên nhắc nợ</th>
-                                            <th class="text-left">Ngày nhắc nợ</th>
-                                            <th class="text-center">Trạng thái nhắc nợ</th>
+                                            <th>Số lần tạm ứng</th>
+                                            <th class="text-left">Tình trạng</th>
+                                            <th class="text-left">Thời gian yêu cầu tạm ứng</th>
+                                            <th class="text-left">Tổng số tiền phải trả</th>
+                                            <th class="text-left">Tổng số tiền phải trả</th>
+                                            <th class="text-left">Thời gian phân bổ gần đây</th>
+                                            <th class="text-left">Điện thoại cuối cùng</th>
+                                            <th class="text-left">Ngày thanh toán</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
+                                                <td><input type="checkbox" class="checkEmployee"
+                                                           value="${lst.contract.idContract}"/></td>
                                                 <td class="text-left"><a data-toggle="modal" href="#"
-                                                                         onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
+                                                                         onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.companies.id}','${lst.contract.idContract}')"
+                                                ><b>${lst.contract.idContract}</b></a>
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0">
-                                                            ${lst.customer.customerPhone}
-                                                        <span class="d-block text-muted">Tên khách hàng :${lst.customer.customerName}</span>
-                                                        <span class="d-block text-muted">Mã công ty :<b><a
-                                                                data-toggle="modal" href="#"
-                                                                onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
-                                                        <span class="d-block text-muted">Số tài khoản: ${lst.customer.customerBankAcc}</span>
-                                                        <span class="d-block text-muted">Tên ngân hàng : ${lst.customer.customerBankName}</span>
-                                                    </h6>
+                                                    S0 -2 0
                                                 </td>
                                                 <td>
-                                                    <b> ${lst.customer.customerPhone}</b>
+                                                    -2
                                                 </td>
                                                 <td>
-                                                    <b> ${lst.customer.customerName}</b>
+                                                        ${lst.customer.customerContract}
                                                 </td>
                                                 <td>
-                                                    <b> ${lst.customer.companyCode}</b>
+                                                        ${lst.customer.customerName}
                                                 </td>
                                                 <td>
-                                                    <b> ${lst.customer.customerBankAcc}</b>
+                                                        ${lst.customer.customerPhone}
+                                                </td>
+                                                <td> ${lst.contract.timeBorrow}
+                                                </td>
+                                                <td> Hứa thanh toán
                                                 </td>
                                                 <td>
-                                                    <b> ${lst.customer.customerBankName}</b>
-                                                </td>
-                                                <td><fmt:formatNumber value="${lst.contract.borrow}" type="number"/> đ
-                                                </td>
-                                                <td><fmt:formatNumber value="${lst.contract.borrow}" type="number"/> đ
-                                                </td>
-                                                <td>${lst.contract.borrow}
-                                                </td>
-                                                <td>${lst.contract.borrow}
-                                                </td>
-                                                <td>0</td>
-                                                <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
-                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
+                                                    <fmt:parseDate value=" ${lst.contract.createdDate}"
+                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="day"
                                                                    type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                                    value="${patientDob}"/>
+                                                                    value="${day}"/>
+
                                                 </td>
-                                                <td>1</td>
-                                                <td>-</td>
-                                                <td><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob"
-                                                                   type="date"/>
-                                                    <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
+                                                <td><fmt:formatNumber
+                                                        value="${lst.contract.borrow  * 0.02}"
+                                                        type="number"/> đ
+                                                </td>
+                                                <td> ${lst.contract.borrow  * 0.02}
+                                                </td>
                                                 <td>
-                                                    <select name="status" class="form-control"
-                                                            data-placeholder="Select status">
-                                                        <option value="overdue">Qúa hạn</option>
-                                                        <option value="pending" selected>Đang chờ</option>
-                                                        <option value="paid">Đã trả tiền</option>
-                                                        <option value="invalid">Không hợp lệ</option>
-                                                    </select>
+                                                    <fmt:parseDate value=" ${lst.contract.createdDate}"
+                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="day"
+                                                                   type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                    value="${day}"/>
+
+                                                </td>
+                                                <td>
+                                                    <fmt:parseDate value=" ${lst.contract.createdDate}"
+                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="day"
+                                                                   type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                    value="${day}"/>
+
+                                                </td>
+                                                <td> 05/02/2021
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -185,6 +295,11 @@
 <script src="js/vendors.min.js"></script>
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+
+rel="stylesheet"/>
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
@@ -192,7 +307,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
-        // function sử dụng framework datatable của Jquery
+
         $('#example').DataTable({
             dom: 'Bfrtip',
             order: [[0, "desc"]],
@@ -204,11 +319,11 @@
                     next: "Trang sau",
                 }
             },
-            pageLength: 20, //Phân 20 kết quả cho mỗi trang
+            pageLength: 10,
             columnDefs: [
                 {
                     visible: false,
-                    targets: [2, 3, 4, 5, 6, 9, 10] // ẩn đi các column đã chọn
+                    targets: 11
                 },
             ],
             buttons: [
@@ -221,7 +336,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15] // export excel các column đã chọn
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14]
 
                     }
                 },

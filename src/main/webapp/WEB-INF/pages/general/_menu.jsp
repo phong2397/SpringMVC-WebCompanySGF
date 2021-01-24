@@ -43,7 +43,7 @@
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Quản lý đơn hàng</li>
             <li>
                 <a href="tongtiepnhan.html">
-                    <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
+                    <img src="images/svg-icon/chart.svg" class="svg-icon" alt="">
                     <span>Tìm hiểu đơn hàng</span>
                 </a>
             </li>
@@ -66,37 +66,33 @@
                 </a>
             </li>
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">NHẮC THU PHÍ</li>
-            <li>
-                <a href="tongtiepnhan.html">
-                    <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
-                    <span>Tìm hiểu đơn hàng</span>
+            <li class="treeview">
+                <a href="#">
+                    <img src="images/svg-icon/advanced.svg" class="svg-icon" alt="">
+                    <span>Customer</span>
+                    <span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
                 </a>
+                <ul class="treeview-menu">
+                    <li><a href="tongtiepnhan.htmll"><i class="ti-more"></i>Tìm hiểu đơn hàng</a></li>
+                    <li><a href="thamdinh.html"><i class="ti-more"></i>Quản lý xét duyệt</a></li>
+                </ul>
             </li>
-            <li>
-                <a href="thamdinh.html">
-                    <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
-                    <span>Quản lý xét duyệt</span>
+            <li class="treeview">
+                <a href="#">
+                    <img src="images/svg-icon/sidebar-menu/advancedui.svg" class="svg-icon" alt="">
+                    <span>Repayment</span>
+                    <span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
                 </a>
+                <ul class="treeview-menu">
+                    <li><a href="chothuhoi.html"><i class="ti-more"></i>Team Nhắc phí</a></li>
+                    <li><a href="daxuly.html"><i class="ti-more"></i> Tổng khách hàng thanh toán</a></li>
+                    <li><a href="noquahan.html"><i class="ti-more"></i>Team Thu phí</a></li>
+                </ul>
             </li>
-            <li>
-                <a href="chothuhoi.html">
-                    <img src="images/svg-icon/sidebar-menu/reports.svg" class="svg-icon" alt="">
-                    <span>Nhắc phí</span>
-                </a>
-            </li>
-            <li>
-                <a href="daxuly.html">
-                    <img src="images/svg-icon/sidebar-menu/ico.svg" class="svg-icon" alt="">
-                    <span>Khách hàng thanh toán</span>
-                </a>
-            </li>
-            <li>
-                <a href="noquahan.html">
-                    <img src="images/svg-icon/sidebar-menu/members.svg" class="svg-icon" alt="">
-                    <span>Thu phí</span>
-                </a>
-            </li>
-
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Phòng kế toán</li>
             <li>
                 <a href="tongdanhsach.html">
@@ -208,7 +204,7 @@
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Quản lý đơn hàng</li>
             <li>
                 <a href="tongtiepnhan.html">
-                    <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
+                    <img src="images/svg-icon/chart.svg" class="svg-icon" alt="">
                     <span>Tìm hiểu đơn hàng</span>
                 </a>
             </li>
