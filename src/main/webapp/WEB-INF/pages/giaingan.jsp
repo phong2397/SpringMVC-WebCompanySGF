@@ -145,7 +145,7 @@
                                 </div>
                                 <div class="text-center my-2">
                                     <div class="font-size-60">${countAct}</div>
-                                    <span>Yêu cầu đã được giải ngân</span>
+                                    <span>Yêu cầu chờ giải ngân</span>
                                 </div>
 
                             </div>
@@ -204,10 +204,10 @@
                                             <th>Phí dịch vụ</th>
                                             <th>Mức phí</th>
                                             <th>Mức phí</th>
-                                            <th>Thời gian yêu cầu tạm ứng</th>
+                                            <th>Thời gian yêu cầu giải ngân</th>
                                             <th>Trạng thái</th>
                                             <th>Nhân viên xét duyệt</th>
-                                            <th>Ngày thanh toán</th>
+                                            <th>Hạn thanh toán</th>
                                             <th>Số tiền thanh toán</th>
                                             <th>Số tiền thanh toán</th>
                                             <th>Chủ tài khoản</th>
@@ -259,14 +259,14 @@
                                                             type="number"/> đ
                                                 </td>
                                                 <td>
-                                                    <fmt:parseDate value=" ${lst.saRequest.createdDate}"
+                                                    <fmt:parseDate value=" ${lst.saRequest.employeeDuyetDate}"
                                                                    pattern="yyyy-MM-dd'T'HH:mm" var="day"
                                                                    type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                     value="${day}"/>
                                                 </td>
-                                                <td>
-                                                    Chờ chuyển tiền
+                                                <td style="color: #0aa5df">
+                                                    <b> Chờ chuyển tiền</b>
                                                 </td>
                                                 <td id="employeeDuyet-${lst.saRequest.id}">
                                                         ${lst.saRequest.employeeDuyet}

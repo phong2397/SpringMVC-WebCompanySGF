@@ -160,11 +160,9 @@
                                                         <b> <a data-toggle="modal" href="#" id="cPhone" class="as"
                                                                onclick="viewInfoCustomer('${lst.customer.customerPhone}')"> ${lst.customer.customerPhone}</a></b>
                                                         <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
-                                                        <span class="d-block text-muted">Mã công ty :<b><a
-                                                                data-toggle="modal" href="#"
-                                                                onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
-                                                        <span class="d-block text-muted">Số tài khoản: ${lst.customer.customerBankAcc}</span>
-                                                        <span class="d-block text-muted">Tên ngân hàng : ${lst.customer.customerBankName}</span>
+                                                        <span class="d-block text-muted">Chủ tài khoản :<b> ${lst.customer.customerBank}</b></span>
+                                                        <span class="d-block text-muted">Số tài khoản: <b>${lst.customer.customerBankAcc}</b></span>
+                                                        <span class="d-block text-muted">Tên ngân hàng :<b> ${lst.customer.customerBankName}</b></span>
                                                     </h6>
                                                 </td>
                                                 <td>
@@ -184,7 +182,7 @@
                                                 </td>
                                                 </td>
                                                 <td>${lst.contract.systemTrace}</td>
-                                                <td><h6 class="mb-0" style="color:#28a745"><b>Đã tất toán</b></h6>
+                                                <td><h6 class="mb-0" style="color:hotpink"><b>Đã tất toán</b></h6>
                                                 </td>
                                                 <td>${lst.contract.transactionId}</td>
                                                 <td><fmt:parseDate value=" ${lst.contract.createdDate}"

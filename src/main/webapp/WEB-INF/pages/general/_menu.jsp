@@ -69,7 +69,7 @@
             <li class="treeview">
                 <a href="#">
                     <img src="images/svg-icon/advanced.svg" class="svg-icon" alt="">
-                    <span>Customer</span>
+                    <span>Khách hàng</span>
                     <span class="pull-right-container">
 								<i class="fa fa-angle-right pull-right"></i>
 							</span>
@@ -82,7 +82,7 @@
             <li class="treeview">
                 <a href="#">
                     <img src="images/svg-icon/sidebar-menu/advancedui.svg" class="svg-icon" alt="">
-                    <span>Repayment</span>
+                    <span>Bộ sưu tập</span>
                     <span class="pull-right-container">
 								<i class="fa fa-angle-right pull-right"></i>
 							</span>

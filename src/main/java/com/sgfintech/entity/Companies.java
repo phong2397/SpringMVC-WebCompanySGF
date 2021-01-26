@@ -30,7 +30,7 @@ public class Companies implements Serializable {
     @Column(name = "conpany_tax")
     private String conpanyTax;
 
-    @Column(name = "conpany_phone")
+    @Column(name = "company_phone")
     private String conpanyPhone;
 
     @Column(name = "created_date")

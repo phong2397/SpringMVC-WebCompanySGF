@@ -766,7 +766,7 @@ function viewInfoCustomer(phone, id, comId) {
     } else {
         $("#job").append('<p>Địa chỉ công ty : <span style="color:grey;">' + com.companyAddress + '</span></p>');
     }
-    $("#job").append('<p>Mã nhân viên : <span style="color:grey;">' + com.companyCode + '</span></p>');
+    $("#job").append('<p>Mã nhân viên : <span style="color:grey;">' + list.customer.customerCode + '</span></p>');
     if (list.customer.status == 'wait') {
         $("#job").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + 'đang chờ' + '</span></p>');
     } else if (list.customer.status == 'expried') {

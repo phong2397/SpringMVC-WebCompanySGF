@@ -82,7 +82,7 @@ function gachno() {
         $("#loading").hide();
         $('#modalHoadonGachno').modal('hide');
         $("#remainAmountBorrowOrder-" + dataRequest).empty();
-        $("#remainAmountBorrowOrder-" + dataRequest).append(total.toLocaleString("vi-VN") + ' đ');
+        $("#remainAmountBorrowOrder-" + dataRequest).append((total + (total * 0.02)).toLocaleString("vi-VN") + ' đ');
 
     } else {
         Swal.fire({
@@ -141,7 +141,7 @@ function viewInfo(idContract, custPhone) {
     const contract = viewInvoice.contract;
     Object.keys(contract).forEach((key) => {
         if (key == "remainAmountBorrow") {
-            let value = contract[key];
+            let value = contract[key] + (contract[key] * 0.02);
             $('#' + key).text(value);
 
         } else if (key == "borrow") {

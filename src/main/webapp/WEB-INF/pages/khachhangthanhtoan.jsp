@@ -168,7 +168,7 @@
                                                                             <div class="media align-items-center p-0">
                                                                                 <h4>
                                                                                     <p class="no-margin font-weight-600"><span
-                                                                                            class="text-warning">15.000 đ</span>
+                                                                                            class="text-warning">15.000.000 đ</span>
                                                                                     </p>
                                                                                     <p> Tổng số dư đã ký
                                                                                     </p></h4>

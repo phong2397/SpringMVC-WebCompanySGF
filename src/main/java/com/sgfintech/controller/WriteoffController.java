@@ -69,9 +69,10 @@ public class WriteoffController {
         try {
             Contract ct = contractDAO.findById(Long.parseLong(data));
             if (!StringUtil.isEmpty(u) && u.getUserLogin().equals("ketoan")) {
-                if (moneyRemainAmount.equals("0")) {
+                if (Total.equals("0") || Long.parseLong(Total) < 0) {
                     ct.setStatus("done");
                     ct.setRemainAmountBorrow(0l);
+                    ct.setAcceptedBy(u.getUserLogin());
                     ct.setDateRepayment(LocalDateTime.now());
                     ct.setUpdatedDate(LocalDateTime.now());
                     contractDAO.update(ct);
@@ -79,6 +80,7 @@ public class WriteoffController {
                 } else {
                     ct.setStatus("notcomplete");
                     ct.setRemainAmountBorrow(Long.parseLong(Total));
+                    ct.setAcceptedBy(u.getUserLogin());
                     ct.setDateRepayment(LocalDateTime.now());
                     ct.setUpdatedDate(LocalDateTime.now());
                     contractDAO.update(ct);

@@ -122,7 +122,7 @@
                                                 <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
                                                 <span class="d-block text-muted">Chủ tài khoản :<b> ${lst.customer.customerBank}</b></span>
                                                 <span class="d-block text-muted">Số tài khoản: <b>${lst.customer.customerBankAcc}</b></span>
-                                                <span class="d-block text-muted">Chủ tài khoản :<b> ${lst.customer.customerBankName}</b></span>
+                                                <span class="d-block text-muted">Tên ngân hàng :<b> ${lst.customer.customerBankName}</b></span>
                                             </h6>
                                         </td>
                                         <td>
@@ -140,10 +140,13 @@
                                         <td>
                                             <b> ${lst.customer.customerBankName}</b>
                                         </td>
-                                        <td><fmt:formatNumber value="${lst.contract.borrow}" type="number"/> đ
+                                        <td><fmt:formatNumber
+                                                value="${lst.contract.borrow + (lst.contract.borrow * 0.02)}"
+                                                type="number"/> đ
                                         </td>
                                         <td id="remainAmountBorrowOrder-${lst.contract.idContract}"><fmt:formatNumber
-                                                value="${lst.contract.remainAmountBorrow}" type="number"/> đ
+                                                value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 0.02)}"
+                                                type="number"/> đ
                                         </td>
                                         <td>${lst.contract.borrow}
                                         </td>

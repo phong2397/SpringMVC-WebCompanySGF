@@ -278,12 +278,12 @@ function viewInfoCustomer(params, id, comId) {
     if (typeof (sa.description) === "undefined") {
         $("#saInfo").append('<p>Lý do : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
     } else {
-        $("#saInfo").append('<p>Lý do : <b style="color:forestgreen;">' + sa.description + '</b></p>');
+        $("#saInfo").append('<p>Lý do : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
     }
     $("#danhgia").empty();
     $("#labelDanhgia").empty();
     $("#labelDanhgia").append('Đánh giá');
-    $("#danhgia").append('<div class="col-4"><p>Giải ngân : Thông tin nhận tiền đầy đủ</p><button class="btn btn-rounded btn-info btn-accept" data-toggle="modal" href="#giainganVerify">Đồng ý</button> </div>');
+    $("#danhgia").append('<div class="col-4"><p>Giải ngân : Thông tin nhận tiền đầy đủ</p><button class="btn btn-rounded btn-info btn-accept" data-toggle="modal" href="#giainganVerify">Hoàn thành chuyển tiền </button> </div>');
 
     list = result.find(el => el.company.id == comId);
     console.log(list)
