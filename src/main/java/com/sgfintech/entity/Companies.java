@@ -30,18 +30,22 @@ public class Companies implements Serializable {
     @Column(name = "conpany_tax")
     private String conpanyTax;
 
+    @Column(name = "company_phone")
+    private String conpanyPhone;
+
     @Column(name = "created_date")
     private LocalDateTime createdDate = LocalDateTime.now();
 
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
-    public Companies(Long id, String companyCode, String companyName, String companyAddress, String conpanyTax, LocalDateTime createdDate, LocalDateTime updatedDate) {
+    public Companies(Long id, String companyCode, String companyName, String companyAddress, String conpanyTax, String companyPhone, LocalDateTime createdDate, LocalDateTime updatedDate) {
         this.id = id;
         this.companyCode = companyCode;
         this.companyName = companyName;
         this.companyAddress = companyAddress;
         this.conpanyTax = conpanyTax;
+        this.conpanyPhone = companyPhone;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
     }

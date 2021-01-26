@@ -56,6 +56,7 @@ public class ImportController implements ServletContextAware {
     String process(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response) {
         String companyCode = request.getParameter("macongty");
         String companyName = request.getParameter("tencongty");
+        String companyPhone = request.getParameter("sodienthoai");
         try {
             String path = servletContext.getRealPath(fileLocation);
             Date date = new Date();
@@ -74,6 +75,7 @@ public class ImportController implements ServletContextAware {
                 Companies com = new Companies();
                 com.setCompanyCode(companyCode);
                 com.setCompanyName(companyName);
+                com.setConpanyPhone(companyPhone);
                 companiesDAO.save(com);
                 customerDAO.saveAllStateless(lstCustomer);
                 return new Gson().toJson(lstCustomer);

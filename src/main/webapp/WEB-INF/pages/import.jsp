@@ -93,13 +93,13 @@
                                                        placeholder="Số điện thoại công ty">
                                             </div>
                                         </div>
-                                        <%--                                        <div class="col-md-4">--%>
-                                        <%--                                            <div class="form-group">--%>
-                                        <%--                                                <label>Số điện thoại công ty</label>--%>
-                                        <%--                                                <input id="companyPhone" type="text" class="form-control"--%>
-                                        <%--                                                       placeholder="Mã công ty">--%>
-                                        <%--                                            </div>--%>
-                                        <%--                                        </div>--%>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Số điện thoại công ty</label>
+                                                <input id="sodienthoai" type="text" class="form-control"
+                                                       placeholder="Số điện thoại công ty">
+                                            </div>
+                                        </div>
                                     </div>
                                     <button type="button" class="btn btn-rounded btn-warning btn-outline mr-1">
                                         <i class="ti-trash"></i> Hủy
@@ -184,10 +184,10 @@
         formData.append('file', $('#importFile')[0].files[0]);
         var tenconty = $("#tencongty").val();
         var macongty = $("#macongty").val();
-        // var sodienthoai = $("#companyPhone")
+        var sodienthoaicty = $("#sodienthoai").val();
         var filePath = $("#importFile").val();
         $.ajax({
-            url: 'import?tencongty=' + tenconty + '&macongty=' + macongty,
+            url: 'import?tencongty=' + tenconty + '&macongty=' + macongty + '&sodienthoai=' + sodienthoaicty,
             type: 'POST',
             data: formData,
             cache: false,

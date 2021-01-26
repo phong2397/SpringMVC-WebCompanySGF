@@ -16,7 +16,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("nvthamdinh") || role.equals("nvkyduyet") || role.equals("nvnhacphi") || role.equals("nvthuphi") || role.equals("tnthamdinh") || role.equals("tncollection")) {
         } else {
             response.sendRedirect("404");
         }
@@ -123,7 +123,7 @@
                                             </td>
                                             <td class="text-left"><b style="color: #00E466">${lst.status}</b></td>
                                             <td>
-                                                <button class="btn btn-rounded btn-info btn-accept">Update</button>
+                                                <button class="btn btn-rounded btn-info btn-accept">Chỉnh sửa</button>
                                             </td>
                                         </tr>
                                         </c:forEach>

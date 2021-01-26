@@ -72,6 +72,8 @@ public class SignController {
             String empDuyet = u.getUserLogin();
             List<MergeDataOrder> listXetduyetLogin = mergeDataService.getUserDuyet("wfs", empDuyet);
             mm.addAttribute(Consts.Attr_ResultView, listXetduyetLogin);
+            List<SaRequest> saRequest = saRequestDAO.findAll();
+            mm.addAttribute("sa", saRequest);
             mm.addAttribute("countAct", countAct);
             mm.addAttribute("countWait", countWait);
             mm.addAttribute("countWFS", countWFS);
@@ -104,41 +106,51 @@ public class SignController {
     }
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
-    public String welcomePage(ModelMap mm, HttpServletRequest request) {
+    public String welcomePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
         int countAct = mergeDataService.countStatus("act");
         int countDone = mergeDataService.countStatus("done");
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
-        List<Useradmin> admin = useradminDAO.findAll();
-        mm.addAttribute("admin", admin);
-        List<SaRequest> saRequest = saRequestDAO.findAll();
-        mm.addAttribute("sa", saRequest);
-        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countDone", countDone);
-        return "kyduyet";
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
+            List<Useradmin> admin = useradminDAO.findAll();
+            mm.addAttribute("admin", admin);
+            List<SaRequest> saRequest = saRequestDAO.findAll();
+            mm.addAttribute("sa", saRequest);
+            mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+            mm.addAttribute("countWait", countWait);
+            mm.addAttribute("countWFS", countWFS);
+            mm.addAttribute("countAct", countAct);
+            mm.addAttribute("countDone", countDone);
+            return "kyduyet";
+        }
     }
 
-    @RequestMapping(value = {"/kyduyetnoaction"}, method = RequestMethod.GET)
-    public String kyduyetnoaction(ModelMap mm, HttpServletRequest request) {
+    @RequestMapping(value = {"/giaingan"}, method = RequestMethod.GET)
+    public String giainganPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
         int countAct = mergeDataService.countStatus("act");
         int countDone = mergeDataService.countStatus("done");
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
-        List<Useradmin> admin = useradminDAO.findAll();
-        mm.addAttribute("admin", admin);
-        List<SaRequest> saRequest = saRequestDAO.findAll();
-        mm.addAttribute("sa", saRequest);
-        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countDone", countDone);
-        return "kyduyetnoaction";
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("act", false);
+            List<Useradmin> admin = useradminDAO.findAll();
+            mm.addAttribute("admin", admin);
+            List<SaRequest> saRequest = saRequestDAO.findAll();
+            mm.addAttribute("sa", saRequest);
+            mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+            mm.addAttribute("countWait", countWait);
+            mm.addAttribute("countWFS", countWFS);
+            mm.addAttribute("countAct", countAct);
+            mm.addAttribute("countDone", countDone);
+            return "giaingan";
+        }
     }
 
     @RequestMapping(value = "/updateEmployeeDuyet", method = RequestMethod.POST)
@@ -170,20 +182,46 @@ public class SignController {
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.POST)
     public @ResponseBody
     String handlerOrderRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String data = request.getParameter("datarequest");
+        String textDecline = request.getParameter("textDecline");
+        String status = request.getParameter("status");
+        String step = request.getParameter("step");
+        String employeeDuyet = request.getParameter("employeeDuyet");
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        try {
+            if (!StringUtil.isEmpty(employeeDuyet) && u.getUserLogin().equals(employeeDuyet)) {
+                SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+                sa.setStatus(status.trim());
+                sa.setDescription(textDecline);
+                sa.setEmployeeDuyet(employeeDuyet);
+                sa.setEmployeeDuyetDate(LocalDateTime.now());
+                sa.setEmployeeDuyet(employeeDuyet);
+                sa.setUpdatedDate(LocalDateTime.now());
+                saRequestDAO.update(sa);
+                return "success";
+            } else {
+                return "errorEmployee";
+            }
+        } catch (Exception ex) {
+            return "error";
+        }
+    }
+
+    @RequestMapping(value = {"/giaingan"}, method = RequestMethod.POST)
+    public @ResponseBody
+    String handlerdisburseRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         SignatureRSA signatureRSA = context.getBean(SignatureRSA.class);
         String data = request.getParameter("datarequest"); //id cua order request
         String status = request.getParameter("status");
         String step = request.getParameter("step");
-        String textdecline = request.getParameter("textDecline");
-        String employeeDuyet = request.getParameter("employeeDuyet");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
-            SaRequest sa = saRequestDAO.findById(Long.parseLong(data)); //sa.getBorrow();
+            SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
             Customer cu = customerService.getCustomerByPhone(sa.getCustomerPhone());
             String uuid = UUID.randomUUID().toString();
             String requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-            if (!StringUtil.isEmpty(employeeDuyet) && u.getUserLogin().equals(employeeDuyet)) {
-                if (status.equals("act")) {
+            if (!StringUtil.isEmpty(u) && u.getUserLogin().equals("ketoan")) {
+                if (status.equals("done")) {
                     Contract ct = new Contract();
                     ct.setIdContract(sa.getId());
                     ct.setSystemTrace(uuid);
@@ -193,22 +231,20 @@ public class SignController {
                     ct.setRemainAmountBorrow(sa.getBorrow());
                     ct.setFeeBorrow(sa.getFeeBorrow());
                     ct.setTransactionId(requestId);
-                    ct.setStatus(status);
+                    ct.setStatus("act");
                     Calendar cal = Calendar.getInstance();
                     cal.add(Calendar.DATE, +30);
                     ct.setDateRepayment(LocalDateTime.now().plusDays(30));
                     ct.setCreatedDate(sa.getUpdatedDate());
-                    ct.setAcceptedBy(employeeDuyet);
+                    ct.setAcceptedBy(sa.getEmployeeDuyet());
                     contractDAO.save(ct);
-                    sa.setEmployeeDuyet(employeeDuyet);
+                    sa.setEmployeeDuyet(sa.getEmployeeDuyet());
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
                     sa.setUpdatedDate(LocalDateTime.now());
                     sa.setStatus(status);
                     saRequestDAO.update(sa);
                     return "success";
                 } else if (status.equals("deni")) {
-                    sa.setDescription(textdecline);
-                    sa.setEmployeeDuyet(employeeDuyet);
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
                     sa.setUpdatedDate(LocalDateTime.now());
                     sa.setStatus(status);
@@ -225,3 +261,4 @@ public class SignController {
         }
     }
 }
+

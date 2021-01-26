@@ -121,7 +121,144 @@ $("body").on("click", ".btn-refuse", function () {
         $("#modal-right").modal('hide');
     }
 });
+$("body").on("click", ".as", function () {
+    var phone = $(this).closest('tr').children('td:eq(4)').text().trim();
+    console.log(phone)
+    data = {phone: phone};
+    var result = findHistoryModal(data);
+    var obj = JSON.parse(result);
+    $("#tbody").empty();
+    Object.keys(obj).forEach((key) => {
+        let sa = obj[key]
+        let time = obj[key].saRequest.createdDate
+        var rowElement = $('<tr></tr>');
+        rowElement.append('<td><h5><a  href="#" onclick="viewInfoOrder(' + sa.saRequest.id + ')">' + sa.saRequest.id + '</a></h5></td>');
+        rowElement.append('<td><h5>' + ("0" + (time.date.day)).slice(-2) + '/' + ("0" + (time.date.month)).slice(-2) + '/' + ("0" + (time.date.year)).slice(-2) + ' ' + ("0" + (time.time.hour)).slice(-2) + ':' + ("0" + (time.time.minute)).slice(-2) + ':' + ("0" + (time.time.second)).slice(-2) + '</h5></td>');
+        rowElement.append('<td><h5><a  href="#" onclick="viewInfoOrder(' + sa.saRequest.id + ')">' + sa.saRequest.borrow.toLocaleString("vi-VN") + ' đ</a></h5></td>');
+        if (sa.saRequest.status == 'wait') {
+            rowElement.append('<td><h5 style="color: darkorange">chờ xét duyệt</h5></td>');
 
+        } else if (sa.saRequest.status == 'wfs') {
+            rowElement.append('<td><h5 style="color:  #0aa5df">chờ ký duyệt</h5></td>');
+
+        } else if (sa.saRequest.status == 'done') {
+            rowElement.append('<td><h5 style="color: hotpink"> đã giải ngân</h5></td>');
+
+        } else if (sa.saRequest.status == 'act') {
+            rowElement.append('<td><h5 style="color: green">chờ chuyển tiền</h5></td>');
+
+        } else if (sa.saRequest.status == 'deni') {
+            rowElement.append('<td><h5 style="color: red">từ chối</h5></td>');
+
+        }
+        $("#tbody").append(rowElement)
+    })
+});
+
+function findHistoryModal(data) {
+    let result = "";
+    try {
+        $.ajax({
+            type: "POST",
+            timeout: 100000,
+            url: "findHistoryModal",
+            data: data,
+            async: false,
+            success: function (data, status, xhr) {
+                result = data;
+                return result;
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+                console.log(textStatus);
+                console.log(errorMessage);
+            }
+        })
+    } catch (error) {
+        return "Không thể kết nối tới server";
+    }
+    return result;
+}
+
+function viewInfoOrder(id) {
+    list.forEach((order) => {
+        if (order.id == id) {
+            let sa = order.status
+            console.log(sa)
+            if (sa == 'done') {
+                $("#listView").empty();
+                $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
+                $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
+                $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + ("0" + (order.createdDate.date.day)).slice(-2) + '/' + ("0" + (order.createdDate.date.month)).slice(-2) + '/' + order.createdDate.date.year + ' ' + ' ' + ("0" + (order.createdDate.time.hour)).slice(-2) + ':' + ("0" + (order.createdDate.time.minute)).slice(-2) + ':' + ("0" + (order.createdDate.time.second)).slice(-2) + '</p>');
+                $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
+                $("#listView").append('<p>Trạng thái :' + ' ' + '<b style="color: hotpink">' + 'Đã xong' + '</b></p>');
+                $("#listView").append('<p>Người thẩm định :' + ' ' + order.employeeThamdinh + '</p>');
+                $("#listView").append('<p>Ngày thẩm định :' + ' ' + ("0" + (order.employeeThamdinhDate.date.day)).slice(-2) + '/' + ("0" + (order.employeeThamdinhDate.date.month)).slice(-2) + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + ("0" + (order.employeeThamdinhDate.time.hour)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.minute)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.second)).slice(-2) + '</p>');
+                $("#listView").append('<p>Người duyệt đơn :' + ' ' + order.employeeDuyet + '</p>');
+                $("#listView").append('<p> :' + ' ' + order.employeeDuyetDate.date.day + '/' + order.employeeDuyetDate.date.month + '/' + order.employeeDuyetDate.date.year + ' ' + ' ' + order.employeeDuyetDate.time.hour + ':' + order.employeeDuyetDate.time.minute + ':' + order.employeeDuyetDate.time.second + '</p>');
+                $("#listView").append('<p>Ngày duyệt đơn :' + ' ' + ("0" + (order.employeeDuyetDate.date.day)).slice(-2) + '/' + ("0" + (order.employeeDuyetDate.date.month)).slice(-2) + '/' + order.employeeDuyetDate.date.year + ' ' + ' ' + ("0" + (order.employeeDuyetDate.time.hour)).slice(-2) + ':' + ("0" + (order.employeeDuyetDate.time.minute)).slice(-2) + ':' + ("0" + (order.employeeDuyetDate.time.second)).slice(-2) + '</p>');
+
+                $('#modal-left').modal('show');
+            } else if (sa == 'act') {
+                $("#listView").empty();
+                $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
+                $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
+                $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + ("0" + (order.createdDate.date.day)).slice(-2) + '/' + ("0" + (order.createdDate.date.month)).slice(-2) + '/' + order.createdDate.date.year + ' ' + ' ' + ("0" + (order.createdDate.time.hour)).slice(-2) + ':' + ("0" + (order.createdDate.time.minute)).slice(-2) + ':' + ("0" + (order.createdDate.time.second)).slice(-2) + '</p>');
+                $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
+                $("#listView").append('<p>Trạng thái :' + ' ' + '<b style="color: dodgerblue">' + 'Đã giải ngân' + '</b></p>');
+                $("#listView").append('<p>Người thẩm định :' + ' ' + order.employeeThamdinh + '</p>');
+                $("#listView").append('<p>Ngày thẩm định :' + ' ' + ("0" + (order.employeeThamdinhDate.date.day)).slice(-2) + '/' + ("0" + (order.employeeThamdinhDate.date.month)).slice(-2) + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + ("0" + (order.employeeThamdinhDate.time.hour)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.minute)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.second)).slice(-2) + '</p>');
+                $("#listView").append('<p>Người duyệt đơn :' + ' ' + order.employeeDuyet + '</p>');
+                $("#listView").append('<p> :' + ' ' + order.employeeDuyetDate.date.day + '/' + order.employeeDuyetDate.date.month + '/' + order.employeeDuyetDate.date.year + ' ' + ' ' + order.employeeDuyetDate.time.hour + ':' + order.employeeDuyetDate.time.minute + ':' + order.employeeDuyetDate.time.second + '</p>');
+                $("#listView").append('<p>Ngày duyệt đơn :' + ' ' + ("0" + (order.employeeDuyetDate.date.day)).slice(-2) + '/' + ("0" + (order.employeeDuyetDate.date.month)).slice(-2) + '/' + order.employeeDuyetDate.date.year + ' ' + ' ' + ("0" + (order.employeeDuyetDate.time.hour)).slice(-2) + ':' + ("0" + (order.employeeDuyetDate.time.minute)).slice(-2) + ':' + ("0" + (order.employeeDuyetDate.time.second)).slice(-2) + '</p>');
+                $('#modal-left').modal('show');
+            } else if (sa == 'wfs') {
+                $("#listView").empty();
+                $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
+                $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
+                $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + ("0" + (order.createdDate.date.day)).slice(-2) + '/' + ("0" + (order.createdDate.date.month)).slice(-2) + '/' + order.createdDate.date.year + ' ' + ' ' + ("0" + (order.createdDate.time.hour)).slice(-2) + ':' + ("0" + (order.createdDate.time.minute)).slice(-2) + ':' + ("0" + (order.createdDate.time.second)).slice(-2) + '</p>');
+                $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
+                $("#listView").append('<p>Trạng thái :' + ' ' + '<b style="color: #0aa5df">' + 'chờ ký' + '</b></p>');
+                $("#listView").append('<p>Người thẩm định :' + ' ' + order.employeeThamdinh + '</p>');
+                $("#listView").append('<p>Ngày thẩm định :' + ' ' + ("0" + (order.employeeThamdinhDate.date.day)).slice(-2) + '/' + ("0" + (order.employeeThamdinhDate.date.month)).slice(-2) + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + ("0" + (order.employeeThamdinhDate.time.hour)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.minute)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.second)).slice(-2) + '</p>');
+                $('#modal-left').modal('show');
+            } else if (sa == 'wait') {
+                $("#listView").empty();
+                $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
+                $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
+                $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + ("0" + (order.createdDate.date.day)).slice(-2) + '/' + ("0" + (order.createdDate.date.month)).slice(-2) + '/' + order.createdDate.date.year + ' ' + ' ' + ("0" + (order.createdDate.time.hour)).slice(-2) + ':' + ("0" + (order.createdDate.time.minute)).slice(-2) + ':' + ("0" + (order.createdDate.time.second)).slice(-2) + '</p>');
+                $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
+                $("#listView").append('<p>Trạng thái :' + ' ' + '<b style="color: darkorange">' + 'chờ xét duyệt' + '</b></p>');
+                $('#modal-left').modal('show');
+            } else if (sa == 'deni') {
+                $("#listView").empty();
+                $("#listView").append('<h3><p>Mã yêu cầu :' + ' ' + order.id + '</p></h3>');
+                $("#listView").append('<p>Số điện thoại :' + ' ' + order.customerPhone + '</p>');
+                $("#listView").append('<p>Mã công ty :' + ' ' + order.companyCode + '</p>');
+                $("#listView").append('<p>Ngày yêu cầu :' + ' ' + ("0" + (order.createdDate.date.day)).slice(-2) + '/' + ("0" + (order.createdDate.date.month)).slice(-2) + '/' + order.createdDate.date.year + ' ' + ' ' + ("0" + (order.createdDate.time.hour)).slice(-2) + ':' + ("0" + (order.createdDate.time.minute)).slice(-2) + ':' + ("0" + (order.createdDate.time.second)).slice(-2) + '</p>');
+                $("#listView").append('<p>Số tiền ứng :' + ' ' + order.borrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Phí :' + ' ' + order.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#listView").append('<p>Số lần ứng :' + ' ' + order.timeBorrow + '</p>');
+                $("#listView").append('<p>Trạng thái :' + ' ' + '<b style="color: red">' + 'từ chối' + '</b></p>');
+                $("#listView").append('<p>Người thẩm định :' + ' ' + order.employeeThamdinh + '</p>');
+                $("#listView").append('<p>Ngày thẩm định :' + ' ' + ("0" + (order.employeeThamdinhDate.date.day)).slice(-2) + '/' + ("0" + (order.employeeThamdinhDate.date.month)).slice(-2) + '/' + order.employeeThamdinhDate.date.year + ' ' + ' ' + ("0" + (order.employeeThamdinhDate.time.hour)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.minute)).slice(-2) + ':' + ("0" + (order.employeeThamdinhDate.time.second)).slice(-2) + '</p>');
+                $("#listView").append('<p>Nhận xét :' + ' ' + order.description + '</p>');
+                $('#modal-left').modal('show');
+            }
+        }
+    })
+}
 
 function viewInfoCustomer(phone, id, comId) {
     selectedsaId = id;
@@ -129,7 +266,7 @@ function viewInfoCustomer(phone, id, comId) {
     let list = result.find(el => el.customer.customerPhone == phone);
     axios({
         method: 'GET',
-        url: 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + phone,
+        url: 'https://dev.sgft.info/customergateway/api/v1/document/' + phone,
         headers: {
             // 'Content-Type': 'application/x-www-form-urlencoded',
             'Access-Control-Allow-Origin': 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + phone,
@@ -143,7 +280,7 @@ function viewInfoCustomer(phone, id, comId) {
             const imgCMND = JSON.parse(response.data.cmnd)
             $('#imgCMND').empty();
             Object.keys(imgCMND).forEach((key) => {
-                if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (imgCMND[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgCMND').append('Bổ sung hình ảnh');
                 } else {
                     $('#imgCMND').append('<img class="img" id="zoom_10" src="' + imgCMND[key] + '" data-zoom-image="' + imgCMND[key] + '" />');
@@ -153,7 +290,7 @@ function viewInfoCustomer(phone, id, comId) {
             $('#imgPayslip').empty()
             Object.keys(payslipObj).forEach((key) => {
                 console.log(payslipObj[key]);
-                if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (payslipObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
                     $('#imgPayslip').append('<img class="img" src="' + payslipObj[key] + '"/>');
@@ -162,7 +299,7 @@ function viewInfoCustomer(phone, id, comId) {
             const salaryObj = JSON.parse(response.data.salary);
             $('#imgSalary').empty()
             Object.keys(salaryObj).forEach((key) => {
-                if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (salaryObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
                     $('#imgSalary').append('<img class="img" src="' + salaryObj[key] + '"/>');
@@ -172,7 +309,7 @@ function viewInfoCustomer(phone, id, comId) {
             const healthObj = JSON.parse(response.data.health);
             $('#imgHealth').empty()
             Object.keys(healthObj).forEach((key) => {
-                if (healthObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (healthObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
                     $('#imgHealth').append('<img class="img" src="' + healthObj[key] + '"/>');
@@ -181,7 +318,7 @@ function viewInfoCustomer(phone, id, comId) {
             const appendixObj = JSON.parse(response.data.appendix);
             $('#imgAppendix').empty()
             Object.keys(appendixObj).forEach((key) => {
-                if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (appendixObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
                     $('#imgAppendix').append('<img class="img" src="' + appendixObj[key] + '"/>');
@@ -190,7 +327,7 @@ function viewInfoCustomer(phone, id, comId) {
             const socialObj = JSON.parse(response.data.social);
             $('#imgSocial').empty()
             Object.keys(socialObj).forEach((key) => {
-                if (socialObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (socialObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
                     $('#imgSocial').append('<img class="img" src="' + socialObj[key] + '"/>');
@@ -199,7 +336,7 @@ function viewInfoCustomer(phone, id, comId) {
             const contractObj = JSON.parse(response.data.contract);
             $('#imgContract').empty()
             Object.keys(contractObj).forEach((key) => {
-                if (contractObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (contractObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
                     $('#imgContract').append('<img class="img" src="' + contractObj[key] + '"/>');
@@ -239,6 +376,13 @@ function viewInfoCustomer(phone, id, comId) {
             Object.keys(idDate).forEach((key) => {
                 $('#' + key + 'id').text(idDate[key]);
             })
+        } else if (key == "customerHealthInsurance") {
+            value = c[key]
+            if (value) {
+                $('#' + key).text(c[key]);
+            } else {
+                $('#' + key).text('Không có thông tin');
+            }
         } else {
             $('#' + key).text(c[key]);
         }

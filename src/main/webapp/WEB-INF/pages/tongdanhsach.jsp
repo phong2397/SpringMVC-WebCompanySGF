@@ -20,7 +20,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("nvthamdinh") || role.equals("nvkyduyet") || role.equals("nvnhacphi") || role.equals("nvthuphi") || role.equals("tnthamdinh") || role.equals("tncollection")) {
         } else {
             response.sendRedirect("404");
         }
@@ -140,8 +140,13 @@
                                             <th>Status</th>
                                             <th>Mã giao dịch (Transaction ID)</th>
                                             <th>Ngày gạch nợ</th>
+                                            <th>Số tiền tạm ứng</th>
+                                            <th>Số tiền tạm ứng</th>
                                             <th>Số tiền còn nợ</th>
                                             <th>Số tiền còn nợ</th>
+                                            <th>Số tiền đã thanh toán</th>
+                                            <th>Số tiền đã thanh toán</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -155,11 +160,9 @@
                                                         <b> <a data-toggle="modal" href="#" id="cPhone" class="as"
                                                                onclick="viewInfoCustomer('${lst.customer.customerPhone}')"> ${lst.customer.customerPhone}</a></b>
                                                         <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
-                                                        <span class="d-block text-muted">Mã công ty :<b><a
-                                                                data-toggle="modal" href="#"
-                                                                onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
-                                                        <span class="d-block text-muted">Số tài khoản: ${lst.customer.customerBankAcc}</span>
-                                                        <span class="d-block text-muted">Tên ngân hàng : ${lst.customer.customerBankName}</span>
+                                                        <span class="d-block text-muted">Chủ tài khoản :<b> ${lst.customer.customerBank}</b></span>
+                                                        <span class="d-block text-muted">Số tài khoản: <b>${lst.customer.customerBankAcc}</b></span>
+                                                        <span class="d-block text-muted">Tên ngân hàng :<b> ${lst.customer.customerBankName}</b></span>
                                                     </h6>
                                                 </td>
                                                 <td>
@@ -179,19 +182,29 @@
                                                 </td>
                                                 </td>
                                                 <td>${lst.contract.systemTrace}</td>
-                                                <td><h6 class="mb-0" style="color:#28a745"><b> Gạch nợ </b></h6>
+                                                <td><h6 class="mb-0" style="color:hotpink"><b>Đã tất toán</b></h6>
                                                 </td>
                                                 <td>${lst.contract.transactionId}</td>
                                                 <td><fmt:parseDate value=" ${lst.contract.createdDate}"
-                                                                   pattern="yyyy-MM-dd'T'HH:mm:ss" var="patientDob"
+                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
                                                                    type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                     value="${patientDob}"/></td>
+                                                <td><fmt:formatNumber
+                                                        value="${lst.contract.borrow + (lst.contract.borrow * 2/100) }"
+                                                        type="number"/> đ
+                                                </td>
+                                                <td> ${lst.contract.borrow + (lst.contract.borrow * 2/100) }</td>
                                                 <td><fmt:formatNumber
                                                         value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 2/100) }"
                                                         type="number"/> đ
                                                 </td>
                                                 <td> ${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 2/100) }</td>
+                                                <td><fmt:formatNumber
+                                                        value="${lst.contract.feeBorrow + (lst.contract.feeBorrow * 2/100) }"
+                                                        type="number"/> đ
+                                                </td>
+                                                <td> ${lst.contract.feeBorrow + (lst.contract.feeBorrow * 2/100) }</td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -241,11 +254,11 @@
                 }
             },
             order: [[0, "desc"]],
-            pageLength: 10,// phân 10 kết quả cho mỗi trang
+            pageLength: 10,
             columnDefs: [
                 {
                     visible: false,
-                    targets: [2, 3, 4, 5, 6, 12] // ẩn đi các column đã chọn
+                    targets: [2, 3, 4, 5, 6, 10, 12, 14, 16]
                 },
             ],
             buttons: [
@@ -258,7 +271,7 @@
                             $('row c[r^="A"]', sheet).attr('s', '50');
                             $('row c[r^="D"]', sheet).attr('s', '50');
                         },
-                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12],// export excel các column đã chọn
+                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16],
 
                     }
                 },

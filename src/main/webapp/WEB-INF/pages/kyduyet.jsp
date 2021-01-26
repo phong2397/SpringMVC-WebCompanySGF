@@ -19,7 +19,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("kyduyet")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("nvthamdinh") || role.equals("nvkyduyet") || role.equals("nvnhacphi") || role.equals("nvthuphi") || role.equals("tnthamdinh") || role.equals("tncollection")) {
         } else {
             response.sendRedirect("404");
         }
@@ -69,10 +69,7 @@
 
             <!-- Main content -->
             <section class="content">
-
                 <div class="row">
-
-
                     <!-- /.col -->
                     <div class="col-xl-3 col-md-6 col-12">
                         <div class="box box-inverse box-warning">
@@ -186,7 +183,16 @@
                         <div class="box">
                             <div class="box-header with-border">
                                 <h4 class="box-title">Danh sách chờ duyệt</h4><br>
-                                <button class="btn btn-primary">Chia đơn</button>
+                                <%
+                                    Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+                                    String role = u.getRole();
+                                    if (role.equals("root") || role.equals("tnthamdinh")) { %>
+                                <button class="btn btn-primary" data-toggle="modal" href="#modalKyduyet">Chia đơn
+                                </button>
+                                <% } else {
+                                }
+                                %>
+
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
@@ -220,10 +226,18 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr id="tr-${lst.saRequest.id}">
+
                                                 <td><input type="checkbox" class="checkEmployee"
                                                            value="${lst.saRequest.id}"/></td>
-                                                <td><a data-toggle="modal" href="#"
+                                                <td><%
+                                                    if (role.equals("root") || role.equals("tnthamdinh")) { %>
+                                                    <a data-toggle="modal" href="#" class="as"
                                                        onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
+                                                    <% } else {%>
+                                                    <a data-toggle="modal" href="#" class="as"
+                                                       onclick="viewInfoNoaction('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
+                                                    <% }%>
+
                                                 </td>
                                                 <td>
                                                         ${lst.customer.customerName}
@@ -280,19 +294,15 @@
                                                     </c:choose>
                                                 </td>
                                                 <td>
-                                                    <fmt:parseDate value=" ${lst.saRequest.createdDate}"
-                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="day"
-                                                                   type="date"/>
-                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                                    value="${day}"/>
+                                                    05/02/2021
                                                 </td>
                                                 <td>
                                                     <fmt:formatNumber
-                                                            value="${lst.saRequest.borrow  * 0.02}"
+                                                            value="${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }"
                                                             type="number"/> đ
                                                 </td>
                                                 <td>
-                                                        ${lst.saRequest.borrow}
+                                                        ${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -317,7 +327,7 @@
     <!-- /.control-sidebar -->
     <jsp:include page="general/modal.jsp"/>
     <!-- Modal show employee thamdinh -->
-    <div class="modal modal-fill fade" id="modalThamdinh" tabindex="-1">
+    <div class="modal modal-fill fade" id="modalKyduyet" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -335,7 +345,7 @@
                             </option>
                             <c:forEach items="${admin}" var="lst" varStatus="loop">
                                 <c:choose>
-                                    <c:when test="${lst.role eq 'kyduyet'}">
+                                    <c:when test="${lst.role eq 'nvkyduyet'}">
                                         <option value="${lst.userLogin}">
                                             <span> ${lst.userLogin}</span>
                                         </option>
@@ -349,7 +359,7 @@
                 </div>
                 <div class="modal-footer modal-footer-uniform">
                     <button type="button" onclick="chiadon(this)" class="btn btn-rounded btn-warning btn-update"
-                            data-dismiss="modal">Cập nhật
+                            data-dismiss="modal">Xác nhận
                     </button>
                     <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng</button>
                 </div>
@@ -370,15 +380,26 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src="js/funcKyduyet.js">
 </script>
 <script type="text/javascript">
+    <%
+                List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
+                Gson g = new Gson();
+                String json = g.toJson(list);
+
+                  List<SaRequest> listSa = (List<SaRequest>) request.getAttribute("sa");
+                  Gson gSa= new Gson();
+                  String jsonSa = gSa.toJson(listSa);
+                %>
+    var result = <%=json%>;
+    var saList = <%=jsonSa%>;
+    console.log(saList)
     var selectedsaId;
     $(document).ready(function () {
+
         $("#loading").hide();
-        $("body").on("click", ".btn-primary", function () {
-            $('#modalThamdinh').modal('show');
-        })
         $('#example').DataTable({
             dom: 'Bfrtip',
             ordering: false,
@@ -391,34 +412,24 @@
                     next: "Trang sau",
                 }
             },
-            pageLength: 10,// phân 10 kết quả cho mỗi trang
+            pageLength: 10,
             columnDefs: [
                 {
                     visible: false,
-                    targets: [7, 10, 17]// ẩn đi các column đã chọn
+                    targets: [7, 10, 17]
                 },
             ],
             buttons: [
                 {
-                    title: 'Danh sách từ chối ',
+                    title: 'Danh sách chờ ký duyệt ',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17]// export excel các column đã chọn
+                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17]
                     }
                 },
             ]
         })
     });
-    <%
-                  List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
-                  Gson g = new Gson();
-                  String json = g.toJson(list);
-                    List<SaRequest> list1 = (List<SaRequest>) request.getAttribute("sa");
-                    Gson gs= new Gson();
-                    String json1 = gs.toJson(list1);
-                  %>
-    var result = <%=json%>;
-    var list = <%=json1%>;
 
 
 </script>

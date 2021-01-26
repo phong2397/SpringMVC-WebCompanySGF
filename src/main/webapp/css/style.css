@@ -98,6 +98,11 @@ table.dataTable tr th.select-checkbox.selected::after {
     text-shadow: rgb(176, 190, 217) 1px 1px, rgb(176, 190, 217) -1px -1px, rgb(176, 190, 217) 1px -1px, rgb(176, 190, 217) -1px 1px;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+
 .error {
     color: #F00;
     background-color: #FFF;
@@ -307,10 +312,6 @@ h1, h2, h3, .h1, .h2, .h3 {
 
 img {
     max-width: 100%;
-}
-
-.img-fluid {
-    width: 100%;
 }
 
 .align-sub {
@@ -26307,6 +26308,8 @@ textarea.form-control {
 }
 
 .modal-right .modal-dialog {
+    font-weight: bold;
+    color: black;
     position: absolute;
     top: 0;
     right: 0;
@@ -26327,6 +26330,11 @@ textarea.form-control {
     -webkit-box-direction: normal;
     flex-direction: column;
     border-radius: 0;
+}
+
+.slide-container {
+    overflow: auto;
+    white-space: nowrap;
 }
 
 .modal-content {
@@ -26357,8 +26365,7 @@ textarea.form-control {
     padding: 5px;
     max-width: 100%;
     max-height: 100%;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    margin-right: 5px;
 }
 
 .model_img {
