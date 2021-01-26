@@ -24,12 +24,12 @@ public class ProcessedController {
     @Autowired
     ContractDAO contractDAO;
 
-    @RequestMapping(value = {"/daxuly"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/khachhangthanhtoan"}, method = RequestMethod.GET)
     public String welcomePage(ModelMap mm) {
         List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("done", true, "");
         List<Contract> contract = contractDAO.findAll();
         mm.addAttribute("con", contract);
         mm.addAttribute(Consts.Attr_ResultView, listdata);
-        return "daxuly";
+        return "khachhangthanhtoan";
     }
 }

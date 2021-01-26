@@ -88,16 +88,30 @@
 							</span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="chothuhoi.html"><i class="ti-more"></i>Team Nhắc phí</a></li>
-                    <li><a href="daxuly.html"><i class="ti-more"></i> Tổng khách hàng thanh toán</a></li>
-                    <li><a href="noquahan.html"><i class="ti-more"></i>Team Thu phí</a></li>
+                    <li><a href="nhacphi.html"><i class="ti-more"></i>Team Nhắc phí</a></li>
+                    <li><a href="khachhangthanhtoan.html"><i class="ti-more"></i> Tổng khách hàng thanh toán</a></li>
+                    <li><a href="thuphi.html"><i class="ti-more"></i>Team Thu phí</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <img src="images/svg-icon/settings.svg" class="svg-icon" alt="">
+                    <span>Hệ thống cấu hình tổ chức</span>
+                    <span class="pull-right-container">
+								<i class="fa fa-angle-right pull-right"></i>
+							</span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="giaidoantrehan.html"><i class="ti-more"></i>Giai đoạn trễ hạn</a></li>
+                    <li><a href="cauhinhtochuc.html"><i class="ti-more"></i>Cấu hình tổ chức</a></li>
+                    <li><a href="cauhinhbophan.html"><i class="ti-more"></i>Cấu hình bộ phận</a></li>
                 </ul>
             </li>
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Phòng kế toán</li>
             <li>
-                <a href="tongdanhsach.html">
-                    <img src="images/svg-icon/sidebar-menu/tickers.svg" class="svg-icon" alt="">
-                    <span>Tổng danh sách</span>
+                <a href="giaingan.html">
+                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
+                    <span>Giải ngân</span>
                 </a>
             </li>
             <li>
@@ -106,6 +120,14 @@
                     <span>Gạch nợ</span>
                 </a>
             </li>
+            <li>
+                <a href="tongdanhsach.html">
+                    <img src="images/svg-icon/sidebar-menu/tickers.svg" class="svg-icon" alt="">
+                    <span>Khách hàng thanh toán</span>
+                </a>
+            </li>
+
+
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Cấu hình sản phẩm</li>
             <li>
                 <a href="cauhinh.html">

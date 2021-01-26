@@ -109,8 +109,9 @@
                         </div>
                         <div class="row">
                             <div class="col-3 ">
+
                                 <div class="slide-container">
-                                    <p id="imgCMND"></p>
+                                    <div id="imgCMND"></div>
                                 </div>
                                 <br>
                                 <p>- Số CMND : <span id="customerId" style="color:grey;"></span></p>
@@ -166,6 +167,8 @@
     </div>
 </div>
 <!-- /.modal -->
+
+
 <!-- Modal show info order -->
 <div class="modal modal-fill fade" id="modal-left" tabindex="100">
     <div class="modal-dialog">
@@ -235,7 +238,7 @@
                 </button>
             </div>
             <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                <label>Bạn có chắc chắn thẩm định cho đơn "<b style="color: black" id="ida"></b>"?</label>
+                <h4>Bạn có chắc chắn thẩm định cho đơn "<b style="color: black" id="ida"></b>"?</h4>
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal"
@@ -259,11 +262,35 @@
                 </button>
             </div>
             <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                <label>Bạn có chắc chắn ký duyệt cho đơn "<b style="color: black" id="ids"></b>"?</label>
+                <h4>Bạn có chắc chắn ký duyệt cho đơn "<b style="color: black" id="ids"></b>"?</h4>
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal"
                         onclick="verifyKyduyet()">
+                    Xác nhận
+                </button>
+                <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<!-- Modal xác nhận giai ngan -->
+<div class="modal modal-fill fade" id="giainganVerify" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 style="color: #0b0b0b">Giải ngân</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                <h4>Bạn có chắc chắn giải ngân cho đơn "<b style="color: black" id="idd"></b>"?</h4>
+            </div>
+            <div class="modal-footer modal-footer-uniform">
+                <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal"
+                        onclick="verifyGiaingan()">
                     Xác nhận
                 </button>
                 <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Hủy</button>
@@ -495,13 +522,76 @@
                     </div>
                 </div>
             </div>
-
             <!-- Footer -->
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang
                 </button>
             </div>
 
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<!-- Modal reset password -->
+<div class="modal modal-fill fade" id="modalGiaidoantrehan" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+            </div>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                <div class="box-body">
+                    <h4 style="color: #0b0b0b;font-weight:bold">Chỉnh sửa </h4>
+                    <div class="form-group">
+                        <label>Mã nguyên tắc : </label>
+                        <input type="text" value="S0" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Tên nguyên tắc : </label>
+                        <input type="text" value="S0" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Cấp ưu tiên : </label>
+                        <input type="text" value="1" class="form-control">
+
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái : </label>
+                        <select id="user_role" class="form-control">
+                            <option value="nvthamdinh" selected>
+                                <span>Hữu hiệu</span>
+                            </option>
+                            <option value="nvkyduyet">
+                                <span>Vô hiệu hóa</span>
+                            </option>
+
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label>Số ngày quá hạn : </label>
+                        <input type="text" value="-2" class="form-control"></div>
+                    <div class="form-group">
+                        <label><=T< : </label>
+                        <input type="text" value="1" class="form-control"></div>
+
+                    <div class="form-group">
+                        <label>Giai đoạn trễ hạn : </label>
+                        <input type="text" value="0" class="form-control"></div>
+                    <div class="form-group">
+                        <label>Ghi chú : </label>
+                        <textarea class="form-control"></textarea>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="modal-footer modal-footer-uniform">
+                    <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Hủy bỏ</button>
+                    <button type="button" class="btn btn-rounded btn-primary">
+                        Lưu
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

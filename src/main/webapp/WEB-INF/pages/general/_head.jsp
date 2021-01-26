@@ -14,6 +14,7 @@
     <meta name="author" content="">
     <link rel="icon" href="images/SGFintech-Logo-r97Y8.png">
 
+
     <title>SG Fintech Web Admin</title>
 
     <!-- Vendors Style-->

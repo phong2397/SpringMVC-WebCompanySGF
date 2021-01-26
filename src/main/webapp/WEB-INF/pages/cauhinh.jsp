@@ -123,7 +123,7 @@
                                             </td>
                                             <td class="text-left"><b style="color: #00E466">${lst.status}</b></td>
                                             <td>
-                                                <button class="btn btn-rounded btn-info btn-accept">Update</button>
+                                                <button class="btn btn-rounded btn-info btn-accept">Chỉnh sửa</button>
                                             </td>
                                         </tr>
                                         </c:forEach>

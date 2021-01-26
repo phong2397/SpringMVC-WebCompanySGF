@@ -266,6 +266,29 @@ public class MergeDataService {
         }
     }
 
+    public List<MergeDataWithdraw> gachnodata(String date) { //no check date = true
+        String sql = "";
+        Object[] param = null;
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        sql = "select cu.*, co.*,com.* from sgft_customer cu , sgft_contract co, sgft_companies com where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code and co.status in ('act','notcomplete')  ORDER BY co.id_contract DESC";
+        param = new Object[]{};
+
+        try {
+            List<MergeDataWithdraw> resultList = jdbcTemplate.query(sql, param,
+                    (rs, arg1) -> {
+                        Customer cu = new CustomerMapper().mapRow(rs, arg1);
+                        Contract co = new ContractMapper().mapRow(rs, arg1);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new MergeDataWithdraw(cu, co, com);
+                    });
+            return resultList;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
     public List<MergeDataWithdraw> getDataWithdraw(String status, boolean nodate, String date) { //no check date = true
         String sql = "";
         Object[] param = null;

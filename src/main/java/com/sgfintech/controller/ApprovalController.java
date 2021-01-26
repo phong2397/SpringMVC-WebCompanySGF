@@ -45,20 +45,25 @@ public class ApprovalController {
     UseradminService useradminService;
 
     @RequestMapping(value = {"/tuchoi"}, method = RequestMethod.GET)
-    public String declinePage(ModelMap mm, HttpServletRequest request) {
+    public String declinePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         int countAct = mergeDataService.countStatus("act");
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
         int countDeni = mergeDataService.countStatus("deni");
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("deni");
-        List<SaRequest> saRequest = saRequestDAO.findAll();
-        mm.addAttribute("sa", saRequest);
-        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countDeni", countDeni);
-        return "tuchoi";
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("deni");
+            List<SaRequest> saRequest = saRequestDAO.findAll();
+            mm.addAttribute("sa", saRequest);
+            mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+            mm.addAttribute("countAct", countAct);
+            mm.addAttribute("countWait", countWait);
+            mm.addAttribute("countWFS", countWFS);
+            mm.addAttribute("countDeni", countDeni);
+            return "tuchoi";
+        }
     }
 
     @RequestMapping(value = {"/tuchoithamdinh"}, method = RequestMethod.GET)

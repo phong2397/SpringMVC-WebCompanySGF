@@ -203,8 +203,15 @@
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
                                                 <td></td>
-                                                <td><a data-toggle="modal" href="#" class="as"
+                                                <td><% Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+                                                    String role = u.getRole();
+                                                    if (role.equals("root") || role.equals("tnthamdinh")) { %>
+                                                    <a data-toggle="modal" href="#" class="as"
                                                        onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
+                                                    <% } else {%>
+                                                    <a data-toggle="modal" href="#" class="as"
+                                                       onclick="viewInfoNoaction('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
+                                                    <% }%>
                                                 </td>
                                                 <td>
                                                         ${lst.customer.customerName}

@@ -179,7 +179,9 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <h4 class="box-title">Danh sách khách hàng</h4>
+                                <h4 class="box-title">Danh sách khách hàng</h4><br>
+                                <button class="btn btn-primary" data-toggle="modal" href="#modalnhacphi">Chia đơn
+                                </button>
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
@@ -203,8 +205,6 @@
                                             <th class="text-left">Thời gian phân bổ gần đây</th>
                                             <th class="text-left">Điện thoại cuối cùng</th>
                                             <th class="text-left">Ngày thanh toán</th>
-                                            <th class="text-left">Phí trễ hạn</th>
-                                            <th class="text-left">Phí trễ hạn</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -267,12 +267,6 @@
                                                 </td>
                                                 <td> 05/02/2021
                                                 </td>
-                                                <td><fmt:formatNumber
-                                                        value="10000"
-                                                        type="number"/> đ
-                                                </td>
-                                                <td>10000
-                                                </td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -296,6 +290,47 @@
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <jsp:include page="general/modal.jsp"/>
+    <!-- Modal show employee thamdinh -->
+    <div class="modal modal-fill fade" id="modalnhacphi" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 style="color: #0b0b0b">Chỉ định nhắc phí</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                    <div class="form-group">
+                        <label style="color:black">Chọn nhân viên nhắc phí</label><br>
+                        <select id="userLogin" class="form-control">
+                            <option selected disabled hidden>
+                                -- Vui lòng chọn --
+                            </option>
+                            <c:forEach items="${admin}" var="lst" varStatus="loop">
+                                <c:choose>
+                                    <c:when test="${lst.role eq 'nvnhacphi'}">
+                                        <option value="${lst.userLogin}">
+                                            <span> ${lst.userLogin}</span>
+                                        </option>
+                                    </c:when>
+                                    <c:otherwise>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer modal-footer-uniform">
+                    <button type="button" onclick="chiadon(this)" class="btn btn-rounded btn-warning btn-update"
+                            data-dismiss="modal">Xác nhận
+                    </button>
+                    <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
@@ -331,7 +366,7 @@ rel="stylesheet"/>
             columnDefs: [
                 {
                     visible: false,
-                    targets: [11, 16]
+                    targets: 11
                 },
             ],
             buttons: [
@@ -344,7 +379,7 @@ rel="stylesheet"/>
                                 return body;
                             }
                         },
-                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 16]
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14]
 
                     }
                 },

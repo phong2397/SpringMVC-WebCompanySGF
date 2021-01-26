@@ -68,18 +68,27 @@
                     Có thể hóa đơn gạch nợ bằng tay. Vui lòng bấm vào nút In Hóa Đơn để lưu giữ chứng từ
                 </div>
             </div>
+            <div class="col-12">
+                <div class="bb-1 clearFix">
+                    <div class="text-right pb-15">
+                        <button onclick="printDiv('main')" class="btn btn-rounded btn-facebook"
+                                type="button"> <span><i
+                                class="fa fa-print"></i>&nbsp;In hóa đơn</span></button>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h4 class="box-title">Danh sách nợ</h4>
+                            <h4 class="box-title">Danh sách thu hồi</h4>
                         </div>
                         <div class="box-body">
                             <div class="table-responsive">
                                 <table id="example" class="table table-striped table-bordered no-margin" width="100%">
                                     <thead>
                                     <tr>
-                                        <th class="text-center">Mã đơn vay</th>
+                                        <th class="text-center">Mã đơn</th>
                                         <th>Thông tin khách hàng</th>
                                         <th>Số điện thoại</th>
                                         <th>Tên khách hàng</th>
@@ -94,8 +103,10 @@
                                         <th class="text-left">Hạn thanh toán</th>
                                         <th class="text-left">Kỳ thanh toán</th>
                                         <th class="text-left">Ngày nhắc nợ</th>
+                                        <th class="text-left">Ngày thanh toán</th>
                                         <th class="text-left">Trạng thái đơn</th>
                                         <th class="text-left">Trạng thái cổng thanh toán</th>
+                                        <th class="text-left">Uỷ nhiệm chi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -109,11 +120,9 @@
                                                 <b> <a data-toggle="modal" href="#" id="cPhone" class="as"
                                                        onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerPhone}</a></b>
                                                 <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
-                                                <span class="d-block text-muted">Mã công ty :<b><a
-                                                        data-toggle="modal" href="#"
-                                                        onclick="viewInfoCompany('${lst.companies.companyCode}')"> ${lst.companies.companyCode}</a></b></span>
-                                                <span class="d-block text-muted">Số tài khoản: ${lst.customer.customerBankAcc}</span>
-                                                <span class="d-block text-muted">Chủ tài khoản : ${lst.customer.customerBankName}</span>
+                                                <span class="d-block text-muted">Chủ tài khoản :<b> ${lst.customer.customerBank}</b></span>
+                                                <span class="d-block text-muted">Số tài khoản: <b>${lst.customer.customerBankAcc}</b></span>
+                                                <span class="d-block text-muted">Chủ tài khoản :<b> ${lst.customer.customerBankName}</b></span>
                                             </h6>
                                         </td>
                                         <td>
@@ -123,7 +132,7 @@
                                             <b> ${lst.customer.customerName}</b>
                                         </td>
                                         <td>
-                                            <b> ${lst.customer.companyCode}</b>
+                                            <b> ${lst.customer.customerBank}</b>
                                         </td>
                                         <td>
                                             <b> ${lst.customer.customerBankAcc}</b>
@@ -133,28 +142,38 @@
                                         </td>
                                         <td><fmt:formatNumber value="${lst.contract.borrow}" type="number"/> đ
                                         </td>
-                                        <td><fmt:formatNumber value="${lst.contract.borrow}" type="number"/> đ
+                                        <td id="remainAmountBorrowOrder-${lst.contract.idContract}"><fmt:formatNumber
+                                                value="${lst.contract.remainAmountBorrow}" type="number"/> đ
                                         </td>
                                         <td>${lst.contract.borrow}
                                         </td>
-                                        <td>${lst.contract.borrow}
+                                        <td>${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 0.02)}
                                         </td>
-                                        <td>0</td>
-                                        <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
-                                                           pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
-                                                           type="date"/>
-                                            <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                            value="${patientDob}"/>
+                                        <td><fmt:formatNumber value="${lst.contract.feeBorrow}" type="number"/>
+                                            đ
+                                        </td>
+                                        <td>05/02/2021
                                         </td>
                                         <td>1</td>
                                         <td><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob"
                                                            type="date"/>
                                             <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
+                                        <td><fmt:parseDate value=" ${lst.contract.createdDate}"
+                                                           pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
+                                                           type="date"/>
+                                            <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                            value="${patientDob}"/></td>
 
-                                        <td>Đã giải ngân</td>
+                                        <td><b style="color: #0D8BBD">${lst.contract.status}</b></td>
                                         <td>-</td>
-
+                                        <td>
+                                            <button type="button" class="btn btn-info btn-github"
+                                                    data-dismiss="modal">Upload
+                                            </button>
+                                        </td>
                                     </tr>
+
+
                                     </c:forEach>
                                     <tbody>
                                 </table>
@@ -164,122 +183,12 @@
                     </div>
                     <!-- /.box -->
                 </div>
-                <div class="col-12">
-                    <div class="bb-1 clearFix">
-                        <div class="text-right pb-15">
-                            <button onclick="printDiv('main')" class="btn btn-rounded btn-warning"
-                                    type="button"> <span><i
-                                    class="fa fa-print"></i>&nbsp;In hóa đơn</span></button>
-                        </div>
-                    </div>
-                </div>
+
 
                 <!-- /.col -->
             </div>
             <!-- Main content -->
-            <section class="invoice printableArea" id="main" style="display: none">
-                <div class="col-12">
-                    <!-- title row -->
-                    <div class="col-12">
-                        <div class="page-header">
-                            <h2 class="d-inline"><span class="font-size-30">Thông tin hóa đơn</span></h2>
-                            <div class="pull-right text-right">
-                                <h3><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
-                                    <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- info row -->
-                    <div class="row invoice-info">
-                        <div class="col-md-6 invoice-col">
-                            <strong>FROM</strong>
-                            <address>
-                                <strong class="text-blue font-size-24">SG Fintech</strong><br>
-                                <strong class="d-inline">66 Phó Đức Chính Quận 1</strong><br>
-                                <strong>Phone: (00) 123-456-7890 &nbsp;&nbsp;&nbsp;&nbsp; Email:
-                                    admin@sgfintech.com.vn</strong>
-                            </address>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-md-6 invoice-col text-right">
-                            <strong>To</strong>
-                            <address>
-                                <strong class="text-blue font-size-24"><span id="customerName"></span></strong><br>
-                                <strong class="d-inline"><span id="customerAddress"></span></strong><br>
-                                <strong>Phone: <span id="customerPhone"></span> &nbsp;&nbsp;&nbsp;&nbsp; Email:
-                                    <span id="customerEmail"></span></strong>
-                            </address>
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-12 invoice-col mb-15">
-                            <div class="invoice-details row no-margin">
-                                <div class="col-md-6 col-lg-3"><b>Mã đơn hàng:&nbsp;</b><span id="idContract"></span>
-                                </div>
-                                <div class="col-md-6 col-lg-3"><b>Thông tin giao dịch:</b>
-                                    <span id="transactionId"></span></div>
-                                <div class="col-md-6 col-lg-3"><b>Ngày thanh toán:</b><fmt:parseDate value="${year}"
-                                                                                                     pattern="dd-MM-yyyy"
-                                                                                                     var="patientDob"
-                                                                                                     type="date"/>
-                                    <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></div>
-                                <div class="col-md-6 col-lg-3"><b>Tài khoản báo có :</b>
-                                    <span id="customerBankAcc"></span></div>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                    <!-- Table row -->
-                    <div class="row">
-                        <div class="col-12 table-responsive">
-                            <table class="table table-bordered">
-                                <tbody>
-                                <tr>
-                                    <th>Mô tả</th>
-                                    <th>Serial #</th>
-                                    <th class="text-right">Phí</th>
-                                    <th class="text-right">Số tiền thanh toán</th>
-                                </tr>
-                                <tr>
-                                    <td>Thanh toán dư nợ cuối kì</td>
-                                    <td><span id="systemTrace"></span></td>
-                                    <td class="text-right">2 %</td>
-                                    <td class="text-right"><span id="borrow"></span></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
 
-                    <div class="row">
-                        <div class="col-12 text-right">
-                            <p class="lead"><b>Ngày thanh toán:</b><span class="text-danger"><fmt:parseDate
-                                    value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
-														<fmt:formatDate pattern="dd/MM/yyyy "
-                                                                        value="${patientDob}"/></span></p>
-                            <div class="total-payment">
-                                <h3><b>Total :</b>
-                                    <td class="text-right"><span id="remainAmountBorrow"></span></td>
-                                </h3>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- /.col -->
-                    <!-- /.row -->
-
-                    <!-- this row will not appear when printing -->
-                    <div class="row no-print">
-                        <div class="col-12">
-                            <button type="button" class="btn btn-rounded btn-success pull-right"><i
-                                    class="fa fa-credit-card"></i> Gạch nợ
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
             <!-- /.content -->
         </div>
     </div>
@@ -290,6 +199,130 @@
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <jsp:include page="general/modal.jsp"/>
+    <div class="modal modal-right fade" id="modalHoadonGachno" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                    <section class="invoice printableArea" id="main">
+                        <div class="col-12">
+                            <!-- title row -->
+                            <div class="col-12">
+                                <div class="page-header">
+                                    <h2 class="d-inline"><span class="font-size-30">Thông tin hóa đơn</span></h2>
+                                    <div class="pull-right text-right">
+                                        <h3><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob"
+                                                           type="date"/>
+                                            <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- info row -->
+                            <div class="row invoice-info">
+                                <div class="col-md-6 invoice-col">
+                                    <strong>FROM</strong>
+                                    <address>
+                                        <strong class="text-blue font-size-24">SG Fintech</strong><br>
+                                        <strong class="d-inline">66 Phó Đức Chính Quận 1</strong><br>
+                                        <strong>Phone: (00) 123-456-7890 &nbsp;&nbsp;&nbsp;&nbsp; Email:
+                                            admin@sgfintech.com.vn</strong>
+                                    </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-md-6 invoice-col text-right">
+                                    <strong>To</strong>
+                                    <address>
+                                        <strong class="text-blue font-size-24"><span
+                                                id="customerNameg"></span></strong><br>
+                                        <strong class="d-inline"><span id="customerAddressg"></span></strong><br>
+                                        <strong>Phone: <span id="customerPhoneg"></span> &nbsp;&nbsp;&nbsp;&nbsp; Email:
+                                            <span id="customerEmailg"></span></strong>
+                                    </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-12 invoice-col mb-15">
+                                    <div class="invoice-details row no-margin">
+                                        <div class="col-md-6 col-lg-3"><b>Mã đơn :&nbsp;</b><span
+                                                id="idContract"></span>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3"><b>Thông tin giao dịch:</b>
+                                            <span id="transactionId"></span></div>
+                                        <div class="col-md-6 col-lg-3"><b>Ngày thanh toán:</b><fmt:parseDate
+                                                value="${year}"
+                                                pattern="dd-MM-yyyy"
+                                                var="patientDob"
+                                                type="date"/>
+                                            <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></div>
+                                        <div class="col-md-6 col-lg-3"><b>Tài khoản báo có :</b>
+                                            <span id="customerBankAccg"></span></div>
+                                    </div>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                            <!-- Table row -->
+                            <div class="row">
+                                <div class="col-12 table-responsive">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                        <tr>
+                                            <th>Mô tả</th>
+                                            <th>Serial #</th>
+                                            <th class="text-right">Số lần thanh toán</th>
+                                            <th class="text-right">Số tiền thanh toán</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Thanh toán dư nợ cuối kì</td>
+                                            <td><span id="systemTrace"></span></td>
+                                            <td class="text-right"><span id="timeBorrow"></span></td>
+                                            <td class="text-right"><span id="feeBorrow"></span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+
+                            <div class="row">
+                                <div class="col-12 text-right">
+                                    <p class="lead"><b>Ngày thanh toán:</b><span class="text-danger"><fmt:parseDate
+                                            value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
+														<fmt:formatDate pattern="dd/MM/yyyy "
+                                                                        value="${patientDob}"/></span></p>
+                                    <div class="total-payment">
+                                        <h3><b>Tổng cộng :</b>
+                                            <span id="remainAmountBorrow" style="display: none"></span>
+                                            <span id="TotalFee"></span>
+                                            <span id="TotalFee1" style="display: none"></span>
+                                        </h3>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.col -->
+                            <!-- /.row -->
+
+                            <!-- this row will not appear when printing -->
+                            <div class="row no-print">
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-rounded btn-success pull-right"
+                                            onclick="gachno()"><i
+                                            class="fa fa-credit-card"></i> Gạch nợ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <hr>
+                    <div class="modal-footer modal-footer-uniform">
+                        <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
@@ -333,7 +366,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16]
+                        columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 
                     }
                 },

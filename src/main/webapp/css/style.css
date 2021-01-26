@@ -98,6 +98,11 @@ table.dataTable tr th.select-checkbox.selected::after {
     text-shadow: rgb(176, 190, 217) 1px 1px, rgb(176, 190, 217) -1px -1px, rgb(176, 190, 217) 1px -1px, rgb(176, 190, 217) -1px 1px;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+
 .error {
     color: #F00;
     background-color: #FFF;
@@ -307,10 +312,6 @@ h1, h2, h3, .h1, .h2, .h3 {
 
 img {
     max-width: 100%;
-}
-
-.img-fluid {
-    width: 100%;
 }
 
 .align-sub {

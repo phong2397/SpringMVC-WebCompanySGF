@@ -439,10 +439,10 @@ $("body").on("click", ".as", function () {
             rowElement.append('<td><h5 style="color:  #0aa5df">chờ ký duyệt</h5></td>');
 
         } else if (sa.saRequest.status == 'done') {
-            rowElement.append('<td><h5 style="color: hotpink"> đã hoàn thành</h5></td>');
+            rowElement.append('<td><h5 style="color: hotpink"> đã giải ngân</h5></td>');
 
         } else if (sa.saRequest.status == 'act') {
-            rowElement.append('<td><h5 style="color: green">đã giải ngân</h5></td>');
+            rowElement.append('<td><h5 style="color: green">chờ chuyển tiền</h5></td>');
 
         } else if (sa.saRequest.status == 'deni') {
             rowElement.append('<td><h5 style="color: red">từ chối</h5></td>');
@@ -563,10 +563,10 @@ function viewInfoCustomer(phone, id, comId) {
     let list = result.find(el => el.customer.customerPhone == phone);
     axios({
         method: 'GET',
-        url: 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + phone,
+        url: 'https://dev.sgft.info/customergateway/api/v1/document/' + phone,
         headers: {
             // 'Content-Type': 'application/x-www-form-urlencoded',
-            'Access-Control-Allow-Origin': 'http://dev.sgft.info:8080/customergateway/api/v1/document/' + phone,
+            'Access-Control-Allow-Origin': 'https://dev.sgft.info/customergateway/api/v1/document/' + phone,
         },
         auth: {
             username: "sgfintech",
@@ -574,20 +574,21 @@ function viewInfoCustomer(phone, id, comId) {
         }
     })
         .then(function (response) {
+            console.log(response)
             const imgCMND = JSON.parse(response.data.cmnd)
             $('#imgCMND').empty();
             Object.keys(imgCMND).forEach((key) => {
-                if (imgCMND[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (imgCMND[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgCMND').append('Bổ sung hình ảnh');
                 } else {
-                    $('#imgCMND').append('<img class="img" id="zoom_10" src="' + imgCMND[key] + '" data-zoom-image="' + imgCMND[key] + '" />');
+                    $('#imgCMND').append('<img  id="xzoom" class="img" src="' + imgCMND[key] + '' + '" xoriginal ="' + imgCMND[key] + '"  />');
                 }
             });
             const payslipObj = JSON.parse(response.data.payslip);
             $('#imgPayslip').empty()
             Object.keys(payslipObj).forEach((key) => {
                 console.log(payslipObj[key]);
-                if (payslipObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (payslipObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
                     $('#imgPayslip').append('<img class="img" src="' + payslipObj[key] + '"/>');
@@ -596,7 +597,7 @@ function viewInfoCustomer(phone, id, comId) {
             const salaryObj = JSON.parse(response.data.salary);
             $('#imgSalary').empty()
             Object.keys(salaryObj).forEach((key) => {
-                if (salaryObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (salaryObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
                     $('#imgSalary').append('<img class="img" src="' + salaryObj[key] + '"/>');
@@ -606,7 +607,7 @@ function viewInfoCustomer(phone, id, comId) {
             const healthObj = JSON.parse(response.data.health);
             $('#imgHealth').empty()
             Object.keys(healthObj).forEach((key) => {
-                if (healthObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (healthObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
                     $('#imgHealth').append('<img class="img" src="' + healthObj[key] + '"/>');
@@ -615,7 +616,7 @@ function viewInfoCustomer(phone, id, comId) {
             const appendixObj = JSON.parse(response.data.appendix);
             $('#imgAppendix').empty()
             Object.keys(appendixObj).forEach((key) => {
-                if (appendixObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (appendixObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
                     $('#imgAppendix').append('<img class="img" src="' + appendixObj[key] + '"/>');
@@ -624,16 +625,17 @@ function viewInfoCustomer(phone, id, comId) {
             const socialObj = JSON.parse(response.data.social);
             $('#imgSocial').empty()
             Object.keys(socialObj).forEach((key) => {
-                if (socialObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (socialObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
                     $('#imgSocial').append('<img class="img" src="' + socialObj[key] + '"/>');
                 }
             });
             const contractObj = JSON.parse(response.data.contract);
+            console.log(contractObj)
             $('#imgContract').empty()
             Object.keys(contractObj).forEach((key) => {
-                if (contractObj[key] == 'http://dev.sgft.info:8080/upload/' + phone + '@') {
+                if (contractObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
                     $('#imgContract').append('<img class="img" src="' + contractObj[key] + '"/>');

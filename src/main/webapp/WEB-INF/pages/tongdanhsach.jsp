@@ -140,8 +140,13 @@
                                             <th>Status</th>
                                             <th>Mã giao dịch (Transaction ID)</th>
                                             <th>Ngày gạch nợ</th>
+                                            <th>Số tiền tạm ứng</th>
+                                            <th>Số tiền tạm ứng</th>
                                             <th>Số tiền còn nợ</th>
                                             <th>Số tiền còn nợ</th>
+                                            <th>Số tiền đã thanh toán</th>
+                                            <th>Số tiền đã thanh toán</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -179,7 +184,7 @@
                                                 </td>
                                                 </td>
                                                 <td>${lst.contract.systemTrace}</td>
-                                                <td><h6 class="mb-0" style="color:#28a745"><b> Gạch nợ </b></h6>
+                                                <td><h6 class="mb-0" style="color:#28a745"><b>Đã tất toán</b></h6>
                                                 </td>
                                                 <td>${lst.contract.transactionId}</td>
                                                 <td><fmt:parseDate value=" ${lst.contract.createdDate}"
@@ -188,10 +193,20 @@
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                     value="${patientDob}"/></td>
                                                 <td><fmt:formatNumber
+                                                        value="${lst.contract.borrow + (lst.contract.borrow * 2/100) }"
+                                                        type="number"/> đ
+                                                </td>
+                                                <td> ${lst.contract.borrow + (lst.contract.borrow * 2/100) }</td>
+                                                <td><fmt:formatNumber
                                                         value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 2/100) }"
                                                         type="number"/> đ
                                                 </td>
                                                 <td> ${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 2/100) }</td>
+                                                <td><fmt:formatNumber
+                                                        value="${lst.contract.feeBorrow + (lst.contract.feeBorrow * 2/100) }"
+                                                        type="number"/> đ
+                                                </td>
+                                                <td> ${lst.contract.feeBorrow + (lst.contract.feeBorrow * 2/100) }</td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -241,11 +256,11 @@
                 }
             },
             order: [[0, "desc"]],
-            pageLength: 10,// phân 10 kết quả cho mỗi trang
+            pageLength: 10,
             columnDefs: [
                 {
                     visible: false,
-                    targets: [2, 3, 4, 5, 6, 12] // ẩn đi các column đã chọn
+                    targets: [2, 3, 4, 5, 6, 10, 12, 14, 16]
                 },
             ],
             buttons: [
@@ -258,7 +273,7 @@
                             $('row c[r^="A"]', sheet).attr('s', '50');
                             $('row c[r^="D"]', sheet).attr('s', '50');
                         },
-                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12],// export excel các column đã chọn
+                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16],
 
                     }
                 },

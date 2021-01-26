@@ -39,6 +39,16 @@
         display: block !important;
         opacity: 100 !important;
     }
+
+    .xzoom-source img, .xzoom-preview img, .xzoom-lens img {
+        display: block;
+        max-width: none;
+        max-height: none;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -o-transition: none;
+        transition: none;
+    }
 </style>
 <div class="wrapper">
 
@@ -177,6 +187,7 @@
                                     <span>Yêu cầu tất toán thành công</span>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -185,6 +196,7 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header with-border">
+
                                 <h4 class="box-title">Số lượng đơn chờ xét duyệt</h4><br>
                                 <%
                                     Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
@@ -225,10 +237,10 @@
                                                 <td><%
                                                     if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                                     <a data-toggle="modal" href="#" class="as"
-                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')">${lst.saRequest.id}</a>
+                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                     <% } else {%>
                                                     <a data-toggle="modal" href="#" class="as"
-                                                       onclick="viewInfoNoaction('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')">${lst.saRequest.id}</a>
+                                                       onclick="viewInfoNoaction('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                     <% }%>
                                                 </td>
                                                 <td>
@@ -286,6 +298,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -350,6 +363,10 @@
 
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link href="https://unpkg.com/xzoom@1.0.7/dist/xzoom.css" rel="stylesheet"/>
+<script src="https://unpkg.com/xzoom@1.0.7/dist/xzoom.min.js"></script>
+<script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js"></script>
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
@@ -357,6 +374,13 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $('.xzoom').xzoom({
+            defaultScale: 1,
+            tint: '#333',
+            Xoffset: 15,
+            position: 'left'
+        });
+
         $("#loading").hide();
         $('#example').DataTable({
             dom: 'Bfrtip',
@@ -388,6 +412,8 @@
             ]
         });
     });
+
+    ;
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
                   Gson g = new Gson();
