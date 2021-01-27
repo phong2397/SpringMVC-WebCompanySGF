@@ -214,7 +214,7 @@
                                             <tr>
                                                 <td><input type="checkbox" class="checkEmployee"
                                                            value="${lst.contract.idContract}"/></td>
-                                                <td class="text-left"><a data-toggle="modal" href="#"
+                                                <td class="text-left"><a data-toggle="modal" href="#" class="as"
                                                                          onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.companies.id}','${lst.contract.idContract}')"
                                                 ><b>${lst.contract.idContract}</b></a>
                                                 </td>
@@ -404,7 +404,7 @@ rel="stylesheet"/>
          String json1 = gs.toJson(list1);
      %>
     var result = <%=json%>;
-    var list = <%=json1%>;
+    var salist = <%=json1%>;
 
 </script>
 </body>

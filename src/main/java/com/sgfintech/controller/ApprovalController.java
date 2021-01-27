@@ -45,7 +45,7 @@ public class ApprovalController {
     UseradminService useradminService;
 
     @RequestMapping(value = {"/tuchoi"}, method = RequestMethod.GET)
-    public String declinePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+    public String tuchoiPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         int countAct = mergeDataService.countStatus("act");
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
@@ -67,7 +67,7 @@ public class ApprovalController {
     }
 
     @RequestMapping(value = {"/tuchoithamdinh"}, method = RequestMethod.GET)
-    public String declineThamdinhPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+    public String tuchoiThamdinhPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         int countAct = mergeDataService.countStatus("act");
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
@@ -90,7 +90,7 @@ public class ApprovalController {
 
     }
 
-    @RequestMapping(value = {"/thamdinhlogin"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/thamdinhRole"}, method = RequestMethod.GET)
     public String showthamdinhLogin(ModelMap mm, HttpServletRequest request, HttpSession session) {
         int countAct = mergeDataService.countStatus("act");
         int countWait = mergeDataService.countStatus("wait");
@@ -109,25 +109,8 @@ public class ApprovalController {
             mm.addAttribute("countWait", countWait);
             mm.addAttribute("countWFS", countWFS);
             mm.addAttribute("countDone", countDone);
-            return "thamdinhlogin";
+            return "thamdinhRole";
         }
-    }
-
-    @RequestMapping(value = {"/tongtiepnhan"}, method = RequestMethod.GET)
-    public String tongtiepnhanPage(ModelMap mm, HttpServletRequest request) {
-        int countWait = mergeDataService.countStatus("wait");
-        int countWFS = mergeDataService.countStatus("wfs");
-        int countAct = mergeDataService.countStatus("act");
-        int countDone = mergeDataService.countStatus("done");
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataTongTiepNhan();
-        List<SaRequest> sa = saRequestDAO.findAll();
-        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("sa", sa);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countDone", countDone);
-        return "tongtiepnhan";
     }
 
     @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
@@ -152,6 +135,23 @@ public class ApprovalController {
             mm.addAttribute("countDone", countDone);
             return "thamdinh";
         }
+    }
+
+    @RequestMapping(value = {"/tongtiepnhan"}, method = RequestMethod.GET)
+    public String tongtiepnhanPage(ModelMap mm, HttpServletRequest request) {
+        int countWait = mergeDataService.countStatus("wait");
+        int countWFS = mergeDataService.countStatus("wfs");
+        int countAct = mergeDataService.countStatus("act");
+        int countDone = mergeDataService.countStatus("done");
+        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataTongTiepNhan();
+        List<SaRequest> sa = saRequestDAO.findAll();
+        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+        mm.addAttribute("sa", sa);
+        mm.addAttribute("countWait", countWait);
+        mm.addAttribute("countWFS", countWFS);
+        mm.addAttribute("countAct", countAct);
+        mm.addAttribute("countDone", countDone);
+        return "tongtiepnhan";
     }
 
     @Autowired
@@ -204,15 +204,26 @@ public class ApprovalController {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
             if (!StringUtil.isEmpty(employeeThamdinh) && u.getUserLogin().equals(employeeThamdinh)) {
-                SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
-                sa.setStatus(status.trim());
-                sa.setDescription(textDecline);
-                sa.setEmployeeThamdinh(employeeThamdinh);
-                sa.setEmployeeThamdinhDate(LocalDateTime.now());
-                sa.setEmployeeDuyet(useradminService.randomUserXetDuyet());
-                sa.setUpdatedDate(LocalDateTime.now());
-                saRequestDAO.update(sa);
-                return "success";
+                if (status.equals("wfs")) {
+                    SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+                    sa.setStatus(status.trim());
+                    sa.setDescription(textDecline);
+                    sa.setEmployeeThamdinh(employeeThamdinh);
+                    sa.setEmployeeThamdinhDate(LocalDateTime.now());
+                    sa.setEmployeeDuyet(useradminService.randomUserXetDuyet());
+                    sa.setUpdatedDate(LocalDateTime.now());
+                    saRequestDAO.update(sa);
+                    return "success";
+                } else {
+                    SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+                    sa.setStatus(status.trim());
+                    sa.setDescription(textDecline);
+                    sa.setEmployeeThamdinh(employeeThamdinh);
+                    sa.setEmployeeThamdinhDate(LocalDateTime.now());
+                    sa.setUpdatedDate(LocalDateTime.now());
+                    saRequestDAO.update(sa);
+                    return "success";
+                }
             } else {
                 return "errorEmployee";
             }

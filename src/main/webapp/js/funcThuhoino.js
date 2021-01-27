@@ -1,45 +1,3 @@
-//function xảy ra khi nhấn vào số điện thoại trong column thứ 2 gọi đến data ajax thực hiện thành công hiển thị nội dung các đơn hàng và ngày yêu cầu vào modal
-$("body").on("click", ".as", function () {
-    var datarequest = $(this).closest("tr").find('td:eq(1)  > h6  > b  > .as').text().trim();// tìm đến số điện thoai của td thứ 1
-    let data = {dataRequest: datarequest};
-    var result = findHistoryModal(data);
-    var obj = JSON.parse(result);
-    $("#tbodytable").empty();
-    Object.keys(obj).forEach((key) => {
-        let con = obj[key]
-        let time = obj[key].contract.createdDate
-        var rowElement = $('<tr></tr>');
-        rowElement.append('<td><h5><a  href="#" onclick="viewInfoContract(' + con.contract.idContract + ')">' + con.contract.idContract + '</a></h5></td>');
-        rowElement.append('<td><h5>' + ("0" + (time.date.day)).slice(-2) + '/' + ("0" + (time.date.month)).slice(-2) + '/' + ("0" + (time.date.year)).slice(-2) + ' ' + ("0" + (time.time.hour)).slice(-2) + ':' + ("0" + (time.time.minute)).slice(-2) + ':' + ("0" + (time.time.second)).slice(-2) + '</h5></td>');
-        $("#tbodytable").append(rowElement);
-    })
-});
-
-//function ajax gọi đến value trong TotalListController thực hiện truy vấn trả về danh sách contract đúng với số điện thoại đó
-function findHistoryModal(data) {
-    let result = "";
-    try {
-        $.ajax({
-            type: "POST",
-            timeout: 100000,
-            url: "findContractHistoryModal",
-            data: data,
-            async: false,
-            success: function (data, status, xhr) {
-                result = data;
-                return result;
-            },
-            error: function (jqXhr, textStatus, errorMessage) {
-                console.log(textStatus);
-                console.log(errorMessage);
-            }
-        })
-    } catch (error) {
-        return "Không thể kết nối tới server";
-    }
-    return result;
-}
-
 function gachno() {
     $("#loading").show();
     var dataRequest = $("#idContract").text();
@@ -81,8 +39,8 @@ function gachno() {
         });
         $("#loading").hide();
         $('#modalHoadonGachno').modal('hide');
-        $("#remainAmountBorrowOrder-" + dataRequest).empty();
-        $("#remainAmountBorrowOrder-" + dataRequest).append((total + (total * 0.02)).toLocaleString("vi-VN") + ' đ');
+        $("#" + dataRequest).empty();
+        $("#" + dataRequest).append((total + (total * 0.02)).toLocaleString("vi-VN") + ' đ');
 
     } else {
         Swal.fire({
@@ -142,18 +100,15 @@ function viewInfo(idContract, custPhone) {
     Object.keys(contract).forEach((key) => {
         if (key == "remainAmountBorrow") {
             let value = contract[key] + (contract[key] * 0.02);
-            $('#' + key).text(value);
+            $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
+            $('#remainAmountBorrow1').text(value.toLocaleString("vi-VN") + " đ");
 
         } else if (key == "borrow") {
             let value1 = contract[key];
             $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
         } else if (key == "feeBorrow") {
-            let total1 = contract[key];
-            let value2 = contract[key];
             let total = contract[key]
-            $('#' + key).text(value2.toLocaleString("vi-VN") + " đ");
             $('#TotalFee').text(total.toLocaleString("vi-VN") + " đ");
-            $('#TotalFee1').text(total1);
         } else {
             $('#' + key).text(contract[key]);
         }
@@ -218,7 +173,7 @@ function viewInfoCustomer(phone, comId, idContract) {
                         }
                     });
                     const appendixObj = JSON.parse(data.appendix);
-                    $('#imgAppendix').empty()
+                    $('#imgAppendixc').empty()
                     Object.keys(appendixObj).forEach((key) => {
                         if (appendixObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                             $('#imgAppendixc').append('<div style="color: grey">Không có hình ảnh</div>');
@@ -227,7 +182,7 @@ function viewInfoCustomer(phone, comId, idContract) {
                         }
                     });
                     const socialObj = JSON.parse(data.social);
-                    $('#imgSocial').empty()
+                    $('#imgSocialc').empty()
                     Object.keys(socialObj).forEach((key) => {
                         if (socialObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                             $('#imgSocialc').append('<div style="color: grey">Không có hình ảnh</div>');
@@ -269,8 +224,28 @@ function viewInfoCustomer(phone, comId, idContract) {
         }
     })
     list = result.find(el => el.companies.id == comId);
+    let comp = list.companies
+    $("#jobc").empty();
+    $("#jobc").append('<h4><b>*</b>&nbsp;&nbsp;&nbsp;Công việc</h4>');
+    $("#jobc").append('<p>Mã công ty : <span style="color:grey;">' + comp.companyCode + '</span></p>');
+    $("#jobc").append('<p>Tên công ty : <span style="color:grey;">' + comp.companyName + '</span></p>');
+    if (typeof (comp.companyAddress) === "undefined") {
+        $("#jobc").append('<p>Địa chỉ công ty : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
+    } else {
+        $("#jobc").append('<p>Địa chỉ công ty : <span style="color:grey;">' + comp.companyAddress + '</span></p>');
+    }
+    $("#jobc").append('<p>Mã nhân viên : <span style="color:grey;">' + list.customer.customerCode + '</span></p>');
+    if (list.customer.status == 'wait') {
+        $("#jobc").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + 'đang chờ' + '</span></p>');
+    } else if (list.customer.status == 'expried') {
+        $("#jobc").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + 'hết thời hạn' + '</span></p>');
+    } else if (list.customer.status == 'active') {
+        $("#jobc").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + 'đang hoạt động' + '</span></p>');
+    }
+    $("#jobc").append('<p>Vị trí : <span  style="color:grey;">' + list.customer.customerPosition + '</span></p>');
+    $("#jobc").append('<p>Mức lương : <span  style="color:grey;">' + list.customer.customerSalary.toLocaleString("vi-VN") + " đ" + '</span></p>');
+    console.log(list)
     let com = list.companies;
-    console.log(com)
     Object.keys(com).forEach((key) => {
         $('#' + key).text(com[key]);
         if (key = "companyPhone") {
@@ -302,8 +277,6 @@ function viewInfoCustomer(phone, comId, idContract) {
 
         $('#' + key + 'imp').text(con[key]);
     })
-
-
     $('#modalRepayment').modal('show');
 }
 
@@ -311,3 +284,83 @@ $("#rootcheckbox").click(function () {
     $('input:checkbox').not(this).prop('checked', this.checked);
 });
 
+$("body").on("click", ".as", function () {
+    var datarequest = $(this).closest("tr").find('td:eq(6)').text().trim();
+    let data = {dataRequest: datarequest};
+    var result = findHistoryModal(data);
+    var obj = JSON.parse(result);
+    $("#tbodyCon").empty();
+    Object.keys(obj).forEach((key) => {
+        let con = obj[key]
+        console.log(con)
+        let time = obj[key].contract.createdDate
+        var rowElement = $('<tr></tr>');
+        rowElement.append('<td><h5><a  href="#" onclick="viewInfoContract(' + con.contract.idContract + ')">' + con.contract.idContract + '</a></h5></td>');
+        rowElement.append('<td><h5>' + ("0" + (time.date.day)).slice(-2) + '/' + ("0" + (time.date.month)).slice(-2) + '/' + ("0" + (time.date.year)).slice(-2) + ' ' + ("0" + (time.time.hour)).slice(-2) + ':' + ("0" + (time.time.minute)).slice(-2) + ':' + ("0" + (time.time.second)).slice(-2) + '</h5></td>');
+        rowElement.append('<td><h5>' + con.contract.remainAmountBorrow.toLocaleString("vi-VN") + ' đ</h5></td>');
+        rowElement.append('<td><h5>' + con.contract.borrow.toLocaleString("vi-VN") + ' đ</h5></td>');
+        if (con.contract.status == 'act') {
+            rowElement.append('<td><h5 style="color:#0D8BBD">đã giải ngân</h5></td>');
+
+        } else if (con.contract.status == 'done') {
+            rowElement.append('<td><h5 style="color: hotpink">đã tất toán</h5></td>');
+
+        }
+        $("#tbodyCon").append(rowElement)
+    })
+});
+
+function viewInfoContract(params) {
+    salist.forEach((contract) => {
+        console.log(salist)
+        if (contract.idContract == params) {
+            $("#contractView").empty();
+            $("#contractView").append('<h3><p>Mã đơn :' + ' ' + contract.idContract + '</p></h3>');
+            $("#contractView").append('<p>Số điện thoại :' + ' ' + contract.customerPhone + '</p>');
+            $("#contractView").append('<p>Ngày giải ngân :' + ' ' + ("0" + (contract.createdDate.date.day)).slice(-2) + '/' + ("0" + (contract.createdDate.date.month)).slice(-2) + '/' + contract.createdDate.date.year + ' ' + ' ' + ("0" + (contract.createdDate.time.hour)).slice(-2) + ':' + ("0" + (contract.createdDate.time.minute)).slice(-2) + ':' + ("0" + (contract.createdDate.time.second)).slice(-2) + '</p>');
+            $("#contractView").append('<p>Số tiền ứng :' + ' ' + contract.borrow.toLocaleString("vi-VN") + ' đ</p>');
+            $("#contractView").append('<p>Phí :' + ' ' + '2 %' + '</p>');
+            $("#contractView").append('<p>Mức Phí :' + ' ' + contract.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
+            $("#contractView").append('<p>Số tiền còn nợ :' + ' ' + (contract.remainAmountBorrow + (contract.remainAmountBorrow * 0.02)).toLocaleString("vi-VN") + ' đ</p>');
+
+            $("#contractView").append('<p>Số tiền thanh toán :' + ' ' + contract.remainAmountBorrow.toLocaleString("vi-VN") + ' đ</p>');
+            if (contract.status == "act") {
+                $("#contractView").append('<p>Trạng thái :' + ' ' + '<b style="color: #0D8BBD">' + 'đã giải ngân' + '</b></p>');
+
+            } else if (contract.status == "done") {
+                $("#contractView").append('<p>Trạng thái :' + ' ' + '<b style="color: hotpink">' + 'đã tất toán' + '</b></p>');
+
+            }
+            $("#contractView").append('<p>Mã giao dịch :' + ' ' + contract.transactionId + '</p>');
+            $("#contractView").append('<p>Ngày thanh toán :' + ' ' + ("0" + (contract.dateRepayment.date.day)).slice(-2) + '/' + ("0" + (contract.dateRepayment.date.month)).slice(-2) + '/' + contract.dateRepayment.date.year + ' ' + ' ' + ("0" + (contract.dateRepayment.time.hour)).slice(-2) + ':' + ("0" + (contract.dateRepayment.time.minute)).slice(-2) + ':' + ("0" + (contract.dateRepayment.time.second)).slice(-2) + '</p>');
+            $("#contractView").append('<p>Hạn thanh toán :' + ' ' + '05/02/2021' + '</p>');
+            $("#contractView").append('<p>Người giải ngân :' + ' ' + contract.acceptedBy + '</p>');
+            $('#modalContract').modal('show');
+        }
+
+    })
+}
+
+function findHistoryModal(data) {
+    let result = "";
+    try {
+        $.ajax({
+            type: "POST",
+            timeout: 100000,
+            url: "findContractHistoryModal",
+            data: data,
+            async: false,
+            success: function (data, status, xhr) {
+                result = data;
+                return result;
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+                console.log(textStatus);
+                console.log(errorMessage);
+            }
+        })
+    } catch (error) {
+        return "Không thể kết nối tới server";
+    }
+    return result;
+}

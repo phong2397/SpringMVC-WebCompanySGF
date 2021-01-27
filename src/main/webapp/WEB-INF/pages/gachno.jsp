@@ -96,17 +96,19 @@
                                         <th>Số tài khoản</th>
                                         <th>Tên ngân hàng</th>
                                         <th class="text-left">Số tiền tạm ứng</th>
-                                        <th class="text-left">Số tiền còn nợ</th>
                                         <th class="text-left">Số tiền tạm ứng</th>
+                                        <th>Phí dịch vụ</th>
+                                        <th>Mức phí</th>
+                                        <th>Mức phí</th>
+                                        <th class="text-left">Số tiền còn nợ</th>
                                         <th class="text-left">Số tiền còn nợ</th>
                                         <th class="text-left">Số tiền đã đóng</th>
                                         <th class="text-left">Hạn thanh toán</th>
                                         <th class="text-left">Kỳ thanh toán</th>
-                                        <th class="text-left">Ngày nhắc nợ</th>
+                                        <th class="text-left">Ngày giải ngân</th>
                                         <th class="text-left">Ngày thanh toán</th>
                                         <th class="text-left">Trạng thái đơn</th>
                                         <th class="text-left">Trạng thái cổng thanh toán</th>
-                                        <th class="text-left">Uỷ nhiệm chi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -141,10 +143,21 @@
                                             <b> ${lst.customer.customerBankName}</b>
                                         </td>
                                         <td><fmt:formatNumber
-                                                value="${lst.contract.borrow + (lst.contract.borrow * 0.02)}"
+                                                value="${lst.contract.borrow }"
                                                 type="number"/> đ
                                         </td>
-                                        <td id="remainAmountBorrowOrder-${lst.contract.idContract}"><fmt:formatNumber
+                                        <td>
+                                            2 %
+                                        </td>
+                                        <td>
+                                                ${lst.contract.borrow * 0.02}
+                                        </td>
+                                        <td>
+                                            <fmt:formatNumber
+                                                    value="${lst.contract.borrow  * 0.02}"
+                                                    type="number"/> đ
+                                        </td>
+                                        <td id="${lst.contract.idContract}"><fmt:formatNumber
                                                 value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 0.02)}"
                                                 type="number"/> đ
                                         </td>
@@ -158,22 +171,24 @@
                                         <td>05/02/2021
                                         </td>
                                         <td>1</td>
-                                        <td><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob"
+                                        <td><fmt:parseDate value="${lst.contract.createdDate}"
+                                                           pattern="yyyy-MM-dd'T'HH:mm:ss"
+                                                           var="patientDob"
                                                            type="date"/>
-                                            <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></td>
+                                            <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
                                         <td><fmt:parseDate value=" ${lst.contract.createdDate}"
                                                            pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
                                                            type="date"/>
                                             <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                             value="${patientDob}"/></td>
 
-                                        <td><b style="color: #0D8BBD">${lst.contract.status}</b></td>
+                                        <td><c:choose>
+                                            <c:when test="${lst.contract.status eq 'act' }">
+                                                <b style="color:#0D8BBD">Đã giải ngân</b></c:when>
+                                            <c:when test="${lst.contract.status eq 'done' }">
+                                                <b style="color:hotpink">Đã tất toán</b></c:when>
+                                        </c:choose></td>
                                         <td>-</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info btn-github"
-                                                    data-dismiss="modal">Upload
-                                            </button>
-                                        </td>
                                     </tr>
 
 
@@ -248,7 +263,7 @@
                                                 id="idContract"></span>
                                         </div>
                                         <div class="col-md-6 col-lg-3"><b>Thông tin giao dịch:</b>
-                                            <span id="transactionId"></span></div>
+                                            <span id="transactionId"></span> <span id="status"></span></div>
                                         <div class="col-md-6 col-lg-3"><b>Ngày thanh toán:</b><fmt:parseDate
                                                 value="${year}"
                                                 pattern="dd-MM-yyyy"
@@ -277,7 +292,7 @@
                                             <td>Thanh toán dư nợ cuối kì</td>
                                             <td><span id="systemTrace"></span></td>
                                             <td class="text-right"><span id="timeBorrow"></span></td>
-                                            <td class="text-right"><span id="feeBorrow"></span></td>
+                                            <td class="text-right"><span id="remainAmountBorrow1"></span></td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -294,9 +309,7 @@
                                                                         value="${patientDob}"/></span></p>
                                     <div class="total-payment">
                                         <h3><b>Tổng cộng :</b>
-                                            <span id="remainAmountBorrow" style="display: none"></span>
-                                            <span id="TotalFee"></span>
-                                            <span id="TotalFee1" style="display: none"></span>
+                                            <span id="remainAmountBorrow"></span>
                                         </h3>
                                     </div>
                                 </div>
@@ -356,7 +369,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [2, 3, 4, 5, 6, 9, 10]
+                    targets: [2, 3, 4, 5, 6, 9, 12, 13]
                 },
             ],
             buttons: [
@@ -388,7 +401,6 @@
     %>
     var result = <%=json%>;
     var list = <%=json1%>;
-
 
 </script>
 </body>

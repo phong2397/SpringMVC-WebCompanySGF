@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.sgfintech.entity.Useradmin" %>
+<%@ page import="com.sgfintech.util.Consts" %><%--
   Created by IntelliJ IDEA.
   User: phong
   Date: 12/22/20
@@ -188,45 +189,8 @@
     </div>
 </div>
 <!-- /.modal -->
-<!-- Modal show info order not show customer -->
-<div class="modal modal-right fade" id="modalOrder" tabindex="100">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Thông tin chi tiết đơn hàng</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="font-weight: bold; color: #0b0b0b" id="listView2">
-            </div>
-            <div class="modal-footer modal-footer-uniform">
-                <button type="button" class="btn btn-info " data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /.modal -->
-<!-- Modal show info contract -->
-<div class="modal modal-fill fade" id="modalContract" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Thông tin chi tiết hợp đồng </h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="font-weight: bold; color: #0b0b0b" id="contractView">
 
-            </div>
-            <div class="modal-footer modal-footer-uniform">
-                <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /.modal -->
+
 <!-- Modal xác nhận thẩm định -->
 <div class="modal modal-fill fade" id="thamdinhVerify" tabindex="-1">
     <div class="modal-dialog">
@@ -324,15 +288,37 @@
     </div>
 </div>
 <!-- /.modal -->
-<!-- Modal show info customer -->
-<div tabindex="-1" class="modal modal-right fade" id="modalRepayment" role="dialog" aria-hidden="true"
+<!-- Modal show info customer team nhac phi - thu phi - ke toan-->
+<div tabindex="10" class="modal modal-right fade" id="modalRepayment" role="dialog" aria-hidden="true"
      aria-labelledby="exampleModalLabel">
     <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="tabbable">
+
                     <!-- Nav Tabs, Modal Nav Bar -->
                     <ul class="nav nav-tabs" role="tablist">
+                        <%
+
+                            Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+                            String role = u.getRole();
+                            if (role.equals("ketoan")) { %>
+                        <li class="nav-item active">
+                            <a class="nav-link active" href="#basicInfo" data-toggle="tab">
+                                Thông tin khách hàng
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#document" data-toggle="tab">
+                                Thông tin thẩm định và hình ảnh
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#historyCon" data-toggle="tab">
+                                Lịch sử hợp đồng giải ngân
+                            </a>
+                        </li>
+                        <% } else { %>
                         <li class="nav-item active">
                             <a class="nav-link active" href="#basicInfo" data-toggle="tab">
                                 Thông tin khách hàng
@@ -353,6 +339,13 @@
                                 Thông tin thẩm định và hình ảnh
                             </a>
                         </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#historyCon" data-toggle="tab">
+                                Lịch sử hợp đồng giải ngân
+                            </a>
+                        </li>
+                        <% }%>
+
                     </ul>
 
                 </div>
@@ -365,6 +358,21 @@
 
             <div class="modal-body">
                 <div class="tab-content">
+                    <div class="tab-pane" id="historyCon">
+                        <h4>&nbsp;&nbsp;Lịch sử đơn hàng</h4>
+                        <table class="table table-lg invoice-archive" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Mã đơn</th>
+                                <th>Thời gian yêu cầu</th>
+                                <th>Số tiền ứng</th>
+                                <th>Số tiền còn nợ</th>
+                                <th>Trạng thái đơn</th>
+                            </thead>
+                            <tbody id="tbodyCon">
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="tab-pane" id="impact">
                         <h4>&nbsp;&nbsp;Ghi chép tình trạng </h4>
                         <div class="box-body">
@@ -496,30 +504,28 @@
                         <h4>&nbsp;&nbsp;Thông tin khách hàng</h4>
                         <div class="row">
                             <div class="col-3 ">
+                                <h4><b>*</b>&nbsp;&nbsp;Thông tin cá nhân</h4>
                                 <p>Họ và tên : <span id="customerNamec" style="color:grey;"></span></p>
-                                <p>Địa chỉ thường trú : <span id="customerAddressc" style="color:grey;"></span></p>
-                            </div>
-                            <div class="col-3">
-                                <p>Số CMND : <span id="customerIdc" style="color:grey;"></span></p>
-                                <p>Địa chỉ tạm trú : <span id="customerAddressTempc" style="color:grey;"></span></p>
-                            </div>
-                            <div class="col-2 ">
+                                <p>Giới tính : <span id="customerGenderc" style="color:grey;"></span></p>
                                 <p>Ngày sinh : <span id="dayc" style="color:grey;"></span>/<span id="monthc"
                                                                                                  style="color:grey;"></span>/<span
                                         id="yearc" style="color:grey;"></span></p>
+                                <p>Địa chỉ thường trú : <span id="customerAddressc" style="color:grey;"></span></p>
+                                <p>Địa chỉ tạm trú : <span id="customerAddressTempc" style="color:grey;"></span></p>
+                            </div>
+                            <div class="col-3 ">
+                                <h4><b>*</b>&nbsp;&nbsp;Liên lạc</h4>
+                                <p>Số điện thoại : <span id="customerPhonec" style="color:grey;"></span></p>
                                 <p>Email : <span id="customerEmailc" style="color:grey;"></span></p>
                             </div>
-                            <div class="col-2 ">
-                                <p>Vị trí công việc : <span id="customerPositionc" style="color:grey;"></span></p>
-                                <p>Mức lương : <span id="customerSalaryc" style="color:grey;"></span></p>
-                            </div>
-                            <div class="col-2 ">
-                                <p>Tên công ty : <span id="companyName" style="color:grey;"></span></p>
-                                <p>Số điện thoại công ty : <span id="companyPhone" style="color:grey;"></span></p>
-                            </div>
+                            <div class="col-3 " id="jobc"></div>
+                            <div class="col-3 "><h4><b>*</b>&nbsp;&nbsp;Tài khoản nhận</h4>
+                                <p> Chủ tài khoản : <span id="customerBankc" style="color:grey;"></span></p>
+                                <p>Số tài khoản : <span id="customerBankAccc" style="color:grey;"></span></p>
+                                <p> Tên ngân hàng : <span id="customerBankNamec" c style="color:grey;"></span></p></div>
                         </div>
-
                     </div>
+
                 </div>
             </div>
             <!-- Footer -->
@@ -528,6 +534,25 @@
                 </button>
             </div>
 
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
+<!-- Modal show info contract -->
+<div class="modal modal-fill fade" id="modalContract" tabindex="1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông tin chi tiết đơn hàng</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-weight: bold; color: #0b0b0b" id="contractView">
+            </div>
+            <div class="modal-footer modal-footer-uniform">
+                <button type="button" class="btn btn-rounded btn-close" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>

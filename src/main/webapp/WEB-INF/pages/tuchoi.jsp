@@ -385,7 +385,6 @@
                   %>
     var result = <%=json%>;
     var list = <%=json1%>;
-    // function sử dụng framework datatable của Jquery
 
 
 </script>

@@ -59,8 +59,8 @@ public class SignController {
     @Autowired
     SaRequestService saRequestService;
 
-    @RequestMapping(value = {"/kyduyetlogin"}, method = RequestMethod.GET)
-    public String kyduyetlogin(ModelMap mm, HttpServletRequest request, HttpSession session) {
+    @RequestMapping(value = {"/kyduyetRole"}, method = RequestMethod.GET)
+    public String kyduyetRole(ModelMap mm, HttpServletRequest request, HttpSession session) {
         int countAct = mergeDataService.countStatus("act");
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
@@ -78,12 +78,12 @@ public class SignController {
             mm.addAttribute("countWait", countWait);
             mm.addAttribute("countWFS", countWFS);
             mm.addAttribute("countDone", countDone);
-            return "kyduyetlogin";
+            return "kyduyetRole";
         }
     }
 
     @RequestMapping(value = {"/tuchoikyduyet"}, method = RequestMethod.GET)
-    public String declineKyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+    public String tuchoieKyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         int countAct = mergeDataService.countStatus("act");
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
@@ -106,7 +106,7 @@ public class SignController {
     }
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
-    public String welcomePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+    public String kyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         int countWait = mergeDataService.countStatus("wait");
         int countWFS = mergeDataService.countStatus("wfs");
         int countAct = mergeDataService.countStatus("act");

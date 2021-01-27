@@ -39,58 +39,71 @@ public class WriteoffController {
     SaRequestDAO saRequestDAO;
 
     @RequestMapping(value = {"/nhacphi"}, method = RequestMethod.GET)
-    public String chothuhoi(ModelMap mm) {
-        List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("act", true, "");
-        List<Contract> contract = contractDAO.findAll();
-        List<Useradmin> admin = useradminDAO.findAll();
-        mm.addAttribute("admin", admin);
-        mm.addAttribute("con", contract);
-        mm.addAttribute(Consts.Attr_ResultView, listdata);
-        return "nhacphi";
+    public String nhacphiPage(ModelMap mm, HttpSession session) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("act", true, "");
+            List<Contract> contract = contractDAO.findAll();
+            List<Useradmin> admin = useradminDAO.findAll();
+            mm.addAttribute("admin", admin);
+            mm.addAttribute("con", contract);
+            mm.addAttribute(Consts.Attr_ResultView, listdata);
+            return "nhacphi";
+        }
     }
 
     @RequestMapping(value = {"/gachno"}, method = RequestMethod.GET)
-    public String welcomePage(ModelMap mm) {
-        List<MergeDataWithdraw> listdata = mergeDataService.gachnodata("");
-        List<Contract> contract = contractDAO.findAll();
-        mm.addAttribute("con", contract);
-        mm.addAttribute(Consts.Attr_ResultView, listdata);
-        return "gachno";
+    public String gachnoPage(ModelMap mm, HttpSession session) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            List<MergeDataWithdraw> listdata = mergeDataService.gachnodata("");
+            List<Contract> contract = contractDAO.findAll();
+            mm.addAttribute("con", contract);
+            mm.addAttribute(Consts.Attr_ResultView, listdata);
+            return "gachno";
+        }
+    }
+
+    @RequestMapping(value = {"/theodoikhoantamung"}, method = RequestMethod.GET)
+    public String theodoikhoantamungPage(ModelMap mm, HttpSession session) {
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            int countAct = mergeDataService.contractStatus("act");
+            int countDone = mergeDataService.contractStatus("done");
+            List<MergeDataWithdraw> listdata = mergeDataService.theodoikhoantamung("");
+            List<Contract> contract = contractDAO.findAll();
+            mm.addAttribute("con", contract);
+            mm.addAttribute(Consts.Attr_ResultView, listdata);
+            mm.addAttribute("countDone", countDone);
+            mm.addAttribute("countAct", countAct);
+            return "theodoikhoantamung";
+        }
     }
 
     @RequestMapping(value = {"/gachno"}, method = RequestMethod.POST)
     public @ResponseBody
-    String handlerWriteoffRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    String gachnotoanphanAction(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String data = request.getParameter("datarequest");
-        String moneyRepay = request.getParameter("moneyRepay");
-        String moneyRemainAmount = request.getParameter("moneyRemainAmount");
-        String Total = request.getParameter("total");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
             Contract ct = contractDAO.findById(Long.parseLong(data));
             if (!StringUtil.isEmpty(u) && u.getUserLogin().equals("ketoan")) {
-                if (Total.equals("0") || Long.parseLong(Total) < 0) {
-                    ct.setStatus("done");
-                    ct.setRemainAmountBorrow(0l);
-                    ct.setAcceptedBy(u.getUserLogin());
-                    ct.setDateRepayment(LocalDateTime.now());
-                    ct.setUpdatedDate(LocalDateTime.now());
-                    contractDAO.update(ct);
-                    return "success";
-                } else {
-                    ct.setStatus("notcomplete");
-                    ct.setRemainAmountBorrow(Long.parseLong(Total));
-                    ct.setAcceptedBy(u.getUserLogin());
-                    ct.setDateRepayment(LocalDateTime.now());
-                    ct.setUpdatedDate(LocalDateTime.now());
-                    contractDAO.update(ct);
-                    return "notcomplete";
-                }
+                ct.setStatus("done");
+                ct.setRemainAmountBorrow(0l);
+                ct.setAcceptedBy(u.getUserLogin());
+                ct.setDateRepayment(LocalDateTime.now());
+                ct.setUpdatedDate(LocalDateTime.now());
+                contractDAO.update(ct);
+                return "success";
             } else {
                 return "roleError";
             }
-
-
         } catch (Exception ex) {
             return "error";
         }
