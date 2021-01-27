@@ -7,6 +7,7 @@ import com.sgfintech.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
@@ -15,6 +16,7 @@ import java.lang.reflect.Array;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lucnguyen.hcmut@gmail.com
@@ -56,6 +58,19 @@ public class SaRequestService {
             }
         });
         return updateCounts;
+    }
+
+    public int[] countStatus() {
+        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("PROC_COUNTSTATUS");
+        Map<String, Object> outParams = simpleJdbcCall.execute();
+        return new int[]{
+                (Integer) outParams.get("total"),
+                (Integer) outParams.get("act"),
+                (Integer) outParams.get("deni"),
+                (Integer) outParams.get("wfs"),
+                (Integer) outParams.get("wait"),
+                (Integer) outParams.get("done")
+        };
     }
 
 

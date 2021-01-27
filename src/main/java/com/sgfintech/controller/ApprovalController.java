@@ -44,12 +44,11 @@ public class ApprovalController {
     @Autowired
     UseradminService useradminService;
 
+    @Autowired
+    SaRequestService saRequestService;
+
     @RequestMapping(value = {"/tuchoi"}, method = RequestMethod.GET)
     public String declinePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-        int countAct = mergeDataService.countStatus("act");
-        int countWait = mergeDataService.countStatus("wait");
-        int countWFS = mergeDataService.countStatus("wfs");
-        int countDeni = mergeDataService.countStatus("deni");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -58,20 +57,21 @@ public class ApprovalController {
             List<SaRequest> saRequest = saRequestDAO.findAll();
             mm.addAttribute("sa", saRequest);
             mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-            mm.addAttribute("countAct", countAct);
-            mm.addAttribute("countWait", countWait);
-            mm.addAttribute("countWFS", countWFS);
-            mm.addAttribute("countDeni", countDeni);
+            int[] count = saRequestService.countStatus();
+            mm.addAttribute("countAct", count[1]);
+            mm.addAttribute("countWait", count[2]);
+            mm.addAttribute("countWFS", count[3]);
+            mm.addAttribute("countDeni", count[4]);
             return "tuchoi";
         }
     }
 
     @RequestMapping(value = {"/tuchoithamdinh"}, method = RequestMethod.GET)
     public String declineThamdinhPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-        int countAct = mergeDataService.countStatus("act");
-        int countWait = mergeDataService.countStatus("wait");
-        int countWFS = mergeDataService.countStatus("wfs");
-        int countDeni = mergeDataService.countStatus("deni");
+//        int countAct = mergeDataService.countStatus("act");
+//        int countWait = mergeDataService.countStatus("wait");
+//        int countWFS = mergeDataService.countStatus("wfs");
+//        int countDeni = mergeDataService.countStatus("deni");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -81,21 +81,22 @@ public class ApprovalController {
             List<SaRequest> saRequest = saRequestDAO.findAll();
             mm.addAttribute("sa", saRequest);
             mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-            mm.addAttribute("countAct", countAct);
-            mm.addAttribute("countWait", countWait);
-            mm.addAttribute("countWFS", countWFS);
-            mm.addAttribute("countDeni", countDeni);
+            int[] count = saRequestService.countStatus();
+            mm.addAttribute("countAct", count[1]);
+            mm.addAttribute("countWait", count[4]);
+            mm.addAttribute("countWFS", count[3]);
+            mm.addAttribute("countDeni", count[2]);
             return "tuchoithamdinh";
         }
 
     }
 
-    @RequestMapping(value = {"/thamdinhlogin"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/thamdinhRole"}, method = RequestMethod.GET)
     public String showthamdinhLogin(ModelMap mm, HttpServletRequest request, HttpSession session) {
-        int countAct = mergeDataService.countStatus("act");
-        int countWait = mergeDataService.countStatus("wait");
-        int countWFS = mergeDataService.countStatus("wfs");
-        int countDone = mergeDataService.countStatus("done");
+//        int countAct = mergeDataService.countStatus("act");
+//        int countWait = mergeDataService.countStatus("wait");
+//        int countWFS = mergeDataService.countStatus("wfs");
+//        int countDone = mergeDataService.countStatus("done");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -105,37 +106,39 @@ public class ApprovalController {
             mm.addAttribute(Consts.Attr_ResultView, listThamdinhLogin);
             List<SaRequest> sa = saRequestDAO.findAll();
             mm.addAttribute("sa", sa);
-            mm.addAttribute("countAct", countAct);
-            mm.addAttribute("countWait", countWait);
-            mm.addAttribute("countWFS", countWFS);
-            mm.addAttribute("countDone", countDone);
+            int[] count = saRequestService.countStatus();
+            mm.addAttribute("countAct", count[1]);
+            mm.addAttribute("countWait", count[4]);
+            mm.addAttribute("countWFS", count[3]);
+            mm.addAttribute("countDone", count[5]);
             return "thamdinhlogin";
         }
     }
 
     @RequestMapping(value = {"/tongtiepnhan"}, method = RequestMethod.GET)
     public String tongtiepnhanPage(ModelMap mm, HttpServletRequest request) {
-        int countWait = mergeDataService.countStatus("wait");
-        int countWFS = mergeDataService.countStatus("wfs");
-        int countAct = mergeDataService.countStatus("act");
-        int countDone = mergeDataService.countStatus("done");
+//        int countWait = mergeDataService.countStatus("wait");
+//        int countWFS = mergeDataService.countStatus("wfs");
+//        int countAct = mergeDataService.countStatus("act");
+//        int countDone = mergeDataService.countStatus("done");
         List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataTongTiepNhan();
         List<SaRequest> sa = saRequestDAO.findAll();
         mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
         mm.addAttribute("sa", sa);
-        mm.addAttribute("countWait", countWait);
-        mm.addAttribute("countWFS", countWFS);
-        mm.addAttribute("countAct", countAct);
-        mm.addAttribute("countDone", countDone);
+        int[] count = saRequestService.countStatus();
+        mm.addAttribute("countWait", count[4]);
+        mm.addAttribute("countWFS", count[3]);
+        mm.addAttribute("countAct", count[1]);
+        mm.addAttribute("countDone", count[5]);
         return "tongtiepnhan";
     }
 
     @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
     public String thamdinhPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-        int countWait = mergeDataService.countStatus("wait");
-        int countWFS = mergeDataService.countStatus("wfs");
-        int countAct = mergeDataService.countStatus("act");
-        int countDone = mergeDataService.countStatus("done");
+//        int countWait = mergeDataService.countStatus("wait");
+//        int countWFS = mergeDataService.countStatus("wfs");
+//        int countAct = mergeDataService.countStatus("act");
+//        int countDone = mergeDataService.countStatus("done");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -146,16 +149,14 @@ public class ApprovalController {
             mm.addAttribute("admin", admin);
             mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
             mm.addAttribute("sa", sa);
-            mm.addAttribute("countWait", countWait);
-            mm.addAttribute("countWFS", countWFS);
-            mm.addAttribute("countAct", countAct);
-            mm.addAttribute("countDone", countDone);
+            int[] count = saRequestService.countStatus();
+            mm.addAttribute("countWait", count[4]);
+            mm.addAttribute("countWFS", count[3]);
+            mm.addAttribute("countAct", count[1]);
+            mm.addAttribute("countDone", count[5]);
             return "thamdinh";
         }
     }
-
-    @Autowired
-    SaRequestService saRequestService;
 
     @RequestMapping(value = "/updateEmployeeThamdinh", method = RequestMethod.POST)
     public @ResponseBody
@@ -204,15 +205,26 @@ public class ApprovalController {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
             if (!StringUtil.isEmpty(employeeThamdinh) && u.getUserLogin().equals(employeeThamdinh)) {
-                SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
-                sa.setStatus(status.trim());
-                sa.setDescription(textDecline);
-                sa.setEmployeeThamdinh(employeeThamdinh);
-                sa.setEmployeeThamdinhDate(LocalDateTime.now());
-                sa.setEmployeeDuyet(useradminService.randomUserXetDuyet());
-                sa.setUpdatedDate(LocalDateTime.now());
-                saRequestDAO.update(sa);
-                return "success";
+                if (status.equals("wfs")) {
+                    SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+                    sa.setStatus(status.trim());
+                    sa.setDescription(textDecline);
+                    sa.setEmployeeThamdinh(employeeThamdinh);
+                    sa.setEmployeeThamdinhDate(LocalDateTime.now());
+                    sa.setEmployeeDuyet(useradminService.randomUserXetDuyet());
+                    sa.setUpdatedDate(LocalDateTime.now());
+                    saRequestDAO.update(sa);
+                    return "success";
+                } else {
+                    SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+                    sa.setStatus(status.trim());
+                    sa.setDescription(textDecline);
+                    sa.setEmployeeThamdinh(employeeThamdinh);
+                    sa.setEmployeeThamdinhDate(LocalDateTime.now());
+                    sa.setUpdatedDate(LocalDateTime.now());
+                    saRequestDAO.update(sa);
+                    return "success";
+                }
             } else {
                 return "errorEmployee";
             }

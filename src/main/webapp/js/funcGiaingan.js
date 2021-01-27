@@ -92,7 +92,7 @@ function findHistoryModal(data) {
 }
 
 $("body").on("click", ".as", function () {
-    var phone = $(this).closest('tr').children('td:eq(3)').text().trim();
+    var phone = $(this).closest('tr').children('td:eq(6)').text().trim();
     data = {phone: phone};
     var result = findHistoryModal(data);
     var obj = JSON.parse(result);

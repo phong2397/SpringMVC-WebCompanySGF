@@ -121,12 +121,17 @@
                 </a>
             </li>
             <li>
-                <a href="tongdanhsach.html">
+                <a href="khachhangtattoan.html">
                     <img src="images/svg-icon/sidebar-menu/tickers.svg" class="svg-icon" alt="">
                     <span>Khách hàng thanh toán</span>
                 </a>
             </li>
-
+            <li>
+                <a href="theodoikhoantamung.html">
+                    <img src="images/svg-icon/ecommerce.svg" class="svg-icon" alt="">
+                    <span>Tổng danh sách các đơn</span>
+                </a>
+            </li>
 
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Cấu hình sản phẩm</li>
             <li>
@@ -191,7 +196,7 @@
             %>
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Quản lý đơn hàng</li>
             <li>
-                <a href="thamdinhlogin.html">
+                <a href="thamdinhRole.html">
                     <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
                     <span>Quản lý xét duyệt</span>
                 </a>
@@ -204,6 +209,40 @@
             </li>
             <li>
                 <a href="tuchoithamdinh.html">
+                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
+                    <span>Từ chối</span>
+                </a>
+            </li>
+            <li>
+                <a href="thaydoimatkhau.html">
+                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
+                    <span>Thay đổi mật khẩu</span>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/logout">
+                    <img src="images/svg-icon/sidebar-menu/logout.svg" class="svg-icon" alt="">
+                    <span>Đăng xuất</span>
+
+                </a>
+            </li>
+            <% } else if (role.equals("nvkyduyet")) {
+            %>
+            <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Quản lý đơn hàng</li>
+            <li>
+                <a href="thamdinh.html">
+                    <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
+                    <span>Quản lý xét duyệt</span>
+                </a>
+            </li>
+            <li>
+                <a href="kyduyetRole.html">
+                    <img src="images/svg-icon/sidebar-menu/charts3.svg" class="svg-icon" alt="">
+                    <span>Duyệt giải ngân</span>
+                </a>
+            </li>
+            <li>
+                <a href="tuchoikyduyet.html">
                     <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
                     <span>Từ chối</span>
                 </a>
@@ -274,40 +313,7 @@
 
                 </a>
             </li>
-            <% } else if (role.equals("nvkyduyet")) {
-            %>
-            <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Quản lý đơn hàng</li>
-            <li>
-                <a href="thamdinh.html">
-                    <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
-                    <span>Quản lý xét duyệt</span>
-                </a>
-            </li>
-            <li>
-                <a href="kyduyetlogin.html">
-                    <img src="images/svg-icon/sidebar-menu/charts3.svg" class="svg-icon" alt="">
-                    <span>Duyệt giải ngân</span>
-                </a>
-            </li>
-            <li>
-                <a href="tuchoikyduyet.html">
-                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
-                    <span>Từ chối</span>
-                </a>
-            </li>
-            <li>
-                <a href="thaydoimatkhau.html">
-                    <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
-                    <span>Thay đổi mật khẩu</span>
-                </a>
-            </li>
-            <li>
-                <a href="${pageContext.request.contextPath}/logout">
-                    <img src="images/svg-icon/sidebar-menu/logout.svg" class="svg-icon" alt="">
-                    <span>Đăng xuất</span>
 
-                </a>
-            </li>
             <% } else if (role.equals("nvthuphi")) {
             %>
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Quản lý đơn hàng</li>

@@ -35,7 +35,6 @@ public class CustomerService {
                         return cu;
                     });
         } catch (Exception ex) {
-            c = null;
         }
         return c;
     }
