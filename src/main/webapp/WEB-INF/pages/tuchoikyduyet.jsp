@@ -249,7 +249,7 @@
                                                                     value="${day}"/>
                                                 </td>
                                                 <td>
-                                                    <b style="color: red">Từ chối</b>
+                                                    <b style="color: red">${lst.saRequest.status}</b>
                                                 </td>
 
                                                 <td>

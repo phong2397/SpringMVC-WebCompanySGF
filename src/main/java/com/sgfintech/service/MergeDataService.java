@@ -213,26 +213,6 @@ public class MergeDataService {
         }
     }
 
-    public List<MergeDataWithdraw> getContractModal(String customerPhone) {
-        String sql = "select cu.*, co.*,com.* from sgft_customer cu , sgft_contract co, sgft_companies com where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code  and co.customer_phone=? ORDER BY co.id_contract DESC";
-        if (StringUtil.isEmpty(jdbcTemplate)) {
-            jdbcTemplate = new JdbcTemplate(dataSource);
-        }
-        try {
-            Object[] param = new Object[]{customerPhone};
-            List<MergeDataWithdraw> resultList = jdbcTemplate.query(sql, param,
-                    (rs, arg1) -> {
-                        Customer cu = new CustomerMapper().mapRow(rs, arg1);
-                        Contract co = new ContractMapper().mapRow(rs, arg1);
-                        Companies com = new CompanyMapper().mapRow(rs, arg1);
-                        return new MergeDataWithdraw(cu, co, com);
-                    });
-            return resultList;
-        } catch (Exception ex) {
-            return null;
-        }
-    }
-
     public List<MergeDataOrder> findhistoryModal(String phone) {
         String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where cu.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.customer_phone = ? ORDER BY sa.id DESC";
         if (StringUtil.isEmpty(jdbcTemplate)) {
@@ -254,13 +234,33 @@ public class MergeDataService {
         }
     }
 
-    public List<MergeDataWithdraw> gachnodata(String date) { //no check date = true
+    public List<MergeDataWithdraw> getContractModal(String customerPhone) {
+        String sql = "select co.*,cu.*,com.* from sgft_contract co,sgft_customer cu ,  sgft_companies com where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code and co.customer_phone=? ORDER BY co.id_contract DESC";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+        try {
+            Object[] param = new Object[]{customerPhone};
+            List<MergeDataWithdraw> resultList = jdbcTemplate.query(sql, param,
+                    (rs, arg1) -> {
+                        Customer cu = new CustomerMapper().mapRow(rs, arg1);
+                        Contract co = new ContractMapper().mapRow(rs, arg1);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new MergeDataWithdraw(cu, co, com);
+                    });
+            return resultList;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public List<MergeDataWithdraw> gachnodata(String date) {
         String sql = "";
         Object[] param = null;
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
-        sql = "select cu.*, co.*,com.* from sgft_customer cu , sgft_contract co, sgft_companies com where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code and co.status in ('act','notcomplete')  ORDER BY co.id_contract DESC";
+        sql = "select co.*,cu.*,com.* from sgft_contract co,sgft_customer cu ,  sgft_companies com where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code and co.status in ('act','notcomplete')  ORDER BY co.id_contract DESC";
         param = new Object[]{};
 
         try {
@@ -284,13 +284,36 @@ public class MergeDataService {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         if (nodate == true) {
-            sql = "select cu.*, co.*,com.* from sgft_customer cu , sgft_contract co, sgft_companies com where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code  and co.status=? ORDER BY co.id_contract DESC";
+            sql = "select co.*,cu.*,com.* from sgft_contract co,sgft_customer cu ,  sgft_companies com where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code and co.status= ?  ORDER BY co.id_contract DESC";
             param = new Object[]{status};
         } else {
-            sql = "select cu.*, co.*,com.* from sgft_customer cu , sgft_contract co, sgft_companies com where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code and co.status=? and date_format(co.created_date , '%Y %M %d') = date_format(?,'%Y %M %d') ORDER BY co.id_contract DESC";
+            sql = "select co.*,cu.*,com.* from sgft_contract co,sgft_customer cu ,  sgft_companies com where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code and co.status=? and date_format(co.created_date , '%Y %M %d') = date_format(?,'%Y %M %d') ORDER BY co.id_contract DESC";
             param = new Object[]{status, date};
         }
         try {
+            List<MergeDataWithdraw> resultList = jdbcTemplate.query(sql, param,
+                    (rs, arg1) -> {
+                        Customer cu = new CustomerMapper().mapRow(rs, arg1);
+                        Contract co = new ContractMapper().mapRow(rs, arg1);
+                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        return new MergeDataWithdraw(cu, co, com);
+                    });
+            return resultList;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+
+    public List<MergeDataWithdraw> theodoikhoantamung(String date) {
+
+        String sql = "select co.*,com.*,cu.* from sgft_contract co , sgft_companies com,sgft_customer cu where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code ORDER BY co.id_contract DESC";
+        if (StringUtil.isEmpty(jdbcTemplate)) {
+            jdbcTemplate = new JdbcTemplate(dataSource);
+        }
+
+        try {
+            Object[] param = new Object[]{};
             List<MergeDataWithdraw> resultList = jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {
                         Customer cu = new CustomerMapper().mapRow(rs, arg1);

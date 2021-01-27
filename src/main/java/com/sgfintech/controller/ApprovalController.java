@@ -91,7 +91,7 @@ public class ApprovalController {
 
     }
 
-    @RequestMapping(value = {"/thamdinhlogin"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/thamdinhRole"}, method = RequestMethod.GET)
     public String showthamdinhLogin(ModelMap mm, HttpServletRequest request, HttpSession session) {
 //        int countAct = mergeDataService.countStatus("act");
 //        int countWait = mergeDataService.countStatus("wait");
@@ -205,15 +205,26 @@ public class ApprovalController {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
             if (!StringUtil.isEmpty(employeeThamdinh) && u.getUserLogin().equals(employeeThamdinh)) {
-                SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
-                sa.setStatus(status.trim());
-                sa.setDescription(textDecline);
-                sa.setEmployeeThamdinh(employeeThamdinh);
-                sa.setEmployeeThamdinhDate(LocalDateTime.now());
-                sa.setEmployeeDuyet(useradminService.randomUserXetDuyet());
-                sa.setUpdatedDate(LocalDateTime.now());
-                saRequestDAO.update(sa);
-                return "success";
+                if (status.equals("wfs")) {
+                    SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+                    sa.setStatus(status.trim());
+                    sa.setDescription(textDecline);
+                    sa.setEmployeeThamdinh(employeeThamdinh);
+                    sa.setEmployeeThamdinhDate(LocalDateTime.now());
+                    sa.setEmployeeDuyet(useradminService.randomUserXetDuyet());
+                    sa.setUpdatedDate(LocalDateTime.now());
+                    saRequestDAO.update(sa);
+                    return "success";
+                } else {
+                    SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+                    sa.setStatus(status.trim());
+                    sa.setDescription(textDecline);
+                    sa.setEmployeeThamdinh(employeeThamdinh);
+                    sa.setEmployeeThamdinhDate(LocalDateTime.now());
+                    sa.setUpdatedDate(LocalDateTime.now());
+                    saRequestDAO.update(sa);
+                    return "success";
+                }
             } else {
                 return "errorEmployee";
             }

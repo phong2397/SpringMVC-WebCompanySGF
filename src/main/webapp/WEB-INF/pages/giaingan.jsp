@@ -189,30 +189,32 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table id="example" class="table table-lg invoice-archive" width="100%">
+                                    <table id="example" class="table table-striped table-bordered no-margin"
+                                           width="100%">
                                         <thead>
                                         <tr>
                                         <tr>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
+                                            <th>Chủ tài khoản</th>
+                                            <th>Số tài khoản</th>
+                                            <th>Tên ngân hàng</th>
                                             <th>Số CMND</th>
                                             <th>Điện thoại</th>
-                                            <th>Số lần tạm ứng</th>
+                                            <th>Trạng thái đơn</th>
                                             <th>Nhân viên thẩm định</th>
                                             <th>Số tiền tạm ứng</th>
                                             <th>Số tiền tạm ứng</th>
                                             <th>Phí dịch vụ</th>
                                             <th>Mức phí</th>
                                             <th>Mức phí</th>
+                                            <th>Số lần tạm ứng</th>
                                             <th>Thời gian yêu cầu giải ngân</th>
-                                            <th>Trạng thái</th>
                                             <th>Nhân viên xét duyệt</th>
                                             <th>Hạn thanh toán</th>
                                             <th>Số tiền thanh toán</th>
                                             <th>Số tiền thanh toán</th>
-                                            <th>Chủ tài khoản</th>
-                                            <th>Số tài khoản</th>
-                                            <th>Tên ngân hàng</th>
+
                                         </tr>
                                         </tr>
                                         </thead>
@@ -225,6 +227,15 @@
                                                 </td>
                                                 <td>
                                                         ${lst.customer.customerName}
+                                                </td>
+                                                <td>
+                                                        ${lst.customer.customerBank}
+                                                </td>
+                                                <td>
+                                                        ${lst.customer.customerBankAcc}
+                                                </td>
+                                                <td>
+                                                        ${lst.customer.customerBankName}
                                                 </td>
                                                 <td>
                                                         ${lst.customer.customerId}
@@ -282,15 +293,7 @@
                                                 <td>
                                                         ${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }
                                                 </td>
-                                                <td>
-                                                        ${lst.customer.customerBank}
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerBankAcc}
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerBankName}
-                                                </td>
+
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -453,7 +456,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [6, 9, 16]
+                    targets: [8, 11, 19]
                 },
             ],
             buttons: [
@@ -461,7 +464,7 @@
                     title: 'Danh sách đã ký duyệt',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 9, 11, 12, 13, 14, 16, 17, 18, 19]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 11, 12, 14, 15, 16, 17, 19]
 
                     }
                 },
