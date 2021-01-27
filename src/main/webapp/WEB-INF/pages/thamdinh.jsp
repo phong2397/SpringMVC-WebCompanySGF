@@ -196,7 +196,11 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header with-border">
-
+                                <div class='image'>
+                                    <img class="img"
+                                         src='http://www.online-image-editor.com//styles/2014/images/example_image.png'/>
+                                </div>
+                                <div id='modal'></div>
                                 <h4 class="box-title">Số lượng đơn chờ xét duyệt</h4><br>
                                 <%
                                     Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
@@ -363,22 +367,39 @@
 
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<link href="https://unpkg.com/xzoom@1.0.7/dist/xzoom.css" rel="stylesheet"/>
-<script src="https://unpkg.com/xzoom@1.0.7/dist/xzoom.min.js"></script>
-<script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js"></script>
+
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
+<script src="js/generalFuncTiepnhanYeucau.js" type="text/javascript"></script>
 <script src="js/funcTiepnhanyeucau.js" type="text/javascript"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.xzoom').xzoom({
-            defaultScale: 1,
-            tint: '#333',
-            Xoffset: 15,
-            position: 'left'
+        var currentMousePos = {x: -1, y: -1};
+        $(document).mousemove(function (event) {
+            currentMousePos.x = event.pageX;
+            currentMousePos.y = event.pageY;
+            if ($('#modal').css('display') != 'none') {
+                $('#modal').css({
+                    top: currentMousePos.y,
+                    left: currentMousePos.x + 12
+                });
+            }
+        });
+        $('.image').on('mouseover', function () {
+            var image = $(this).find('img');
+            var modal = $('#modal');
+            $(modal).html(image.clone());
+            $(modal).css({
+                top: currentMousePos.y,
+                left: currentMousePos.x + 12
+            });
+            $(modal).show();
+
+        });
+        $('.image').on('mouseleave', function () {
+            $(modal).hide();
         });
 
         $("#loading").hide();

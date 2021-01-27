@@ -58,7 +58,7 @@
             <!-- Main content -->
             <section class="content">
                 <!-- /.box-header -->
-                <form method="post" enctype="multipart/form-data" class="form">
+                <form method="post" id="demoForm" enctype="multipart/form-data" class="form">
                     <div class="box">
                         <div class="box-header">
                             <h5>Nhấn vào nút chọn file vào khoảng trống bên dưới để nhập cho nhân sự.
@@ -83,6 +83,7 @@
                                             <div class="form-group">
                                                 <label>Tên công ty</label>
                                                 <input id="tencongty" type="text" class="form-control"
+                                                       name="tencongty"
                                                        placeholder="Tên công ty">
                                             </div>
                                         </div>
@@ -90,6 +91,7 @@
                                             <div class="form-group">
                                                 <label>Mã Công ty</label>
                                                 <input id="macongty" type="text" class="form-control"
+                                                       name="macongty"
                                                        placeholder="Số điện thoại công ty">
                                             </div>
                                         </div>
@@ -97,6 +99,7 @@
                                             <div class="form-group">
                                                 <label>Số điện thoại công ty</label>
                                                 <input id="sodienthoai" type="text" class="form-control"
+                                                       name="sodienthoai"
                                                        placeholder="Số điện thoại công ty">
                                             </div>
                                         </div>
@@ -108,6 +111,7 @@
                                             class="btn btn-rounded btn-primary btn-outline">
                                         <i class="ti-save-alt"></i> Lưu
                                     </button>
+
                                 </div>
 
                             </div>
@@ -166,82 +170,114 @@
 <script src="js/vendors.min.js"></script>
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
-<script src="js/pages/dashboard9.js"></script>
 <script src="js/demo.js"></script>
 <script src="assets/vendor_components/dropzone/dropzone.js"></script>
 <script src="assets/vendor_components/sweetalert/sweetalert.min.js"></script>
 <script src="assets/vendor_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
     });
+    $("#demoForm").validate({
+        rules: {
+            tencongty: {
+                required: true,
+
+            },
+            macongty: {
+                required: true,
+            },
+            sodienthoai: {
+                required: true,
+                digits: true
+            },
+        },
+        messages: {
+            tencongty: {
+                required: "Bắt buộc nhập tên công ty",
+
+            },
+            macongty: {
+                required: "Bắt buộc nhập mã công ty",
+            },
+            sodienthoai: {
+                required: "Bắt buộc nhập số điện thoại công ty",
+                digits: "Chỉ được nhập số"
+            },
+        }
+    });
 
     function submitform() {
-        $("#loading").show();
-        $("#resultTable").hide();
-        var formData = new FormData();
-        formData.append('file', $('#importFile')[0].files[0]);
-        var tenconty = $("#tencongty").val();
-        var macongty = $("#macongty").val();
-        var sodienthoaicty = $("#sodienthoai").val();
-        var filePath = $("#importFile").val();
-        $.ajax({
-            url: 'import?tencongty=' + tenconty + '&macongty=' + macongty + '&sodienthoai=' + sodienthoaicty,
-            type: 'POST',
-            data: formData,
-            cache: false,
-            processData: false,  // tell jQuery not to process the data
-            contentType: false,  // tell jQuery not to set contentType
-            async: false,
-            success: function (data) {
-                try {
-                    $("#resultTable").show();
-                    var obj = JSON.parse(data + "");
-                    var body = $("#tbodytable");
-                    body.empty();
-                    Object.keys(obj).forEach((key) => {
-                        var e = obj[key];
-                        var rowElement = $('<tr></tr>');
-                        rowElement.append('<td>' + e.customerName + '</td>');
-                        rowElement.append('<td>' + e.customerId + '</td>');
-                        rowElement.append('<td>' + e.customerBirthday.day + "/" + e.customerBirthday.month + "/" + e.customerBirthday.year + '</td>');
-                        rowElement.append('<td>' + e.customerPhone + '</td>');
-                        rowElement.append('<td>' + e.customerContractExpired.date.day + "/" + e.customerContractExpired.date.month + "/" + e.customerContractExpired.date.year + '</td>');
-                        rowElement.append('<td>' + e.customerContract + '</td>');
-                        rowElement.append('<td>' + e.status + '</td>');
-                        rowElement.append('<td>' + e.customerBankAcc + '</td>');
-                        rowElement.append('<td>' + e.customerBankName + '</td>');
-                        rowElement.append('<td>' + e.customerBank + '</td>');
-                        body.append(rowElement);
-                    })
+        if ($("#demoForm").valid()) {
+            $("#loading").show();
+            $("#resultTable").hide();
+            var formData = new FormData();
+            formData.append('file', $('#importFile')[0].files[0]);
+            var tenconty = $("#tencongty").val();
+            var macongty = $("#macongty").val();
+            var sodienthoaicty = $("#sodienthoai").val();
+            var filePath = $("#importFile").val();
+            $.ajax({
+                url: 'import?tencongty=' + tenconty + '&macongty=' + macongty + '&sodienthoai=' + sodienthoaicty,
+                type: 'POST',
+                data: formData,
+                cache: false,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                async: false,
+                success: function (data) {
+                    try {
+                        $("#resultTable").show();
+                        var obj = JSON.parse(data + "");
+                        var body = $("#tbodytable");
+                        body.empty();
+                        Object.keys(obj).forEach((key) => {
+                            var e = obj[key];
+                            var rowElement = $('<tr></tr>');
+                            rowElement.append('<td>' + e.customerName + '</td>');
+                            rowElement.append('<td>' + e.customerId + '</td>');
+                            rowElement.append('<td>' + e.customerBirthday.day + "/" + e.customerBirthday.month + "/" + e.customerBirthday.year + '</td>');
+                            rowElement.append('<td>' + e.customerPhone + '</td>');
+                            rowElement.append('<td>' + e.customerContractExpired.date.day + "/" + e.customerContractExpired.date.month + "/" + e.customerContractExpired.date.year + '</td>');
+                            rowElement.append('<td>' + e.customerContract + '</td>');
+                            rowElement.append('<td>' + e.status + '</td>');
+                            rowElement.append('<td>' + e.customerBankAcc + '</td>');
+                            rowElement.append('<td>' + e.customerBankName + '</td>');
+                            rowElement.append('<td>' + e.customerBank + '</td>');
+                            body.append(rowElement);
+                        })
+                        $("#loading").hide();
+                        console.log(data);
+                        Swal.fire(
+                            'Successful',
+                            'Dữ liệu của hệ thống đã được cập nhật',
+                            'success'
+                        )
+                    } catch (error) {
+                        $("#loading").hide();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Lỗi trong quá trình thực thi',
+                        })
+                    }
+                },
+                error: function (data) {
                     $("#loading").hide();
-                    console.log(data);
-                    Swal.fire(
-                        'Successful',
-                        'Dữ liệu của hệ thống đã được cập nhật',
-                        'success'
-                    )
-                } catch (error) {
-                    $("#loading").hide();
+                    alert(data);
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
                         text: 'Lỗi trong quá trình thực thi',
-                    })
+                        footer: '<a href>Why do I have this issue?</a>'
+                    });
                 }
-            },
-            error: function (data) {
-                $("#loading").hide();
-                alert(data);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Lỗi trong quá trình thực thi',
-                    footer: '<a href>Why do I have this issue?</a>'
-                });
-            }
-        });
+            });
+        }
     }
 </script>
 </body>

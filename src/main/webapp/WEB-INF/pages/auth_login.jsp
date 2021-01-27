@@ -1,6 +1,7 @@
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ page import="com.sgfintech.entity.Useradmin" %>
-<%@ page import="com.sgfintech.service.UseradminService" %><%--
+<%@ page import="com.sgfintech.service.UseradminService" %>
+<%@ page import="com.sgfintech.util.MailUtil" %><%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 12/09/2020
@@ -104,6 +105,7 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script>
+
     $(document).ready(function () {
         $("#demoForm").validate({
             rules: {

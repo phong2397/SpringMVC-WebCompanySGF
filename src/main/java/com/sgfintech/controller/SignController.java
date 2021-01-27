@@ -214,6 +214,7 @@ public class SignController {
         String data = request.getParameter("datarequest"); //id cua order request
         String status = request.getParameter("status");
         String step = request.getParameter("step");
+        String textDecline = request.getParameter("textDecline");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
             SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
@@ -236,8 +237,9 @@ public class SignController {
                     cal.add(Calendar.DATE, +30);
                     ct.setDateRepayment(LocalDateTime.now().plusDays(30));
                     ct.setCreatedDate(sa.getUpdatedDate());
-                    ct.setAcceptedBy(sa.getEmployeeDuyet());
+                    ct.setAcceptedBy(u.getUserLogin());
                     contractDAO.save(ct);
+                    sa.setDescription(textDecline);
                     sa.setEmployeeDuyet(sa.getEmployeeDuyet());
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
                     sa.setUpdatedDate(LocalDateTime.now());

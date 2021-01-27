@@ -129,21 +129,18 @@
                                         <thead>
                                         <tr>
                                             <th>Mã đơn</th>
+                                            <th>Mã công ty</th>
                                             <th>Họ và tên</th>
                                             <th>Chủ tài khoản</th>
                                             <th>Số tài khoản</th>
                                             <th>Tên ngân hàng</th>
-                                            <th>Số CMND</th>
                                             <th>Điện thoại</th>
-                                            <th>Số lần tạm ứng</th>
                                             <th class="text-center">Số tiền tạm ứng</th>
                                             <th class="text-center">Số tiền tạm ứng</th>
                                             <th>Phí dịch vụ</th>
                                             <th>Mức phí</th>
                                             <th>Mức phí</th>
-                                            <th>Mã hệ thống (System Trace)</th>
                                             <th>Status</th>
-                                            <th>Mã giao dịch (Transaction ID)</th>
                                             <th class="text-left">Số tiền còn nợ</th>
                                             <th class="text-left">Số tiền còn nợ</th>
                                             <th class="text-left">Số tiền đã đóng</th>
@@ -162,6 +159,9 @@
                                                        onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.companies.id}','${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
                                                 </td>
                                                 <td>
+                                                        ${lst.companies.companyCode}
+                                                </td>
+                                                <td>
                                                         ${lst.customer.customerName}
                                                 </td>
                                                 <td>
@@ -174,12 +174,7 @@
                                                         ${lst.customer.customerBankName}
                                                 </td>
                                                 <td>
-                                                        ${lst.customer.customerId}
-                                                </td>
-                                                <td>
                                                         ${lst.customer.customerPhone}
-                                                </td>
-                                                <td> ${lst.contract.timeBorrow}
                                                 </td>
                                                 <td><fmt:formatNumber
                                                         value="${lst.contract.borrow }"
@@ -198,7 +193,6 @@
                                                 <td>
                                                         ${lst.contract.borrow * 0.02}
                                                 </td>
-                                                <td>${lst.contract.systemTrace}</td>
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${lst.contract.status eq 'act' }">
@@ -208,7 +202,6 @@
                                                     </c:choose>
 
                                                 </td>
-                                                <td>${lst.contract.transactionId}</td>
                                                 <td>
                                                     <fmt:formatNumber
                                                             value=" ${lst.contract.borrow + (lst.contract.borrow * 0.02)}"
@@ -296,7 +289,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [9, 12, 17, 19]
+                    targets: [8, 11, 14, 16]
                 },
             ],
             buttons: [
@@ -309,7 +302,7 @@
                             $('row c[r^="A"]', sheet).attr('s', '50');
                             $('row c[r^="D"]', sheet).attr('s', '50');
                         },
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17, 19, 20, 21, 22, 23, 24],
+                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 9, 11, 12, 14, 16, 17, 18, 19, 20],
 
                     }
                 },

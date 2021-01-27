@@ -89,6 +89,7 @@
                                     <thead>
                                     <tr>
                                         <th class="text-center">Mã đơn</th>
+                                        <th class="text-center">Mã công ty</th>
                                         <th>Thông tin khách hàng</th>
                                         <th>Số điện thoại</th>
                                         <th>Tên khách hàng</th>
@@ -102,6 +103,7 @@
                                         <th>Mức phí</th>
                                         <th class="text-left">Số tiền còn nợ</th>
                                         <th class="text-left">Số tiền còn nợ</th>
+                                        <th class="text-left">Số tiền đã đóng</th>
                                         <th class="text-left">Số tiền đã đóng</th>
                                         <th class="text-left">Hạn thanh toán</th>
                                         <th class="text-left">Kỳ thanh toán</th>
@@ -118,13 +120,15 @@
                                                onclick="viewInfo('${lst.contract.idContract}','${lst.customer.customerPhone}')"><b>${lst.contract.idContract}</b></a>
                                         </td>
                                         <td>
+                                                ${lst.companies.companyCode}
+                                        </td>
+                                        <td>
                                             <h6 class="mb-0">
-                                                <b> <a data-toggle="modal" href="#" id="cPhone" class="as"
-                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}')">${lst.customer.customerPhone}</a></b>
-                                                <span class="d-block text-muted">Tên khách hàng :<b>${lst.customer.customerName}</b></span>
-                                                <span class="d-block text-muted">Chủ tài khoản :<b> ${lst.customer.customerBank}</b></span>
-                                                <span class="d-block text-muted">Số tài khoản: <b>${lst.customer.customerBankAcc}</b></span>
-                                                <span class="d-block text-muted">Tên ngân hàng :<b> ${lst.customer.customerBankName}</b></span>
+                                                    ${lst.customer.customerPhone}
+                                                <span class="d-block text-muted"><b>Tên khách hàng</b> :${lst.customer.customerName}</span>
+                                                <span class="d-block text-muted"><b>Chủ tài khoản</b> : ${lst.customer.customerBank}</span>
+                                                <span class="d-block text-muted"><b>Số tài khoản</b>: ${lst.customer.customerBankAcc}</span>
+                                                <span class="d-block text-muted"><b>Tên ngân hàng</b> : ${lst.customer.customerBankName}</span>
                                             </h6>
                                         </td>
                                         <td>
@@ -147,27 +151,30 @@
                                                 type="number"/> đ
                                         </td>
                                         <td>
-                                            2 %
+                                                ${lst.contract.borrow }
                                         </td>
                                         <td>
-                                                ${lst.contract.borrow * 0.02}
+                                            2 %
                                         </td>
                                         <td>
                                             <fmt:formatNumber
                                                     value="${lst.contract.borrow  * 0.02}"
                                                     type="number"/> đ
                                         </td>
-                                        <td id="${lst.contract.idContract}"><fmt:formatNumber
-                                                value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 0.02)}"
-                                                type="number"/> đ
+                                        <td id="${lst.contract.idContract}">${lst.contract.borrow  * 0.02}
                                         </td>
-                                        <td>${lst.contract.borrow}
+                                        <td>
+                                            <fmt:formatNumber
+                                                    value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 0.02)}"
+                                                    type="number"/> đ
                                         </td>
                                         <td>${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 0.02)}
                                         </td>
                                         <td><fmt:formatNumber value="${lst.contract.feeBorrow}" type="number"/>
                                             đ
                                         </td>
+                                        <td>${lst.contract.feeBorrow}</td>
+
                                         <td>05/02/2021
                                         </td>
                                         <td>1</td>
@@ -369,12 +376,12 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [2, 3, 4, 5, 6, 9, 12, 13]
+                    targets: [3, 4, 5, 6, 7, 9, 12, 14, 16]
                 },
             ],
             buttons: [
                 {
-                    title: 'Danh sách nợ ',
+                    title: 'Danh sách thu hồi ',
                     extend: 'excelHtml5',
                     exportOptions: {
                         format: {
@@ -382,7 +389,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+                        columns: [0, 1, 3, 4, 5, 6, 7, 9, 10, 12, 14, 16, 17, 18, 19, 20, 21]
 
                     }
                 },

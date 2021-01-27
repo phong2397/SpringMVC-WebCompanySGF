@@ -195,14 +195,13 @@
                                         <tr>
                                         <tr>
                                             <th>Mã đơn</th>
+                                            <th>Mã công ty</th>
                                             <th>Họ và tên</th>
                                             <th>Chủ tài khoản</th>
                                             <th>Số tài khoản</th>
                                             <th>Tên ngân hàng</th>
-                                            <th>Số CMND</th>
                                             <th>Điện thoại</th>
                                             <th>Trạng thái đơn</th>
-                                            <th>Nhân viên thẩm định</th>
                                             <th>Số tiền tạm ứng</th>
                                             <th>Số tiền tạm ứng</th>
                                             <th>Phí dịch vụ</th>
@@ -212,8 +211,8 @@
                                             <th>Thời gian yêu cầu giải ngân</th>
                                             <th>Nhân viên xét duyệt</th>
                                             <th>Hạn thanh toán</th>
-                                            <th>Số tiền thanh toán</th>
-                                            <th>Số tiền thanh toán</th>
+                                            <th>Số tiền cần thanh toán</th>
+                                            <th>Số tiền cần thanh toán</th>
 
                                         </tr>
                                         </tr>
@@ -224,6 +223,9 @@
                                                 <td>
                                                     <a data-toggle="modal" href="#" class="as"
                                                        onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
+                                                </td>
+                                                <td>
+                                                        ${lst.company.companyCode}
                                                 </td>
                                                 <td>
                                                         ${lst.customer.customerName}
@@ -238,17 +240,11 @@
                                                         ${lst.customer.customerBankName}
                                                 </td>
                                                 <td>
-                                                        ${lst.customer.customerId}
-                                                </td>
-                                                <td>
                                                         ${lst.customer.customerPhone}
                                                 </td>
 
-                                                <td>
-                                                        ${lst.saRequest.timeBorrow}
-                                                </td>
-                                                <td>
-                                                        ${lst.saRequest.employeeThamdinh}
+                                                <td style="color: #0aa5df">
+                                                    <b> Chờ chuyển tiền</b>
                                                 </td>
                                                 <td>
                                                         ${lst.saRequest.borrow}
@@ -270,15 +266,16 @@
                                                             type="number"/> đ
                                                 </td>
                                                 <td>
+                                                        ${lst.saRequest.timeBorrow}
+                                                </td>
+                                                <td>
                                                     <fmt:parseDate value=" ${lst.saRequest.employeeDuyetDate}"
                                                                    pattern="yyyy-MM-dd'T'HH:mm" var="day"
                                                                    type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                     value="${day}"/>
                                                 </td>
-                                                <td style="color: #0aa5df">
-                                                    <b> Chờ chuyển tiền</b>
-                                                </td>
+
                                                 <td id="employeeDuyet-${lst.saRequest.id}">
                                                         ${lst.saRequest.employeeDuyet}
                                                 </td>
@@ -370,6 +367,9 @@
                                             id="year" style="color:grey;"></span></p>
                                     <p>Địa chỉ thường trú : <span id="customerAddress" style="color:grey;"></span></p>
                                     <p>Địa chỉ tạm trú : <span id="customerAddressTemp" style="color:grey;"></span></p>
+                                    <p>Số CMND : <span id="customerId" style="color:grey;"></span></p>
+                                    <p id="dateCMND"></p>
+                                    <p>Nơi cấp : <span id="customerIdLocation" style="color:grey;"></span></p>
                                 </div>
                                 <div class="col-3 ">
                                     <h4><b>*</b>&nbsp;&nbsp;Liên lạc</h4>
@@ -456,7 +456,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [8, 11, 19]
+                    targets: [8, 11, 18]
                 },
             ],
             buttons: [
@@ -464,7 +464,7 @@
                     title: 'Danh sách đã ký duyệt',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 11, 12, 14, 15, 16, 17, 19]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 11, 13, 14, 15, 16, 18]
 
                     }
                 },

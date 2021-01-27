@@ -249,6 +249,7 @@ public class ApprovalController {
                 sa.setDescription(textDecline);
                 sa.setEmployeeThamdinhDate(LocalDateTime.now());
                 sa.setEmployeeDuyet(employee);
+                sa.setCreatedDate(LocalDateTime.now());
                 sa.setUpdatedDate(LocalDateTime.now());
                 saRequestDAO.update(sa);
                 return "success";

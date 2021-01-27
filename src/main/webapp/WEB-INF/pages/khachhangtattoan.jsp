@@ -120,25 +120,21 @@
                         <div class="box">
                             <div class="box-header with-border">
                                 <h4 class="box-title">Danh sách đã thanh toán</h4>
-                                <h6 class="box-subtitle">Danh sách khách hàng được gạch nợ tự động và xác nhận gạch
-                                    nợ bởi kế toán trưởng</h6>
                             </div>
                             <div class="box-body p-15">
                                 <div class="table-responsive">
-                                    <table id="example" class="table table-lg invoice-archive"
+                                    <table id="example" class="table table-striped table-bordered no-margin"
                                            data-page-size="10" width="100%">
                                         <thead>
                                         <tr>
                                             <th>Mã đơn vay</th>
-                                            <th>Số điện thoại</th>
-                                            <th>Tên khách hàng</th>
                                             <th>Mã công ty</th>
+                                            <th>Tên khách hàng</th>
                                             <th>Chủ tài khoản</th>
                                             <th>Số tài khoản</th>
                                             <th>Tên ngân hàng</th>
-                                            <th>Mã hệ thống (System Trace)</th>
-                                            <th>Status</th>
-                                            <th>Mã giao dịch (Transaction ID)</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Trạng thái đơn</th>
                                             <th>Ngày gạch nợ</th>
                                             <th>Số tiền tạm ứng</th>
                                             <th>Số tiền tạm ứng</th>
@@ -153,18 +149,16 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
-                                                <td><a data-toggle="modal" href="#"
-                                                       onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
+                                                <td><a data-toggle="modal" href="#" class="as"
+                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.companies.id}','${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
                                                 </td>
                                                 <td>
-                                                        ${lst.customer.customerPhone}
+                                                        ${lst.companies.companyCode}
                                                 </td>
                                                 <td>
                                                         ${lst.customer.customerName}
                                                 </td>
-                                                <td>
-                                                        ${lst.customer.companyCode}
-                                                </td>
+
                                                 <td>
                                                         ${lst.customer.customerBank}
                                                 </td>
@@ -174,13 +168,16 @@
                                                 <td>
                                                         ${lst.customer.customerBankName}
                                                 </td>
+                                                <td>
+                                                        ${lst.customer.customerPhone}
                                                 </td>
-                                                <td>${lst.contract.systemTrace}</td>
+                                                </td>
+
                                                 <td><h6 class="mb-0" style="color:hotpink">
                                                     <b>Đã tất toán</b>
                                                 </h6>
                                                 </td>
-                                                <td>${lst.contract.transactionId}</td>
+
                                                 <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
                                                                    pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
                                                                    type="date"/>
@@ -260,7 +257,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    // targets: [2, 3, 4, 5, 6, 10, 12, 14, 16]
+                    targets: [10, 12, 14]
                 },
             ],
             buttons: [
@@ -273,7 +270,7 @@
                             $('row c[r^="A"]', sheet).attr('s', '50');
                             $('row c[r^="D"]', sheet).attr('s', '50');
                         },
-                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 16],
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 15, 16],
 
                     }
                 },

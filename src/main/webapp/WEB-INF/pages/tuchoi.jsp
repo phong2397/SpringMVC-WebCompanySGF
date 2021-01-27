@@ -311,6 +311,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="js/jquery-1.8.3.js"></script>
 <script src="js/jquery.elevateZoom-3.0.8.min.js"></script>
+<script src="js/generalFuncTiepnhanYeucau.js" type="text/javascript"></script>
 <script src="js/funcTiepnhanyeucau.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function () {

@@ -14,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 public class MailUtil {
+
+
     public static void SendEmailTLS(String toemail, String token) {
 
         Properties prop = new Properties();
@@ -25,7 +27,6 @@ public class MailUtil {
 
         final String username = ConfigGateway.getEmailUser();
         final String password = ConfigGateway.getEmailPassword();
-
 
 
         Session session = Session.getInstance(prop,

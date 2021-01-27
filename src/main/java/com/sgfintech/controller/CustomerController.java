@@ -9,6 +9,7 @@ import com.sgfintech.handler.CustomerHandler;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.service.UseradminService;
 import com.sgfintech.util.Consts;
+import com.sgfintech.util.MailUtil;
 import com.sgfintech.util.StringUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;

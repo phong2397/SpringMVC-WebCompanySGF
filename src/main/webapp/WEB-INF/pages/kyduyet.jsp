@@ -381,6 +381,7 @@
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/generalFuncTiepnhanYeucau.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/funcKyduyet.js">
 </script>
 <script type="text/javascript">

@@ -110,7 +110,6 @@
                         </div>
                         <div class="row">
                             <div class="col-3 ">
-
                                 <div class="slide-container">
                                     <div id="imgCMND"></div>
                                 </div>
@@ -122,7 +121,7 @@
                                 <p>- Nơi cấp : <span id="customerIdLocation" style="color:grey;"></span></p></div>
                             <div class="col-3 ">
                                 <div class="slide-container">
-                                    <p id="imgHealth"></p>
+                                    <div class="image" id="imgHealth"></div>
                                 </div>
                                 <br>
                                 <p>- Số bảo hiểm y tế : <span id="customerHealthInsurance" style="color:grey;"></span>
@@ -130,7 +129,7 @@
                             </div>
                             <div class="col-3 ">
                                 <div class="slide-container">
-                                    <p id="imgPayslip"></p>
+                                    <div class="image" id="imgPayslip"></div>
                                 </div>
                             </div>
                             <div class="col-3 ">
@@ -315,7 +314,7 @@
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="#historyCon" data-toggle="tab">
-                                Lịch sử hợp đồng giải ngân
+                                Lịch sử giao dịch
                             </a>
                         </li>
                         <% } else { %>
@@ -364,7 +363,8 @@
                             <thead>
                             <tr>
                                 <th>Mã đơn</th>
-                                <th>Thời gian yêu cầu</th>
+                                <th>Thời gian giải ngân</th>
+                                <th>Người giải ngân</th>
                                 <th>Số tiền ứng</th>
                                 <th>Số tiền còn nợ</th>
                                 <th>Trạng thái đơn</th>
@@ -504,7 +504,6 @@
                         <h4>&nbsp;&nbsp;Thông tin khách hàng</h4>
                         <div class="row">
                             <div class="col-3 ">
-                                <h4><b>*</b>&nbsp;&nbsp;Thông tin cá nhân</h4>
                                 <p>Họ và tên : <span id="customerNamec" style="color:grey;"></span></p>
                                 <p>Giới tính : <span id="customerGenderc" style="color:grey;"></span></p>
                                 <p>Ngày sinh : <span id="dayc" style="color:grey;"></span>/<span id="monthc"
@@ -512,6 +511,11 @@
                                         id="yearc" style="color:grey;"></span></p>
                                 <p>Địa chỉ thường trú : <span id="customerAddressc" style="color:grey;"></span></p>
                                 <p>Địa chỉ tạm trú : <span id="customerAddressTempc" style="color:grey;"></span></p>
+                                <p>Số CMND : <span id="customerIdc" style="color:grey;"></span></p>
+                                <p id="dateCMND"></p>
+                                <p>Nơi cấp : <span id="customerIdLocationc" style="color:grey;"></span></p>
+
+
                             </div>
                             <div class="col-3 ">
                                 <h4><b>*</b>&nbsp;&nbsp;Liên lạc</h4>
