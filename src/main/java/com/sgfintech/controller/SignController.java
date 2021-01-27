@@ -56,15 +56,16 @@ public class SignController {
 
     @Autowired
     UseradminDAO useradminDAO;
+
     @Autowired
     SaRequestService saRequestService;
 
-    @RequestMapping(value = {"/kyduyetRole"}, method = RequestMethod.GET)
-    public String kyduyetRole(ModelMap mm, HttpServletRequest request, HttpSession session) {
-        int countAct = mergeDataService.countStatus("act");
-        int countWait = mergeDataService.countStatus("wait");
-        int countWFS = mergeDataService.countStatus("wfs");
-        int countDone = mergeDataService.countStatus("done");
+    @RequestMapping(value = {"/kyduyetlogin"}, method = RequestMethod.GET)
+    public String kyduyetlogin(ModelMap mm, HttpServletRequest request, HttpSession session) {
+//        int countAct = mergeDataService.countStatus("act");
+//        int countWait = mergeDataService.countStatus("wait");
+//        int countWFS = mergeDataService.countStatus("wfs");
+//        int countDone = mergeDataService.countStatus("done");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -74,20 +75,21 @@ public class SignController {
             mm.addAttribute(Consts.Attr_ResultView, listXetduyetLogin);
             List<SaRequest> saRequest = saRequestDAO.findAll();
             mm.addAttribute("sa", saRequest);
-            mm.addAttribute("countAct", countAct);
-            mm.addAttribute("countWait", countWait);
-            mm.addAttribute("countWFS", countWFS);
-            mm.addAttribute("countDone", countDone);
-            return "kyduyetRole";
+            int count[] = saRequestService.countStatus();
+            mm.addAttribute("countAct", count[1]);
+            mm.addAttribute("countWait", count[4]);
+            mm.addAttribute("countWFS", count[3]);
+            mm.addAttribute("countDone", count[5]);
+            return "kyduyetlogin";
         }
     }
 
     @RequestMapping(value = {"/tuchoikyduyet"}, method = RequestMethod.GET)
-    public String tuchoieKyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-        int countAct = mergeDataService.countStatus("act");
-        int countWait = mergeDataService.countStatus("wait");
-        int countWFS = mergeDataService.countStatus("wfs");
-        int countDeni = mergeDataService.countStatus("deni");
+    public String declineKyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+//        int countAct = mergeDataService.countStatus("act");
+//        int countWait = mergeDataService.countStatus("wait");
+//        int countWFS = mergeDataService.countStatus("wfs");
+//        int countDeni = mergeDataService.countStatus("deni");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -97,20 +99,21 @@ public class SignController {
             List<SaRequest> saRequest = saRequestDAO.findAll();
             mm.addAttribute("sa", saRequest);
             mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-            mm.addAttribute("countAct", countAct);
-            mm.addAttribute("countWait", countWait);
-            mm.addAttribute("countWFS", countWFS);
-            mm.addAttribute("countDeni", countDeni);
+            int count[] = saRequestService.countStatus();
+            mm.addAttribute("countAct", count[1]);
+            mm.addAttribute("countWait", count[4]);
+            mm.addAttribute("countWFS", count[3]);
+            mm.addAttribute("countDeni", count[2]);
             return "tuchoikyduyet";
         }
     }
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
-    public String kyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-        int countWait = mergeDataService.countStatus("wait");
-        int countWFS = mergeDataService.countStatus("wfs");
-        int countAct = mergeDataService.countStatus("act");
-        int countDone = mergeDataService.countStatus("done");
+    public String welcomePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+//        int countWait = mergeDataService.countStatus("wait");
+//        int countWFS = mergeDataService.countStatus("wfs");
+//        int countAct = mergeDataService.countStatus("act");
+//        int countDone = mergeDataService.countStatus("done");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -121,20 +124,21 @@ public class SignController {
             List<SaRequest> saRequest = saRequestDAO.findAll();
             mm.addAttribute("sa", saRequest);
             mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-            mm.addAttribute("countWait", countWait);
-            mm.addAttribute("countWFS", countWFS);
-            mm.addAttribute("countAct", countAct);
-            mm.addAttribute("countDone", countDone);
+            int count[] = saRequestService.countStatus();
+            mm.addAttribute("countWait", count[4]);
+            mm.addAttribute("countWFS", count[3]);
+            mm.addAttribute("countAct", count[1]);
+            mm.addAttribute("countDone", count[5]);
             return "kyduyet";
         }
     }
 
     @RequestMapping(value = {"/giaingan"}, method = RequestMethod.GET)
     public String giainganPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-        int countWait = mergeDataService.countStatus("wait");
-        int countWFS = mergeDataService.countStatus("wfs");
-        int countAct = mergeDataService.countStatus("act");
-        int countDone = mergeDataService.countStatus("done");
+//        int countWait = mergeDataService.countStatus("wait");
+//        int countWFS = mergeDataService.countStatus("wfs");
+//        int countAct = mergeDataService.countStatus("act");
+//        int countDone = mergeDataService.countStatus("done");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -145,10 +149,11 @@ public class SignController {
             List<SaRequest> saRequest = saRequestDAO.findAll();
             mm.addAttribute("sa", saRequest);
             mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-            mm.addAttribute("countWait", countWait);
-            mm.addAttribute("countWFS", countWFS);
-            mm.addAttribute("countAct", countAct);
-            mm.addAttribute("countDone", countDone);
+            int count[] = saRequestService.countStatus();
+            mm.addAttribute("countWait", count[4]);
+            mm.addAttribute("countWFS", count[3]);
+            mm.addAttribute("countAct", count[1]);
+            mm.addAttribute("countDone", count[5]);
             return "giaingan";
         }
     }

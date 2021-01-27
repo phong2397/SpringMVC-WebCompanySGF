@@ -14,12 +14,14 @@ import com.sgfintech.mapper.SaRequestMapper;
 import com.sgfintech.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
 import java.sql.Blob;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lucnguyen.hcmut@gmail.com
@@ -131,20 +133,6 @@ public class MergeDataService {
             return resultList;
         } catch (Exception ex) {
             return null;
-        }
-    }
-
-    public int countStatus(String status) {
-        String sql = "select COUNT(sa.status) from sgft_sa_request sa where sa.status = ? ";
-        if (StringUtil.isEmpty(jdbcTemplate)) {
-            jdbcTemplate = new JdbcTemplate(dataSource);
-        }
-        try {
-            int count = jdbcTemplate.queryForObject(sql, new Object[]{status}, Integer.class);
-            return count;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return 0;
         }
     }
 
