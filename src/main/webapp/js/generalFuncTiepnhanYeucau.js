@@ -386,7 +386,7 @@ function viewInfoCustomer(phone, id, comId) {
                 if (imgCMND[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgCMND').append('Bổ sung hình ảnh');
                 } else {
-                    $('#imgCMND').append('<img  class="img" src="' + imgCMND[key] + '' + '" xoriginal ="' + imgCMND[key] + '"  />');
+                    $('#imgCMND').append('<img class="img" src="' + imgCMND[key] + '' + '" data-toggle="modal"  data-target="#myModal" />');
                 }
             });
             const payslipObj = JSON.parse(response.data.payslip);
@@ -396,7 +396,7 @@ function viewInfoCustomer(phone, id, comId) {
                 if (payslipObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
-                    $('#imgPayslip').append('<img class="img" src="' + payslipObj[key] + '"/>');
+                    $('#imgPayslip').append('<img class="img" src="' + payslipObj[key] + '" data-toggle="modal"  data-target="#myModal"/>');
                 }
             });
             const salaryObj = JSON.parse(response.data.salary);
@@ -405,7 +405,7 @@ function viewInfoCustomer(phone, id, comId) {
                 if (salaryObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
-                    $('#imgSalary').append('<img class="img" src="' + salaryObj[key] + '"/>');
+                    $('#imgSalary').append('<img class="img" src="' + salaryObj[key] + '" data-toggle="modal"  data-target="#myModal"/>');
                 }
 
             });
@@ -415,7 +415,7 @@ function viewInfoCustomer(phone, id, comId) {
                 if (healthObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
-                    $('#imgHealth').append('<img class="img" src="' + healthObj[key] + '"/>');
+                    $('#imgHealth').append('<img class="img" src="' + healthObj[key] + '" data-toggle="modal"  data-target="#myModal"/>');
                 }
             });
             const appendixObj = JSON.parse(response.data.appendix);
@@ -424,7 +424,7 @@ function viewInfoCustomer(phone, id, comId) {
                 if (appendixObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
-                    $('#imgAppendix').append('<img class="img" src="' + appendixObj[key] + '"/>');
+                    $('#imgAppendix').append('<img class="img" src="' + appendixObj[key] + '" data-toggle="modal"  data-target="#myModal"/>');
                 }
             });
             const socialObj = JSON.parse(response.data.social);
@@ -433,7 +433,7 @@ function viewInfoCustomer(phone, id, comId) {
                 if (socialObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
-                    $('#imgSocial').append('<img class="img" src="' + socialObj[key] + '"/>');
+                    $('#imgSocial').append('<img class="img" src="' + socialObj[key] + '" data-toggle="modal"  data-target="#myModal"/>');
                 }
             });
             const contractObj = JSON.parse(response.data.contract);
@@ -443,7 +443,7 @@ function viewInfoCustomer(phone, id, comId) {
                 if (contractObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
-                    $('#imgContract').append('<img class="img" src="' + contractObj[key] + '"/>');
+                    $('#imgContract').append('<img class="img" src="' + contractObj[key] + '"data-toggle="modal"  data-target="#myModal" />');
                 }
             });
         })

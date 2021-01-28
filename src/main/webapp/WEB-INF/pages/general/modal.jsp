@@ -111,7 +111,7 @@
                         <div class="row">
                             <div class="col-3 ">
                                 <div class="slide-container">
-                                    <div id="imgCMND"></div>
+                                    <div class="image" id="imgCMND"></div>
                                 </div>
                                 <br>
                                 <p>- Số CMND : <span id="customerId" style="color:grey;"></span></p>
@@ -249,7 +249,15 @@
                 </button>
             </div>
             <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                <h4>Bạn có chắc chắn giải ngân cho đơn "<b style="color: black" id="idd"></b>"?</h4>
+                <button type="button" class="btn btn-info" data-dismiss="modal"
+                        onclick="">
+                    Upload Chứng Từ
+                </button>
+                <div class="row" style="margin-top: 5%">
+                    <div class="col-12"><h4>Bạn có chắc chắn giải ngân cho đơn "<b style="color: black" id="idd"></b>"?
+                    </h4></div>
+                </div>
+
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal"
@@ -533,9 +541,8 @@
                 </div>
             </div>
             <!-- Footer -->
-            <div class="modal-footer modal-footer-uniform">
-                <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang
-                </button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng trang</button>
             </div>
 
         </div>
@@ -554,8 +561,8 @@
             </div>
             <div class="modal-body" style="font-weight: bold; color: #0b0b0b" id="contractView">
             </div>
-            <div class="modal-footer modal-footer-uniform">
-                <button type="button" class="btn btn-rounded btn-close" data-dismiss="modal">Close</button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng trang</button>
             </div>
         </div>
     </div>
@@ -625,3 +632,16 @@
     </div>
 </div>
 <!-- /.modal -->
+<!-- Modal show bigger img -->
+<div id="myModal" class="modal fade" role="dialog" tabindex="1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="showimage" src=""/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

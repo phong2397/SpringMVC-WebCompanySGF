@@ -196,10 +196,6 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <div class='image'>
-                                    <img class="img"
-                                         src='http://www.online-image-editor.com//styles/2014/images/example_image.png'/>
-                                </div>
                                 <div id='modal'></div>
                                 <h4 class="box-title">Số lượng đơn chờ xét duyệt</h4><br>
                                 <%
@@ -376,32 +372,6 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        var currentMousePos = {x: -1, y: -1};
-        $(document).mousemove(function (event) {
-            currentMousePos.x = event.pageX;
-            currentMousePos.y = event.pageY;
-            if ($('#modal').css('display') != 'none') {
-                $('#modal').css({
-                    top: currentMousePos.y,
-                    left: currentMousePos.x + 12
-                });
-            }
-        });
-        $('.image').on('mouseover', function () {
-            var image = $(this).find('img');
-            var modal = $('#modal');
-            $(modal).html(image.clone());
-            $(modal).css({
-                top: currentMousePos.y,
-                left: currentMousePos.x + 12
-            });
-            $(modal).show();
-
-        });
-        $('.image').on('mouseleave', function () {
-            $(modal).hide();
-        });
-
         $("#loading").hide();
         $('#example').DataTable({
             dom: 'Bfrtip',
