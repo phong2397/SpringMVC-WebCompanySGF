@@ -249,11 +249,22 @@
                 </button>
             </div>
             <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                <button type="button" class="btn btn-info" data-dismiss="modal"
-                        onclick="">
-                    Upload Chứng Từ
-                </button>
-                <div class="row" style="margin-top: 5%">
+                <div class="row">
+                    <div class="col-12">
+                        <form action="" method="post"
+                              enctype="multipart/form-data">
+                            <label><h4>Chọn hình ảnh ủy nhiệm thu:</h4>
+                                <button type="button" class="btn btn-rounded btn-info "
+                                        type="file" name="file"> Upload
+                                </button>
+                            </label><br>
+                            <img class="img" src=""/>
+
+                        </form>
+
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 4%">
                     <div class="col-12"><h4>Bạn có chắc chắn giải ngân cho đơn "<b style="color: black" id="idd"></b>"?
                     </h4></div>
                 </div>

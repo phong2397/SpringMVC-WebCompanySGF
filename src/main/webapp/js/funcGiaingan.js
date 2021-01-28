@@ -278,9 +278,9 @@ function viewInfoCustomer(params, id, comId) {
         $("#saInfo").append('<p>Ngày duyệt đơn : <span style="color:grey;">' + ' ' + ("0" + (sa.employeeDuyetDate.date.day)).slice(-2) + '/' + ("0" + (sa.employeeDuyetDate.date.month)).slice(-2) + '/' + sa.employeeDuyetDate.date.year + ' ' + ' ' + ("0" + (sa.employeeDuyetDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.minute)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.second)).slice(-2) + '</span></p>');
 
         if (typeof (sa.description) === "undefined") {
-            $("#saInfo").append('<p>Lý do : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
+            $("#saInfo").append('<p>Đánh giá: <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
         } else {
-            $("#saInfo").append('<p>Lý do : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
+            $("#saInfo").append('<p>Đánh giá : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
         }
         $("#danhgia").empty();
         $("#labelDanhgia").empty();

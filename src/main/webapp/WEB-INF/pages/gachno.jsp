@@ -231,6 +231,21 @@
             <div class="modal-content">
                 <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
                     <section class="invoice printableArea" id="main">
+                        <div class="row no-print">
+                            <div class="col-12">
+                                <form action="" method="post"
+                                      enctype="multipart/form-data">
+                                    <label>Chọn hình ảnh ủy nhiệm thu:
+                                        <button type="button" class="btn btn-rounded btn-info "
+                                                type="file" name="file"> Upload
+                                        </button>
+                                    </label><br>
+                                    <img class="img" src=""/>
+
+                                </form>
+
+                            </div>
+                        </div>
                         <div class="col-12">
                             <!-- title row -->
                             <div class="col-12">
