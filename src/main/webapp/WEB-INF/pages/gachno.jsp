@@ -81,7 +81,7 @@
                 <div class="col-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h4 class="box-title">Danh sách thu hồi</h4>
+                            <h4 class="box-title">Danh sách chờ gạch nợ</h4>
                         </div>
                         <div class="box-body">
                             <div class="table-responsive">
@@ -108,6 +108,7 @@
                                         <th class="text-left">Hạn thanh toán</th>
                                         <th class="text-left">Kỳ thanh toán</th>
                                         <th class="text-left">Ngày giải ngân</th>
+                                        <th class="text-left">Người giải ngân</th>
                                         <th class="text-left">Ngày thanh toán</th>
                                         <th class="text-left">Trạng thái đơn</th>
                                         <th class="text-left">Trạng thái cổng thanh toán</th>
@@ -183,6 +184,7 @@
                                                            var="patientDob"
                                                            type="date"/>
                                             <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
+                                        <td>${lst.contract.acceptedBy}</td>
                                         <td><fmt:parseDate value=" ${lst.contract.createdDate}"
                                                            pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
                                                            type="date"/>
@@ -381,7 +383,7 @@
             ],
             buttons: [
                 {
-                    title: 'Danh sách thu hồi ',
+                    title: 'Danh sách chờ gạch nợ ',
                     extend: 'excelHtml5',
                     exportOptions: {
                         format: {
@@ -389,7 +391,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 1, 3, 4, 5, 6, 7, 9, 10, 12, 14, 16, 17, 18, 19, 20, 21]
+                        columns: [0, 1, 3, 4, 5, 6, 7, 9, 10, 12, 14, 16, 17, 18, 19, 20, 21, 22]
 
                     }
                 },
