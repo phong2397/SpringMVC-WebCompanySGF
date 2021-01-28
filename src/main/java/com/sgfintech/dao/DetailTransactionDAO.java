@@ -45,6 +45,7 @@ public class DetailTransactionDAO {
         List<DetailTransaction> fooList = query.list();
         return fooList;
     }
+
 //
 //    @Test
 //    public void givenEntitiesExist_whenRetrievingLastPage_thenCorrectSize() {
