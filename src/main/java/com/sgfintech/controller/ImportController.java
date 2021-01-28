@@ -75,7 +75,7 @@ public class ImportController implements ServletContextAware {
                 Companies com = new Companies();
                 com.setCompanyCode(companyCode);
                 com.setCompanyName(companyName);
-                com.setConpanyPhone(companyPhone);
+                com.setCompanyPhone(companyPhone);
                 companiesDAO.save(com);
                 customerDAO.saveAllStateless(lstCustomer);
                 return new Gson().toJson(lstCustomer);

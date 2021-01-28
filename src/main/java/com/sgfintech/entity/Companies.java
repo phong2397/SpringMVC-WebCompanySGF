@@ -31,7 +31,7 @@ public class Companies implements Serializable {
     private String conpanyTax;
 
     @Column(name = "company_phone")
-    private String conpanyPhone;
+    private String companyPhone;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate = LocalDateTime.now();
@@ -45,7 +45,7 @@ public class Companies implements Serializable {
         this.companyName = companyName;
         this.companyAddress = companyAddress;
         this.conpanyTax = conpanyTax;
-        this.conpanyPhone = companyPhone;
+        this.companyPhone = companyPhone;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
     }

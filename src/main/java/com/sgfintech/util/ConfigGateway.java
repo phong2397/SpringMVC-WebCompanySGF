@@ -10,9 +10,9 @@ import java.util.Properties;
 public class ConfigGateway {
     private static String GATEWAY_URL = "";
 
-    private static String EMAIL_USER = "thanhphong2497@gmail.com";
+    private static String EMAIL_USER = "";
 
-    private static String EMAIL_PASSWORD = "thanhphong2397";
+    private static String EMAIL_PASSWORD = "";
 
     public static String getEmailUser() {
         return EMAIL_USER;

@@ -111,7 +111,7 @@ public class ApprovalController {
             mm.addAttribute("countWait", count[4]);
             mm.addAttribute("countWFS", count[3]);
             mm.addAttribute("countDone", count[5]);
-            return "thamdinhlogin";
+            return "thamdinhRole";
         }
     }
 

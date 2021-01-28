@@ -56,6 +56,10 @@
             <!-- <p class="auth-msg text-white-50">Sign in to start your session</p> -->
 
             <form id="demoForm" action="${pageContext.request.contextPath}/login" method="post" class="form-element">
+                <span style="color: red">${errorStatus}</span>
+                <%
+                    session.removeAttribute("errorStatus");
+                %>
                 <div class="form-group has-feedback">
                     <input name="user" id="user" class="form-control text-white plc-white" placeholder="Tên đăng nhập">
                     <span class="ion ion-email form-control-feedback text-white"></span>

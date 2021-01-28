@@ -104,8 +104,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-rounded btn-warning btn-outline mr-1">
-                                        <i class="ti-trash"></i> Hủy
+                                    <button type="reset" class="btn btn-rounded btn-warning btn-outline mr-1">
+                                        <i class="ti-trash"></i> Đặt lại
                                     </button>
                                     <button type="button" onclick="submitform();"
                                             class="btn btn-rounded btn-primary btn-outline">
