@@ -150,7 +150,7 @@ public class SignController {
             mm.addAttribute("sa", saRequest);
             mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
             int count[] = saRequestService.countStatus();
-            mm.addAttribute("countWait", count[4]);
+            mm.addAttribute("countWait", count[2]);
             mm.addAttribute("countWFS", count[3]);
             mm.addAttribute("countAct", count[1]);
             mm.addAttribute("countDone", count[5]);

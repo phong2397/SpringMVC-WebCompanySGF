@@ -238,13 +238,7 @@ function viewInfoCustomer(phone, comId, idContract) {
         $("#jobc").append('<p>Địa chỉ công ty : <span style="color:grey;">' + comp.companyAddress + '</span></p>');
     }
     $("#jobc").append('<p>Mã nhân viên : <span style="color:grey;">' + list.customer.customerCode + '</span></p>');
-    if (list.customer.status == 'wait') {
-        $("#jobc").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + 'đang chờ' + '</span></p>');
-    } else if (list.customer.status == 'expried') {
-        $("#jobc").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + 'hết thời hạn' + '</span></p>');
-    } else if (list.customer.status == 'active') {
-        $("#jobc").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + 'đang hoạt động' + '</span></p>');
-    }
+    $("#jobc").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + 'đang hoạt động' + '</span></p>');
     $("#jobc").append('<p>Vị trí : <span  style="color:grey;">' + list.customer.customerPosition + '</span></p>');
     $("#jobc").append('<p>Mức lương : <span  style="color:grey;">' + list.customer.customerSalary.toLocaleString("vi-VN") + " đ" + '</span></p>');
     console.log(list)

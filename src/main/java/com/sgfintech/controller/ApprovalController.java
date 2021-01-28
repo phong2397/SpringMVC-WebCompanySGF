@@ -83,9 +83,9 @@ public class ApprovalController {
             mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
             int[] count = saRequestService.countStatus();
             mm.addAttribute("countAct", count[1]);
-            mm.addAttribute("countWait", count[4]);
+            mm.addAttribute("countWait", count[2]);
             mm.addAttribute("countWFS", count[3]);
-            mm.addAttribute("countDeni", count[2]);
+            mm.addAttribute("countDeni", count[4]);
             return "tuchoithamdinh";
         }
 
@@ -108,7 +108,7 @@ public class ApprovalController {
             mm.addAttribute("sa", sa);
             int[] count = saRequestService.countStatus();
             mm.addAttribute("countAct", count[1]);
-            mm.addAttribute("countWait", count[4]);
+            mm.addAttribute("countWait", count[2]);
             mm.addAttribute("countWFS", count[3]);
             mm.addAttribute("countDone", count[5]);
             return "thamdinhRole";
@@ -116,21 +116,26 @@ public class ApprovalController {
     }
 
     @RequestMapping(value = {"/tongtiepnhan"}, method = RequestMethod.GET)
-    public String tongtiepnhanPage(ModelMap mm, HttpServletRequest request) {
+    public String tongtiepnhanPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
 //        int countWait = mergeDataService.countStatus("wait");
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countAct = mergeDataService.countStatus("act");
 //        int countDone = mergeDataService.countStatus("done");
-        List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataTongTiepNhan();
-        List<SaRequest> sa = saRequestDAO.findAll();
-        mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-        mm.addAttribute("sa", sa);
-        int[] count = saRequestService.countStatus();
-        mm.addAttribute("countWait", count[4]);
-        mm.addAttribute("countWFS", count[3]);
-        mm.addAttribute("countAct", count[1]);
-        mm.addAttribute("countDone", count[5]);
-        return "tongtiepnhan";
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            return "redirect:login";
+        } else {
+            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataTongTiepNhan();
+            List<SaRequest> sa = saRequestDAO.findAll();
+            mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+            mm.addAttribute("sa", sa);
+            int[] count = saRequestService.countStatus();
+            mm.addAttribute("countWait", count[2]);
+            mm.addAttribute("countWFS", count[3]);
+            mm.addAttribute("countAct", count[1]);
+            mm.addAttribute("countDone", count[5]);
+            return "tongtiepnhan";
+        }
     }
 
     @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
@@ -150,7 +155,7 @@ public class ApprovalController {
             mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
             mm.addAttribute("sa", sa);
             int[] count = saRequestService.countStatus();
-            mm.addAttribute("countWait", count[4]);
+            mm.addAttribute("countWait", count[2]);
             mm.addAttribute("countWFS", count[3]);
             mm.addAttribute("countAct", count[1]);
             mm.addAttribute("countDone", count[5]);
