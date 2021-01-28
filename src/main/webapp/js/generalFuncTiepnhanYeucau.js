@@ -610,6 +610,7 @@ function viewInfoCustomer(phone, id, comId) {
     $("#job").append('<h4><b>*</b>&nbsp;&nbsp;&nbsp;Công việc</h4>');
     $("#job").append('<p>Mã công ty : <span style="color:grey;">' + com.companyCode + '</span></p>');
     $("#job").append('<p>Tên công ty : <span style="color:grey;">' + com.companyName + '</span></p>');
+    $("#job").append('<p>Số điện thoại công ty : <span style="color:grey;">' + com.companyPhone + '</span></p>');
     $("#job").append('<span style="display: none" id="employeeduyet">' + list.saRequest.employeeDuyet + '</span>');
     $("#job").append('<span style="display: none" id="employeeTD">' + list.saRequest.employeeThamdinh + '</span>');
     if (typeof (com.companyAddress) === "undefined") {
@@ -618,13 +619,9 @@ function viewInfoCustomer(phone, id, comId) {
         $("#job").append('<p>Địa chỉ công ty : <span style="color:grey;">' + com.companyAddress + '</span></p>');
     }
     $("#job").append('<p>Mã nhân viên : <span style="color:grey;">' + list.customer.customerCode + '</span></p>');
-    if (list.customer.status == 'wait') {
-        $("#job").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + 'đang chờ' + '</span></p>');
-    } else if (list.customer.status == 'expried') {
-        $("#job").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + 'hết thời hạn' + '</span></p>');
-    } else if (list.customer.status == 'active') {
-        $("#job").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + 'đang hoạt động' + '</span></p>');
-    }
+
+    $("#job").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + list.customer.status + '</span></p>');
+
     $("#job").append('<p>Vị trí : <span  style="color:grey;">' + list.customer.customerPosition + '</span></p>');
     $("#job").append('<p>Mức lương : <span  style="color:grey;">' + list.customer.customerSalary.toLocaleString("vi-VN") + " đ" + '</span></p>');
     $('#modal-right').modal('show');

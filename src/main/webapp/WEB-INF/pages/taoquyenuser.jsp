@@ -18,7 +18,7 @@
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("tnthamdinh") || role.equals("tncollection")) {
+        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("nvthamdinh") || role.equals("nvkyduyet") || role.equals("nvnhacphi") || role.equals("nvthuphi") || role.equals("tnthamdinh") || role.equals("tncollection")) {
         } else {
             response.sendRedirect("404");
         }
@@ -131,7 +131,8 @@
                                             </select>
                                         </div>
 
-                                        <button type="submit" class="btn btn-default">Đăng ký</button>
+                                        <button type="submit" class="btn btn-default" onclick="createUser()">Đăng ký
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -171,8 +172,17 @@
                                             </td>
                                             <td class="text-left">${lst.role}
                                             </td>
-                                            <td class="text-left" style="color:#00aa00;">
-                                                <b> Đã kích hoạt</b>
+
+                                            <td class="text-left" id="tr-${lst.id}">
+                                                <c:choose>
+                                                    <c:when test="${lst.status eq 0 }">
+                                                        <b style="color: forestgreen">Đang hoạt động</b>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <b style="color: red">Đã khóa tài khoản</b>
+                                                    </c:otherwise>
+
+                                                </c:choose>
                                             </td>
                                             <td class="text-left">
                                                 <fmt:parseDate value=" ${lst.createdDate}"
@@ -182,9 +192,17 @@
                                                                 value="${day}"/>
                                             </td>
                                             <td class="text-left">
-                                                <button class="btn btn-danger"
-                                                        onclick="showReset('${lst.id}','${lst.userLogin}')">
+                                                <button class="btn btn-info"
+                                                        onclick="showResetModal('${lst.id}','${lst.userLogin}')">
                                                     Đặt lại mật khẩu
+                                                </button>
+                                                <button class="btn btn-warning"
+                                                        onclick="lockUser('${lst.id}')">
+                                                    Khóa tài khoản
+                                                </button>
+                                                <button class="btn btn-default"
+                                                        onclick="unlockUser('${lst.id}')">
+                                                    Mở khóa tài khoản
                                                 </button>
                                             </td>
                                         </tr>
@@ -306,7 +324,7 @@
     });
 
 
-    $("body").on("click", ".btn-default", function () {
+    function createUser() {
         if ($("#demoForm").valid()) {
             var userLogin = $("#user_login").val();
             console.log(userLogin)
@@ -356,7 +374,7 @@
                 });
             }
         }
-    });
+    };
 
     function submitUser(data) {
         try {
@@ -376,7 +394,7 @@
         }
     }
 
-    function showReset(id, name) {
+    function showResetModal(id, name) {
         console.log(id)
         console.log(name)
         $("#modalresetPass").modal('show');
@@ -386,7 +404,6 @@
 
     function ajaxresetPass(data) {
         try {
-            // This async call may fail.
             let text = $.ajax({
                 type: "POST",
                 timeout: 100000,
@@ -436,6 +453,114 @@
             });
         }
     };
+
+
+    function unlockUser(id) {
+        let data = {
+            idlock: id,
+        };
+        var result = ajaxunlockUser(data);
+        console.log(result)
+        if (result === "success") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Đã mở khóa tài khoản.',
+                showConfirmButton: false,
+                timer: 100000
+            });
+            $('#tr-' + id).empty()
+            $('#tr-' + id).append(' <b style="color: forestgreen">Đang hoạt động</b>')
+        } else if (result === "errorlockRole") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Không có quyền mở khóa tài khoản',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        } else {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Có lỗi không thể thực thi',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        }
+    };
+
+    function ajaxunlockUser(data) {
+        try {
+            // This async call may fail.
+            let text = $.ajax({
+                type: "POST",
+                timeout: 100000,
+                url: "${pageContext.request.contextPath}/unlockuserAdmin",
+                data: data,
+                dataType: 'text',
+                async: false
+            }).responseText;
+            return text;
+            console.log(text);
+        } catch (error) {
+            return "Không thể kết nối tới server";
+        }
+    }
+
+    function lockUser(id) {
+        let data = {
+            idlock: id,
+        };
+        var result = ajaxlockUser(data);
+        console.log(result)
+        if (result === "success") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Đã khóa tài khoản.',
+                showConfirmButton: false,
+                timer: 100000
+            });
+            $('#tr-' + id).empty()
+            $('#tr-' + id).append(' <b style="color: red">Đã khóa tài khoản</b>')
+
+        } else if (result === "errorlockRole") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Không có quyền khóa tài khoản',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        } else {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Có lỗi không thể thực thi',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        }
+    };
+
+    function ajaxlockUser(data) {
+        try {
+            // This async call may fail.
+            let text = $.ajax({
+                type: "POST",
+                timeout: 100000,
+                url: "${pageContext.request.contextPath}/lockuserAdmin",
+                data: data,
+                dataType: 'text',
+                async: false
+            }).responseText;
+            return text;
+            console.log(text);
+        } catch (error) {
+            return "Không thể kết nối tới server";
+        }
+    }
 
 
 </script>

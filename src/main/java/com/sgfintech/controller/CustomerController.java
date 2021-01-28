@@ -156,6 +156,48 @@ public class CustomerController {
         }
     }
 
+    @RequestMapping(value = "/lockuserAdmin", method = RequestMethod.POST)
+    public @ResponseBody
+    String lockuserAdmin(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String data = request.getParameter("idlock");
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u.getUserLogin().equals("root") || u.getUserLogin().equals("tnthamdinh") || u.getUserLogin().equals("tncollection")) {
+            try {
+                Useradmin user = useradminDAO.findById(Long.parseLong(data));
+                user.setStatus("1");
+                user.setUpdatedDate(LocalDateTime.now());
+                useradminDAO.update(user);
+                return "success";
+            } catch (Exception ex) {
+                return "error";
+            }
+        } else {
+            return "errorlockRole";
+        }
+
+    }
+
+    @RequestMapping(value = "/unlockuserAdmin", method = RequestMethod.POST)
+    public @ResponseBody
+    String unlockuserAdmin(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String data = request.getParameter("idlock");
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u.getUserLogin().equals("root") || u.getUserLogin().equals("tnthamdinh") || u.getUserLogin().equals("tncollection") || u.getUserLogin().equals("ketoantruong")) {
+            try {
+                Useradmin user = useradminDAO.findById(Long.parseLong(data));
+                user.setStatus("0");
+                user.setUpdatedDate(LocalDateTime.now());
+                useradminDAO.update(user);
+                return "success";
+            } catch (Exception ex) {
+                return "error";
+            }
+        } else {
+            return "errorlockRole";
+        }
+
+    }
+
     @RequestMapping(value = {"/thaydoimatkhau"}, method = RequestMethod.GET)
     public String thaydoimatkhau(ModelMap mm, HttpSession session) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);

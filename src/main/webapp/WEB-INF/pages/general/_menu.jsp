@@ -19,7 +19,7 @@
     <section class="sidebar">
         <!-- sidebar menu-->
         <ul class="sidebar-menu" data-widget="tree">
-            <% if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong")) { %>
+            <% if (role.equals("root")) { %>
 
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Upload Tài liệu</li>
             <li>
@@ -132,7 +132,64 @@
                     <span>Tổng danh sách các đơn</span>
                 </a>
             </li>
+            <li>
+                <a href="trasoatthongtin.html">
+                    <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
+                    <span>Tra soát thông tin</span>
+                </a>
+            </li>
+            <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Cấu hình sản phẩm</li>
+            <li>
+                <a href="cauhinh.html">
+                    <img src="images/svg-icon/widgets.svg" class="svg-icon" alt="">
+                    <span>Tham số sản phẩm</span>
+                </a>
+            </li>
+            <li>
+                <a href="taoquyenuser.html">
+                    <img src="images/svg-icon/apps.svg" class="svg-icon" alt="">
+                    <span>Tạo người dùng phân quyền</span>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/logout">
+                    <img src="images/svg-icon/sidebar-menu/logout.svg" class="svg-icon" alt="">
+                    <span>Đăng xuất</span>
 
+                </a>
+            </li>
+            <% } else if (role.equals("ketoan") || role.equals("ketoantruong")) { %>
+            <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Phòng kế toán</li>
+            <li>
+                <a href="giaingan.html">
+                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
+                    <span>Giải ngân</span>
+                </a>
+            </li>
+            <li>
+                <a href="gachno.html">
+                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
+                    <span>Gạch nợ</span>
+                </a>
+            </li>
+            <li>
+                <a href="khachhangtattoan.html">
+                    <img src="images/svg-icon/sidebar-menu/tickers.svg" class="svg-icon" alt="">
+                    <span>Khách hàng thanh toán</span>
+                </a>
+            </li>
+            <li>
+                <a href="theodoikhoantamung.html">
+                    <img src="images/svg-icon/ecommerce.svg" class="svg-icon" alt="">
+                    <span>Tổng danh sách các đơn</span>
+                </a>
+            </li>
+            <li>
+                <a href="trasoatthongtin.html">
+                    <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
+                    <span>Tra soát thông tin</span>
+                </a>
+            </li>
             <li class="header" style="background-color: rgba(63, 231, 91, 0.253);">Cấu hình sản phẩm</li>
             <li>
                 <a href="cauhinh.html">

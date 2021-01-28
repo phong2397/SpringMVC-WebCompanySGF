@@ -20,7 +20,7 @@ public class CompanyMapper implements RowMapper<Companies> {
         c.setCompanyName(rs.getString("company_name"));
         c.setCompanyAddress(rs.getString("company_address"));
         c.setConpanyTax(rs.getString("conpany_tax"));
-        c.setConpanyPhone(rs.getString("company_phone"));
+        c.setCompanyPhone(rs.getString("company_phone"));
         if (!StringUtil.isEmpty(rs.getDate("created_date"))) {
             c.setCreatedDate(StringUtil.convertToLocalDateViaInstant(rs.getTimestamp("created_date")));
         }

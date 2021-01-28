@@ -292,7 +292,7 @@
                 </button>
             </div>
             <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                <label>Bạn có chắc chắn đặt lại mật khẩu của "<b id="userName"></b>"?</label>
+                <h4>Bạn có chắc chắn đặt lại mật khẩu của "<b id="userName"></b>"?</h4>
                 <span id="idReset" style="display: none"></span>
             </div>
             <div class="modal-footer modal-footer-uniform">

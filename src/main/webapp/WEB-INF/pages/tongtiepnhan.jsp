@@ -269,23 +269,23 @@
                                                     <c:choose>
                                                         <c:when test="${lst.saRequest.status eq 'wait' }"><h6
                                                                 class="mb-0 font-weight-bold"
-                                                                style="color: orange"> đơn chờ xử lý
+                                                                style="color: orange"> chờ xử lý
                                                         </h6></c:when>
                                                         <c:when test="${lst.saRequest.status eq 'wfs' }"><h6
                                                                 class="mb-0 font-weight-bold"
-                                                                style="color: royalblue"> đơn chờ xét duyệt
+                                                                style="color: royalblue"> chờ xét duyệt
                                                         </h6></c:when>
                                                         <c:when test="${lst.saRequest.status eq 'act' }"><h6
                                                                 class="mb-0 font-weight-bold"
-                                                                style="color: greenyellow"> đơn giải ngân
+                                                                style="color: greenyellow"> chờ chuyển tiền
                                                         </h6></c:when>
                                                         <c:when test="${lst.saRequest.status eq 'done' }"><h6
                                                                 class="mb-0 font-weight-bold"
-                                                                style="color: hotpink"> đơn đã tất toán thành công
+                                                                style="color: hotpink"> đã giải ngân
                                                         </h6></c:when>
                                                         <c:when test="${lst.saRequest.status eq 'deni' }"><h6
                                                                 class="mb-0 font-weight-bold"
-                                                                style="color: red"> đơn từ chối
+                                                                style="color: red"> từ chối
                                                         </h6></c:when>
                                                     </c:choose>
                                                 </td>

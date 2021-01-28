@@ -12,10 +12,10 @@
 <%
     if (session.getAttribute(Consts.Session_Euser) != null) {
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-        String role = u.getRole();
-        if (role.equals("root") || role.equals("ketoan") || role.equals("ketoantruong") || role.equals("nvthamdinh") || role.equals("nvkyduyet") || role.equals("nvnhacphi") || role.equals("nvthuphi") || role.equals("tnthamdinh") || role.equals("tncollection")) {
+        if (u.getStatus().equals("0")) {
         } else {
-            response.sendRedirect("404");
+            response.sendRedirect("login");
+            session.setAttribute("errorStatus", "Tài khoản đã bị khóa");
         }
     } else {
         response.sendRedirect("login");

@@ -1,3 +1,11 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: admin
+  Date: 1/28/2021
+  Time: 11:06 AM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.sgfintech.handler.MergeDataWithdraw" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.gson.Gson" %>
@@ -119,14 +127,15 @@
             <div class="content-header">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="page-title">Tổng khách hàng thanh toán</h3>
+                        <h3 class="page-title">Tra soát thông tin chứng từ hóa đơn</h3>
                         <div class="d-inline-block align-items-center">
                             <nav>
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a>
                                     </li>
-                                    <li class="breadcrumb-item" aria-current="page">Repayment</li>
-                                    <li class="breadcrumb-item active" aria-current="page">Tổng khách hàng thanh toán
+                                    <li class="breadcrumb-item" aria-current="page">Phòng kế toán</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Tra soát thông tin chứng từ
+                                        hóa đơn
                                     </li>
                                 </ol>
                             </nav>
@@ -250,81 +259,52 @@
                                                             <th class="text-center">Số hợp đồng</th>
                                                             <th class="text-center">Tên sản phẩm</th>
                                                             <th class="text-center">Tên công ty</th>
-                                                            <th class="text-center">Ngày thanh toán</th>
-                                                            <th class="text-center">Số tiền thanh toán</th>
-                                                            <th class="text-center">Số tiền thanh toán</th>
                                                             <th class="text-center">Tên khách hàng</th>
                                                             <th class="text-center">Số CMND</th>
-                                                            <th class="text-center">Số tiền cần thanh toán</th>
-                                                            <th class="text-center">Số tiền cần thanh toán</th>
-                                                            <th class="text-center">Số ngày trễ hạn</th>
-                                                            <th class="text-center">Đủ 1 kỳ</th>
-                                                            <th class="text-center">Nhóm</th>
-                                                            <th class="text-center">Tên nhân viên</th>
+                                                            <th class="text-center">Số tiền tạm ứng</th>
+                                                            <th class="text-center">Số tiền đã thanh toán</th>
+                                                            <th class="text-center">Ngày thanh toán</th>
+                                                            <th class="text-center">Hạn thanh toán</th>
+                                                            <th class="text-center">Tên nhân viên giao dịch</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <c:forEach items="${views}" var="lst" varStatus="loop">
                                                         <tr>
-                                                            <td class="text-center"><a href="#"
-                                                                                       onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
+                                                            <td class="text-center">
+                                                                307
                                                             </td>
                                                             <td class="text-center">
-                                                                    ${lst.contract.idContract}
+                                                                307
                                                             </td>
-
                                                             <td class="text-center">
                                                                 Salary Advance
                                                             </td>
                                                             <td class="text-center">
-                                                                    ${lst.companies.companyName}
+                                                                Công ty ABC
                                                             </td>
                                                             <td class="text-center">
-                                                                <fmt:parseDate value=" ${lst.contract.dateRepayment}"
-                                                                               pattern="yyyy-MM-dd'T'HH:mm:ss"
-                                                                               var="patientDob"
-                                                                               type="date"/>
-                                                                <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                                                value="${patientDob}"/>
+                                                                Luong Van Can
                                                             </td>
                                                             <td class="text-center">
-                                                                <fmt:formatNumber
-                                                                        value="${lst.contract.remainAmountBorrow}"
-                                                                        type="number"/> đ
+                                                                0255197065
                                                             </td>
                                                             <td class="text-center">
-                                                                    ${lst.contract.remainAmountBorrow}
+                                                                3.200.000 đ
                                                             </td>
                                                             <td class="text-center">
-                                                                    ${lst.customer.customerName}
+                                                                200.000 đ
+                                                            </td>
+                                                            <td class="text-center">
+                                                                28/01/2021
+                                                            </td>
+                                                            <td class="text-center">
+                                                                05/02/2021
+                                                            </td>
 
-                                                            </td>
                                                             <td class="text-center">
-                                                                    ${lst.customer.customerId}
-
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <fmt:formatNumber
-                                                                        value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 0.02 )}"
-                                                                        type="number"/> đ
-                                                            </td>
-                                                            <td class="text-center">
-                                                                    ${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 0.02 )}
-                                                            </td>
-                                                            <td class="text-center">
-                                                                -2
-                                                            </td>
-                                                            <td class="text-center">
-                                                                1
-                                                            </td>
-                                                            <td class="text-center">
-                                                                S0
-                                                            </td>
-                                                            <td class="text-center">
-                                                                -
+                                                                Kế toán
                                                             </td>
                                                         </tr>
-                                                        </c:forEach>
                                                         <tbody>
                                                     </table>
                                                 </div>
@@ -458,3 +438,4 @@
 </script>
 </body>
 </html>
+

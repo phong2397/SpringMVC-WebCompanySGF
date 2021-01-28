@@ -60,7 +60,7 @@ public class SignController {
     @Autowired
     SaRequestService saRequestService;
 
-    @RequestMapping(value = {"/kyduyetlogin"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/kyduyetRole"}, method = RequestMethod.GET)
     public String kyduyetlogin(ModelMap mm, HttpServletRequest request, HttpSession session) {
 //        int countAct = mergeDataService.countStatus("act");
 //        int countWait = mergeDataService.countStatus("wait");
@@ -80,7 +80,7 @@ public class SignController {
             mm.addAttribute("countWait", count[4]);
             mm.addAttribute("countWFS", count[3]);
             mm.addAttribute("countDone", count[5]);
-            return "kyduyetlogin";
+            return "kyduyetRole";
         }
     }
 
