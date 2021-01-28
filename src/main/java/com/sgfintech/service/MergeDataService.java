@@ -180,6 +180,7 @@ public class MergeDataService {
             Object[] param = new Object[]{status, empThamdinh};
             List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {
+
                         Customer c = new CustomerMapper().mapRow(rs, arg1);
                         SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
                         Companies com = new CompanyMapper().mapRow(rs, arg1);
@@ -314,14 +315,13 @@ public class MergeDataService {
 
         try {
             Object[] param = new Object[]{};
-            List<MergeDataWithdraw> resultList = jdbcTemplate.query(sql, param,
+            return jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {
                         Customer cu = new CustomerMapper().mapRow(rs, arg1);
                         Contract co = new ContractMapper().mapRow(rs, arg1);
                         Companies com = new CompanyMapper().mapRow(rs, arg1);
                         return new MergeDataWithdraw(cu, co, com);
                     });
-            return resultList;
         } catch (Exception ex) {
             return null;
         }

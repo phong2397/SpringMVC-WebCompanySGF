@@ -14,8 +14,14 @@ public class ConfigGateway {
 
     private static String EMAIL_PASSWORD = "";
 
+    private static Integer PAGING = 0;
+
     public static String getEmailUser() {
         return EMAIL_USER;
+    }
+
+    public static Integer getPAGING() {
+        return PAGING;
     }
 
     public static String getEmailPassword() {
@@ -33,6 +39,7 @@ public class ConfigGateway {
             GATEWAY_URL = prop.getProperty("payment.url");
             EMAIL_USER = prop.getProperty("email.user");
             EMAIL_PASSWORD = prop.getProperty("email.password");
+            PAGING = Integer.parseInt(prop.getProperty("paging"));
         } catch (IOException e) {
             e.printStackTrace();
         }

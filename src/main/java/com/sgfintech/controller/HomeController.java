@@ -2,6 +2,7 @@ package com.sgfintech.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -19,8 +20,13 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class HomeController {
 
+    private static final Logger log = Logger.getLogger(HomeController.class);
+
     @RequestMapping(value = {"/home", "/index"}, method = RequestMethod.GET)
     public String welcomePage(Model model) {
+        log.info("test log ===============================");
+        log.info(System.getProperty("catalina.base"));
+        log.info(System.getProperty("catalina.home"));
         return "index";
     }
     @RequestMapping(value = {"/404"}, method = RequestMethod.GET)
