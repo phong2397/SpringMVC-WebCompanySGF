@@ -92,7 +92,7 @@ public class Customer implements Serializable {
     private String customerGender;
 
     @Column(name = "status")
-    private String status = "wait";
+    private String status = "active";
 
     @Column(name = "created_date")
     private LocalDateTime createdDate = LocalDateTime.now();

@@ -278,7 +278,27 @@ function viewInfoNoaction(phone, id, comId) {
     $("#ida").append(sa.id);
     $("#saId").empty();
     $("#saId").append('<div class="col-4 "><h3>Mã đơn : <span style="color:grey;" id="saID">' + sa.id + '</span></h3></div>');
-    if (sa.status == "act") {
+
+    if (sa.status == "done") {
+        $("#saInfo").empty();
+        $("#saInfo").append('<h4><b>*</b>&nbsp;&nbsp;Thông tin yêu cầu</h4>');
+        $("#saInfo").append('<p>Tên khách hàng : <span style="color:grey;">' + list.customer.customerName + '</span></p>');
+        $("#saInfo").append('<p>Phí dịch vụ : <span style="color:grey;">' + (sa.borrow * 0.02).toLocaleString('vi-VN') + 'đ' + '</span></p>');
+        $("#saInfo").append('<p>Số tiền tạm ứng : <span style="color:grey;">' + sa.borrow.toLocaleString('vi-VN') + 'đ' + '</span></p>');
+        $("#saInfo").append('<p>Ngày yêu cầu :' + '<span style="color:grey;"> ' + ("0" + (sa.createdDate.date.day)).slice(-2) + '/' + ("0" + (sa.createdDate.date.month)).slice(-2) + '/' + sa.createdDate.date.year + ' ' + ' ' + ("0" + (sa.createdDate.time.hour)).slice(-2) + ':' + ("0" + (sa.createdDate.time.minute)).slice(-2) + ':' + ("0" + (sa.createdDate.time.second)).slice(-2) + '</span></p>');
+        $("#saInfo").append('<p>Người thẩm định : <span style="color:grey;">' + sa.employeeThamdinh + '</span></p>');
+        $("#saInfo").append('<p>Ngày thẩm định :' + ' <span style="color:grey;"> ' + ("0" + (sa.employeeThamdinhDate.date.day)).slice(-2) + '/' + ("0" + (sa.employeeThamdinhDate.date.month)).slice(-2) + '/' + sa.employeeThamdinhDate.date.year + ' ' + ' ' + ("0" + (sa.employeeThamdinhDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeThamdinhDate.time.minute)).slice(-2) + ':' + ("0" + (sa.employeeThamdinhDate.time.second)).slice(-2) + '</span></p>');
+        $("#saInfo").append('<p>Người ký duyệt : <span style="color:grey;">' + sa.employeeDuyet + '</span></p>');
+        $("#saInfo").append('<p>Ngày duyệt đơn : <span style="color:grey;">' + ' ' + ("0" + (sa.employeeDuyetDate.date.day)).slice(-2) + '/' + ("0" + (sa.employeeDuyetDate.date.month)).slice(-2) + '/' + sa.employeeDuyetDate.date.year + ' ' + ' ' + ("0" + (sa.employeeDuyetDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.minute)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.second)).slice(-2) + '</span></p>');
+        $("#saInfo").append('<p>Người giải ngân : <span style="color:grey;">' + 'ketoan' + '</span></p>');
+        $("#saInfo").append('<p>Ngày giải ngân : <span style="color:grey;">' + ' ' + ("0" + (sa.updatedDate.date.day)).slice(-2) + '/' + ("0" + (sa.updatedDate.date.month)).slice(-2) + '/' + sa.updatedDate.date.year + ' ' + ' ' + ("0" + (sa.updatedDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.minute)).slice(-2) + ':' + ("0" + (sa.updatedDate.time.second)).slice(-2) + '</span></p>');
+        if (typeof (sa.description) === "undefined") {
+            $("#saInfo").append('<p>Đánh giá : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
+        } else {
+            $("#saInfo").append('<p>Đánh giá : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
+        }
+
+    } else if (sa.status == "act") {
         $("#saInfo").empty();
         $("#saInfo").append('<h4><b>*</b>&nbsp;&nbsp;Thông tin yêu cầu</h4>');
         $("#saInfo").append('<p>Tên khách hàng : <span style="color:grey;">' + list.customer.customerName + '</span></p>');
@@ -291,9 +311,9 @@ function viewInfoNoaction(phone, id, comId) {
         $("#saInfo").append('<p>Ngày duyệt đơn : <span style="color:grey;">' + ' ' + ("0" + (sa.employeeDuyetDate.date.day)).slice(-2) + '/' + ("0" + (sa.employeeDuyetDate.date.month)).slice(-2) + '/' + sa.employeeDuyetDate.date.year + ' ' + ' ' + ("0" + (sa.employeeDuyetDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.minute)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.second)).slice(-2) + '</span></p>');
 
         if (typeof (sa.description) === "undefined") {
-            $("#saInfo").append('<p>Nhận xét : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
+            $("#saInfo").append('<p>Đánh giá : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
         } else {
-            $("#saInfo").append('<p>Nhận xét : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
+            $("#saInfo").append('<p>Đánh giá : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
         }
     } else if (sa.status === "wait") {
         $("#saInfo").empty();
@@ -302,6 +322,11 @@ function viewInfoNoaction(phone, id, comId) {
         $("#saInfo").append('<p>Phí dịch vụ : <span style="color:grey;">' + (sa.borrow * 0.02).toLocaleString('vi-VN') + 'đ' + '</span></p>');
         $("#saInfo").append('<p>Số tiền tạm ứng : <span style="color:grey;">' + sa.borrow.toLocaleString('vi-VN') + 'đ' + '</span></p>');
         $("#saInfo").append('<p>Ngày yêu cầu :' + '<span style="color:grey;"> ' + ("0" + (sa.createdDate.date.day)).slice(-2) + '/' + ("0" + (sa.createdDate.date.month)).slice(-2) + '/' + sa.createdDate.date.year + ' ' + ' ' + ("0" + (sa.createdDate.time.hour)).slice(-2) + ':' + ("0" + (sa.createdDate.time.minute)).slice(-2) + ':' + ("0" + (sa.createdDate.time.second)).slice(-2) + '</span></p>');
+        if (typeof (sa.description) === "undefined") {
+            $("#saInfo").append('<p>Đánh giá : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
+        } else {
+            $("#saInfo").append('<p>Đánh giá : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
+        }
     } else if (sa.status === "wfs") {
         $("#saInfo").empty();
         $("#saInfo").append('<h4><b>*</b>&nbsp;&nbsp;Thông tin yêu cầu</h4>');
@@ -311,7 +336,11 @@ function viewInfoNoaction(phone, id, comId) {
         $("#saInfo").append('<p>Ngày yêu cầu :' + '<span style="color:grey;"> ' + ("0" + (sa.createdDate.date.day)).slice(-2) + '/' + ("0" + (sa.createdDate.date.month)).slice(-2) + '/' + sa.createdDate.date.year + ' ' + ' ' + ("0" + (sa.createdDate.time.hour)).slice(-2) + ':' + ("0" + (sa.createdDate.time.minute)).slice(-2) + ':' + ("0" + (sa.createdDate.time.second)).slice(-2) + '</span></p>');
         $("#saInfo").append('<p>Người thẩm định : <span style="color:grey;">' + list.customer.customerName + '</span></p>');
         $("#saInfo").append('<p>Ngày thẩm định :' + ' <span style="color:grey;"> ' + ("0" + (sa.employeeThamdinhDate.date.day)).slice(-2) + '/' + ("0" + (sa.employeeThamdinhDate.date.month)).slice(-2) + '/' + sa.employeeThamdinhDate.date.year + ' ' + ' ' + ("0" + (sa.employeeThamdinhDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeThamdinhDate.time.minute)).slice(-2) + ':' + ("0" + (sa.employeeThamdinhDate.time.second)).slice(-2) + '</span></p>');
-
+        if (typeof (sa.description) === "undefined") {
+            $("#saInfo").append('<p>Đánh giá : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
+        } else {
+            $("#saInfo").append('<p>Đánh giá : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
+        }
     } else if (sa.status === "deni" && kd == null) {
         $("#saInfo").empty();
         $("#saInfo").append('<h4><b>*</b>&nbsp;&nbsp;Thông tin yêu cầu</h4>');
@@ -386,7 +415,7 @@ function viewInfoCustomer(phone, id, comId) {
                 if (imgCMND[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgCMND').append('Bổ sung hình ảnh');
                 } else {
-                    $('#imgCMND').append('<img class="img" src="' + imgCMND[key] + '' + '" data-toggle="modal"  data-target="#myModal" />');
+                    $('#imgCMND').append('<img class="img" src="' + imgCMND[key] + '' + '" onclick="viewImage()" />');
                 }
             });
             const payslipObj = JSON.parse(response.data.payslip);
@@ -491,10 +520,8 @@ function viewInfoCustomer(phone, id, comId) {
             $('#' + key).text(c[key]);
         }
     })
-
     list = result.find(el => el.saRequest.id == id);
     let sa = list.saRequest;
-    console.log(sa)
     $("#ids").empty();
     $("#ids").append(sa.id);
     $("#ida").empty();
@@ -503,7 +530,26 @@ function viewInfoCustomer(phone, id, comId) {
     $("#saId").append('<div class="col-4 "><h3>Mã đơn : <span style="color:grey;" id="saID">' + sa.id + '</span></h3></div>');
     $("#idd").empty();
     $("#idd").append(sa.id);
-    if (sa.status == "act") {
+    if (sa.status == "done") {
+        $("#saInfo").empty();
+        $("#saInfo").append('<h4><b>*</b>&nbsp;&nbsp;Thông tin yêu cầu</h4>');
+        $("#saInfo").append('<p>Tên khách hàng : <span style="color:grey;">' + list.customer.customerName + '</span></p>');
+        $("#saInfo").append('<p>Phí dịch vụ : <span style="color:grey;">' + (sa.borrow * 0.02).toLocaleString('vi-VN') + 'đ' + '</span></p>');
+        $("#saInfo").append('<p>Số tiền tạm ứng : <span style="color:grey;">' + sa.borrow.toLocaleString('vi-VN') + 'đ' + '</span></p>');
+        $("#saInfo").append('<p>Ngày yêu cầu :' + '<span style="color:grey;"> ' + ("0" + (sa.createdDate.date.day)).slice(-2) + '/' + ("0" + (sa.createdDate.date.month)).slice(-2) + '/' + sa.createdDate.date.year + ' ' + ' ' + ("0" + (sa.createdDate.time.hour)).slice(-2) + ':' + ("0" + (sa.createdDate.time.minute)).slice(-2) + ':' + ("0" + (sa.createdDate.time.second)).slice(-2) + '</span></p>');
+        $("#saInfo").append('<p>Người thẩm định : <span style="color:grey;">' + sa.employeeThamdinh + '</span></p>');
+        $("#saInfo").append('<p>Ngày thẩm định :' + ' <span style="color:grey;"> ' + ("0" + (sa.employeeThamdinhDate.date.day)).slice(-2) + '/' + ("0" + (sa.employeeThamdinhDate.date.month)).slice(-2) + '/' + sa.employeeThamdinhDate.date.year + ' ' + ' ' + ("0" + (sa.employeeThamdinhDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeThamdinhDate.time.minute)).slice(-2) + ':' + ("0" + (sa.employeeThamdinhDate.time.second)).slice(-2) + '</span></p>');
+        $("#saInfo").append('<p>Người ký duyệt : <span style="color:grey;">' + sa.employeeDuyet + '</span></p>');
+        $("#saInfo").append('<p>Ngày duyệt đơn : <span style="color:grey;">' + ' ' + ("0" + (sa.employeeDuyetDate.date.day)).slice(-2) + '/' + ("0" + (sa.employeeDuyetDate.date.month)).slice(-2) + '/' + sa.employeeDuyetDate.date.year + ' ' + ' ' + ("0" + (sa.employeeDuyetDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.minute)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.second)).slice(-2) + '</span></p>');
+        $("#saInfo").append('<p>Người giải ngân : <span style="color:grey;">' + 'ketoan' + '</span></p>');
+        $("#saInfo").append('<p>Ngày giải ngân : <span style="color:grey;">' + ' ' + ("0" + (sa.updatedDate.date.day)).slice(-2) + '/' + ("0" + (sa.updatedDate.date.month)).slice(-2) + '/' + sa.updatedDate.date.year + ' ' + ' ' + ("0" + (sa.updatedDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.minute)).slice(-2) + ':' + ("0" + (sa.updatedDate.time.second)).slice(-2) + '</span></p>');
+        if (typeof (sa.description) === "undefined") {
+            $("#saInfo").append('<p>Đánh giá : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
+        } else {
+            $("#saInfo").append('<p>Đánh giá : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
+        }
+
+    } else if (sa.status == "act") {
         $("#saInfo").empty();
         $("#saInfo").append('<h4><b>*</b>&nbsp;&nbsp;Thông tin yêu cầu</h4>');
         $("#saInfo").append('<p>Tên khách hàng : <span style="color:grey;">' + list.customer.customerName + '</span></p>');
@@ -524,8 +570,7 @@ function viewInfoCustomer(phone, id, comId) {
         $("#labelDanhgia").empty();
         $("#labelDanhgia").append('Đánh giá');
         $("#danhgia").append('<div class="col-4"><p>Giải ngân : Thông tin nhận tiền đầy đủ</p><button class="btn btn-rounded btn-info btn-accept" data-toggle="modal" href="#giainganVerify">Hoàn thành chuyển tiền </button> </div>');
-    }
-    if (sa.status === "wait") {
+    } else if (sa.status === "wait") {
         $("#saInfo").empty();
         $("#saInfo").append('<h4><b>*</b>&nbsp;&nbsp;Thông tin yêu cầu</h4>');
         $("#saInfo").append('<p>Tên khách hàng : <span style="color:grey;">' + list.customer.customerName + '</span></p>');
@@ -604,8 +649,8 @@ function viewInfoCustomer(phone, id, comId) {
     }
 
     list = result.find(el => el.company.id == comId);
+    console.log(list)
     let com = list.company;
-    console.log(com)
     $("#job").empty();
     $("#job").append('<h4><b>*</b>&nbsp;&nbsp;&nbsp;Công việc</h4>');
     $("#job").append('<p>Mã công ty : <span style="color:grey;">' + com.companyCode + '</span></p>');
@@ -619,8 +664,7 @@ function viewInfoCustomer(phone, id, comId) {
         $("#job").append('<p>Địa chỉ công ty : <span style="color:grey;">' + com.companyAddress + '</span></p>');
     }
     $("#job").append('<p>Mã nhân viên : <span style="color:grey;">' + list.customer.customerCode + '</span></p>');
-
-    $("#job").append('<p>Trạng thái HĐLĐ : <span style="color:grey;">' + list.customer.status + '</span></p>');
+    $("#job").append('<p>Trạng thái HĐLĐ : <span style="color:green;">' + 'đang hoạt động' + '</span></p>');
 
     $("#job").append('<p>Vị trí : <span  style="color:grey;">' + list.customer.customerPosition + '</span></p>');
     $("#job").append('<p>Mức lương : <span  style="color:grey;">' + list.customer.customerSalary.toLocaleString("vi-VN") + " đ" + '</span></p>');

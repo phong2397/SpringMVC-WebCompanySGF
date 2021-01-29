@@ -121,7 +121,7 @@
                         <div class="box box-inverse box-success">
                             <div class="box-body">
                                 <div class="flexbox">
-                                    <h5>Đã ký duyệt</h5>
+                                    <h5>Chờ giải ngân</h5>
                                     <div class="dropdown">
 											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
                                                     class="ion-android-more-vertical rotate-90"></i></span>
@@ -137,7 +137,7 @@
                                 </div>
                                 <div class="text-center my-2">
                                     <div class="font-size-60">${countAct}</div>
-                                    <span>Yêu cầu đã được giải ngân</span>
+                                    <span>Yêu cầu chờ được giải ngân</span>
                                 </div>
 
                             </div>
@@ -165,7 +165,7 @@
 
                                 <div class="text-center my-2">
                                     <div class="font-size-60">${countDone}</div>
-                                    <span>Yêu cầu tất toán thành công</span>
+                                    <span>Yêu cầu đã giải ngân</span>
                                 </div>
                             </div>
                         </div>
@@ -291,10 +291,10 @@
                                                 </td>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${empty lst.saRequest.employeeThamdinh}">-
+                                                        <c:when test="${empty lst.saRequest.employeeDuyet}">-
                                                         </c:when>
                                                         <c:otherwise>
-                                                            ${lst.saRequest.employeeThamdinh}
+                                                            ${lst.saRequest.employeeDuyet}
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>
@@ -402,6 +402,7 @@
                   %>
     var result = <%=json%>;
     var list = <%=json1%>;
+    console.log('RESULT: ', result);
 
 </script>
 

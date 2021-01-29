@@ -286,10 +286,10 @@ function viewInfoCustomer(params, id, comId) {
         $("#labelDanhgia").empty();
         $("#labelDanhgia").append('Đánh giá');
         $("#danhgia").append('<div class="col-4"><p>Giải ngân : Thông tin nhận tiền đầy đủ</p><button class="btn btn-rounded btn-info btn-accept" data-toggle="modal" href="#giainganVerify">Hoàn thành chuyển tiền </button> </div>');
-    }
+    } else
 
 
-    list = result.find(el => el.company.id == comId);
+        list = result.find(el => el.company.id == comId);
     console.log(list)
     let com = list.company;
     console.log(com)
