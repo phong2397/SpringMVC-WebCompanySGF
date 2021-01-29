@@ -221,7 +221,8 @@
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
                                                 <td class="text-center">
-                                                    <a onclick="viewInfoDetail('${lst.id}')" data-toggle="modal"><b>${lst.id}</b></a>
+                                                    <a href="#" data-toggle="modal"
+                                                       onclick="viewInfoDetail('${lst.id}')"><b>${lst.id}</b></a>
                                                 </td>
                                                 <td class="text-center">
                                                         ${lst.companyCode}

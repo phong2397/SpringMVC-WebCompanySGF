@@ -1,7 +1,6 @@
-function verifyGiaingan() {
+function viewInfoDetail(id) {
     $("#loading").show();
-    var dataRequest = $('#idd').text();
-    console.log(dataRequest)
+    console.log(id)
     let data = {
         datarequest: dataRequest,
         status: 'done',

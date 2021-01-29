@@ -12,6 +12,7 @@ import com.sgfintech.service.MergeDataService;
 import com.sgfintech.service.SaRequestService;
 import com.sgfintech.util.Consts;
 import com.sgfintech.util.StringUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ import java.util.*;
  */
 @Controller
 public class SignController {
-
+    private static final Logger log = Logger.getLogger(SignController.class);
     @Autowired
     private MergeDataService mergeDataService;
 
@@ -183,14 +184,21 @@ public class SignController {
     @RequestMapping(value = {"/giaingan"}, method = RequestMethod.POST)
     public @ResponseBody
     String handlerOrderRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        log.info("POST - giaingan");
         String data = request.getParameter("datarequest");
+        log.info("Data id saRequest: " + data);
         String textDecline = request.getParameter("textDecline");
+        log.info("Data description: " + textDecline);
         String status = request.getParameter("status");
+        log.info("Data status: " + status);
         String step = request.getParameter("step");
+        log.info("Data step: " + step);
         String employeeDuyet = request.getParameter("employeeDuyet");
+        log.info("Data employeeDuyet: " + employeeDuyet);
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
             if (!StringUtil.isEmpty(employeeDuyet) && u.getUserLogin().equals(employeeDuyet)) {
+                log.info("Check empty employee duyet ");
                 SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
                 sa.setStatus(status.trim());
                 sa.setDescription(textDecline);
@@ -201,9 +209,11 @@ public class SignController {
                 saRequestDAO.update(sa);
                 return "success";
             } else {
+                log.info("Error role");
                 return "errorEmployee";
             }
         } catch (Exception ex) {
+            log.error("Exception:" + ex.getMessage());
             return "error";
         }
     }
@@ -218,13 +228,19 @@ public class SignController {
     public @ResponseBody
     String handlerdisburseRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 //        SignatureRSA signatureRSA = context.getBean(SignatureRSA.class);
-        String data = request.getParameter("datarequest"); //id cua order request
+        log.info("POST - kyduyet");
+        String data = request.getParameter("datarequest");
+        log.info("Data id sarequest: " + data);
         String status = request.getParameter("status");
+        log.info("Data status: " + status);
         String step = request.getParameter("step");
+        log.info("Data step: " + step);
         String textDecline = request.getParameter("textDecline");
+        log.info("Data textDecline: " + textDecline);
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
             SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+            log.info("Data id sarequest: " + sa);
             Customer cu = customerService.getCustomerByPhone(sa.getCustomerPhone());
             String uuid = UUID.randomUUID().toString();
             String requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
