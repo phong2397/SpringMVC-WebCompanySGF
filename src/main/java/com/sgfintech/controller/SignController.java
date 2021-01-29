@@ -138,12 +138,13 @@ public class SignController {
         if (u == null) {
             return "redirect:login";
         } else {
-            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("act", false);
+//            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("act", false);
+            List<DetailTransaction> listActive = detailTransactionDAO.findAllByActive(1);
             List<Useradmin> admin = useradminDAO.findAll();
             mm.addAttribute("admin", admin);
             List<SaRequest> saRequest = saRequestDAO.findAll();
             mm.addAttribute("sa", saRequest);
-            mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
+            mm.addAttribute(Consts.Attr_ResultView, listActive);
             int count[] = saRequestService.countStatus();
             mm.addAttribute("countWait", count[2]);
             mm.addAttribute("countWFS", count[3]);
@@ -179,7 +180,7 @@ public class SignController {
         }
     }
 
-    @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/giaingan"}, method = RequestMethod.POST)
     public @ResponseBody
     String handlerOrderRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String data = request.getParameter("datarequest");
@@ -213,7 +214,7 @@ public class SignController {
     @Autowired
     CustomerDAO customerDAO;
 
-    @RequestMapping(value = {"/giaingan"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.POST)
     public @ResponseBody
     String handlerdisburseRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 //        SignatureRSA signatureRSA = context.getBean(SignatureRSA.class);

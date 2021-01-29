@@ -220,77 +220,82 @@
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
-                                            <tr id="tr-${lst.saRequest.id}">
+                                            <tr>
                                                 <td>
-                                                    <a data-toggle="modal" href="#" class="as"
-                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
+                                                        ${lst}
                                                 </td>
-                                                <td>
-                                                        ${lst.company.companyCode}
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerName}
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerBank}
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerBankAcc}
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerBankName}
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerPhone}
-                                                </td>
+                                            </tr>
+                                            <%--                                            <tr id="tr-${lst.saRequest.id}">--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                    <a data-toggle="modal" href="#" class="as"--%>
+                                            <%--                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                        ${lst.company.companyCode}--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                        ${lst.customer.customerName}--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                        ${lst.customer.customerBank}--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                        ${lst.customer.customerBankAcc}--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                        ${lst.customer.customerBankName}--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                        ${lst.customer.customerPhone}--%>
+                                            <%--                                                </td>--%>
+                                            <%----%>
+                                            <%--                                                <td style="color: #0aa5df">--%>
+                                            <%--                                                    <b> Chờ chuyển tiền</b>--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                        ${lst.saRequest.borrow}--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                    <fmt:formatNumber--%>
+                                            <%--                                                            value="${lst.saRequest.borrow }"--%>
+                                            <%--                                                            type="number"/> đ--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                    2 %--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                        ${lst.saRequest.borrow * 0.02}--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                    <fmt:formatNumber--%>
+                                            <%--                                                            value="${lst.saRequest.borrow  * 0.02}"--%>
+                                            <%--                                                            type="number"/> đ--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                        ${lst.saRequest.timeBorrow}--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                    <fmt:parseDate value=" ${lst.saRequest.employeeDuyetDate}"--%>
+                                            <%--                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="day"--%>
+                                            <%--                                                                   type="date"/>--%>
+                                            <%--                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"--%>
+                                            <%--                                                                    value="${day}"/>--%>
+                                            <%--                                                </td>--%>
 
-                                                <td style="color: #0aa5df">
-                                                    <b> Chờ chuyển tiền</b>
-                                                </td>
-                                                <td>
-                                                        ${lst.saRequest.borrow}
-                                                </td>
-                                                <td>
-                                                    <fmt:formatNumber
-                                                            value="${lst.saRequest.borrow }"
-                                                            type="number"/> đ
-                                                </td>
-                                                <td>
-                                                    2 %
-                                                </td>
-                                                <td>
-                                                        ${lst.saRequest.borrow * 0.02}
-                                                </td>
-                                                <td>
-                                                    <fmt:formatNumber
-                                                            value="${lst.saRequest.borrow  * 0.02}"
-                                                            type="number"/> đ
-                                                </td>
-                                                <td>
-                                                        ${lst.saRequest.timeBorrow}
-                                                </td>
-                                                <td>
-                                                    <fmt:parseDate value=" ${lst.saRequest.employeeDuyetDate}"
-                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="day"
-                                                                   type="date"/>
-                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                                    value="${day}"/>
-                                                </td>
-
-                                                <td id="employeeDuyet-${lst.saRequest.id}">
-                                                        ${lst.saRequest.employeeDuyet}
-                                                </td>
-                                                <td>
-                                                    05/02/2021
-                                                </td>
-                                                <td>
-                                                    <fmt:formatNumber
-                                                            value="${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }"
-                                                            type="number"/> đ
-                                                </td>
-                                                <td>
-                                                        ${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }
-                                                </td>
+                                            <%--                                                <td id="employeeDuyet-${lst.saRequest.id}">--%>
+                                            <%--                                                        ${lst.saRequest.employeeDuyet}--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                    05/02/2021--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                    <fmt:formatNumber--%>
+                                            <%--                                                            value="${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }"--%>
+                                            <%--                                                            type="number"/> đ--%>
+                                            <%--                                                </td>--%>
+                                            <%--                                                <td>--%>
+                                            <%--                                                        ${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }--%>
+                                            <%--                                                </td>--%>
 
                                             </tr>
                                         </c:forEach>
