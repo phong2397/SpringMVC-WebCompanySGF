@@ -19,11 +19,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -180,43 +184,72 @@ public class SignController {
             return "error";
         }
     }
+    String fileLocation = "file-upload/archived_system/";
+
+    private ServletContext servletContext;
 
     @RequestMapping(value = {"/giaingan"}, method = RequestMethod.POST)
     public @ResponseBody
-    String handlerOrderRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        log.info("POST - giaingan");
-        String data = request.getParameter("datarequest");
-        log.info("Data id saRequest: " + data);
-        String textDecline = request.getParameter("textDecline");
-        log.info("Data description: " + textDecline);
-        String status = request.getParameter("status");
-        log.info("Data status: " + status);
-        String step = request.getParameter("step");
-        log.info("Data step: " + step);
-        String employeeDuyet = request.getParameter("employeeDuyet");
-        log.info("Data employeeDuyet: " + employeeDuyet);
-        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+    String handlerOrderRequest(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String id = request.getParameter("id_donhang");
         try {
-            if (!StringUtil.isEmpty(employeeDuyet) && u.getUserLogin().equals(employeeDuyet)) {
-                log.info("Check empty employee duyet ");
-                SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
-                sa.setStatus(status.trim());
-                sa.setDescription(textDecline);
-                sa.setEmployeeDuyet(employeeDuyet);
-                sa.setEmployeeDuyetDate(LocalDateTime.now());
-                sa.setEmployeeDuyet(employeeDuyet);
-                sa.setUpdatedDate(LocalDateTime.now());
-                saRequestDAO.update(sa);
-                return "success";
-            } else {
-                log.info("Error role");
-                return "errorEmployee";
+            String path = servletContext.getRealPath(fileLocation);
+            log.info("Path : " + path);
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-sss");
+            String fileName = sdf.format(date) + multipartFile.getOriginalFilename();
+            File file = new File(path, fileName);
+            if (!file.exists()) {
+                log.info("Check file not exiist : ");
+                file.mkdirs();
             }
+            multipartFile.transferTo(file);
+            String expath = servletContext.getRealPath(fileLocation + fileName);
+            DetailTransaction detailTransaction = detailTransactionDAO.findById(Integer.parseInt(id));
+            Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+            detailTransaction.setPayImages(expath);
+            detailTransaction.setPayer(u.getUserLogin());
+            detailTransactionDAO.update(detailTransaction);
+            return "success";
         } catch (Exception ex) {
-            log.error("Exception:" + ex.getMessage());
-            return "error";
+            return null;
         }
     }
+
+
+
+//        log.info("POST - giaingan");
+//        String data = request.getParameter("datarequest");
+//        log.info("Data id saRequest: " + data);
+//        String textDecline = request.getParameter("textDecline");
+//        log.info("Data description: " + textDecline);
+//        String status = request.getParameter("status");
+//        log.info("Data status: " + status);
+//        String step = request.getParameter("step");
+//        log.info("Data step: " + step);
+//        String employeeDuyet = request.getParameter("employeeDuyet");
+//        log.info("Data employeeDuyet: " + employeeDuyet);
+//        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+//        try {
+//            if (!StringUtil.isEmpty(employeeDuyet) && u.getUserLogin().equals(employeeDuyet)) {
+//                log.info("Check empty employee duyet ");
+//                SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+//                sa.setStatus(status.trim());
+//                sa.setDescription(textDecline);
+//                sa.setEmployeeDuyet(employeeDuyet);
+//                sa.setEmployeeDuyetDate(LocalDateTime.now());
+//                sa.setEmployeeDuyet(employeeDuyet);
+//                sa.setUpdatedDate(LocalDateTime.now());
+//                saRequestDAO.update(sa);
+//                return "success";
+//            } else {
+//                log.info("Error role");
+//                return "errorEmployee";
+//            }
+//        } catch (Exception ex) {
+//            log.error("Exception:" + ex.getMessage());
+//            return "error";
+//        }
 
     @Autowired
     DetailTransactionDAO detailTransactionDAO;

@@ -101,7 +101,7 @@ public class ExcelHelper {
                 c.setCustomerBankAcc(row.getCell(7).getStringCellValue());
                 c.setCustomerBankName(row.getCell(8).getStringCellValue());
                 c.setCustomerBank(row.getCell(9).getStringCellValue());
-                log.info("Parse data list customer inside db: " + lstCust.add(c));
+//                log.info("Parse data list customer inside db: " + lstCust.add(c));
                 lstCust.add(c);
             } catch (Exception exception) {
                 log.error("Exception: " + exception.getMessage());

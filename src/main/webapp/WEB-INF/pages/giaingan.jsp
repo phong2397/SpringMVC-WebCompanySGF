@@ -222,7 +222,7 @@
                                             <tr>
                                                 <td class="text-center">
                                                     <a href="#" data-toggle="modal"
-                                                       onclick="viewInfoDetail('${lst.id}')"><b>${lst.id}</b></a>
+                                                       onclick="viewInfoCustomer('${lst.id}')"><b>${lst.id}</b></a>
                                                 </td>
                                                 <td class="text-center">
                                                         ${lst.companyCode}
@@ -362,9 +362,9 @@
                           enctype="multipart/form-data">
                         <label><b style="color:black; margin-bottom: 20px; ">Chọn hình ảnh:</b><br>
                             <input type="file" class="btn btn-rounded btn-facebook "
-                                   name="file">
-                            </input>
+                                   name="file"/>
                         </label><br>
+                        <input type="hidden" id="id_donhang" name="id_donhang"/>
                         <img class="img" src=""/>
                         <div class="modal-footer modal-footer-uniform">
                             <button class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">Hoàn thành chuyển tiền
@@ -418,6 +418,11 @@
     var saList = <%=jsonSa%>;
     console.log(saList)
     var selectedsaId;
+
+    function giaingan() {
+
+    }
+
     $(document).ready(function () {
 
         $("#loading").hide();
