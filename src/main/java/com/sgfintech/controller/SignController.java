@@ -17,6 +17,7 @@ import com.sgfintech.service.MergeDataService;
 import com.sgfintech.service.SaRequestService;
 import com.sgfintech.util.Consts;
 import com.sgfintech.util.StringUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,7 @@ import java.util.*;
  */
 @Controller
 public class SignController {
+    private static final Logger log = Logger.getLogger(SignController.class);
 
     @Autowired
     private MergeDataService mergeDataService;
@@ -66,8 +68,12 @@ public class SignController {
 //        int countWait = mergeDataService.countStatus("wait");
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countDone = mergeDataService.countStatus("done");
+
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
             return "redirect:login";
         } else {
             String empDuyet = u.getUserLogin();
@@ -80,6 +86,9 @@ public class SignController {
             mm.addAttribute("countWait", count[2]);
             mm.addAttribute("countWFS", count[3]);
             mm.addAttribute("countDone", count[5]);
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
             return "kyduyetRole";
         }
     }
@@ -90,8 +99,12 @@ public class SignController {
 //        int countWait = mergeDataService.countStatus("wait");
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countDeni = mergeDataService.countStatus("deni");
+
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
             return "redirect:login";
         } else {
             String empDuyet = u.getUserLogin();
@@ -104,6 +117,9 @@ public class SignController {
             mm.addAttribute("countWait", count[2]);
             mm.addAttribute("countWFS", count[3]);
             mm.addAttribute("countDeni", count[2]);
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
             return "tuchoikyduyet";
         }
     }
@@ -114,6 +130,7 @@ public class SignController {
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countAct = mergeDataService.countStatus("act");
 //        int countDone = mergeDataService.countStatus("done");
+
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -129,6 +146,9 @@ public class SignController {
             mm.addAttribute("countWFS", count[3]);
             mm.addAttribute("countAct", count[1]);
             mm.addAttribute("countDone", count[5]);
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
             return "kyduyet";
         }
     }
@@ -139,8 +159,12 @@ public class SignController {
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countAct = mergeDataService.countStatus("act");
 //        int countDone = mergeDataService.countStatus("done");
+
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
             return "redirect:login";
         } else {
             List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("act", false);
@@ -154,6 +178,9 @@ public class SignController {
             mm.addAttribute("countWFS", count[3]);
             mm.addAttribute("countAct", count[1]);
             mm.addAttribute("countDone", count[5]);
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
             return "giaingan";
         }
     }
@@ -161,6 +188,7 @@ public class SignController {
     @RequestMapping(value = "/updateEmployeeDuyet", method = RequestMethod.POST)
     public @ResponseBody
     String updateEmployeeDuyet(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
         List<SaRequest> lst = new ArrayList<>();
         String[] data = request.getParameterValues("datarequest[]");
         System.out.println(data);
@@ -175,11 +203,20 @@ public class SignController {
         try {
             int[][] countUpdate = saRequestService.updateemployeeDuyetById(lst);
             if (countUpdate.length < 1) {
+                log.info("test log ===============================");
+                log.info(System.getProperty("catalina.base"));
+                log.info(System.getProperty("catalina.home"));
                 return "error";
             } else {
+                log.info("test log ===============================");
+                log.info(System.getProperty("catalina.base"));
+                log.info(System.getProperty("catalina.home"));
                 return "success";
             }
         } catch (Exception ex) {
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
             return "error";
         }
     }
@@ -203,11 +240,20 @@ public class SignController {
                 sa.setEmployeeDuyet(employeeDuyet);
                 sa.setUpdatedDate(LocalDateTime.now());
                 saRequestDAO.update(sa);
+                log.info("test log ===============================");
+                log.info(System.getProperty("catalina.base"));
+                log.info(System.getProperty("catalina.home"));
                 return "success";
             } else {
+                log.info("test log ===============================");
+                log.info(System.getProperty("catalina.base"));
+                log.info(System.getProperty("catalina.home"));
                 return "errorEmployee";
             }
         } catch (Exception ex) {
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
             return "error";
         }
     }
@@ -215,6 +261,7 @@ public class SignController {
     @RequestMapping(value = {"/giaingan"}, method = RequestMethod.POST)
     public @ResponseBody
     String handlerdisburseRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
         SignatureRSA signatureRSA = context.getBean(SignatureRSA.class);
         String data = request.getParameter("datarequest"); //id cua order request
         String status = request.getParameter("status");
@@ -250,20 +297,35 @@ public class SignController {
                     sa.setUpdatedDate(LocalDateTime.now());
                     sa.setStatus(status);
                     saRequestDAO.update(sa);
+                    log.info("test log ===============================");
+                    log.info(System.getProperty("catalina.base"));
+                    log.info(System.getProperty("catalina.home"));
                     return "success";
                 } else if (status.equals("deni")) {
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
                     sa.setUpdatedDate(LocalDateTime.now());
                     sa.setStatus(status);
                     saRequestDAO.update(sa);
+                    log.info("test log ===============================");
+                    log.info(System.getProperty("catalina.base"));
+                    log.info(System.getProperty("catalina.home"));
                     return "success";
                 }
+                log.info("test log ===============================");
+                log.info(System.getProperty("catalina.base"));
+                log.info(System.getProperty("catalina.home"));
                 return "errorStatus";
             } else {
+                log.info("test log ===============================");
+                log.info(System.getProperty("catalina.base"));
+                log.info(System.getProperty("catalina.home"));
                 return "errorEmployee";
             }
             //todo virtual account va tao collection point
         } catch (Exception ex) {
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
             return "error";
         }
     }

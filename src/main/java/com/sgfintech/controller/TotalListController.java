@@ -9,6 +9,7 @@ import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.handler.MergeDataWithdraw;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.util.Consts;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +24,8 @@ import java.util.List;
 
 @Controller
 public class TotalListController {
+
+    private static final Logger log = Logger.getLogger(TotalListController.class);
     @Autowired
     MergeDataService mergeDataService;
 
@@ -31,8 +34,12 @@ public class TotalListController {
 
     @RequestMapping(value = {"/khachhangtattoan"}, method = RequestMethod.GET)
     public String khachhangtattoanPage(ModelMap mm, HttpSession session) {
+
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
             return "redirect:login";
         } else {
             int countAct = mergeDataService.contractStatus("act");
@@ -43,6 +50,9 @@ public class TotalListController {
             mm.addAttribute(Consts.Attr_ResultView, listdata);
             mm.addAttribute("countDone", countDone);
             mm.addAttribute("countAct", countAct);
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
             return "khachhangtattoan";
         }
     }
@@ -54,6 +64,9 @@ public class TotalListController {
         List<MergeDataWithdraw> result = mergeDataService.getContractModal(customerPhone);
         Gson g = new Gson();
         String responseStr = g.toJson(result);
+        log.info("test log ===============================");
+        log.info(System.getProperty("catalina.base"));
+        log.info(System.getProperty("catalina.home"));
         return responseStr;
     }
 }

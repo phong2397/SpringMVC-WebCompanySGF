@@ -8,6 +8,7 @@ import com.sgfintech.entity.Useradmin;
 import com.sgfintech.handler.MergeDataWithdraw;
 import com.sgfintech.service.MergeDataService;
 import com.sgfintech.util.Consts;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,16 +30,34 @@ public class ProductController {
     @Autowired
     ProductDAO productDAO;
 
+    private static final Logger log = Logger.getLogger(ProductController.class);
+
+
     @RequestMapping(value = {"/cauhinh"}, method = RequestMethod.GET)
-    public String settings(ModelMap mm) {
-        List<Product> listdata = productDAO.findAll();
-        mm.addAttribute(Consts.Attr_ResultView, listdata);
-        return "cauhinh";
+    public String settings(ModelMap mm, HttpSession session) {
+
+        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+        if (u == null) {
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
+            return "redirect:login";
+        } else {
+            List<Product> listdata = productDAO.findAll();
+            mm.addAttribute(Consts.Attr_ResultView, listdata);
+            log.info("test log ===============================");
+            log.info(System.getProperty("catalina.base"));
+            log.info(System.getProperty("catalina.home"));
+            return "cauhinh";
+        }
     }
 
     @RequestMapping(value = "/changeProduct", method = RequestMethod.POST)
     public @ResponseBody
     String changes(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        log.info("test log ===============================");
+        log.info(System.getProperty("catalina.base"));
+        log.info(System.getProperty("catalina.home"));
         String data = request.getParameter("id");
         String productCode = request.getParameter("productCode");
         String productDetail = request.getParameter("productDetail");
