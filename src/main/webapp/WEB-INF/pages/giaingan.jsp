@@ -221,7 +221,7 @@
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
                                                 <td class="text-center">
-                                                    <a href="#modal-giaingan" data-toggle="modal"><b>${lst.id}</b></a>
+                                                    <a onclick="viewInfoDetail('${lst.id}')" data-toggle="modal"><b>${lst.id}</b></a>
                                                 </td>
                                                 <td class="text-center">
                                                         ${lst.companyCode}
@@ -357,16 +357,20 @@
                 <!-- Panes -->
 
                 <div class="modal-body">
-
-                    <form action="" method="post"
+                    <form action="giaingan.html" method="post"
                           enctype="multipart/form-data">
-                        <label><b style="color:black ">Chọn hình ảnh:</b><br>
-                            <button type="button" class="btn btn-rounded btn-facebook "
-                                    type="file" name="file"> Upload
-                            </button>
+                        <label><b style="color:black; margin-bottom: 20px; ">Chọn hình ảnh:</b><br>
+                            <input type="file" class="btn btn-rounded btn-facebook "
+                                   name="file">
+                            </input>
                         </label><br>
                         <img class="img" src=""/>
-
+                        <div class="modal-footer modal-footer-uniform">
+                            <button class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">Hoàn thành chuyển tiền
+                            </button>
+                            <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng trang
+                            </button>
+                        </div>
                     </form>
                     <h4 id="labelDanhgia"></h4>
 
@@ -375,12 +379,7 @@
 
 
                 <!-- Footer -->
-                <div class="modal-footer modal-footer-uniform">
-                    <button class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">Hoàn thành chuyển tiền
-                    </button>
-                    <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng trang
-                    </button>
-                </div>
+
 
             </div>
         </div>
