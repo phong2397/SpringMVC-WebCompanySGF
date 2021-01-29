@@ -1,13 +1,14 @@
-function viewInfoDetail() {
-    let dataRequest = $("#saID").text()
+function viewInfoDetail(id) {
     $("#loading").show();
+    console.log(id)
     let data = {
         datarequest: dataRequest,
         status: 'done',
         step: '3',
         textDecline: 'Chuyển tiền thành công',
     };
-    var result = sendOrderGiaingan(data);
+    console.log("viewDetail");
+    // var result = sendOrderGiaingan(data);
     if (result === "success") {
         Swal.fire({
             position: 'top-end',
@@ -19,6 +20,24 @@ function viewInfoDetail() {
         $("#loading").hide();
         $("#modal-giaingan").modal('hide');
         $("#tr-" + selectedsaId).remove();
+    } else if (result === "errorEmployee") {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Bạn không có quyền giải ngân',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        $("#loading").hide();
+    } else if (result === "errorStatus") {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Trạng thái không khớp',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        $("#loading").hide();
     } else {
         Swal.fire({
             position: 'top-end',
@@ -189,8 +208,8 @@ function viewInfoCustomer(id) {
     list = result.find(el => el.id == id);
     console.log(list)
 
-    $("#saId").empty();
-    $("#saId").append('<div class="col-4 " ><h3>Mã đơn : <span  id="saID">' + list.id + '</span></h3></div>');
+    $("#id_donhang").empty();
+    $("#id_donhang").val(id);
     $('#modal-giaingan').modal('show');
 }
 
