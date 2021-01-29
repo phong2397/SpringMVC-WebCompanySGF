@@ -240,7 +240,9 @@
                                                             <th class="text-center">Số tài khoản</th>
                                                             <th class="text-center">Tên ngân hàng</th>
                                                             <th class="text-center">Số tiền TU</th>
+                                                            <th class="text-center">Số tiền TU</th>
                                                             <th class="text-center">Phí</th>
+                                                            <th class="text-center">Tổng phí</th>
                                                             <th class="text-center">Tổng phí</th>
                                                             <th class="text-center">TG yêu cầu</th>
                                                             <th class="text-center">Người trả</th>
@@ -248,8 +250,8 @@
                                                             <th class="text-center">Người thu tiền</th>
                                                             <th class="text-center">TG thu tiền</th>
                                                             <th class="text-center">Trạng thái</th>
-                                                            <th class="text-center">Uỷ nhiệm chi</th>
-                                                            <th class="text-center">Uỷ nhiệm thu</th>
+                                                            <th class="text-center">HA trả</th>
+                                                            <th class="text-center">HA thu</th>
 
                                                         </tr>
                                                         </thead>
@@ -284,12 +286,18 @@
 
                                                                 </td>
                                                                 <td class="text-center">
+                                                                        ${lst.amount}
+                                                                </td>
+                                                                <td class="text-center">
                                                                     2 %
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <fmt:formatNumber
                                                                             value="${lst.total}"
                                                                             type="number"/> đ
+                                                                </td>
+                                                                <td class="text-center">
+                                                                        ${lst.total}
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <fmt:parseDate value="  ${lst.dateRequest}"
@@ -303,14 +311,41 @@
                                                                         ${lst.payer}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    -
+                                                                    <c:choose>
+                                                                        <c:when test="${not empty lst.payDate}"><
+                                                                            <fmt:parseDate value="  ${lst.payDate}"
+                                                                                           pattern="yyyy-MM-dd'T'HH:mm"
+                                                                                           var="day"
+                                                                                           type="date"/>
+                                                                            <fmt:formatDate
+                                                                                    pattern="dd/MM/yyyy - hh:mm a"
+                                                                                    value="${day}"/></c:when>
+                                                                        <c:otherwise>
+                                                                            -
+                                                                        </c:otherwise>
+
+                                                                    </c:choose>
+
                                                                 </td>
                                                                 <td class="text-center">
                                                                         ${lst.collector}
                                                                 </td>
                                                                 <td class="text-center">
+                                                                    <c:choose>
+                                                                        <c:when test="${not empty lst.payDate}"><
+                                                                            <fmt:parseDate value="  ${lst.collectDate}"
+                                                                                           pattern="yyyy-MM-dd'T'HH:mm"
+                                                                                           var="day"
+                                                                                           type="date"/>
+                                                                            <fmt:formatDate
+                                                                                    pattern="dd/MM/yyyy - hh:mm a"
+                                                                                    value="${day}"/></c:when>
+                                                                        <c:otherwise>
+                                                                            -
+                                                                        </c:otherwise>
 
-                                                                    -
+                                                                    </c:choose>
+
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <c:choose>
@@ -427,9 +462,15 @@
                 }
             },
             pageLength: 20,
+            columnDefs: [
+                {
+                    visible: false,
+                    targets: [8, 11]
+                }
+            ],
             buttons: [
                 {
-                    title: 'Danh sách khách hàng thanh toán',
+                    title: 'Danh sách thanh toán',
                     extend: 'excelHtml5',
                     exportOptions: {
                         format: {
@@ -437,7 +478,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 1, 2, 3, 4, 6, 7, 8, 10, 11, 12, 13]
+                        columns: [0, 1, 2, 3, 4, 6, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19]
 
                     }
                 },

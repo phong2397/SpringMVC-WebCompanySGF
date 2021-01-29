@@ -1,9 +1,11 @@
 package com.sgfintech.service;
 
+import com.sgfintech.controller.ApprovalController;
 import com.sgfintech.entity.Customer;
 import com.sgfintech.entity.SaRequest;
 import com.sgfintech.mapper.CustomerMapper;
 import com.sgfintech.util.StringUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
@@ -24,13 +26,14 @@ import java.util.Map;
 @Service
 @Transactional
 public class SaRequestService {
-
+    private static final Logger log = Logger.getLogger(SaRequestService.class);
     @Autowired
     private DataSource dataSource;
 
     private JdbcTemplate jdbcTemplate;
 
     public int[][] updateRecordById(List<SaRequest> listid) {
+        log.info("POST - updateRecordById");
         if (jdbcTemplate == null) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
@@ -42,10 +45,12 @@ public class SaRequestService {
                 preparedStatement.setLong(2, saRequest.getId());
             }
         });
+        log.info("Update count: " + updateCounts);
         return updateCounts;
     }
 
     public int[][] updateemployeeDuyetById(List<SaRequest> listid) {
+        log.info("POST - updateemployeeDuyetById");
         if (jdbcTemplate == null) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
