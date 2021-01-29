@@ -281,8 +281,8 @@ public class SignController {
             String uuid = UUID.randomUUID().toString();
             String requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
             if (!StringUtil.isEmpty(u) && u.getUserLogin().equals(employeeDuyet)) {
-                if (status.equals("act")) {
-                    log.info("check status == act");
+                if (status.equals("wfs")) {
+                    log.info("check status == wfs");
                     Contract ct = new Contract();
                     ct.setIdContract(sa.getId());
                     ct.setSystemTrace(uuid);

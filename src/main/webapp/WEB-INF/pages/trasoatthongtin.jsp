@@ -239,8 +239,8 @@
                                                             <th class="text-center">Chủ tài khoản</th>
                                                             <th class="text-center">Số tài khoản</th>
                                                             <th class="text-center">Tên ngân hàng</th>
-                                                            <th class="text-center">Số tiền TU</th>
-                                                            <th class="text-center">Số tiền TU</th>
+                                                            <th class="text-center">Số tiền tạm ứng</th>
+                                                            <th class="text-center">Số tiền tạm ứng</th>
                                                             <th class="text-center">Phí</th>
                                                             <th class="text-center">Tổng phí</th>
                                                             <th class="text-center">Tổng phí</th>
@@ -250,8 +250,8 @@
                                                             <th class="text-center">Người thu tiền</th>
                                                             <th class="text-center">TG thu tiền</th>
                                                             <th class="text-center">Trạng thái</th>
-                                                            <th class="text-center">Chứng từ</th>
-
+                                                            <th class="text-center">Chứng từ chuyển tiền</th>
+                                                            <th class="text-center">Chứng từ thu tiền</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody
@@ -320,10 +320,21 @@
                                                                         ${lst.collectDate}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                        ${lst.status}
+                                                                    <c:choose>
+                                                                        <c:when test="${lst.status eq 'done'}">Đã chuyển tiền thành công</c:when>
+                                                                        <c:otherwise>
+                                                                            Đã chờ chuyển tiền
+                                                                        </c:otherwise>
+
+                                                                    </c:choose>
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    <img src="${lst.payImages}" alt="" width="100%">
+                                                                    <img src="/${lst.payImages}"
+                                                                         alt="" width="100%">
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <img src="/${lst.collectionImages}" alt=""
+                                                                         width="100%">
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -426,7 +437,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [8, 11]
+                    // targets: [8, 11]
                 }
             ],
             buttons: [
