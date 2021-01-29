@@ -184,7 +184,7 @@ public class SignController {
             return "error";
         }
     }
-    String fileLocation = "file-upload/archived_system/";
+//    String fileLocation = "file-upload/archived_system/";
 
     private ServletContext servletContext;
 
@@ -193,7 +193,7 @@ public class SignController {
     String handlerOrderRequest(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String id = request.getParameter("id_donhang");
         try {
-            String path = servletContext.getRealPath(fileLocation);
+            String path = System.getProperty("catalina.home") + "/webapps/uynhiemchi/";
             log.info("Path : " + path);
             Date date = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-sss");
@@ -204,11 +204,12 @@ public class SignController {
                 file.mkdirs();
             }
             multipartFile.transferTo(file);
-            String expath = servletContext.getRealPath(fileLocation + fileName);
+            String expath = "uynhiemchi/" + fileName;
             DetailTransaction detailTransaction = detailTransactionDAO.findById(Integer.parseInt(id));
             Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
             detailTransaction.setPayImages(expath);
             detailTransaction.setPayer(u.getUserLogin());
+            detailTransaction.setStatus("done");
             detailTransactionDAO.update(detailTransaction);
             log.info("success");
             return "success";
