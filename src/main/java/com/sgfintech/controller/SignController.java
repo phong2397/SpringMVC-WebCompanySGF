@@ -219,7 +219,6 @@ public class SignController {
     }
 
 
-
 //        log.info("POST - giaingan");
 //        String data = request.getParameter("datarequest");
 //        log.info("Data id saRequest: " + data);
@@ -272,6 +271,7 @@ public class SignController {
         log.info("Data step: " + step);
         String textDecline = request.getParameter("textDecline");
         log.info("Data textDecline: " + textDecline);
+        String employeeDuyet = request.getParameter("employeeDuyet");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
             SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
@@ -279,8 +279,8 @@ public class SignController {
             Customer cu = customerService.getCustomerByPhone(sa.getCustomerPhone());
             String uuid = UUID.randomUUID().toString();
             String requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-            if (!StringUtil.isEmpty(u) && u.getUserLogin().equals("ketoan")) {
-                if (status.equals("done")) {
+            if (!StringUtil.isEmpty(u) && u.getUserLogin().equals(employeeDuyet)) {
+                if (status.equals("act")) {
                     Contract ct = new Contract();
                     ct.setIdContract(sa.getId());
                     ct.setSystemTrace(uuid);

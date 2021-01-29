@@ -35,7 +35,7 @@ public class OverdueController {
 
     @RequestMapping(value = {"/thuphi"}, method = RequestMethod.GET)
     public String thuphiPage(ModelMap mm, HttpSession session) {
-
+        log.info("GET - Go into thuphiPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             log.info("test log ===============================");

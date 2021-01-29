@@ -32,21 +32,17 @@ public class ProcessedController {
 
     @RequestMapping(value = {"/khachhangthanhtoan"}, method = RequestMethod.GET)
     public String khachhangthanhtoanPage(ModelMap mm, HttpSession session) {
-
+        log.info("GET - Go into khachhangthanhtoanPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
             return "redirect:login";
         } else {
             List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("done", true, "");
+            log.info("List Data: " + listdata);
             List<Contract> contract = contractDAO.findAll();
+            log.info("List contract: " + contract);
             mm.addAttribute("con", contract);
             mm.addAttribute(Consts.Attr_ResultView, listdata);
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
             return "khachhangthanhtoan";
         }
     }
