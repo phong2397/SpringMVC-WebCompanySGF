@@ -285,7 +285,7 @@ function viewInfoCustomer(params, id, comId) {
         $("#danhgia").empty();
         $("#labelDanhgia").empty();
         $("#labelDanhgia").append('Đánh giá');
-        $("#danhgia").append('<div class="col-4"><p>Giải ngân : Thông tin nhận tiền đầy đủ</p><button class="btn btn-rounded btn-info btn-accept" data-toggle="modal" href="#giainganVerify">Hoàn thành chuyển tiền </button> </div>');
+        $("#danhgia").append('');
     } else
 
 
