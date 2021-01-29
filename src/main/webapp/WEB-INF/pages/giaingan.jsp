@@ -367,7 +367,7 @@
                         <input type="hidden" id="id_donhang" name="id_donhang"/>
                         <img class="img" src=""/>
                         <div class="modal-footer modal-footer-uniform">
-                            <button class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">Hoàn thành chuyển
+                            <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">Hoàn thành chuyển
                                 tiền
                             </button>
                             <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng trang

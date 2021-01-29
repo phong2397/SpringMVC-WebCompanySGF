@@ -79,6 +79,27 @@ public class DetailTransactionDAO {
         return fooList;
     }
 
+    public List<DetailTransaction> findAllByDone(int page) {
+        Session session = this.sessionFactory.getCurrentSession();
+        String countQ = "select count (f.id) from DetailTransaction f";
+        Query countQuery = session.createQuery(countQ);
+        Long countResults = (Long) countQuery.uniqueResult();
+        int pageSize = ConfigGateway.getPAGING();
+        int lastPageNumber = (int) (Math.ceil(countResults / pageSize));
+        if (lastPageNumber < 1) {
+            lastPageNumber = 1;
+        }
+        if (page > lastPageNumber) {
+            page = lastPageNumber;
+        }
+        Query query =  session.createQuery("from DetailTransaction where status = ?1 order by dateRequest desc");
+        query.setParameter(1, "done");
+        query.setFirstResult(0);
+        query.setMaxResults(pageSize*page);
+        List<DetailTransaction> fooList = query.list();
+        return fooList;
+    }
+
 //
 //    @Test
 //    public void givenEntitiesExist_whenRetrievingLastPage_thenCorrectSize() {

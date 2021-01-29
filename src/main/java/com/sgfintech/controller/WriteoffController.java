@@ -1,9 +1,11 @@
 package com.sgfintech.controller;
 
 import com.sgfintech.dao.ContractDAO;
+import com.sgfintech.dao.DetailTransactionDAO;
 import com.sgfintech.dao.SaRequestDAO;
 import com.sgfintech.dao.UseradminDAO;
 import com.sgfintech.entity.Contract;
+import com.sgfintech.entity.DetailTransaction;
 import com.sgfintech.entity.SaRequest;
 import com.sgfintech.entity.Useradmin;
 import com.sgfintech.handler.MergeDataWithdraw;
@@ -46,9 +48,7 @@ public class WriteoffController {
 
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
+          
             return "redirect:login";
         } else {
             List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("act", true, "");
@@ -57,30 +57,25 @@ public class WriteoffController {
             mm.addAttribute("admin", admin);
             mm.addAttribute("con", contract);
             mm.addAttribute(Consts.Attr_ResultView, listdata);
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
+          
             return "nhacphi";
         }
     }
 
+    @Autowired
+    DetailTransactionDAO detailTransactionDAO;
+
     @RequestMapping(value = {"/gachno"}, method = RequestMethod.GET)
     public String gachnoPage(ModelMap mm, HttpSession session) {
-
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
             return "redirect:login";
         } else {
-            List<MergeDataWithdraw> listdata = mergeDataService.gachnodata("");
+//            List<MergeDataWithdraw> listdata = mergeDataService.gachnodata("");
+            List<DetailTransaction> list = detailTransactionDAO.findAllByDone(1);
             List<Contract> contract = contractDAO.findAll();
             mm.addAttribute("con", contract);
-            mm.addAttribute(Consts.Attr_ResultView, listdata);
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
+            mm.addAttribute(Consts.Attr_ResultView, list);
             return "gachno";
         }
     }
@@ -90,9 +85,6 @@ public class WriteoffController {
 
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
             return "redirect:login";
         } else {
             int countAct = mergeDataService.contractStatus("act");
@@ -103,9 +95,6 @@ public class WriteoffController {
             mm.addAttribute(Consts.Attr_ResultView, listdata);
             mm.addAttribute("countDone", countDone);
             mm.addAttribute("countAct", countAct);
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
             return "theodoikhoantamung";
         }
     }
@@ -125,20 +114,13 @@ public class WriteoffController {
                 ct.setDateRepayment(LocalDateTime.now());
                 ct.setUpdatedDate(LocalDateTime.now());
                 contractDAO.update(ct);
-                log.info("test log ===============================");
-                log.info(System.getProperty("catalina.base"));
-                log.info(System.getProperty("catalina.home"));
                 return "success";
             } else {
-                log.info("test log ===============================");
-                log.info(System.getProperty("catalina.base"));
-                log.info(System.getProperty("catalina.home"));
+              
                 return "roleError";
             }
         } catch (Exception ex) {
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
+          
             return "error";
         }
     }
