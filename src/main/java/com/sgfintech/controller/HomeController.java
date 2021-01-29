@@ -23,12 +23,11 @@ public class HomeController {
     private static final Logger log = Logger.getLogger(HomeController.class);
 
     @RequestMapping(value = {"/home", "/index"}, method = RequestMethod.GET)
-    public String welcomePage(Model model) {
-        log.info("test log ===============================");
-        log.info(System.getProperty("catalina.base"));
-        log.info(System.getProperty("catalina.home"));
+    public String homePage(Model model) {
+        log.info("GET - homePage");
         return "index";
     }
+
     @RequestMapping(value = {"/404"}, method = RequestMethod.GET)
     public String error(Model model) {
         return "404";

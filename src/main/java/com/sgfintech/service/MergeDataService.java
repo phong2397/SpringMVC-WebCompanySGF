@@ -1,5 +1,6 @@
 package com.sgfintech.service;
 
+import com.sgfintech.controller.ApprovalController;
 import com.sgfintech.entity.Companies;
 import com.sgfintech.entity.Contract;
 import com.sgfintech.entity.Customer;
@@ -12,6 +13,7 @@ import com.sgfintech.mapper.ContractMapper;
 import com.sgfintech.mapper.CustomerMapper;
 import com.sgfintech.mapper.SaRequestMapper;
 import com.sgfintech.util.StringUtil;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -29,6 +31,8 @@ import java.util.Map;
 @Service
 @Transactional
 public class MergeDataService {
+
+    private static final Logger log = Logger.getLogger(MergeDataService.class);
 
     @Autowired
     private DataSource dataSource;
@@ -78,20 +82,26 @@ public class MergeDataService {
     }
 
     public List<CustomerHandler> getDataCustomer() {
+        log.info("Return ");
+
         String sql = "select com.*,cu.* from sgft_companies com,sgft_customer cu where  com.company_code = cu.company_code ";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         try {
             Object[] param = new Object[]{};
+
             List<CustomerHandler> resultList = jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {
                         Customer cu = new CustomerMapper().mapRow(rs, arg1);
                         Companies com = new CompanyMapper().mapRow(rs, arg1);
+                        log.info("");
                         return new CustomerHandler(cu, com);
                     });
             return resultList;
+
         } catch (Exception ex) {
+            log.error(ex.getMessage());
             return null;
         }
     }
@@ -102,6 +112,7 @@ public class MergeDataService {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         try {
+
             Object[] param = new Object[]{status};
             List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {

@@ -4,8 +4,10 @@ package com.sgfintech.handler;
  * @author lucnguyen.hcmut@gmail.com
  */
 
+import com.sgfintech.controller.ImportController;
 import com.sgfintech.entity.Customer;
 import com.sgfintech.util.StringUtil;
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -26,6 +28,7 @@ public class ExcelHelper {
     private List<String> fieldNames = new ArrayList<String>();
     private Workbook workbook = null;
     private String workbookName = "";
+    private static final Logger log = Logger.getLogger(ExcelHelper.class);
 
     public ExcelHelper(String workbookName) {
         this.workbookName = workbookName;
@@ -69,14 +72,19 @@ public class ExcelHelper {
     }
 
     public List<Customer> parseDataFromExcel(String sheetName, String companyCode) throws Exception {
+        log.info("POST - ExcelHelper(parseDataFromExcel) ");
         initializeForRead();
         Sheet sheet = getSheetWithName(sheetName);
+        log.info("Sheet Name: " + sheet);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         List<Customer> lstCust = new ArrayList<>();
+        log.info("List array Customer: " + lstCust);
         Row row;
         for (int rowCount = 1; rowCount <= sheet.getLastRowNum(); rowCount++) {
+            log.info("For loop row count ");
             Customer c = new Customer();
             row = sheet.getRow(rowCount);
+            log.info("Count row: " + row);
             try {
                 c.setCompanyCode(companyCode);
                 c.setCustomerName(row.getCell(0).getStringCellValue());
@@ -93,8 +101,10 @@ public class ExcelHelper {
                 c.setCustomerBankAcc(row.getCell(7).getStringCellValue());
                 c.setCustomerBankName(row.getCell(8).getStringCellValue());
                 c.setCustomerBank(row.getCell(9).getStringCellValue());
+                log.info("Parse data list customer inside db: " + lstCust.add(c));
                 lstCust.add(c);
             } catch (Exception exception) {
+                log.error("Exception: " + exception.getMessage());
                 exception.printStackTrace();
                 continue;
             }
@@ -127,6 +137,7 @@ public class ExcelHelper {
              */
 
         }
+        log.info("List customer add: " + lstCust);
         return lstCust;
     }
 
