@@ -268,43 +268,45 @@
                                                             <th class="text-center">Tên nhân viên giao dịch</th>
                                                         </tr>
                                                         </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="text-center">
-                                                                307
-                                                            </td>
-                                                            <td class="text-center">
-                                                                307
-                                                            </td>
-                                                            <td class="text-center">
-                                                                Salary Advance
-                                                            </td>
-                                                            <td class="text-center">
-                                                                Công ty ABC
-                                                            </td>
-                                                            <td class="text-center">
-                                                                Luong Van Can
-                                                            </td>
-                                                            <td class="text-center">
-                                                                0255197065
-                                                            </td>
-                                                            <td class="text-center">
-                                                                3.200.000 đ
-                                                            </td>
-                                                            <td class="text-center">
-                                                                200.000 đ
-                                                            </td>
-                                                            <td class="text-center">
-                                                                28/01/2021
-                                                            </td>
-                                                            <td class="text-center">
-                                                                05/02/2021
-                                                            </td>
+                                                        <tbody
+                                                        <c:forEach items="${views}" var="lst" varStatus="loop">
+                                                            <tr>
+                                                                <td class="text-center">
+                                                                        ${lst}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    307
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    Salary Advance
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    Công ty ABC
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    Luong Van Can
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    0255197065
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    3.200.000 đ
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    200.000 đ
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    28/01/2021
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    05/02/2021
+                                                                </td>
 
-                                                            <td class="text-center">
-                                                                Kế toán
-                                                            </td>
-                                                        </tr>
+                                                                <td class="text-center">
+                                                                    Kế toán
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
                                                         <tbody>
                                                     </table>
                                                 </div>

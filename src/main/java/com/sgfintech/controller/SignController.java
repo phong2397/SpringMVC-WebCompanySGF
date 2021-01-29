@@ -2,13 +2,8 @@ package com.sgfintech.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.sgfintech.dao.ContractDAO;
-import com.sgfintech.dao.SaRequestDAO;
-import com.sgfintech.dao.UseradminDAO;
-import com.sgfintech.entity.Contract;
-import com.sgfintech.entity.Customer;
-import com.sgfintech.entity.SaRequest;
-import com.sgfintech.entity.Useradmin;
+import com.sgfintech.dao.*;
+import com.sgfintech.entity.*;
 import com.sgfintech.handler.MergeDataOrder;
 import com.sgfintech.handler.RequestGateway;
 import com.sgfintech.handler.SignatureRSA;
@@ -212,10 +207,16 @@ public class SignController {
         }
     }
 
+    @Autowired
+    DetailTransactionDAO detailTransactionDAO;
+
+    @Autowired
+    CustomerDAO customerDAO;
+
     @RequestMapping(value = {"/giaingan"}, method = RequestMethod.POST)
     public @ResponseBody
     String handlerdisburseRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        SignatureRSA signatureRSA = context.getBean(SignatureRSA.class);
+//        SignatureRSA signatureRSA = context.getBean(SignatureRSA.class);
         String data = request.getParameter("datarequest"); //id cua order request
         String status = request.getParameter("status");
         String step = request.getParameter("step");
@@ -250,6 +251,22 @@ public class SignController {
                     sa.setUpdatedDate(LocalDateTime.now());
                     sa.setStatus(status);
                     saRequestDAO.update(sa);
+                    Customer c = customerDAO.findByPhone(sa.getCustomerPhone());
+                    final DetailTransaction d = new DetailTransaction();
+                    d.setId(sa.getId());
+                    d.setCompanyCode(c.getCompanyCode());
+                    d.setCustomerName(c.getCustomerName());
+                    d.setBankAccount(c.getCustomerBankAcc());
+                    d.setBankOwner(c.getCustomerBank());
+                    d.setBankName(c.getCustomerBankName());
+                    d.setCustomerPhone(c.getCustomerPhone());
+                    d.setAmount(sa.getBorrow());
+                    d.setInterestRate(sa.getInterestRate());
+                    d.setDateRequest(LocalDateTime.now());
+                    d.setTotal((int) (sa.getBorrow() + ((int) (sa.getBorrow() * sa.getInterestRate()))));
+                    d.setStatus("active");
+                    final Thread task = new Thread(() -> detailTransactionDAO.save(d));
+                    task.start();
                     return "success";
                 } else if (status.equals("deni")) {
                     sa.setEmployeeDuyetDate(LocalDateTime.now());

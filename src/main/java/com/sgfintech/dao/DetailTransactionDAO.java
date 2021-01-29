@@ -6,7 +6,6 @@ import com.sgfintech.util.ConfigGateway;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -29,6 +28,15 @@ public class DetailTransactionDAO {
         session.update(dt);
     }
 
+    public void save(final DetailTransaction detailTransaction) {
+        this.sessionFactory.getCurrentSession().save(detailTransaction);
+    }
+
+    public DetailTransaction findById(long id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        return session.get(DetailTransaction.class, id);
+    }
+
     public List<DetailTransaction> findAll(int page) {
         Session session = this.sessionFactory.getCurrentSession();
         String countQ = "select count (f.id) from DetailTransaction f";
@@ -36,6 +44,9 @@ public class DetailTransactionDAO {
         Long countResults = (Long) countQuery.uniqueResult();
         int pageSize = ConfigGateway.getPAGING();
         int lastPageNumber = (int) (Math.ceil(countResults / pageSize));
+        if (lastPageNumber < 1) {
+            lastPageNumber = 1;
+        }
         if (page > lastPageNumber) {
             page = lastPageNumber;
         }
