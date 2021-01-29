@@ -245,13 +245,12 @@
                                                             <th class="text-center">Tổng phí</th>
                                                             <th class="text-center">Tổng phí</th>
                                                             <th class="text-center">TG yêu cầu</th>
-                                                            <th class="text-center">Người trả</th>
-                                                            <th class="text-center">TG trả</th>
+                                                            <th class="text-center">Người chuyển tiền</th>
+                                                            <th class="text-center">TG chuyển tiền</th>
                                                             <th class="text-center">Người thu tiền</th>
                                                             <th class="text-center">TG thu tiền</th>
                                                             <th class="text-center">Trạng thái</th>
-                                                            <th class="text-center">HA trả</th>
-                                                            <th class="text-center">HA thu</th>
+                                                            <th class="text-center">Chứng từ</th>
 
                                                         </tr>
                                                         </thead>
@@ -311,58 +310,20 @@
                                                                         ${lst.payer}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    <c:choose>
-                                                                        <c:when test="${not empty lst.payDate}"><
-                                                                            <fmt:parseDate value="  ${lst.payDate}"
-                                                                                           pattern="yyyy-MM-dd'T'HH:mm"
-                                                                                           var="day"
-                                                                                           type="date"/>
-                                                                            <fmt:formatDate
-                                                                                    pattern="dd/MM/yyyy - hh:mm a"
-                                                                                    value="${day}"/></c:when>
-                                                                        <c:otherwise>
-                                                                            -
-                                                                        </c:otherwise>
-
-                                                                    </c:choose>
+                                                                        ${lst.payDate}
 
                                                                 </td>
                                                                 <td class="text-center">
                                                                         ${lst.collector}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    <c:choose>
-                                                                        <c:when test="${not empty lst.payDate}"><
-                                                                            <fmt:parseDate value="  ${lst.collectDate}"
-                                                                                           pattern="yyyy-MM-dd'T'HH:mm"
-                                                                                           var="day"
-                                                                                           type="date"/>
-                                                                            <fmt:formatDate
-                                                                                    pattern="dd/MM/yyyy - hh:mm a"
-                                                                                    value="${day}"/></c:when>
-                                                                        <c:otherwise>
-                                                                            -
-                                                                        </c:otherwise>
-
-                                                                    </c:choose>
-
+                                                                        ${lst.collectDate}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    <c:choose>
-                                                                        <c:when test="${lst.status eq 'active'}"><b
-                                                                                style="color: green">Đang hoạt
-                                                                            động</b></c:when>
-                                                                        <c:otherwise>
-                                                                        </c:otherwise>
-
-                                                                    </c:choose>
+                                                                        ${lst.status}
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <img src="${lst.payImages}" alt="" width="100%">
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <img src="${lst.collectionImages}" alt=""
-                                                                         width="100%">
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
