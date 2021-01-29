@@ -326,10 +326,15 @@
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <c:choose>
-                                                                        <c:when test="${lst.status eq 'done'}">Đã chuyển tiền thành công</c:when>
-                                                                        <c:otherwise>
-                                                                            Đã chờ chuyển tiền
-                                                                        </c:otherwise>
+                                                                        <c:when test="${lst.status eq 'active'}"><b
+                                                                                style="color: green">Chờ chuyển
+                                                                            tiền</b></c:when>
+                                                                        <c:when test="${lst.status eq 'success'}"><b
+                                                                                style="color: green">Gạch nợ thành
+                                                                            công</b></c:when>
+                                                                        <c:when test="${lst.status eq 'done'}"><b
+                                                                                style="color: green">Chuyển tiền thành
+                                                                            công</b></c:when>
 
                                                                     </c:choose>
                                                                 </td>

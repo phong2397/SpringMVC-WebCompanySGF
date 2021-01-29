@@ -322,7 +322,7 @@
         try {
             // This async call may fail.
             let text = $.ajax({
-                url: "giaingan?id_donhang=" + iddonhang,
+                url: "gachno?id_donhang=" + iddonhang,
                 type: 'POST',
                 data: formData,
                 cache: false,
