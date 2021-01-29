@@ -86,122 +86,118 @@
                         </div>
                         <div class="box-body">
                             <div class="table-responsive">
-                                <table id="example" class="table table-striped table-bordered no-margin" width="100%">
+                                <table id="example"
+                                       class="table table-striped table-bordered no-margin"
+                                       width="100%">
                                     <thead>
                                     <tr>
                                         <th class="text-center">Mã đơn</th>
                                         <th class="text-center">Mã công ty</th>
-                                        <th>Thông tin khách hàng</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Tên khách hàng</th>
-                                        <th>Mã công ty</th>
-                                        <th>Số tài khoản</th>
-                                        <th>Tên ngân hàng</th>
-                                        <th class="text-left">Số tiền tạm ứng</th>
-                                        <th class="text-left">Số tiền tạm ứng</th>
-                                        <th>Phí dịch vụ</th>
-                                        <th>Mức phí</th>
-                                        <th>Mức phí</th>
-                                        <th class="text-left">Số tiền còn nợ</th>
-                                        <th class="text-left">Số tiền còn nợ</th>
-                                        <th class="text-left">Số tiền đã đóng</th>
-                                        <th class="text-left">Số tiền đã đóng</th>
-                                        <th class="text-left">Hạn thanh toán</th>
-                                        <th class="text-left">Kỳ thanh toán</th>
-                                        <th class="text-left">Ngày giải ngân</th>
-                                        <th class="text-left">Người giải ngân</th>
-                                        <th class="text-left">Ngày thanh toán</th>
-                                        <th class="text-left">Trạng thái đơn</th>
-                                        <th class="text-left">Trạng thái cổng thanh toán</th>
+                                        <th class="text-center">Tên khách hàng</th>
+                                        <th class="text-center">Số điện thoại</th>
+                                        <th class="text-center">Chủ tài khoản</th>
+                                        <th class="text-center">Số tài khoản</th>
+                                        <th class="text-center">Tên ngân hàng</th>
+                                        <th class="text-center">Số tiền tạm ứng</th>
+                                        <th class="text-center">Số tiền tạm ứng</th>
+                                        <th class="text-center">Phí</th>
+                                        <th class="text-center">Tổng phí</th>
+                                        <th class="text-center">Tổng phí</th>
+                                        <th class="text-center">TG yêu cầu</th>
+                                        <th class="text-center">Người chuyển tiền</th>
+                                        <th class="text-center">TG chuyển tiền</th>
+                                        <th class="text-center">Chứng từ chuyển tiền</th>
+                                        <th class="text-center">Người thu tiền</th>
+                                        <th class="text-center">TG thu tiền</th>
+                                        <th class="text-center">Trạng thái</th>
+                                        <th class="text-center">Chứng từ thu tiền</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody
                                     <c:forEach items="${views}" var="lst" varStatus="loop">
-                                    <tr id="tr-${lst.contract.idContract}">
-                                        <td><a href="#"
-                                               onclick="viewInfo('${lst.contract.idContract}','${lst.customer.customerPhone}')"><b>${lst.contract.idContract}</b></a>
-                                        </td>
-                                        <td>
-                                                ${lst.companies.companyCode}
-                                        </td>
-                                        <td>
-                                            <h6 class="mb-0">
-                                                    ${lst.customer.customerPhone}
-                                                <span class="d-block text-muted"><b>Tên khách hàng</b> :${lst.customer.customerName}</span>
-                                                <span class="d-block text-muted"><b>Chủ tài khoản</b> : ${lst.customer.customerBank}</span>
-                                                <span class="d-block text-muted"><b>Số tài khoản</b>: ${lst.customer.customerBankAcc}</span>
-                                                <span class="d-block text-muted"><b>Tên ngân hàng</b> : ${lst.customer.customerBankName}</span>
-                                            </h6>
-                                        </td>
-                                        <td>
-                                            <b> ${lst.customer.customerPhone}</b>
-                                        </td>
-                                        <td>
-                                            <b> ${lst.customer.customerName}</b>
-                                        </td>
-                                        <td>
-                                            <b> ${lst.customer.customerBank}</b>
-                                        </td>
-                                        <td>
-                                            <b> ${lst.customer.customerBankAcc}</b>
-                                        </td>
-                                        <td>
-                                            <b> ${lst.customer.customerBankName}</b>
-                                        </td>
-                                        <td><fmt:formatNumber
-                                                value="${lst.contract.borrow }"
-                                                type="number"/> đ
-                                        </td>
-                                        <td>
-                                                ${lst.contract.borrow }
-                                        </td>
-                                        <td>
-                                            2 %
-                                        </td>
-                                        <td>
-                                            <fmt:formatNumber
-                                                    value="${lst.contract.borrow  * 0.02}"
-                                                    type="number"/> đ
-                                        </td>
-                                        <td id="${lst.contract.idContract}">${lst.contract.borrow  * 0.02}
-                                        </td>
-                                        <td>
-                                            <fmt:formatNumber
-                                                    value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 0.02)}"
-                                                    type="number"/> đ
-                                        </td>
-                                        <td>${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 0.02)}
-                                        </td>
-                                        <td><fmt:formatNumber value="${lst.contract.feeBorrow}" type="number"/>
-                                            đ
-                                        </td>
-                                        <td>${lst.contract.feeBorrow}</td>
+                                        <tr id="tr-${lst.id}">
+                                            <td class="text-center">
+                                                <a href="#" data-toggle="modal"
+                                                   onclick="viewInfoCustomer('${lst.id}')"><b>${lst.id}</b></a>
+                                            </td>
+                                            <td class="text-center">
+                                                    ${lst.companyCode}
+                                            </td>
+                                            <td class="text-center">
+                                                    ${lst.customerName}
+                                            </td>
+                                            <td class="text-center">
+                                                    ${lst.customerPhone}
+                                            </td>
+                                            <td class="text-center">
+                                                    ${lst.bankOwner}
+                                            </td>
+                                            <td class="text-center">
+                                                    ${lst.bankAccount}
+                                            </td>
+                                            <td class="text-center">
+                                                    ${lst.bankName}
+                                            </td>
+                                            <td class="text-center">
+                                                <fmt:formatNumber
+                                                        value="${lst.amount}"
+                                                        type="number"/> đ
 
-                                        <td>05/02/2021
-                                        </td>
-                                        <td>1</td>
-                                        <td><fmt:parseDate value="${lst.contract.createdDate}"
-                                                           pattern="yyyy-MM-dd'T'HH:mm:ss"
-                                                           var="patientDob"
-                                                           type="date"/>
-                                            <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a" value="${patientDob}"/></td>
-                                        <td>${lst.contract.acceptedBy}</td>
-                                        <td><fmt:parseDate value=" ${lst.contract.createdDate}"
-                                                           pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
-                                                           type="date"/>
-                                            <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                            value="${patientDob}"/></td>
+                                            </td>
+                                            <td class="text-center">
+                                                    ${lst.amount}
+                                            </td>
+                                            <td class="text-center">
+                                                2 %
+                                            </td>
+                                            <td class="text-center">
+                                                <fmt:formatNumber
+                                                        value="${lst.total}"
+                                                        type="number"/> đ
+                                            </td>
+                                            <td class="text-center">
+                                                    ${lst.total}
+                                            </td>
+                                            <td class="text-center">
+                                                <fmt:parseDate value="  ${lst.dateRequest}"
+                                                               pattern="yyyy-MM-dd'T'HH:mm"
+                                                               var="day"
+                                                               type="date"/>
+                                                <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                value="${day}"/>
+                                            </td>
+                                            <td class="text-center">
+                                                    ${lst.payer}
+                                            </td>
+                                            <td class="text-center">
+                                                    ${lst.payDate}
 
-                                        <td><c:choose>
-                                            <c:when test="${lst.contract.status eq 'act' }">
-                                                <b style="color:#0D8BBD">Đã giải ngân</b></c:when>
-                                            <c:when test="${lst.contract.status eq 'done' }">
-                                                <b style="color:hotpink">Đã tất toán</b></c:when>
-                                        </c:choose></td>
-                                        <td>-</td>
-                                    </tr>
+                                            </td>
+                                            <td class="text-center">
+                                                <img src="/${lst.payImages}"
+                                                     alt="" width="100%">
+                                            </td>
+                                            <td class="text-center">
+                                                    ${lst.collector}
+                                            </td>
+                                            <td class="text-center">
+                                                    ${lst.collectDate}
+                                            </td>
+                                            <td class="text-center">
+                                                <c:choose>
+                                                    <c:when test="${lst.status eq 'done'}">Đã chuyển tiền thành công</c:when>
+                                                    <c:otherwise>
+                                                        Đã chờ chuyển tiền
+                                                    </c:otherwise>
 
+                                                </c:choose>
+                                            </td>
 
+                                            <td class="text-center">
+                                                <img src="/${lst.collectionImages}" alt=""
+                                                     width="100%">
+                                            </td>
+                                        </tr>
                                     </c:forEach>
                                     <tbody>
                                 </table>
@@ -227,144 +223,46 @@
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
     <jsp:include page="general/modal.jsp"/>
-    <div class="modal modal-right fade" id="modalHoadonGachno" tabindex="-1">
-        <div class="modal-dialog">
+    <div tabindex="-1" class="modal modal-fill fade" id="modal-giaingan" role="dialog" aria-hidden="true"
+         aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog ">
             <div class="modal-content">
-                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                    <section class="invoice printableArea" id="main">
-                        <div class="row no-print">
-                            <div class="col-12">
-                                <form action="" method="post"
-                                      enctype="multipart/form-data">
-                                    <label>Chọn hình ảnh ủy nhiệm thu:
-                                        <button type="button" class="btn btn-rounded btn-info "
-                                                type="file" name="file"> Upload
-                                        </button>
-                                    </label><br>
-                                    <img class="img" src=""/>
-
-                                </form>
-
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <!-- title row -->
-                            <div class="col-12">
-                                <div class="page-header">
-                                    <h2 class="d-inline"><span class="font-size-30">Thông tin hóa đơn</span></h2>
-                                    <div class="pull-right text-right">
-                                        <h3><fmt:parseDate value="${year}" pattern="dd-MM-yyyy" var="patientDob"
-                                                           type="date"/>
-                                            <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- info row -->
-                            <div class="row invoice-info">
-                                <div class="col-md-6 invoice-col">
-                                    <strong>FROM</strong>
-                                    <address>
-                                        <strong class="text-blue font-size-24">SG Fintech</strong><br>
-                                        <strong class="d-inline">66 Phó Đức Chính Quận 1</strong><br>
-                                        <strong>Phone: (00) 123-456-7890 &nbsp;&nbsp;&nbsp;&nbsp; Email:
-                                            admin@sgfintech.com.vn</strong>
-                                    </address>
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-md-6 invoice-col text-right">
-                                    <strong>To</strong>
-                                    <address>
-                                        <strong class="text-blue font-size-24"><span
-                                                id="customerNameg"></span></strong><br>
-                                        <strong class="d-inline"><span id="customerAddressg"></span></strong><br>
-                                        <strong>Phone: <span id="customerPhoneg"></span> &nbsp;&nbsp;&nbsp;&nbsp; Email:
-                                            <span id="customerEmailg"></span></strong>
-                                    </address>
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-12 invoice-col mb-15">
-                                    <div class="invoice-details row no-margin">
-                                        <div class="col-md-6 col-lg-3"><b>Mã đơn :&nbsp;</b><span
-                                                id="idContract"></span>
-                                        </div>
-                                        <div class="col-md-6 col-lg-3"><b>Thông tin giao dịch:</b>
-                                            <span id="transactionId"></span> <span id="status"></span></div>
-                                        <div class="col-md-6 col-lg-3"><b>Ngày thanh toán:</b><fmt:parseDate
-                                                value="${year}"
-                                                pattern="dd-MM-yyyy"
-                                                var="patientDob"
-                                                type="date"/>
-                                            <fmt:formatDate pattern="dd/MM/yyyy " value="${patientDob}"/></div>
-                                        <div class="col-md-6 col-lg-3"><b>Tài khoản báo có :</b>
-                                            <span id="customerBankAccg"></span></div>
-                                    </div>
-                                </div>
-                                <!-- /.col -->
-                            </div>
-                            <!-- /.row -->
-                            <!-- Table row -->
-                            <div class="row">
-                                <div class="col-12 table-responsive">
-                                    <table class="table table-bordered">
-                                        <tbody>
-                                        <tr>
-                                            <th>Mô tả</th>
-                                            <th>Serial #</th>
-                                            <th class="text-right">Số lần thanh toán</th>
-                                            <th class="text-right">Số tiền thanh toán</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Thanh toán dư nợ cuối kì</td>
-                                            <td><span id="systemTrace"></span></td>
-                                            <td class="text-right"><span id="timeBorrow"></span></td>
-                                            <td class="text-right"><span id="remainAmountBorrow1"></span></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.col -->
-                            </div>
-                            <!-- /.row -->
-
-                            <div class="row">
-                                <div class="col-12 text-right">
-                                    <p class="lead"><b>Ngày thanh toán:</b><span class="text-danger"><fmt:parseDate
-                                            value="${year}" pattern="dd-MM-yyyy" var="patientDob" type="date"/>
-														<fmt:formatDate pattern="dd/MM/yyyy "
-                                                                        value="${patientDob}"/></span></p>
-                                    <div class="total-payment">
-                                        <h3><b>Tổng cộng :</b>
-                                            <span id="remainAmountBorrow"></span>
-                                        </h3>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <!-- /.col -->
-                            <!-- /.row -->
-
-                            <!-- this row will not appear when printing -->
-                            <div class="row no-print">
-                                <div class="col-12">
-                                    <button type="button" class="btn btn-rounded btn-success pull-right"
-                                            onclick="gachno()"><i
-                                            class="fa fa-credit-card"></i> Gạch nợ
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <hr>
-                    <div class="modal-footer modal-footer-uniform">
-                        <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Đóng trang
-                        </button>
-
-                    </div>
+                <div class="modal-header">
+                    <h4 style="color: #0b0b0b">Thông tin chứng từ</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <!-- Panes -->
+
+                <div class="modal-body">
+                    <form action="giaingan.html" method="post" id="from_upload"
+                          enctype="multipart/form-data">
+                        <label><b style="color:black; margin-bottom: 20px; ">Chọn hình ảnh:</b><br>
+                            <input type="file" id="importFile" class="btn btn-rounded btn-facebook "
+                                   name="file"/>
+                        </label><br>
+                        <input type="hidden" id="id_donhang" name="id_donhang"/>
+                        <img class="img" src=""/>
+                        <div class="modal-footer modal-footer-uniform">
+                            <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="gachno()">Gạch
+                                nợ
+                            </button>
+                            <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng trang
+                            </button>
+                        </div>
+                    </form>
+                    <h4 id="labelDanhgia"></h4>
+                    <b style="color:black">Giải ngân : Thông tin nhận tiền đầy đủ</b>
+                </div>
+
+
+                <!-- Footer -->
+
+
             </div>
         </div>
     </div>
-
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
@@ -394,7 +292,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [3, 4, 5, 6, 7, 9, 12, 14, 16]
+                    // targets: [3, 4, 5, 6, 7, 9, 12, 14, 16]
                 },
             ],
             buttons: [
@@ -414,8 +312,42 @@
             ]
         })
     });
+    var selectedsaId;
 
-    var selectedContractId;
+    function gachno() {
+        var formData = new FormData();
+        var iddonhang = $("#id_donhang").val();
+        selectedsaId = iddonhang
+        formData.append('file', $('#importFile')[0].files[0]);
+        try {
+            // This async call may fail.
+            let text = $.ajax({
+                url: "giaingan?id_donhang=" + iddonhang,
+                type: 'POST',
+                data: formData,
+                cache: false,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                async: false,
+            }).responseText;
+            console.log(text);
+            if (text === "success") {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Dữ liệu được cập nhật thành công.',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                $("#modal-giaingan").modal('hide');
+                $("#tr-" + selectedsaId).remove();
+            }
+            return;
+        } catch (error) {
+            return "Không thể kết nối tới server";
+        }
+    }
+
     <%
         List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");
         Gson g = new Gson();

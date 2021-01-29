@@ -247,18 +247,19 @@
                                                             <th class="text-center">TG yêu cầu</th>
                                                             <th class="text-center">Người chuyển tiền</th>
                                                             <th class="text-center">TG chuyển tiền</th>
+                                                            <th class="text-center">Chứng từ chuyển tiền</th>
                                                             <th class="text-center">Người thu tiền</th>
                                                             <th class="text-center">TG thu tiền</th>
                                                             <th class="text-center">Trạng thái</th>
-                                                            <th class="text-center">Chứng từ chuyển tiền</th>
                                                             <th class="text-center">Chứng từ thu tiền</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody
                                                         <c:forEach items="${views}" var="lst" varStatus="loop">
-                                                            <tr>
+                                                            <tr id="tr-${lst.id}">
                                                                 <td class="text-center">
-                                                                        ${lst.id}
+                                                                    <a href="#" data-toggle="modal"
+                                                                       onclick="viewInfoCustomer('${lst.id}')"><b>${lst.id}</b></a>
                                                                 </td>
                                                                 <td class="text-center">
                                                                         ${lst.companyCode}
@@ -314,6 +315,10 @@
 
                                                                 </td>
                                                                 <td class="text-center">
+                                                                    <img src="/${lst.payImages}"
+                                                                         alt="" width="100%">
+                                                                </td>
+                                                                <td class="text-center">
                                                                         ${lst.collector}
                                                                 </td>
                                                                 <td class="text-center">
@@ -328,10 +333,7 @@
 
                                                                     </c:choose>
                                                                 </td>
-                                                                <td class="text-center">
-                                                                    <img src="/${lst.payImages}"
-                                                                         alt="" width="100%">
-                                                                </td>
+
                                                                 <td class="text-center">
                                                                     <img src="/${lst.collectionImages}" alt=""
                                                                          width="100%">
