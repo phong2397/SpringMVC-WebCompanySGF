@@ -358,7 +358,7 @@
                 <!-- Panes -->
 
                 <div class="modal-body">
-                    <form action="giaingan.html" method="post"
+                    <form action="giaingan.html" method="post" id="from_upload"
                           enctype="multipart/form-data">
                         <label><b style="color:black; margin-bottom: 20px; ">Chọn hình ảnh:</b><br>
                             <input type="file" class="btn btn-rounded btn-facebook "
@@ -367,7 +367,8 @@
                         <input type="hidden" id="id_donhang" name="id_donhang"/>
                         <img class="img" src=""/>
                         <div class="modal-footer modal-footer-uniform">
-                            <button class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">Hoàn thành chuyển tiền
+                            <button class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">Hoàn thành chuyển
+                                tiền
                             </button>
                             <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng trang
                             </button>
@@ -420,7 +421,22 @@
     var selectedsaId;
 
     function giaingan() {
-
+        var fromData = new FormData("#from_upload");
+        try {
+            // This async call may fail.
+            let text = $.ajax({
+                type: "POST",
+                timeout: 100000,
+                url: "giaingan",
+                data: fromData,
+                dataType: 'text',
+                async: false
+            }).responseText;
+            debugger
+            return text;
+        } catch (error) {
+            return "Không thể kết nối tới server";
+        }
     }
 
     $(document).ready(function () {

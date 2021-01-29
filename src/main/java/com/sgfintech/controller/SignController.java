@@ -210,6 +210,7 @@ public class SignController {
             detailTransaction.setPayImages(expath);
             detailTransaction.setPayer(u.getUserLogin());
             detailTransaction.setStatus("done");
+            detailTransaction.setPayDate(LocalDateTime.now());
             detailTransactionDAO.update(detailTransaction);
             log.info("success");
             return "success";
@@ -281,6 +282,7 @@ public class SignController {
             String requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
             if (!StringUtil.isEmpty(u) && u.getUserLogin().equals(employeeDuyet)) {
                 if (status.equals("act")) {
+                    log.info("check status == act");
                     Contract ct = new Contract();
                     ct.setIdContract(sa.getId());
                     ct.setSystemTrace(uuid);
@@ -321,6 +323,7 @@ public class SignController {
                     task.start();
                     return "success";
                 } else if (status.equals("deni")) {
+                    log.info("check status == deni");
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
                     sa.setUpdatedDate(LocalDateTime.now());
                     sa.setStatus(status);

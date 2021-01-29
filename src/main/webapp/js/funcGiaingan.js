@@ -7,7 +7,6 @@ function viewInfoDetail(id) {
         step: '3',
         textDecline: 'Chuyển tiền thành công',
     };
-    console.log("viewDetail");
     // var result = sendOrderGiaingan(data);
     if (result === "success") {
         Swal.fire({
