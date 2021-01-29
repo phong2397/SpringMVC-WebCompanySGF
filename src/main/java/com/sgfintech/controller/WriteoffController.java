@@ -18,13 +18,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -101,22 +106,41 @@ public class WriteoffController {
 
     @RequestMapping(value = {"/gachno"}, method = RequestMethod.POST)
     public @ResponseBody
-    String gachnotoanphanAction(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-
+    String gachnotoanphanAction(@RequestParam("file") MultipartFile multipartFile,HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        String id = request.getParameter("id_donhang");
         String data = request.getParameter("datarequest");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
-            Contract ct = contractDAO.findById(Long.parseLong(data));
             if (!StringUtil.isEmpty(u) && u.getUserLogin().equals("ketoan")) {
+                String path = System.getProperty("catalina.home") + "/webapps/uynhiemchi/";
+                log.info("Path : " + path);
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-sss");
+                String fileName = sdf.format(date) + multipartFile.getOriginalFilename();
+                File file = new File(path, fileName);
+                if (!file.exists()) {
+                    log.info("Check file not exiist : ");
+                    file.mkdirs();
+                }
+                multipartFile.transferTo(file);
+                String expath = "uynhiemchi/" + fileName;
+
+                Contract ct = contractDAO.findById(Long.parseLong(data));
                 ct.setStatus("done");
                 ct.setRemainAmountBorrow(0l);
                 ct.setAcceptedBy(u.getUserLogin());
                 ct.setDateRepayment(LocalDateTime.now());
                 ct.setUpdatedDate(LocalDateTime.now());
                 contractDAO.update(ct);
+
+                DetailTransaction d = detailTransactionDAO.findById(Integer.parseInt(id));
+                d.setCollectDate(LocalDateTime.now());
+                d.setStatus("success");
+                d.setCollector(u.getUserLogin());
+                d.setCollectionImages(expath);
+                detailTransactionDAO.update(d);
                 return "success";
             } else {
-              
                 return "roleError";
             }
         } catch (Exception ex) {
