@@ -210,6 +210,7 @@ public class SignController {
             detailTransaction.setPayImages(expath);
             detailTransaction.setPayer(u.getUserLogin());
             detailTransactionDAO.update(detailTransaction);
+            log.info("success");
             return "success";
         } catch (Exception ex) {
             return null;
