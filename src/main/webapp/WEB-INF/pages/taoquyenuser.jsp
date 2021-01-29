@@ -118,6 +118,12 @@
                                                 <option value="tncollection">
                                                     <span> Trưởng nhóm collection</span>
                                                 </option>
+                                                <option value="nvthamdinh">
+                                                    <span>Nhân viên thẩm định</span>
+                                                </option>
+                                                <option value="nvkyduyet">
+                                                    <span>Nhân viên ký duyệt</span>
+                                                </option>
                                                 <% } else if (u.getRole().equals("tncollection")) {
                                                 %>
                                                 <option value="nvnhacphi">

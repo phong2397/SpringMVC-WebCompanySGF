@@ -217,29 +217,6 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-12 col-md-6 col-lg-4 mix banking sponsored">
-                                                                    <div class="box box-body pull-up">
-                                                                        <div class="d-flex justify-content-between">
-                                                                            <div>
-                                                                                <h4>
-                                                                                    <p class="no-margin font-weight-600"><span
-                                                                                            class="text-warning">05/02/2021</span>
-                                                                                    </p>
-                                                                                    <p> Kỳ hạn thanh toán
-                                                                                    </p></h4>
-
-                                                                            </div>
-                                                                            <div class="media align-items-center p-0">
-                                                                                <div class="text-center">
-                                                                                    <a href="#"><i
-                                                                                            class="cc WAVES mr-5"
-                                                                                            title="WAVES"></i></a>
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
                                                             </div>
 
                                                         </div>
@@ -256,54 +233,101 @@
                                                         <thead>
                                                         <tr>
                                                             <th class="text-center">Mã đơn</th>
-                                                            <th class="text-center">Số hợp đồng</th>
-                                                            <th class="text-center">Tên sản phẩm</th>
-                                                            <th class="text-center">Tên công ty</th>
+                                                            <th class="text-center">Mã công ty</th>
                                                             <th class="text-center">Tên khách hàng</th>
-                                                            <th class="text-center">Số CMND</th>
-                                                            <th class="text-center">Số tiền tạm ứng</th>
-                                                            <th class="text-center">Số tiền đã thanh toán</th>
-                                                            <th class="text-center">Ngày thanh toán</th>
-                                                            <th class="text-center">Hạn thanh toán</th>
-                                                            <th class="text-center">Tên nhân viên giao dịch</th>
+                                                            <th class="text-center">Số điện thoại</th>
+                                                            <th class="text-center">Chủ tài khoản</th>
+                                                            <th class="text-center">Số tài khoản</th>
+                                                            <th class="text-center">Tên ngân hàng</th>
+                                                            <th class="text-center">Số tiền TU</th>
+                                                            <th class="text-center">Phí</th>
+                                                            <th class="text-center">Tổng phí</th>
+                                                            <th class="text-center">TG yêu cầu</th>
+                                                            <th class="text-center">Người trả</th>
+                                                            <th class="text-center">TG trả</th>
+                                                            <th class="text-center">Người thu tiền</th>
+                                                            <th class="text-center">TG thu tiền</th>
+                                                            <th class="text-center">Trạng thái</th>
+                                                            <th class="text-center">Uỷ nhiệm chi</th>
+                                                            <th class="text-center">Uỷ nhiệm thu</th>
+
                                                         </tr>
                                                         </thead>
                                                         <tbody
                                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                                             <tr>
                                                                 <td class="text-center">
-                                                                        ${lst}
+                                                                        ${lst.id}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    307
+                                                                        ${lst.companyCode}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    Salary Advance
+                                                                        ${lst.customerName}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    Công ty ABC
+                                                                        ${lst.customerPhone}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    Luong Van Can
+                                                                        ${lst.bankOwner}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    0255197065
+                                                                        ${lst.bankAccount}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    3.200.000 đ
+                                                                        ${lst.bankName}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    200.000 đ
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    28/01/2021
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    05/02/2021
-                                                                </td>
+                                                                    <fmt:formatNumber
+                                                                            value="${lst.amount}"
+                                                                            type="number"/> đ
 
+                                                                </td>
                                                                 <td class="text-center">
-                                                                    Kế toán
+                                                                    2 %
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <fmt:formatNumber
+                                                                            value="${lst.total}"
+                                                                            type="number"/> đ
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <fmt:parseDate value="  ${lst.dateRequest}"
+                                                                                   pattern="yyyy-MM-dd'T'HH:mm"
+                                                                                   var="day"
+                                                                                   type="date"/>
+                                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                                    value="${day}"/>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                        ${lst.payer}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    -
+                                                                </td>
+                                                                <td class="text-center">
+                                                                        ${lst.collector}
+                                                                </td>
+                                                                <td class="text-center">
+
+                                                                    -
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <c:choose>
+                                                                        <c:when test="${lst.status eq 'active'}"><b
+                                                                                style="color: green">Đang hoạt
+                                                                            động</b></c:when>
+                                                                        <c:otherwise>
+                                                                        </c:otherwise>
+
+                                                                    </c:choose>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <img src="${lst.payImages}" alt="" width="100%">
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <img src="${lst.collectionImages}" alt=""
+                                                                         width="100%">
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -403,12 +427,6 @@
                 }
             },
             pageLength: 20,
-            columnDefs: [
-                {
-                    visible: false,
-                    targets: [6, 10]
-                },
-            ],
             buttons: [
                 {
                     title: 'Danh sách khách hàng thanh toán',
