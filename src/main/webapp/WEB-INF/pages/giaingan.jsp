@@ -201,14 +201,14 @@
                                             <th class="text-center">Chủ tài khoản</th>
                                             <th class="text-center">Số tài khoản</th>
                                             <th class="text-center">Tên ngân hàng</th>
-                                            <th class="text-center">Số tiền TU</th>
-                                            <th class="text-center">Số tiền TU</th>
+                                            <th class="text-center">Số tiền tạm ứng</th>
+                                            <th class="text-center">Số tiền tạm ứng</th>
                                             <th class="text-center">Phí</th>
                                             <th class="text-center">Tổng phí</th>
                                             <th class="text-center">Tổng phí</th>
                                             <th class="text-center">TG yêu cầu</th>
-                                            <th class="text-center">Người trả</th>
-                                            <th class="text-center">TG trả</th>
+                                            <th class="text-center">Người chuyển tiền</th>
+                                            <th class="text-center">TG chuyển tiền</th>
                                             <th class="text-center">Người thu tiền</th>
                                             <th class="text-center">TG thu tiền</th>
                                             <th class="text-center">Trạng thái</th>
@@ -219,7 +219,7 @@
                                         </thead>
                                         <tbody
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
-                                            <tr>
+                                            <tr id="tr-${lst.id}">
                                                 <td class="text-center">
                                                     <a href="#" data-toggle="modal"
                                                        onclick="viewInfoCustomer('${lst.id}')"><b>${lst.id}</b></a>
@@ -274,49 +274,24 @@
                                                         ${lst.payer}
                                                 </td>
                                                 <td class="text-center">
-                                                    <c:choose>
-                                                        <c:when test="${not empty lst.payDate}"><
-                                                            <fmt:parseDate value="  ${lst.payDate}"
-                                                                           pattern="yyyy-MM-dd'T'HH:mm"
-                                                                           var="day"
-                                                                           type="date"/>
-                                                            <fmt:formatDate
-                                                                    pattern="dd/MM/yyyy - hh:mm a"
-                                                                    value="${day}"/></c:when>
-                                                        <c:otherwise>
-                                                            -
-                                                        </c:otherwise>
-
-                                                    </c:choose>
+                                                        ${lst.payDate}
 
                                                 </td>
                                                 <td class="text-center">
                                                         ${lst.collector}
                                                 </td>
                                                 <td class="text-center">
-                                                    <c:choose>
-                                                        <c:when test="${not empty lst.payDate}"><
-                                                            <fmt:parseDate value="  ${lst.collectDate}"
-                                                                           pattern="yyyy-MM-dd'T'HH:mm"
-                                                                           var="day"
-                                                                           type="date"/>
-                                                            <fmt:formatDate
-                                                                    pattern="dd/MM/yyyy - hh:mm a"
-                                                                    value="${day}"/></c:when>
-                                                        <c:otherwise>
-                                                            -
-                                                        </c:otherwise>
-
-                                                    </c:choose>
+                                                        ${lst.collectDate}
 
                                                 </td>
                                                 <td class="text-center">
                                                     <c:choose>
                                                         <c:when test="${lst.status eq 'active'}"><b
-                                                                style="color: green">Đang hoạt
-                                                            động</b></c:when>
-                                                        <c:otherwise>
-                                                        </c:otherwise>
+                                                                style="color: green">Chờ chuyển tiền</b></c:when>
+                                                        <c:when test="${lst.status eq 'success'}"><b
+                                                                style="color: green">Gạch nợ thành công</b></c:when>
+                                                        <c:when test="${lst.status eq 'done'}"><b
+                                                                style="color: green">Chuyển tiền thành công</b></c:when>
 
                                                     </c:choose>
                                                 </td>
@@ -361,13 +336,14 @@
                     <form action="giaingan.html" method="post" id="from_upload"
                           enctype="multipart/form-data">
                         <label><b style="color:black; margin-bottom: 20px; ">Chọn hình ảnh:</b><br>
-                            <input type="file" class="btn btn-rounded btn-facebook "
+                            <input type="file" id="importFile" class="btn btn-rounded btn-facebook "
                                    name="file"/>
                         </label><br>
                         <input type="hidden" id="id_donhang" name="id_donhang"/>
                         <img class="img" src=""/>
                         <div class="modal-footer modal-footer-uniform">
-                            <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">Hoàn thành chuyển
+                            <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">Hoàn
+                                thành chuyển
                                 tiền
                             </button>
                             <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng trang
@@ -375,7 +351,6 @@
                         </div>
                     </form>
                     <h4 id="labelDanhgia"></h4>
-
                     <b style="color:black">Giải ngân : Thông tin nhận tiền đầy đủ</b>
                 </div>
 
@@ -417,23 +392,38 @@
                 %>
     var result = <%=json%>;
     var saList = <%=jsonSa%>;
-    console.log(saList)
+    console.log(saList);
     var selectedsaId;
 
     function giaingan() {
-        var fromData = new FormData("#from_upload");
+        var formData = new FormData();
+        var iddonhang = $("#id_donhang").val();
+        selectedsaId = iddonhang
+        formData.append('file', $('#importFile')[0].files[0]);
         try {
             // This async call may fail.
             let text = $.ajax({
-                type: "POST",
-                timeout: 100000,
-                url: "giaingan",
-                data: fromData,
-                dataType: 'text',
-                async: false
+                url: "giaingan?id_donhang=" + iddonhang,
+                type: 'POST',
+                data: formData,
+                cache: false,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                async: false,
             }).responseText;
-            debugger
-            return text;
+            console.log(text);
+            if (text === "success") {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Dữ liệu được cập nhật thành công.',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                $("#modal-giaingan").modal('hide');
+                $("#tr-" + selectedsaId).remove();
+            }
+            return;
         } catch (error) {
             return "Không thể kết nối tới server";
         }

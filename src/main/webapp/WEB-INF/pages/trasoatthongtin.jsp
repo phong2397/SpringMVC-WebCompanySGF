@@ -239,26 +239,27 @@
                                                             <th class="text-center">Chủ tài khoản</th>
                                                             <th class="text-center">Số tài khoản</th>
                                                             <th class="text-center">Tên ngân hàng</th>
-                                                            <th class="text-center">Số tiền TU</th>
-                                                            <th class="text-center">Số tiền TU</th>
+                                                            <th class="text-center">Số tiền tạm ứng</th>
+                                                            <th class="text-center">Số tiền tạm ứng</th>
                                                             <th class="text-center">Phí</th>
                                                             <th class="text-center">Tổng phí</th>
                                                             <th class="text-center">Tổng phí</th>
                                                             <th class="text-center">TG yêu cầu</th>
                                                             <th class="text-center">Người chuyển tiền</th>
                                                             <th class="text-center">TG chuyển tiền</th>
+                                                            <th class="text-center">Chứng từ chuyển tiền</th>
                                                             <th class="text-center">Người thu tiền</th>
                                                             <th class="text-center">TG thu tiền</th>
                                                             <th class="text-center">Trạng thái</th>
-                                                            <th class="text-center">Chứng từ</th>
-
+                                                            <th class="text-center">Chứng từ thu tiền</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody
                                                         <c:forEach items="${views}" var="lst" varStatus="loop">
-                                                            <tr>
+                                                            <tr id="tr-${lst.id}">
                                                                 <td class="text-center">
-                                                                        ${lst.id}
+                                                                    <a href="#" data-toggle="modal"
+                                                                       onclick="viewInfoCustomer('${lst.id}')"><b>${lst.id}</b></a>
                                                                 </td>
                                                                 <td class="text-center">
                                                                         ${lst.companyCode}
@@ -314,16 +315,33 @@
 
                                                                 </td>
                                                                 <td class="text-center">
+                                                                    <img src="/${lst.payImages}"
+                                                                         alt="" width="100%">
+                                                                </td>
+                                                                <td class="text-center">
                                                                         ${lst.collector}
                                                                 </td>
                                                                 <td class="text-center">
                                                                         ${lst.collectDate}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                        ${lst.status}
+                                                                    <c:choose>
+                                                                        <c:when test="${lst.status eq 'active'}"><b
+                                                                                style="color: green">Chờ chuyển
+                                                                            tiền</b></c:when>
+                                                                        <c:when test="${lst.status eq 'success'}"><b
+                                                                                style="color: green">Gạch nợ thành
+                                                                            công</b></c:when>
+                                                                        <c:when test="${lst.status eq 'done'}"><b
+                                                                                style="color: green">Chuyển tiền thành
+                                                                            công</b></c:when>
+
+                                                                    </c:choose>
                                                                 </td>
+
                                                                 <td class="text-center">
-                                                                    <img src="${lst.payImages}" alt="" width="100%">
+                                                                    <img src="/${lst.collectionImages}" alt=""
+                                                                         width="100%">
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -426,7 +444,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [8, 11]
+                    // targets: [8, 11]
                 }
             ],
             buttons: [

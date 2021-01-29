@@ -53,7 +53,7 @@ public class WriteoffController {
 
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
-          
+
             return "redirect:login";
         } else {
             List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("act", true, "");
@@ -62,7 +62,7 @@ public class WriteoffController {
             mm.addAttribute("admin", admin);
             mm.addAttribute("con", contract);
             mm.addAttribute(Consts.Attr_ResultView, listdata);
-          
+
             return "nhacphi";
         }
     }
@@ -106,7 +106,7 @@ public class WriteoffController {
 
     @RequestMapping(value = {"/gachno"}, method = RequestMethod.POST)
     public @ResponseBody
-    String gachnotoanphanAction(@RequestParam("file") MultipartFile multipartFile,HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    String gachnotoanphanAction(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String id = request.getParameter("id_donhang");
         String data = request.getParameter("datarequest");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
@@ -125,7 +125,7 @@ public class WriteoffController {
                 multipartFile.transferTo(file);
                 String expath = "uynhiemchi/" + fileName;
 
-                Contract ct = contractDAO.findById(Long.parseLong(data));
+                Contract ct = contractDAO.findById(Long.parseLong(id));
                 ct.setStatus("done");
                 ct.setRemainAmountBorrow(0l);
                 ct.setAcceptedBy(u.getUserLogin());
@@ -144,7 +144,7 @@ public class WriteoffController {
                 return "roleError";
             }
         } catch (Exception ex) {
-          
+
             return "error";
         }
     }

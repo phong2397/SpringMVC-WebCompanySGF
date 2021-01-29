@@ -51,9 +51,9 @@ public class DetailTransactionDAO {
         if (page > lastPageNumber) {
             page = lastPageNumber;
         }
-        Query query =  session.createQuery("from DetailTransaction order by dateRequest desc");
+        Query query = session.createQuery("from DetailTransaction order by dateRequest desc");
         query.setFirstResult(0);
-        query.setMaxResults(pageSize*page);
+        query.setMaxResults(pageSize * page);
         List<DetailTransaction> fooList = query.list();
         return fooList;
     }
@@ -71,10 +71,10 @@ public class DetailTransactionDAO {
         if (page > lastPageNumber) {
             page = lastPageNumber;
         }
-        Query query =  session.createQuery("from DetailTransaction where status = ?1 order by dateRequest desc");
+        Query query = session.createQuery("from DetailTransaction where status = ?1 order by dateRequest desc");
         query.setParameter(1, "active");
         query.setFirstResult(0);
-        query.setMaxResults(pageSize*page);
+        query.setMaxResults(pageSize * page);
         List<DetailTransaction> fooList = query.list();
         return fooList;
     }
@@ -92,14 +92,13 @@ public class DetailTransactionDAO {
         if (page > lastPageNumber) {
             page = lastPageNumber;
         }
-        Query query =  session.createQuery("from DetailTransaction where status = ?1 order by dateRequest desc");
+        Query query = session.createQuery("from DetailTransaction where status = ?1 order by dateRequest desc");
         query.setParameter(1, "done");
         query.setFirstResult(0);
-        query.setMaxResults(pageSize*page);
+        query.setMaxResults(pageSize * page);
         List<DetailTransaction> fooList = query.list();
         return fooList;
     }
-
 //
 //    @Test
 //    public void givenEntitiesExist_whenRetrievingLastPage_thenCorrectSize() {
