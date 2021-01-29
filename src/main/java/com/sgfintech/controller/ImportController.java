@@ -93,9 +93,6 @@ public class ImportController implements ServletContextAware {
                 com.setCompanyPhone(companyPhone);
                 companiesDAO.save(com);
                 customerDAO.saveAllStateless(lstCustomer);
-                log.info("test log ===============================");
-                log.info(System.getProperty("catalina.base"));
-                log.info(System.getProperty("catalina.home"));
                 return new Gson().toJson(lstCustomer);
             } else {
                 log.info("Check count company code > 1 ");
@@ -105,7 +102,6 @@ public class ImportController implements ServletContextAware {
                 List<Customer> importDB = CompareListHandler.compareList(customerList, lstCustomer);
                 log.info("Compare 2 list: " + importDB);
                 customerDAO.saveAll(importDB);
-                log.info("Json import excel : " + new Gson().toJson(importDB));
                 return new Gson().toJson(importDB);
             }
         } catch (Exception ex) {

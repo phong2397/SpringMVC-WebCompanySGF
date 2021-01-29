@@ -62,16 +62,20 @@ public class SignController {
 //        int countWait = mergeDataService.countStatus("wait");
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countDone = mergeDataService.countStatus("done");
+        log.info("GET - Go into kyduyetRole Page");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
         } else {
             String empDuyet = u.getUserLogin();
-            List<MergeDataOrder> listXetduyetLogin = mergeDataService.getUserDuyet("wfs", empDuyet);
-            mm.addAttribute(Consts.Attr_ResultView, listXetduyetLogin);
+            List<MergeDataOrder> listkyduyetLogin = mergeDataService.getUserDuyet("wfs", empDuyet);
+            log.info("list employee xet duyet: " + listkyduyetLogin);
+            mm.addAttribute(Consts.Attr_ResultView, listkyduyetLogin);
             List<SaRequest> saRequest = saRequestDAO.findAll();
+            log.info("list saRequest: " + saRequest);
             mm.addAttribute("sa", saRequest);
             int count[] = saRequestService.countStatus();
+            log.info("count status: " + count);
             mm.addAttribute("countAct", count[1]);
             mm.addAttribute("countWait", count[2]);
             mm.addAttribute("countWFS", count[3]);
@@ -86,16 +90,20 @@ public class SignController {
 //        int countWait = mergeDataService.countStatus("wait");
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countDeni = mergeDataService.countStatus("deni");
+        log.info("GET - Go into declineKyduyetPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
         } else {
             String empDuyet = u.getUserLogin();
             List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getUserDuyet("deni", empDuyet);
+            log.info("list tuchoi nhan vien ky duyet: " + listMergeDatumOrders);
             List<SaRequest> saRequest = saRequestDAO.findAll();
+            log.info("list saResquest : " + saRequest);
             mm.addAttribute("sa", saRequest);
             mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
             int count[] = saRequestService.countStatus();
+            log.info("count status : " + count);
             mm.addAttribute("countAct", count[1]);
             mm.addAttribute("countWait", count[2]);
             mm.addAttribute("countWFS", count[3]);
@@ -105,22 +113,27 @@ public class SignController {
     }
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
-    public String welcomePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+    public String kyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
 //        int countWait = mergeDataService.countStatus("wait");
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countAct = mergeDataService.countStatus("act");
 //        int countDone = mergeDataService.countStatus("done");
+        log.info("GET - Go into kyduyetPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
         } else {
             List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
+            log.info("list tuchoi nhan vien ky duyet: " + listMergeDatumOrders);
             List<Useradmin> admin = useradminDAO.findAll();
+            log.info("list user admin: " + admin);
             mm.addAttribute("admin", admin);
             List<SaRequest> saRequest = saRequestDAO.findAll();
+            log.info("list saRequest: " + saRequest);
             mm.addAttribute("sa", saRequest);
             mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
             int count[] = saRequestService.countStatus();
+            log.info("count status : " + count);
             mm.addAttribute("countWait", count[2]);
             mm.addAttribute("countWFS", count[3]);
             mm.addAttribute("countAct", count[1]);
@@ -135,18 +148,23 @@ public class SignController {
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countAct = mergeDataService.countStatus("act");
 //        int countDone = mergeDataService.countStatus("done");
+        log.info("GET - Go into giainganPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
         } else {
 //            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("act", false);
             List<DetailTransaction> listActive = detailTransactionDAO.findAllByActive(1);
+            log.info("list detail transaction: " + listActive);
             List<Useradmin> admin = useradminDAO.findAll();
+            log.info("list user admin: " + admin);
             mm.addAttribute("admin", admin);
             List<SaRequest> saRequest = saRequestDAO.findAll();
+            log.info("list saRequest: " + saRequest);
             mm.addAttribute("sa", saRequest);
             mm.addAttribute(Consts.Attr_ResultView, listActive);
             int count[] = saRequestService.countStatus();
+            log.info("count status : " + count);
             mm.addAttribute("countWait", count[2]);
             mm.addAttribute("countWFS", count[3]);
             mm.addAttribute("countAct", count[1]);
@@ -158,25 +176,32 @@ public class SignController {
     @RequestMapping(value = "/updateEmployeeDuyet", method = RequestMethod.POST)
     public @ResponseBody
     String updateEmployeeDuyet(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        log.info("POST - updateEmployeeDuyet");
         List<SaRequest> lst = new ArrayList<>();
         String[] data = request.getParameterValues("datarequest[]");
-        System.out.println(data);
-
+        log.info("data id saRequest" + data);
         String employeeDuyet = request.getParameter("employeeDuyet");
+        log.info("data employee duyet" + employeeDuyet);
         for (String d : data) {
+            log.info("Run for loop data");
             SaRequest s = new SaRequest();
             s.setId(Long.parseLong(d));
             s.setEmployeeDuyet(employeeDuyet);
-            lst.add(s);
+            boolean lsResult = lst.add(s);
+            log.info("List add data: " + lsResult);
         }
         try {
             int[][] countUpdate = saRequestService.updateemployeeDuyetById(lst);
+            log.info("Count employee tham dinh : " + countUpdate);
             if (countUpdate.length < 1) {
+                log.info("Count employee tham dinh  < 1 --- return error ");
                 return "error";
             } else {
+                log.info("Count employee tham dinh  > 1 --- return success ");
                 return "success";
             }
         } catch (Exception ex) {
+            log.error("Exception: " + ex.getMessage());
             return "error";
         }
     }
@@ -193,25 +218,16 @@ public class SignController {
         log.info("Data status: " + status);
         String step = request.getParameter("step");
         log.info("Data step: " + step);
-        String employeeDuyet = request.getParameter("employeeDuyet");
-        log.info("Data employeeDuyet: " + employeeDuyet);
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
-            if (!StringUtil.isEmpty(employeeDuyet) && u.getUserLogin().equals(employeeDuyet)) {
-                log.info("Check empty employee duyet ");
-                SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
-                sa.setStatus(status.trim());
-                sa.setDescription(textDecline);
-                sa.setEmployeeDuyet(employeeDuyet);
-                sa.setEmployeeDuyetDate(LocalDateTime.now());
-                sa.setEmployeeDuyet(employeeDuyet);
-                sa.setUpdatedDate(LocalDateTime.now());
-                saRequestDAO.update(sa);
-                return "success";
-            } else {
-                log.info("Error role");
-                return "errorEmployee";
-            }
+            log.info("Check empty employee duyet ");
+            SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+            sa.setStatus(status.trim());
+            sa.setDescription(textDecline);
+            sa.setUpdatedDate(LocalDateTime.now());
+            saRequestDAO.update(sa);
+            return "success";
+
         } catch (Exception ex) {
             log.error("Exception:" + ex.getMessage());
             return "error";
@@ -242,10 +258,12 @@ public class SignController {
             SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
             log.info("Data id sarequest: " + sa);
             Customer cu = customerService.getCustomerByPhone(sa.getCustomerPhone());
+            log.info("customer find by phone: " + cu);
             String uuid = UUID.randomUUID().toString();
             String requestId = "BK" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
             if (!StringUtil.isEmpty(u) && u.getUserLogin().equals("ketoan")) {
                 if (status.equals("done")) {
+                    log.info("check status == done");
                     Contract ct = new Contract();
                     ct.setIdContract(sa.getId());
                     ct.setSystemTrace(uuid);
@@ -286,6 +304,7 @@ public class SignController {
                     task.start();
                     return "success";
                 } else if (status.equals("deni")) {
+                    log.info("check status == deni");
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
                     sa.setUpdatedDate(LocalDateTime.now());
                     sa.setStatus(status);

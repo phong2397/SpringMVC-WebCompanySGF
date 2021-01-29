@@ -6,6 +6,7 @@ import com.sgfintech.entity.DetailTransaction;
 import com.sgfintech.entity.Useradmin;
 import com.sgfintech.handler.MergeDataWithdraw;
 import com.sgfintech.util.Consts;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +19,13 @@ import java.util.List;
 
 @Controller
 public class RepaymentController {
-
+    private static final Logger log = Logger.getLogger(RepaymentController.class);
     @Autowired
     DetailTransactionDAO detailTransactionDAO;
 
     @RequestMapping(value = {"/trasoatthongtin"}, method = RequestMethod.GET)
     public String trasoatthongtinPage(ModelMap model, HttpSession session) {
+        log.info("GET - trasoatthongtinPage ");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";

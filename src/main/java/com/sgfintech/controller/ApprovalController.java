@@ -203,8 +203,8 @@ public class ApprovalController {
             SaRequest s = new SaRequest();
             s.setId(Long.parseLong(d));
             s.setEmployeeThamdinh(employeeThamdinh);
-            lst.add(s);
-            log.info("List add data: " + lst.add(s));
+            boolean lsResult = lst.add(s);
+            log.info("List add data: " + lsResult);
         }
         try {
             int[][] countUpdate = saRequestService.updateRecordById(lst);
@@ -218,6 +218,7 @@ public class ApprovalController {
                 return "success";
             }
         } catch (Exception ex) {
+            log.error("Exception: " + ex.getMessage());
             return "error";
         }
     }

@@ -35,19 +35,17 @@ public class ProductController {
 
     @RequestMapping(value = {"/cauhinh"}, method = RequestMethod.GET)
     public String settings(ModelMap mm, HttpSession session) {
-
+        log.info("GET - Go into cauhinhPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
+
             return "redirect:login";
         } else {
             List<Product> listdata = productDAO.findAll();
+            log.info("list data: " + listdata);
+
             mm.addAttribute(Consts.Attr_ResultView, listdata);
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
+
             return "cauhinh";
         }
     }

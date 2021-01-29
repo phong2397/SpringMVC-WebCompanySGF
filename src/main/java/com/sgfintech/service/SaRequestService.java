@@ -45,7 +45,7 @@ public class SaRequestService {
                 preparedStatement.setLong(2, saRequest.getId());
             }
         });
-        log.info("Update count: " + updateCounts);
+
         return updateCounts;
     }
 

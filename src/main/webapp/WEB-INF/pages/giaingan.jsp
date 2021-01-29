@@ -4,6 +4,7 @@
 <%@ page import="com.sgfintech.entity.Useradmin" %>
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ page import="com.sgfintech.entity.SaRequest" %>
+<%@ page import="com.sgfintech.entity.DetailTransaction" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -207,13 +208,10 @@
                                             <th class="text-center">Tổng phí</th>
                                             <th class="text-center">Tổng phí</th>
                                             <th class="text-center">TG yêu cầu</th>
-                                            <th class="text-center">Người trả</th>
-                                            <th class="text-center">TG trả</th>
-                                            <th class="text-center">Người thu tiền</th>
-                                            <th class="text-center">TG thu tiền</th>
+                                            <th class="text-center">Người chuyển tiền</th>
+                                            <th class="text-center">TG chuyển tiền</th>
                                             <th class="text-center">Trạng thái</th>
-                                            <th class="text-center">HA trả</th>
-                                            <th class="text-center">HA thu</th>
+                                            <th class="text-center">Chứng từ</th>
 
                                         </tr>
                                         </thead>
@@ -222,7 +220,7 @@
                                             <tr>
                                                 <td class="text-center">
                                                     <a href="#" data-toggle="modal"
-                                                       onclick="viewInfoDetail('${lst.id}')"><b>${lst.id}</b></a>
+                                                       onclick="viewInfoCustomer('${lst.id}')"><b>${lst.id}</b></a>
                                                 </td>
                                                 <td class="text-center">
                                                         ${lst.companyCode}
@@ -291,26 +289,6 @@
 
                                                 </td>
                                                 <td class="text-center">
-                                                        ${lst.collector}
-                                                </td>
-                                                <td class="text-center">
-                                                    <c:choose>
-                                                        <c:when test="${not empty lst.payDate}"><
-                                                            <fmt:parseDate value="  ${lst.collectDate}"
-                                                                           pattern="yyyy-MM-dd'T'HH:mm"
-                                                                           var="day"
-                                                                           type="date"/>
-                                                            <fmt:formatDate
-                                                                    pattern="dd/MM/yyyy - hh:mm a"
-                                                                    value="${day}"/></c:when>
-                                                        <c:otherwise>
-                                                            -
-                                                        </c:otherwise>
-
-                                                    </c:choose>
-
-                                                </td>
-                                                <td class="text-center">
                                                     <c:choose>
                                                         <c:when test="${lst.status eq 'active'}"><b
                                                                 style="color: green">Đang hoạt
@@ -322,10 +300,6 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <img src="${lst.payImages}" alt="" width="100%">
-                                                </td>
-                                                <td class="text-center">
-                                                    <img src="${lst.collectionImages}" alt=""
-                                                         width="100%">
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -358,7 +332,7 @@
                 <!-- Panes -->
 
                 <div class="modal-body">
-
+                    <div id="saId"></div>
                     <form action="" method="post"
                           enctype="multipart/form-data">
                         <label><b style="color:black ">Chọn hình ảnh:</b><br>
@@ -377,7 +351,8 @@
 
                 <!-- Footer -->
                 <div class="modal-footer modal-footer-uniform">
-                    <button class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">Hoàn thành chuyển tiền
+                    <button class=" btn btn-rounded btn-info btn-accept" onclick="viewInfoDetail()">Hoàn thành chuyển
+                        tiền
                     </button>
                     <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng trang
                     </button>
@@ -407,7 +382,7 @@
 </script>
 <script type="text/javascript">
     <%
-                List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
+                List<DetailTransaction> list = (List<DetailTransaction>) request.getAttribute("views");
                 Gson g = new Gson();
                 String json = g.toJson(list);
 
@@ -417,7 +392,6 @@
                 %>
     var result = <%=json%>;
     var saList = <%=jsonSa%>;
-    console.log(saList)
     var selectedsaId;
     $(document).ready(function () {
 
@@ -438,15 +412,15 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [8, 11, 18]
+                    targets: [8, 11]
                 },
             ],
             buttons: [
                 {
-                    title: 'Danh sách đã ký duyệt',
+                    title: 'Danh sách chờ chuyển tiền',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 11, 13, 14, 15, 16, 18]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 11, 13, 14, 15, 16]
 
                     }
                 },
