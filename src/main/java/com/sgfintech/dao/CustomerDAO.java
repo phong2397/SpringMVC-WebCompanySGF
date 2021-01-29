@@ -92,5 +92,21 @@ public class CustomerDAO {
         }
     }
 
+    public Customer findByPhone(String phone) {
+        try {
+            Session session = this.sessionFactory.getCurrentSession();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Customer> cr = cb.createQuery(Customer.class);
+            Root<Customer> root = cr.from(Customer.class);
+            cr.select(root).where(cb.equal(root.get("customerPhone"), phone));
+            Query<Customer> query = session.createQuery(cr);
+            Customer result = query.getSingleResult();
+            return result;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
 
 }
