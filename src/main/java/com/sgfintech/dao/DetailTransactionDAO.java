@@ -72,7 +72,7 @@ public class DetailTransactionDAO {
             page = lastPageNumber;
         }
         Query query =  session.createQuery("from DetailTransaction where status = ?1 order by dateRequest desc");
-        query.setParameter(1, "act");
+        query.setParameter(1, "active");
         query.setFirstResult(0);
         query.setMaxResults(pageSize*page);
         List<DetailTransaction> fooList = query.list();
