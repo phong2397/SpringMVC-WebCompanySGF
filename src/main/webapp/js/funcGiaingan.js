@@ -3,7 +3,7 @@ function viewInfoDetail(id) {
     console.log(id)
     let data = {
         datarequest: dataRequest,
-        status: 'done',
+        status: 'act',
         step: '3',
         textDecline: 'Chuyển tiền thành công',
     };
