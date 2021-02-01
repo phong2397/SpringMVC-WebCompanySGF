@@ -179,12 +179,6 @@
                 </a>
             </li>
             <li>
-                <a href="theodoikhoantamung.html">
-                    <img src="images/svg-icon/ecommerce.svg" class="svg-icon" alt="">
-                    <span>Tổng danh sách các đơn</span>
-                </a>
-            </li>
-            <li>
                 <a href="trasoatthongtin.html">
                     <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
                     <span>Tra soát thông tin</span>

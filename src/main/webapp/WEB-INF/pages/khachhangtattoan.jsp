@@ -135,11 +135,13 @@
                                             <th>Tên ngân hàng</th>
                                             <th>Số điện thoại</th>
                                             <th>Trạng thái đơn</th>
+                                            <th>Người gạch nợ</th>
                                             <th>Ngày gạch nợ</th>
                                             <th>Số tiền tạm ứng</th>
                                             <th>Số tiền tạm ứng</th>
-                                            <th>Số tiền còn nợ</th>
-                                            <th>Số tiền còn nợ</th>
+                                            <th>Phí</th>
+                                            <th>Mức phí</th>
+                                            <th>Mức phí</th>
                                             <th>Số tiền đã thanh toán</th>
                                             <th>Số tiền đã thanh toán</th>
                                             <th>Ngày thanh toán</th>
@@ -177,27 +179,31 @@
                                                     <b>Đã tất toán</b>
                                                 </h6>
                                                 </td>
-
+                                                <td>
+                                                        ${lst.contract.acceptedBy}
+                                                </td>
                                                 <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
                                                                    pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
                                                                    type="date"/>
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                     value="${patientDob}"/></td>
                                                 <td><fmt:formatNumber
+                                                        value="${lst.contract.borrow }"
+                                                        type="number"/> đ
+                                                </td>
+                                                <td> ${lst.contract.borrow }</td>
+                                                <td> 2 %</td>
+                                                <td><fmt:formatNumber
+                                                        value="${lst.contract.feeBorrow }"
+                                                        type="number"/> đ
+                                                </td>
+                                                <td>${lst.contract.feeBorrow }
+                                                </td>
+                                                <td><fmt:formatNumber
                                                         value="${lst.contract.borrow + (lst.contract.borrow * 2/100) }"
                                                         type="number"/> đ
                                                 </td>
-                                                <td> ${lst.contract.borrow + (lst.contract.borrow * 2/100) }</td>
-                                                <td><fmt:formatNumber
-                                                        value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 2/100) }"
-                                                        type="number"/> đ
-                                                </td>
-                                                <td> ${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 2/100) }</td>
-                                                <td><fmt:formatNumber
-                                                        value="${lst.contract.feeBorrow + (lst.contract.feeBorrow * 2/100) }"
-                                                        type="number"/> đ
-                                                </td>
-                                                <td> ${lst.contract.feeBorrow + (lst.contract.feeBorrow * 2/100) }</td>
+                                                <td> ${lst.contract.borrow + (lst.contract.borrow * 2/100) } </td>
                                                 <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
                                                                    pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
                                                                    type="date"/>
@@ -257,7 +263,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [10, 12, 14]
+                    targets: [11, 14, 16]
                 },
             ],
             buttons: [
@@ -270,7 +276,7 @@
                             $('row c[r^="A"]', sheet).attr('s', '50');
                             $('row c[r^="D"]', sheet).attr('s', '50');
                         },
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 15, 16],
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 16, 17, 18],
 
                     }
                 },

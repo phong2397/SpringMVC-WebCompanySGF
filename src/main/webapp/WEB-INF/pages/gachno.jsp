@@ -241,7 +241,6 @@
                     </button>
                 </div>
                 <!-- Panes -->
-
                 <div class="modal-body">
                     <form action="giaingan.html" method="post" id="from_upload"
                           enctype="multipart/form-data">

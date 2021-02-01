@@ -37,58 +37,6 @@
 <!-- Site wrapper -->
 <div class="wrapper">
     <jsp:include page="general/_header.jsp"/>
-    <style>
-
-        .tabs {
-            display: flex;
-            align-items: stretch;
-            list-style: none;
-            padding: 0;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .tab > label {
-            display: block;
-            margin-bottom: -1px;
-            padding: 12px 15px;
-            border: 1px solid #ccc;
-            background: #eee;
-            color: #666;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .tab:hover label {
-            border-top-color: #333;
-            color: #333;
-        }
-
-        .tab-content {
-            display: none;
-            color: #777;
-        }
-
-        /* As we cannot replace the numbers with variables or calls to element properties, the number of this selector parts is our tab count limit */
-        .tabbed [type="radio"]:nth-of-type(1):checked ~ .tabs .tab:nth-of-type(1) label,
-        .tabbed [type="radio"]:nth-of-type(2):checked ~ .tabs .tab:nth-of-type(2) label,
-        .tabbed [type="radio"]:nth-of-type(3):checked ~ .tabs .tab:nth-of-type(3) label,
-        .tabbed [type="radio"]:nth-of-type(4):checked ~ .tabs .tab:nth-of-type(4) label,
-        .tabbed [type="radio"]:nth-of-type(5):checked ~ .tabs .tab:nth-of-type(5) label {
-            border-bottom-color: #fff;
-            background: #fff;
-            color: #222;
-        }
-
-        .tabbed [type="radio"]:nth-of-type(1):checked ~ .tab-content:nth-of-type(1),
-        .tabbed [type="radio"]:nth-of-type(2):checked ~ .tab-content:nth-of-type(2),
-        .tabbed [type="radio"]:nth-of-type(3):checked ~ .tab-content:nth-of-type(3),
-        .tabbed [type="radio"]:nth-of-type(4):checked ~ .tab-content:nth-of-type(4) {
-            display: block;
-        }</style>
 
     <!-- Left side column. contains the logo and sidebar -->
     <jsp:include page="general/_menu.jsp"/>
@@ -107,7 +55,8 @@
                                     <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a>
                                     </li>
                                     <li class="breadcrumb-item" aria-current="page">Repayment</li>
-                                    <li class="breadcrumb-item active" aria-current="page">Tổng khách hàng thanh toán
+                                    <li class="breadcrumb-item active" aria-current="page">Danh sách khách hàng thanh
+                                        toán khách hàng thanh toán
                                     </li>
                                 </ol>
                             </nav>
@@ -116,254 +65,113 @@
                 </div>
             </div>
             <!-- Main content -->
-            <section class="content">
-                <div class="row">
-                    <div class="col-lg-12 col-12">
+            <div class="col-lg-12 col-12">
+                <div class="container-fluid">
+                    <div class="col-12">
                         <div class="box">
-                            <div class="container-fluid">
-                                <div class="tabbed">
-                                    <input type="radio" id="tab1" name="css-tabs" checked>
-                                    <input type="radio" id="tab2" name="css-tabs">
-                                    <input type="radio" id="tab3" name="css-tabs">
-                                    <input type="radio" id="tab4" name="css-tabs">
+                            <div class="box-header with-border">
+                                <h4 class="box-title">Danh sách đã thanh toán</h4>
+                            </div>
+                            <div class="box-body p-15">
+                                <div class="table-responsive">
+                                    <table id="example" class="table table-striped table-bordered no-margin"
+                                           data-page-size="10" width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th>Mã đơn vay</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Tên công ty</th>
+                                            <th>Tên khách hàng</th>
+                                            <th>Số điện thoại KH</th>
+                                            <th>Số CMND</th>
+                                            <th>Trạng thái đơn</th>
+                                            <th>Số tiền tạm ứng</th>
+                                            <th>Số tiền tạm ứng</th>
+                                            <th>Phí</th>
+                                            <th>Mức phí</th>
+                                            <th>Mức phí</th>
+                                            <th>Số tiền đã thanh toán</th>
+                                            <th>Số tiền đã thanh toán</th>
+                                            <th>Ngày thanh toán</th>
+                                            <th>Người gạch nợ</th>
+                                            <th>Ngày gạch nợ</th>
+                                            <th>Hạn thanh toán</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${views}" var="lst" varStatus="loop">
+                                            <tr>
+                                                <td><a data-toggle="modal" href="#" class="as"
+                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.companies.id}','${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
+                                                </td>
+                                                <td>
+                                                    <h5>Salary Advance</h5>
+                                                </td>
+                                                <td>
+                                                        ${lst.companies.companyName}
+                                                </td>
+                                                <td>
+                                                        ${lst.customer.customerName}
+                                                </td>
 
-                                    <ul class="tabs">
-                                        <li class="tab"><label for="tab1">Hôm nay</label></li>
-                                        <li class="tab"><label for="tab2">7 ngày trước </label></li>
-                                        <li class="tab"><label for="tab3">Tháng này</label></li>
-                                        <li class="tab"><label for="tab4">Ngày cụ thể</label></li>
+                                                <td>
+                                                        ${lst.customer.customerPhone}
+                                                </td>
+                                                <td>
+                                                        ${lst.customer.customerId}
+                                                </td>
+                                                </td>
 
-                                    </ul>
-
-                                    <div class="tab-content">
-
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="box">
-                                                    <div class="box-body p-0">
-                                                        <div class="col-12">
-                                                            <div class="row ico-filter" data-ref="ico-filter">
-                                                                <div class="col-12 col-md-6 col-lg-4 mix realestate sponsored">
-                                                                    <div class="box box-body pull-up">
-                                                                        <div class="d-flex justify-content-between">
-                                                                            <div class="media align-items-center p-0">
-                                                                                <h4>
-                                                                                    <p class="no-margin font-weight-600"><span
-                                                                                            class="text-warning">15.000.000 đ</span>
-                                                                                    </p>
-                                                                                    <p> Tổng số dư đã ký
-                                                                                    </p></h4>
-
-                                                                            </div>
-                                                                            <div class="media align-items-center p-0">
-                                                                                <div class="text-center">
-                                                                                    <a href="#"><i
-                                                                                            class="cc XRP mr-5"
-                                                                                            title="XRP"></i></a>
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12 col-md-6 col-lg-4 mix finance sponsored">
-                                                                    <div class="box box-body pull-up">
-                                                                        <div class="d-flex justify-content-between">
-                                                                            <div class="media align-items-center p-0">
-                                                                                <h4>
-                                                                                    <p class="no-margin font-weight-600"><span
-                                                                                            class="text-warning">500.000 đ</span>
-                                                                                    </p>
-                                                                                    <p> Tổng số tiền đã trả
-                                                                                    </p></h4>
-
-                                                                            </div>
-                                                                            <div class="media align-items-center p-0">
-                                                                                <div class="text-center">
-                                                                                    <a href="#"><i
-                                                                                            class="cc STEEM mr-5"
-                                                                                            title="STEEM"></i></a>
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12 col-md-6 col-lg-4 mix banking sponsored">
-                                                                    <div class="box box-body pull-up">
-                                                                        <div class="d-flex justify-content-between">
-                                                                            <div>
-                                                                                <h4>
-                                                                                    <p class="no-margin font-weight-600"><span
-                                                                                            class="text-warning">05/02/2021</span>
-                                                                                    </p>
-                                                                                    <p> Kỳ hạn thanh toán
-                                                                                    </p></h4>
-
-                                                                            </div>
-                                                                            <div class="media align-items-center p-0">
-                                                                                <div class="text-center">
-                                                                                    <a href="#"><i
-                                                                                            class="cc WAVES mr-5"
-                                                                                            title="WAVES"></i></a>
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="box">
-                                            <div class="box-body">
-                                                <div class="table-responsive">
-                                                    <table id="example"
-                                                           class="table table-striped table-bordered no-margin"
-                                                           width="100%">
-                                                        <thead>
-                                                        <tr>
-                                                            <th class="text-center">Mã đơn</th>
-                                                            \
-                                                            <th class="text-center">Tên sản phẩm</th>
-                                                            <th class="text-center">Tên công ty</th>
-                                                            <th class="text-center">Ngày thanh toán</th>
-                                                            <th class="text-center">Số tiền thanh toán</th>
-                                                            <th class="text-center">Số tiền thanh toán</th>
-                                                            <th class="text-center">Tên khách hàng</th>
-                                                            <th class="text-center">Số điện thoại KH</th>
-                                                            <th class="text-center">Số CMND</th>
-                                                            <th class="text-center">Số tiền cần thanh toán</th>
-                                                            <th class="text-center">Số tiền cần thanh toán</th>
-                                                            <th class="text-center">Số ngày trễ hạn</th>
-                                                            <th class="text-center">Đủ 1 kỳ</th>
-                                                            <th class="text-center">Nhóm</th>
-                                                            <th class="text-center">Tên nhân viên</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <c:forEach items="${views}" var="lst" varStatus="loop">
-                                                        <tr>
-                                                            <td class="text-center"><a href="#" class="as"
-                                                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.companies.id}','${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
-                                                            </td>
-
-                                                            <td class="text-center">
-                                                                Salary Advance
-                                                            </td>
-                                                            <td class="text-center">
-                                                                    ${lst.companies.companyName}
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <fmt:parseDate value=" ${lst.contract.dateRepayment}"
-                                                                               pattern="yyyy-MM-dd'T'HH:mm:ss"
-                                                                               var="patientDob"
-                                                                               type="date"/>
-                                                                <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                                                value="${patientDob}"/>
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <fmt:formatNumber
-                                                                        value="${lst.contract.remainAmountBorrow}"
-                                                                        type="number"/> đ
-                                                            </td>
-                                                            <td class="text-center">
-                                                                    ${lst.contract.remainAmountBorrow}
-                                                            </td>
-
-                                                            <td class="text-center">
-                                                                    ${lst.customer.customerName}
-
-                                                            </td>
-                                                            <td class="text-center">
-                                                                    ${lst.customer.customerPhone}
-                                                            </td>
-                                                            <td class="text-center">
-                                                                    ${lst.customer.customerId}
-
-                                                            </td>
-                                                            <td class="text-center">
-                                                                <fmt:formatNumber
-                                                                        value="${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 0.02 )}"
-                                                                        type="number"/> đ
-                                                            </td>
-                                                            <td class="text-center">
-                                                                    ${lst.contract.remainAmountBorrow + (lst.contract.remainAmountBorrow * 0.02 )}
-                                                            </td>
-                                                            <td class="text-center">
-                                                                -2
-                                                            </td>
-                                                            <td class="text-center">
-                                                                1
-                                                            </td>
-                                                            <td class="text-center">
-                                                                S0
-                                                            </td>
-                                                            <td class="text-center">
-                                                                -
-                                                            </td>
-                                                        </tr>
-                                                        </c:forEach>
-                                                        <tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <!-- /.box-body -->
-                                        </div>
-
-                                    </div>
-
-                                    <div class="tab-content">
-                                        <h4>Zombie lipsum</h4>
-                                        <p>Zombie ipsum brains reversus ab cerebellum viral inferno, brein nam rick mend
-                                            grimes malum cerveau cerebro. De carne cerebro lumbering animata cervello
-                                            corpora quaeritis. Summus thalamus brains sit​​, morbo basal ganglia vel
-                                            maleficia? De braaaiiiins apocalypsi gorger omero prefrontal cortex undead
-                                            survivor fornix dictum mauris. </p>
-                                    </div>
-
-                                    <div class="tab-content">
-                                        <h4>New age bullshit</h4>
-                                        <p>Our conversations with other pilgrims have led to an awakening of
-                                            pseudo-astral
-                                            consciousness. Who are we? Where on the great myth will we be re-energized?
-                                            We
-                                            are at a crossroads of complexity and stagnation.</p>
-                                        <p>Eons from now, we dreamers will exist like never before as we are aligned by
-                                            the
-                                            cosmos. We are being called to explore the stratosphere itself as an
-                                            interface
-                                            between nature and complexity. We must learn how to lead infinite lives in
-                                            the
-                                            face of bondage.</p>
-                                        <p>Generated by the <a href="http://sebpearce.com/bullshit/">New Age Bullshit
-                                            Generator</a></p>
-                                    </div>
-                                    <div class="tab-content">
-                                        <h4>New age bullshit</h4>
-                                        <p>Eons from now, we dreamers will exist like never before as we are aligned by
-                                            the
-                                            cosmos. We are being called to explore the stratosphere itself as an
-                                            interface
-                                            between nature and complexity. We must learn how to lead infinite lives in
-                                            the
-                                            face of bondage.</p>
-                                        <p>Generated by the <a href="http://sebpearce.com/bullshit/">Ndsadadasdaa
-                                            Generator</a></p>
-                                    </div>
+                                                <td><h6 class="mb-0" style="color:hotpink">
+                                                    <b>Đã tất toán</b>
+                                                </h6>
+                                                </td>
+                                                <td><fmt:formatNumber
+                                                        value="${lst.contract.borrow }"
+                                                        type="number"/> đ
+                                                </td>
+                                                <td> ${lst.contract.borrow }</td>
+                                                <td> 2 %</td>
+                                                <td><fmt:formatNumber
+                                                        value="${lst.contract.feeBorrow }"
+                                                        type="number"/> đ
+                                                </td>
+                                                <td>${lst.contract.feeBorrow }
+                                                </td>
+                                                <td><fmt:formatNumber
+                                                        value="${lst.contract.borrow + (lst.contract.borrow * 2/100) }"
+                                                        type="number"/> đ
+                                                </td>
+                                                <td> ${lst.contract.borrow + (lst.contract.borrow * 2/100) } </td>
+                                                <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
+                                                                   pattern="yyyy-MM-dd'T'HH:mm"
+                                                                   var="patientDob"
+                                                                   type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                    value="${patientDob}"/></td>
+                                                <td>${lst.contract.acceptedBy }
+                                                </td>
+                                                <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
+                                                                   pattern="yyyy-MM-dd'T'HH:mm"
+                                                                   var="patientDob"
+                                                                   type="date"/>
+                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                    value="${patientDob}"/></td>
+                                                <td>05/02/2021</td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-
                         </div>
-                        <!-- /.box -->
                     </div>
 
                 </div>
-            </section>
+
+                <!-- /.box -->
+            </div>
+
             <!-- /.content -->
 
         </div>
@@ -405,12 +213,12 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [5, 10]
+                    targets: [8, 11, 13]
                 },
             ],
             buttons: [
                 {
-                    title: 'Danh sách khách hàng thanh toán',
+                    title: 'Danh sách khách hàng đã thanh toán',
                     extend: 'excelHtml5',
                     exportOptions: {
                         format: {
@@ -418,7 +226,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 9, 11, 13, 14, 15, 16, 17],
 
                     }
                 },
