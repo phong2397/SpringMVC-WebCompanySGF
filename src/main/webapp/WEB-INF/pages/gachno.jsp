@@ -114,99 +114,99 @@
                                         <th class="text-center">Chứng từ thu tiền</th>
                                     </tr>
                                     </thead>
-                                    <tbody
+                                    <tbody>
                                     <c:forEach items="${views}" var="lst" varStatus="loop">
-                                        <tr id="tr-${lst.id}">
-                                            <td class="text-center">
-                                                <a href="#" data-toggle="modal"
-                                                   onclick="viewformUpload('${lst.id}')"><b>${lst.id}</b></a>
-                                            </td>
-                                            <td class="text-center">
-                                                    ${lst.companyCode}
-                                            </td>
-                                            <td class="text-center">
-                                                    ${lst.customerName}
-                                            </td>
-                                            <td class="text-center">
-                                                    ${lst.customerPhone}
-                                            </td>
-                                            <td class="text-center">
-                                                    ${lst.bankOwner}
-                                            </td>
-                                            <td class="text-center">
-                                                    ${lst.bankAccount}
-                                            </td>
-                                            <td class="text-center">
-                                                    ${lst.bankName}
-                                            </td>
-                                            <td class="text-center">
-                                                <fmt:formatNumber
-                                                        value="${lst.amount}"
-                                                        type="number"/> đ
+                                    <tr id="tr-${lst.id}">
+                                        <td class="text-center">
+                                            <a href="#" data-toggle="modal"
+                                               onclick="viewformUpload('${lst.id}')"><b>${lst.id}</b></a>
+                                        </td>
+                                        <td class="text-center">
+                                                ${lst.companyCode}
+                                        </td>
+                                        <td class="text-center">
+                                                ${lst.customerName}
+                                        </td>
+                                        <td class="text-center">
+                                                ${lst.customerPhone}
+                                        </td>
+                                        <td class="text-center">
+                                                ${lst.bankOwner}
+                                        </td>
+                                        <td class="text-center">
+                                                ${lst.bankAccount}
+                                        </td>
+                                        <td class="text-center">
+                                                ${lst.bankName}
+                                        </td>
+                                        <td class="text-center">
+                                            <fmt:formatNumber
+                                                    value="${lst.amount}"
+                                                    type="number"/> đ
 
-                                            </td>
-                                            <td class="text-center">
-                                                    ${lst.amount}
-                                            </td>
-                                            <td class="text-center">
-                                                2 %
-                                            </td>
-                                            <td class="text-center">
-                                                <fmt:formatNumber
-                                                        value="${lst.total}"
-                                                        type="number"/> đ
-                                            </td>
-                                            <td class="text-center">
-                                                    ${lst.total}
-                                            </td>
-                                            <td class="text-center">
-                                                <fmt:parseDate value="  ${lst.dateRequest}"
-                                                               pattern="yyyy-MM-dd'T'HH:mm"
-                                                               var="day"
-                                                               type="date"/>
-                                                <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                                value="${day}"/>
-                                            </td>
-                                            <td class="text-center">
-                                                <c:choose>
-                                                    <c:when test="${lst.status eq 'done'}"><b
-                                                            style="color: steelblue">Chuyển tiền thành công</b></c:when>
-                                                    <c:otherwise>
-                                                        Đã chờ chuyển tiền
-                                                    </c:otherwise>
+                                        </td>
+                                        <td class="text-center">
+                                                ${lst.amount}
+                                        </td>
+                                        <td class="text-center">
+                                            2 %
+                                        </td>
+                                        <td class="text-center">
+                                            <fmt:formatNumber
+                                                    value="${lst.total}"
+                                                    type="number"/> đ
+                                        </td>
+                                        <td class="text-center">
+                                                ${lst.total}
+                                        </td>
+                                        <td class="text-center">
+                                            <fmt:parseDate value="  ${lst.dateRequest}"
+                                                           pattern="yyyy-MM-dd'T'HH:mm"
+                                                           var="day"
+                                                           type="date"/>
+                                            <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                            value="${day}"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <c:choose>
+                                                <c:when test="${lst.status eq 'done'}"><b
+                                                        style="color: steelblue">Chuyển tiền thành công</b></c:when>
+                                                <c:otherwise>
+                                                    Đã chờ chuyển tiền
+                                                </c:otherwise>
 
-                                                </c:choose>
-                                            </td>
-                                            <td class="text-center">
-                                                    ${lst.payer}
-                                            </td>
-                                            <td class="text-center">
-                                                <fmt:parseDate value="${lst.payDate}"
-                                                               pattern="yyyy-MM-dd'T'HH:mm"
-                                                               var="day"
-                                                               type="date"/>
-                                                <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                                value="${day}"/>
+                                            </c:choose>
+                                        </td>
+                                        <td class="text-center">
+                                                ${lst.payer}
+                                        </td>
+                                        <td class="text-center">
+                                            <fmt:parseDate value="${lst.payDate}"
+                                                           pattern="yyyy-MM-dd'T'HH:mm"
+                                                           var="day"
+                                                           type="date"/>
+                                            <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                            value="${day}"/>
 
 
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="/${lst.payImages}" target="_blank"> <img
-                                                        src="/${lst.payImages}" alt="" width="100%"></a>
-                                            </td>
-                                            <td class="text-center">
-                                                    ${lst.collector}
-                                            </td>
-                                            <td class="text-center">
-                                                    ${lst.collectDate}
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="/${lst.collectionImages}" target="_blank"><img
-                                                        src="/${lst.collectionImages}"
-                                                        alt="" width="100%"></a>
-                                            </td>
-                                            </td>
-                                        </tr>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="/${lst.payImages}" target="_blank"> <img
+                                                    src="/${lst.payImages}" alt="" width="100%"></a>
+                                        </td>
+                                        <td class="text-center">
+                                                ${lst.collector}
+                                        </td>
+                                        <td class="text-center">
+                                                ${lst.collectDate}
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="/${lst.collectionImages}" target="_blank"><img
+                                                    src="/${lst.collectionImages}"
+                                                    alt="" width="100%"></a>
+                                        </td>
+                                        </td>
+                                    </tr>
                                     </c:forEach>
                                     <tbody>
                                 </table>

@@ -314,7 +314,7 @@ public class SignController {
                     ct.setCreatedDate(sa.getUpdatedDate());
                     ct.setAcceptedBy(u.getUserLogin());
                     contractDAO.save(ct);
-                    sa.setDescription(textDecline);
+                    sa.setDescription("Chuyển tiền thành công");
                     sa.setEmployeeDuyet(sa.getEmployeeDuyet());
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
                     sa.setStatus(status);
