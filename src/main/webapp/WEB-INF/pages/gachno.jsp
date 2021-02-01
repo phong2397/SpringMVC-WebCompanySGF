@@ -253,7 +253,7 @@
                                        name="file"/>
                             </label><br>
                             <span id="id_donhang" style="display: none"></span>
-                            <img class="img" src=""/>
+                            <img id="imgUpload" class="img" src=""/>
                         </div>
 
                         <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="gachno()">Gạch
