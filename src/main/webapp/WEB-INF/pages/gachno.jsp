@@ -191,7 +191,8 @@
 
                                             </td>
                                             <td class="text-center">
-                                                <b><a href="http://localhost:8080/${lst.payImages}">${lst.payImages}</a></b>
+                                                <a href="/${lst.collectionImages}" target="_blank"> <img
+                                                        src="/${lst.payImages}" alt="" width="100%"></a>
                                             </td>
                                             <td class="text-center">
                                                     ${lst.collector}
@@ -200,9 +201,10 @@
                                                     ${lst.collectDate}
                                             </td>
                                             <td class="text-center">
-                                                <b><a href="http://localhost:8080/${lst.collectionImages}"> ${lst.collectionImages}</a></b>
-
-
+                                                <a href="/${lst.collectionImages}" target="_blank"><img
+                                                        src="/${lst.collectionImages}"
+                                                        alt="" width="100%"></a>
+                                            </td>
                                             </td>
                                         </tr>
                                     </c:forEach>

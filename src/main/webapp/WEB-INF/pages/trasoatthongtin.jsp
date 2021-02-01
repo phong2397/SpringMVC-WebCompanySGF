@@ -147,75 +147,75 @@
                                     <input type="radio" id="tab3" name="css-tabs">
                                     <input type="radio" id="tab4" name="css-tabs">
 
-                                    <ul class="tabs">
-                                        <li class="tab"><label for="tab1">Hôm nay</label></li>
-                                        <li class="tab"><label for="tab2">7 ngày trước </label></li>
-                                        <li class="tab"><label for="tab3">Tháng này</label></li>
-                                        <li class="tab"><label for="tab4">Ngày cụ thể</label></li>
+                                    <%--                                    <ul class="tabs">--%>
+                                    <%--                                        <li class="tab"><label for="tab1">Hôm nay</label></li>--%>
+                                    <%--                                        <li class="tab"><label for="tab2">7 ngày trước </label></li>--%>
+                                    <%--                                        <li class="tab"><label for="tab3">Tháng này</label></li>--%>
+                                    <%--                                        <li class="tab"><label for="tab4">Ngày cụ thể</label></li>--%>
 
-                                    </ul>
+                                    <%--                                    </ul>--%>
 
                                     <div class="tab-content">
 
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="box">
-                                                    <div class="box-body p-0">
-                                                        <div class="col-12">
-                                                            <div class="row ico-filter" data-ref="ico-filter">
-                                                                <div class="col-12 col-md-6 col-lg-4 mix realestate sponsored">
-                                                                    <div class="box box-body pull-up">
-                                                                        <div class="d-flex justify-content-between">
-                                                                            <div class="media align-items-center p-0">
-                                                                                <h4>
-                                                                                    <p class="no-margin font-weight-600"><span
-                                                                                            class="text-warning">15.000.000 đ</span>
-                                                                                    </p>
-                                                                                    <p> Tổng số dư đã ký
-                                                                                    </p></h4>
+                                        <%--                                        <div class="row">--%>
+                                        <%--                                            <div class="col-12">--%>
+                                        <%--                                                <div class="box">--%>
+                                        <%--                                                    <div class="box-body p-0">--%>
+                                        <%--                                                        <div class="col-12">--%>
+                                        <%--                                                            <div class="row ico-filter" data-ref="ico-filter">--%>
+                                        <%--                                                                <div class="col-12 col-md-6 col-lg-4 mix realestate sponsored">--%>
+                                        <%--                                                                    <div class="box box-body pull-up">--%>
+                                        <%--                                                                        <div class="d-flex justify-content-between">--%>
+                                        <%--                                                                            <div class="media align-items-center p-0">--%>
+                                        <%--                                                                                <h4>--%>
+                                        <%--                                                                                    <p class="no-margin font-weight-600"><span--%>
+                                        <%--                                                                                            class="text-warning">15.000.000 đ</span>--%>
+                                        <%--                                                                                    </p>--%>
+                                        <%--                                                                                    <p> Tổng số dư đã ký--%>
+                                        <%--                                                                                    </p></h4>--%>
 
-                                                                            </div>
-                                                                            <div class="media align-items-center p-0">
-                                                                                <div class="text-center">
-                                                                                    <a href="#"><i
-                                                                                            class="cc XRP mr-5"
-                                                                                            title="XRP"></i></a>
-                                                                                </div>
-                                                                            </div>
+                                        <%--                                                                            </div>--%>
+                                        <%--                                                                            <div class="media align-items-center p-0">--%>
+                                        <%--                                                                                <div class="text-center">--%>
+                                        <%--                                                                                    <a href="#"><i--%>
+                                        <%--                                                                                            class="cc XRP mr-5"--%>
+                                        <%--                                                                                            title="XRP"></i></a>--%>
+                                        <%--                                                                                </div>--%>
+                                        <%--                                                                            </div>--%>
 
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-12 col-md-6 col-lg-4 mix finance sponsored">
-                                                                    <div class="box box-body pull-up">
-                                                                        <div class="d-flex justify-content-between">
-                                                                            <div class="media align-items-center p-0">
-                                                                                <h4>
-                                                                                    <p class="no-margin font-weight-600"><span
-                                                                                            class="text-warning">500.000 đ</span>
-                                                                                    </p>
-                                                                                    <p> Tổng số tiền đã trả
-                                                                                    </p></h4>
+                                        <%--                                                                        </div>--%>
+                                        <%--                                                                    </div>--%>
+                                        <%--                                                                </div>--%>
+                                        <%--                                                                <div class="col-12 col-md-6 col-lg-4 mix finance sponsored">--%>
+                                        <%--                                                                    <div class="box box-body pull-up">--%>
+                                        <%--                                                                        <div class="d-flex justify-content-between">--%>
+                                        <%--                                                                            <div class="media align-items-center p-0">--%>
+                                        <%--                                                                                <h4>--%>
+                                        <%--                                                                                    <p class="no-margin font-weight-600"><span--%>
+                                        <%--                                                                                            class="text-warning">500.000 đ</span>--%>
+                                        <%--                                                                                    </p>--%>
+                                        <%--                                                                                    <p> Tổng số tiền đã trả--%>
+                                        <%--                                                                                    </p></h4>--%>
 
-                                                                            </div>
-                                                                            <div class="media align-items-center p-0">
-                                                                                <div class="text-center">
-                                                                                    <a href="#"><i
-                                                                                            class="cc STEEM mr-5"
-                                                                                            title="STEEM"></i></a>
-                                                                                </div>
-                                                                            </div>
+                                        <%--                                                                            </div>--%>
+                                        <%--                                                                            <div class="media align-items-center p-0">--%>
+                                        <%--                                                                                <div class="text-center">--%>
+                                        <%--                                                                                    <a href="#"><i--%>
+                                        <%--                                                                                            class="cc STEEM mr-5"--%>
+                                        <%--                                                                                            title="STEEM"></i></a>--%>
+                                        <%--                                                                                </div>--%>
+                                        <%--                                                                            </div>--%>
 
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                        <%--                                                                        </div>--%>
+                                        <%--                                                                    </div>--%>
+                                        <%--                                                                </div>--%>
+                                        <%--                                                            </div>--%>
 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <%--                                                        </div>--%>
+                                        <%--                                                    </div>--%>
+                                        <%--                                                </div>--%>
+                                        <%--                                            </div>--%>
+                                        <%--                                        </div>--%>
                                         <div class="box">
                                             <div class="box-body">
                                                 <div class="box-header with-border">
@@ -324,7 +324,10 @@
 
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    <b><a href="http://localhost:8080/${lst.payImages}">${lst.payImages}</a></b>
+                                                                    <a href="/${lst.collectionImages}" target="_blank">
+                                                                        <img
+                                                                                src="/${lst.payImages}" alt=""
+                                                                                width="100%"></a>
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <c:choose>
@@ -353,8 +356,10 @@
                                                                 </td>
 
                                                                 <td class="text-center">
-                                                                    <b><a href="http://localhost:8080/${lst.collectionImages}"> ${lst.collectionImages}</a></b>
-
+                                                                    <a href="/${lst.collectionImages}" target="_blank">
+                                                                        <img
+                                                                                src="/${lst.collectionImages}" alt=""
+                                                                                width="100%"></a>
 
                                                                 </td>
                                                             </tr>

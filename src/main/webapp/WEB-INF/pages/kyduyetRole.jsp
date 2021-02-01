@@ -344,17 +344,17 @@
                     next: "Trang sau",
                 }
             },
-            select: {
-                style: 'multi',
-                selector: 'td:first-child'
-            },
+            // select: {
+            //     style: 'multi',
+            //     selector: 'td:first-child'
+            // },
             pageLength: 10,
             columnDefs: [
-                {
-                    orderable: false,
-                    className: 'select-checkbox',
-                    targets: 0
-                },
+                // {
+                //     orderable: false,
+                //     className: 'select-checkbox',
+                //     targets: 0
+                // },
                 {
                     visible: false,
                     targets: [7, 10, 17]
