@@ -45,7 +45,6 @@ public class SaRequestService {
                 preparedStatement.setLong(2, saRequest.getId());
             }
         });
-
         return updateCounts;
     }
 

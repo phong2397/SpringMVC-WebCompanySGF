@@ -244,10 +244,10 @@
 
                                                 </td>
                                                 <td><fmt:formatNumber
-                                                        value="${lst.contract.borrow  * 0.02}"
+                                                        value="${lst.contract.borrow + (lst.contract.borrow  * 0.02)}"
                                                         type="number"/> đ
                                                 </td>
-                                                <td> ${lst.contract.borrow  * 0.02}
+                                                <td> ${lst.contract.borrow + (lst.contract.borrow  * 0.02)}
                                                 </td>
                                                 <td>
                                                     <fmt:parseDate value=" ${lst.contract.createdDate}"

@@ -230,6 +230,7 @@
                                                             <th class="text-center">Mã đơn</th>
                                                             <th class="text-center">Mã công ty</th>
                                                             <th class="text-center">Tên khách hàng</th>
+                                                            <th class="text-center">Số CMND</th>
                                                             <th class="text-center">Số điện thoại</th>
                                                             <th class="text-center">Chủ tài khoản</th>
                                                             <th class="text-center">Số tài khoản</th>
@@ -263,6 +264,9 @@
                                                                 </td>
                                                                 <td class="text-center">
                                                                         ${lst.customerName}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                        ${lst.customerId}
                                                                 </td>
                                                                 <td class="text-center">
                                                                         ${lst.customerPhone}
@@ -351,7 +355,6 @@
                                                                         <c:when test="${lst.status eq 'done'}"><b
                                                                                 style="color: steelblue">Chuyển tiền
                                                                             thành công</b></c:when>
-
                                                                     </c:choose>
                                                                 </td>
                                                                 <td class="text-center">
@@ -461,7 +464,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [8, 11, 13]
+                    targets: [9, 12, 14]
                 }
             ],
             buttons: [
@@ -474,7 +477,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 1, 2, 3, 4, 6, 8, 9, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21,]
+                        columns: [0, 1, 2, 3, 4, 6, 7, 9, 10, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22]
 
                     }
                 },

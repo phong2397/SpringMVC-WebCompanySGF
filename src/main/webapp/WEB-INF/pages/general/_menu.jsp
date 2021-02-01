@@ -60,12 +60,6 @@
                 </a>
             </li>
             <li>
-                <a href="giaingan.html">
-                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
-                    <span>Giải ngân</span>
-                </a>
-            </li>
-            <li>
                 <a href="tuchoi.html">
                     <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
                     <span>Từ chối</span>
@@ -265,9 +259,9 @@
                 </a>
             </li>
             <li>
-                <a href="giaingan.html">
-                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
-                    <span>Giải ngân</span>
+                <a href="trasoatthongtin.html">
+                    <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
+                    <span>Tra soát thông tin</span>
                 </a>
             </li>
             <li>
@@ -306,9 +300,9 @@
                 </a>
             </li>
             <li>
-                <a href="giaingan.html">
-                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
-                    <span>Giải ngân</span>
+                <a href="trasoatthongtin.html">
+                    <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
+                    <span>Tra soát thông tin</span>
                 </a>
             </li>
             <li>
@@ -349,6 +343,12 @@
                 <a href="kyduyet.html">
                     <img src="images/svg-icon/sidebar-menu/charts3.svg" class="svg-icon" alt="">
                     <span>Duyệt giải ngân</span>
+                </a>
+            </li>
+            <li>
+                <a href="trasoatthongtin.html">
+                    <img src="images/svg-icon/sidebar-menu/charts2.svg" class="svg-icon" alt="">
+                    <span>Tra soát thông tin</span>
                 </a>
             </li>
             <li>

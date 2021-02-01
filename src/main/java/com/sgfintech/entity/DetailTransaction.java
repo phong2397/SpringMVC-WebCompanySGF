@@ -70,4 +70,7 @@ public class DetailTransaction implements Serializable {
 
     @Column(name = "collection_images")
     private String collectionImages;
+
+    @Column(name = "customer_id")
+    private String customerId;
 }
