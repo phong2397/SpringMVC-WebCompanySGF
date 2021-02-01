@@ -213,8 +213,11 @@
                                     <table id="example" class="table table-lg invoice-archive" width="100%">
                                         <thead>
                                         <tr>
+                                            <%
+                                                if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                             <th><input type="checkbox"
                                                        id="rootcheckbox"></th>
+                                            <% }%>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
                                             <th>Số CMND</th>
@@ -222,9 +225,7 @@
                                             <th>Số lần tạm ứng</th>
                                             <th>Nhân viên thẩm định</th>
                                             <th>Số tiền tạm ứng</th>
-                                            <th>Số tiền tạm ứng</th>
                                             <th>Phí dịch vụ</th>
-                                            <th>Mức phí</th>
                                             <th>Mức phí</th>
                                             <th>Thời gian yêu cầu tạm ứng</th>
                                         </tr>
@@ -232,8 +233,11 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr id="tr-${lst.saRequest.id}">
+                                                <%
+                                                    if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                                 <td><input type="checkbox" class="checkEmployee"
                                                            value="${lst.saRequest.id}"/></td>
+                                                <% } %>
                                                 <td><%
                                                     if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                                     <a data-toggle="modal" href="#" class="as"
@@ -266,18 +270,12 @@
                                                     </c:choose>
                                                 </td>
                                                 <td>
-                                                        ${lst.saRequest.borrow}
-                                                </td>
-                                                <td>
                                                     <fmt:formatNumber
                                                             value="${lst.saRequest.borrow }"
                                                             type="number"/> đ
                                                 </td>
                                                 <td>
                                                     2 %
-                                                </td>
-                                                <td>
-                                                        ${lst.saRequest.borrow * 0.02}
                                                 </td>
                                                 <td>
                                                     <fmt:formatNumber
@@ -389,7 +387,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [7, 10]
+                    // targets: [7, 10]
                 },
             ],
             buttons: [
@@ -397,7 +395,7 @@
                     title: 'Danh sách chờ xét duyệt',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12]
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
                     }
                 },
             ]

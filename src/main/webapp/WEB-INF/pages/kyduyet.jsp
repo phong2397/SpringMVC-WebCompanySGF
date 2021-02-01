@@ -182,7 +182,7 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <h4 class="box-title">Danh sách chờ duyệt</h4><br>
+                                <h4 class="box-title">Danh sách chờ ký duyệt</h4><br>
                                 <%
                                     Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
                                     String role = u.getRole();
@@ -205,7 +205,6 @@
                                                 if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                             <th><input type="checkbox"
                                                        id="rootcheckbox"></th>
-                                            <% } else {%>
                                             <% }%>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
@@ -214,15 +213,12 @@
                                             <th>Số lần tạm ứng</th>
                                             <th>Nhân viên thẩm định</th>
                                             <th>Số tiền tạm ứng</th>
-                                            <th>Số tiền tạm ứng</th>
                                             <th>Phí dịch vụ</th>
-                                            <th>Mức phí</th>
                                             <th>Mức phí</th>
                                             <th>Thời gian yêu cầu tạm ứng</th>
                                             <th>Trạng thái</th>
                                             <th>Nhân viên xét duyệt</th>
                                             <th>Ngày thanh toán</th>
-                                            <th>Số tiền thanh toán</th>
                                             <th>Số tiền thanh toán</th>
                                         </tr>
                                         </tr>
@@ -230,15 +226,12 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr id="tr-${lst.saRequest.id}">
-
-
                                                 <%
                                                     if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                                 <td><input type="checkbox" class="checkEmployee"
                                                            value="${lst.saRequest.id}"/></td>
 
-                                                <% } else {%>
-                                                <% }%>
+                                                <% } %>
                                                 <td><%
                                                     if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                                     <a data-toggle="modal" href="#" class="as"
@@ -266,18 +259,12 @@
                                                         ${lst.saRequest.employeeThamdinh}
                                                 </td>
                                                 <td>
-                                                        ${lst.saRequest.borrow}
-                                                </td>
-                                                <td>
                                                     <fmt:formatNumber
                                                             value="${lst.saRequest.borrow }"
                                                             type="number"/> đ
                                                 </td>
                                                 <td>
                                                     2 %
-                                                </td>
-                                                <td>
-                                                        ${lst.saRequest.borrow * 0.02}
                                                 </td>
                                                 <td>
                                                     <fmt:formatNumber
@@ -311,9 +298,7 @@
                                                             value="${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }"
                                                             type="number"/> đ
                                                 </td>
-                                                <td>
-                                                        ${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }
-                                                </td>
+
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -425,7 +410,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [7, 10, 17]
+                    // targets: [6, 9, 16]
                 },
             ],
             buttons: [
@@ -433,7 +418,7 @@
                     title: 'Danh sách chờ ký duyệt ',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
                     }
                 },
             ]

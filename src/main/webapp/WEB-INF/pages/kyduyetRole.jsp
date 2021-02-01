@@ -185,7 +185,7 @@
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header with-border">
-                                <h4 class="box-title">Danh sách chờ duyệt</h4><br>
+                                <h4 class="box-title">Danh sách chờ ký duyệt</h4><br>
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
