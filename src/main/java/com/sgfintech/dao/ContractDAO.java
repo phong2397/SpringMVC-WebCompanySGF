@@ -1,6 +1,7 @@
 package com.sgfintech.dao;
 
 import com.sgfintech.entity.Contract;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.util.List;
 @Repository(value = "contractDAO")
 @Transactional(rollbackFor = Exception.class)
 public class ContractDAO {
+    private static final Logger log = Logger.getLogger(ContractDAO.class);
     @Autowired
     @Qualifier("sessionFactory")
     private SessionFactory sessionFactory;

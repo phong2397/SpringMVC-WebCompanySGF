@@ -1,7 +1,9 @@
 package com.sgfintech.dao;
 
+import com.sgfintech.controller.CustomerController;
 import com.sgfintech.entity.Companies;
 import com.sgfintech.entity.Customer;
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,6 +29,8 @@ import java.util.Queue;
 @Repository(value = "companiesDAO")
 @Transactional(rollbackFor = Exception.class)
 public class CompaniesDAO {
+    private static final Logger log = Logger.getLogger(CompaniesDAO.class);
+
     @Autowired
     @Qualifier("sessionFactory")
     private SessionFactory sessionFactory;
@@ -42,11 +46,13 @@ public class CompaniesDAO {
     }
 
     public List<Companies> findAll() {
+        log.info("Find All - Companies");
         Session session = this.sessionFactory.getCurrentSession();
         return session.createQuery("from Companies", Companies.class).getResultList();
     }
 
     public long countCompanyByCode(String companyCode) {
+        log.info("countCompanyByCode - Companies");
         Session session = this.sessionFactory.getCurrentSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<Long> cr = cb.createQuery(Long.class);

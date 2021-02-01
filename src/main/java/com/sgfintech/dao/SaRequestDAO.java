@@ -1,6 +1,7 @@
 package com.sgfintech.dao;
 
 import com.sgfintech.entity.SaRequest;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.List;
 @Repository(value = "saRequestDAO")
 @Transactional(rollbackFor = Exception.class)
 public class SaRequestDAO {
-
+    private static final Logger log = Logger.getLogger(SaRequestDAO.class);
     @Autowired
     @Qualifier("sessionFactory")
     private SessionFactory sessionFactory;

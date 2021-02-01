@@ -52,8 +52,8 @@ public class ApprovalController {
 
 
     @RequestMapping(value = {"/tuchoi"}, method = RequestMethod.GET)
-    public String declinePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-        log.info("GET - Go into declinePage");
+    public String tuchoiPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+        log.info("GET - Go into tuchoiPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -212,7 +212,6 @@ public class ApprovalController {
             if (countUpdate.length < 1) {
                 log.info("Count employee tham dinh  < 1 --- return error ");
                 return "error";
-
             } else {
                 log.info("Count employee tham dinh  > 1 --- return success ");
                 return "success";
@@ -233,6 +232,7 @@ public class ApprovalController {
         log.info("Data result find phone number and show history of this phone number of customer : " + result);
         Gson g = new Gson();
         String responseStr = g.toJson(result);
+        log.info("Response String Json : " + responseStr);
         return responseStr;
     }
 
@@ -252,8 +252,8 @@ public class ApprovalController {
         log.info("Data empployee tham dinh : " + employeeThamdinh);
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
-            log.info("Check employee tham dinh not empty and  get user login == employee tham dinh");
             if (!StringUtil.isEmpty(employeeThamdinh) && u.getUserLogin().equals(employeeThamdinh)) {
+                log.info("Check employee tham dinh not empty ");
                 if (status.equals("wfs")) {
                     log.info("Check status == wfs");
                     SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
@@ -268,7 +268,7 @@ public class ApprovalController {
                     log.info("Update status wfs");
                     return "success";
                 } else {
-                    log.info("Check status != wfs");
+                    log.info("Check status != deni");
                     SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
                     log.info("Find id saRequest : " + sa);
                     sa.setStatus(status.trim());
@@ -281,10 +281,11 @@ public class ApprovalController {
                     return "success";
                 }
             } else {
-                log.info("!= Role - Not allow do action");
+                log.info("Wrong Role - Not allow do action");
                 return "errorEmployee";
             }
         } catch (Exception ex) {
+            log.error("Exception: " + ex.getMessage());
             return "error";
         }
     }
@@ -308,23 +309,37 @@ public class ApprovalController {
         try {
             log.info("Check employee (thamdinh or kyduyet) not empty and  get user login == employee(thamdinh or kyduyet)");
             if (!StringUtil.isEmpty(employee) && u.getUserLogin().equals(employee)) {
-                SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
-                log.info("Find id saRequest : " + sa);
-                sa.setStatus(status.trim());
-                sa.setDescription(textDecline);
-                sa.setEmployeeThamdinhDate(LocalDateTime.now());
-                sa.setEmployeeDuyet(employee);
-                sa.setCreatedDate(LocalDateTime.now());
-                sa.setUpdatedDate(LocalDateTime.now());
-                saRequestDAO.update(sa);
-                log.info("Update status deni to wait or wfs");
-                return "success";
+                if (u.getRole().equals("nvkyduyet")) {
+                    SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+                    log.info("Find id saRequest : " + sa);
+                    sa.setStatus(status.trim());
+                    sa.setDescription(textDecline);
+                    sa.setEmployeeDuyetDate(LocalDateTime.now());
+                    sa.setEmployeeDuyet(employee);
+                    sa.setCreatedDate(LocalDateTime.now());
+                    sa.setUpdatedDate(LocalDateTime.now());
+                    saRequestDAO.update(sa);
+                    log.info("Update status deni to wait or wfs");
+                    return "success";
+                } else {
+                    SaRequest sa = saRequestDAO.findById(Long.parseLong(data));
+                    log.info("Find id saRequest : " + sa);
+                    sa.setStatus(status.trim());
+                    sa.setDescription(textDecline);
+                    sa.setEmployeeThamdinhDate(LocalDateTime.now());
+                    sa.setEmployeeThamdinh(employee);
+                    sa.setCreatedDate(LocalDateTime.now());
+                    sa.setUpdatedDate(LocalDateTime.now());
+                    saRequestDAO.update(sa);
+                    log.info("Update status deni to wait or wfs");
+                    return "success";
+                }
             } else {
                 log.info("!= Role - Not allow do action");
                 return "errorEmployee";
             }
         } catch (Exception ex) {
-            log.info("Exception : " + ex.getMessage());
+            log.error("Exception : " + ex.getMessage());
             return "error";
         }
     }

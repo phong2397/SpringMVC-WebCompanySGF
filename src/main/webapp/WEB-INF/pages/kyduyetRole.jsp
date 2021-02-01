@@ -379,8 +379,8 @@
                   Gson gSa= new Gson();
                   String jsonSa = gSa.toJson(listSa);
                   %>
-    var result = <%=json%>;
-    var saList = <%=jsonSa%>;
+    let result = <%=json%>;
+    let saList = <%=jsonSa%>;
 
 </script>
 

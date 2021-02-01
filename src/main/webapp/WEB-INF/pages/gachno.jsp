@@ -4,6 +4,7 @@
 <%@ page import="com.sgfintech.entity.Useradmin" %>
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ page import="com.sgfintech.entity.Contract" %>
+<%@ page import="com.sgfintech.entity.DetailTransaction" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -104,12 +105,12 @@
                                         <th class="text-center">Tổng phí</th>
                                         <th class="text-center">Tổng phí</th>
                                         <th class="text-center">TG yêu cầu</th>
+                                        <th class="text-center">Trạng thái</th>
                                         <th class="text-center">Người chuyển tiền</th>
                                         <th class="text-center">TG chuyển tiền</th>
                                         <th class="text-center">Chứng từ chuyển tiền</th>
                                         <th class="text-center">Người thu tiền</th>
                                         <th class="text-center">TG thu tiền</th>
-                                        <th class="text-center">Trạng thái</th>
                                         <th class="text-center">Chứng từ thu tiền</th>
                                     </tr>
                                     </thead>
@@ -118,7 +119,7 @@
                                         <tr id="tr-${lst.id}">
                                             <td class="text-center">
                                                 <a href="#" data-toggle="modal"
-                                                   onclick="viewInfoCustomer('${lst.id}')"><b>${lst.id}</b></a>
+                                                   onclick="viewformUpload('${lst.id}')"><b>${lst.id}</b></a>
                                             </td>
                                             <td class="text-center">
                                                     ${lst.companyCode}
@@ -167,15 +168,30 @@
                                                                 value="${day}"/>
                                             </td>
                                             <td class="text-center">
+                                                <c:choose>
+                                                    <c:when test="${lst.status eq 'done'}"><b
+                                                            style="color: steelblue">Chuyển tiền thành công</b></c:when>
+                                                    <c:otherwise>
+                                                        Đã chờ chuyển tiền
+                                                    </c:otherwise>
+
+                                                </c:choose>
+                                            </td>
+                                            <td class="text-center">
                                                     ${lst.payer}
                                             </td>
                                             <td class="text-center">
-                                                    ${lst.payDate}
+                                                <fmt:parseDate value="${lst.payDate}"
+                                                               pattern="yyyy-MM-dd'T'HH:mm"
+                                                               var="day"
+                                                               type="date"/>
+                                                <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                value="${day}"/>
+
 
                                             </td>
                                             <td class="text-center">
-                                                <img src="/${lst.payImages}"
-                                                     alt="" width="100%">
+                                                <b><a href="http://localhost:8080/${lst.payImages}">${lst.payImages}</a></b>
                                             </td>
                                             <td class="text-center">
                                                     ${lst.collector}
@@ -184,18 +200,9 @@
                                                     ${lst.collectDate}
                                             </td>
                                             <td class="text-center">
-                                                <c:choose>
-                                                    <c:when test="${lst.status eq 'done'}">Đã chuyển tiền thành công</c:when>
-                                                    <c:otherwise>
-                                                        Đã chờ chuyển tiền
-                                                    </c:otherwise>
+                                                <b><a href="http://localhost:8080/${lst.collectionImages}"> ${lst.collectionImages}</a></b>
 
-                                                </c:choose>
-                                            </td>
 
-                                            <td class="text-center">
-                                                <img src="/${lst.collectionImages}" alt=""
-                                                     width="100%">
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -238,22 +245,23 @@
                 <div class="modal-body">
                     <form action="giaingan.html" method="post" id="from_upload"
                           enctype="multipart/form-data">
-                        <label><b style="color:black; margin-bottom: 20px; ">Chọn hình ảnh:</b><br>
-                            <input type="file" id="importFile" class="btn btn-rounded btn-facebook "
-                                   name="file"/>
-                        </label><br>
-                        <input type="hidden" id="id_donhang" name="id_donhang"/>
-                        <img class="img" src=""/>
-                        <div class="modal-footer modal-footer-uniform">
-                            <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="gachno()">Gạch
-                                nợ
-                            </button>
-                            <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng trang
-                            </button>
+                        <div class="form-group">
+                            <h5 style="color: black ">Giải ngân : Thông tin nhận tiền đầy đủ</h5>
+                            <label><b style="color:black; margin-bottom: 20px; ">Chọn hình ảnh:</b><br>
+                                <input type="file" id="importFile"
+                                       name="file"/>
+                            </label><br>
+                            <input type="hidden" id="id_donhang" name="id_donhang"/>
+                            <img class="img" src=""/>
                         </div>
+
+                        <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="gachno()">Gạch
+                            nợ
+                        </button>
+                        <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng trang
+                        </button>
                     </form>
-                    <h4 id="labelDanhgia"></h4>
-                    <b style="color:black">Giải ngân : Thông tin nhận tiền đầy đủ</b>
+
                 </div>
 
 
@@ -292,7 +300,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    // targets: [3, 4, 5, 6, 7, 9, 12, 14, 16]
+                    targets: [8, 11]
                 },
             ],
             buttons: [
@@ -300,24 +308,18 @@
                     title: 'Danh sách chờ gạch nợ ',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        format: {
-                            customizeData: function (header, footer, body) {
-                                return body;
-                            }
-                        },
-                        columns: [0, 1, 3, 4, 5, 6, 7, 9, 10, 12, 14, 16, 17, 18, 19, 20, 21, 22]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19]
 
                     }
                 },
             ]
         })
     });
-    var selectedsaId;
 
     function gachno() {
         var formData = new FormData();
         var iddonhang = $("#id_donhang").val();
-        selectedsaId = iddonhang
+        console.log(iddonhang)
         formData.append('file', $('#importFile')[0].files[0]);
         try {
             // This async call may fail.
@@ -340,7 +342,15 @@
                     timer: 3000
                 });
                 $("#modal-giaingan").modal('hide');
-                $("#tr-" + selectedsaId).remove();
+                $("#tr-" + iddonhang).remove();
+            } else if (text === "errorNoExistPath") {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Cần cập nhật chứng từ thu tiền.',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
             }
             return;
         } catch (error) {
@@ -349,15 +359,17 @@
     }
 
     <%
-        List<MergeDataWithdraw> list = (List<MergeDataWithdraw>) request.getAttribute("views");
-        Gson g = new Gson();
-        String json = g.toJson(list);
+          List<DetailTransaction> list = ( List<DetailTransaction>) request.getAttribute("views");
+                Gson g = new Gson();
+                String json = g.toJson(list);
         List<Contract> list1 = (List<Contract>) request.getAttribute("con");
         Gson gs= new Gson();
         String json1 = gs.toJson(list1);
+
+
     %>
-    var result = <%=json%>;
-    var list = <%=json1%>;
+    let result = <%=json%>;
+    let list = <%=json1%>;
 
 </script>
 </body>

@@ -98,6 +98,7 @@ public class CustomerController {
         log.info("Return result list of merge data companies and customer search companyCode or companyName: " + result);
         Gson g = new Gson();
         String responseStr = g.toJson(result);
+        log.info("ResponseStr: " + responseStr);
         return responseStr;
     }
 

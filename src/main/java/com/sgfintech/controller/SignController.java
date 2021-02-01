@@ -61,11 +61,12 @@ public class SignController {
     SaRequestService saRequestService;
 
     @RequestMapping(value = {"/kyduyetRole"}, method = RequestMethod.GET)
-    public String kyduyetlogin(ModelMap mm, HttpServletRequest request, HttpSession session) {
+    public String kyduyetRole(ModelMap mm, HttpServletRequest request, HttpSession session) {
 //        int countAct = mergeDataService.countStatus("act");
 //        int countWait = mergeDataService.countStatus("wait");
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countDone = mergeDataService.countStatus("done");
+        log.info("GET - kyduyetRole");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -85,11 +86,12 @@ public class SignController {
     }
 
     @RequestMapping(value = {"/tuchoikyduyet"}, method = RequestMethod.GET)
-    public String declineKyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+    public String tuchoikyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
 //        int countAct = mergeDataService.countStatus("act");
 //        int countWait = mergeDataService.countStatus("wait");
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countDeni = mergeDataService.countStatus("deni");
+        log.info("GET - tuchoikyduyet page");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -109,11 +111,12 @@ public class SignController {
     }
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
-    public String welcomePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+    public String kyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
 //        int countWait = mergeDataService.countStatus("wait");
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countAct = mergeDataService.countStatus("act");
 //        int countDone = mergeDataService.countStatus("done");
+        log.info("GET - kyduyetPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -139,6 +142,7 @@ public class SignController {
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countAct = mergeDataService.countStatus("act");
 //        int countDone = mergeDataService.countStatus("done");
+        log.info("GET - giaingan page");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -162,6 +166,7 @@ public class SignController {
     @RequestMapping(value = "/updateEmployeeDuyet", method = RequestMethod.POST)
     public @ResponseBody
     String updateEmployeeDuyet(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        log.info("POST - update employee duyet");
         List<SaRequest> lst = new ArrayList<>();
         String[] data = request.getParameterValues("datarequest[]");
         System.out.println(data);
@@ -191,6 +196,7 @@ public class SignController {
     @RequestMapping(value = {"/giaingan"}, method = RequestMethod.POST)
     public @ResponseBody
     String handlerOrderRequest(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        log.info("POST - giaingan");
         String id = request.getParameter("id_donhang");
         try {
             String path = System.getProperty("catalina.home") + "/webapps/uynhiemchi/";
@@ -205,15 +211,29 @@ public class SignController {
             }
             multipartFile.transferTo(file);
             String expath = "uynhiemchi/" + fileName;
-            DetailTransaction detailTransaction = detailTransactionDAO.findById(Integer.parseInt(id));
-            Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-            detailTransaction.setPayImages(expath);
-            detailTransaction.setPayer(u.getUserLogin());
-            detailTransaction.setStatus("done");
-            detailTransaction.setPayDate(LocalDateTime.now());
-            detailTransactionDAO.update(detailTransaction);
-            log.info("success");
-            return "success";
+            if (expath != null) {
+                log.info("Check file not null");
+                DetailTransaction detailTransaction = detailTransactionDAO.findById(Integer.parseInt(id));
+                log.info("detailTransaction: " + detailTransaction);
+                SaRequest sa = saRequestDAO.findById(Long.parseLong(id));
+                log.info("SaRequest: " + sa);
+                Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+                detailTransaction.setPayImages(expath);
+                detailTransaction.setPayer(u.getUserLogin());
+                detailTransaction.setStatus("done");
+                detailTransaction.setPayDate(LocalDateTime.now());
+                detailTransactionDAO.update(detailTransaction);
+                sa.setStatus("act");
+                sa.setDescription("Chuyển tiền thành công");
+                saRequestDAO.update(sa);
+                log.info("success");
+                return "success";
+            } else {
+                log.info("Error no exist path");
+                return "errorNoExistPath";
+
+            }
+
         } catch (Exception ex) {
             return null;
         }
@@ -303,7 +323,6 @@ public class SignController {
                     sa.setEmployeeDuyet(sa.getEmployeeDuyet());
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
                     sa.setUpdatedDate(LocalDateTime.now());
-                    sa.setStatus(status);
                     saRequestDAO.update(sa);
                     Customer c = customerDAO.findByPhone(sa.getCustomerPhone());
                     final DetailTransaction d = new DetailTransaction();
@@ -326,6 +345,7 @@ public class SignController {
                     log.info("check status == deni");
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
                     sa.setUpdatedDate(LocalDateTime.now());
+                    sa.setDescription(textDecline);
                     sa.setStatus(status);
                     saRequestDAO.update(sa);
                     return "success";

@@ -3,6 +3,7 @@ package com.sgfintech.dao;
 
 import com.sgfintech.entity.DetailTransaction;
 import com.sgfintech.util.ConfigGateway;
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,6 +20,7 @@ import java.util.List;
 @Repository(value = "detailTransactionDAO")
 @Transactional(rollbackFor = Exception.class)
 public class DetailTransactionDAO {
+    private static final Logger log = Logger.getLogger(DetailTransactionDAO.class);
     @Autowired
     @Qualifier("sessionFactory")
     private SessionFactory sessionFactory;
@@ -39,6 +41,7 @@ public class DetailTransactionDAO {
     }
 
     public List<DetailTransaction> findAll(int page) {
+        log.info("List Detailtransaction - Findall - paging ");
         Session session = this.sessionFactory.getCurrentSession();
         String countQ = "select count (f.id) from DetailTransaction f";
         Query countQuery = session.createQuery(countQ);
@@ -55,10 +58,12 @@ public class DetailTransactionDAO {
         query.setFirstResult(0);
         query.setMaxResults(pageSize * page);
         List<DetailTransaction> fooList = query.list();
+        log.info("List Detailtransaction : " + fooList);
         return fooList;
     }
 
     public List<DetailTransaction> findAllByActive(int page) {
+        log.info("List Detailtransaction - Findall status Active - paging ");
         Session session = this.sessionFactory.getCurrentSession();
         String countQ = "select count (f.id) from DetailTransaction f";
         Query countQuery = session.createQuery(countQ);
@@ -76,10 +81,12 @@ public class DetailTransactionDAO {
         query.setFirstResult(0);
         query.setMaxResults(pageSize * page);
         List<DetailTransaction> fooList = query.list();
+        log.info("List Detailtransaction : " + fooList);
         return fooList;
     }
 
     public List<DetailTransaction> findAllByDone(int page) {
+        log.info("List Detailtransaction - Findall status Active - paging ");
         Session session = this.sessionFactory.getCurrentSession();
         String countQ = "select count (f.id) from DetailTransaction f";
         Query countQuery = session.createQuery(countQ);
@@ -97,6 +104,7 @@ public class DetailTransactionDAO {
         query.setFirstResult(0);
         query.setMaxResults(pageSize * page);
         List<DetailTransaction> fooList = query.list();
+        log.info("List Detailtransaction : " + fooList);
         return fooList;
     }
 //

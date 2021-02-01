@@ -394,10 +394,8 @@
                   Gson gSa= new Gson();
                   String jsonSa = gSa.toJson(listSa);
                 %>
-    var result = <%=json%>;
-    var saList = <%=jsonSa%>;
-    console.log(saList)
-    var selectedsaId;
+    let result = <%=json%>;
+    let saList = <%=jsonSa%>;
     $(document).ready(function () {
 
         $("#loading").hide();

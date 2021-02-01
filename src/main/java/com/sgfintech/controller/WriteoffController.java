@@ -50,10 +50,9 @@ public class WriteoffController {
 
     @RequestMapping(value = {"/nhacphi"}, method = RequestMethod.GET)
     public String nhacphiPage(ModelMap mm, HttpSession session) {
-
+        log.info("GET - nhacphiPage ");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
-
             return "redirect:login";
         } else {
             List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("act", true, "");
@@ -62,7 +61,6 @@ public class WriteoffController {
             mm.addAttribute("admin", admin);
             mm.addAttribute("con", contract);
             mm.addAttribute(Consts.Attr_ResultView, listdata);
-
             return "nhacphi";
         }
     }
@@ -72,79 +70,99 @@ public class WriteoffController {
 
     @RequestMapping(value = {"/gachno"}, method = RequestMethod.GET)
     public String gachnoPage(ModelMap mm, HttpSession session) {
+        log.info("GET - gachnoPage ");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
         } else {
 //            List<MergeDataWithdraw> listdata = mergeDataService.gachnodata("");
             List<DetailTransaction> list = detailTransactionDAO.findAllByDone(1);
+            log.info("List detail transaction: " + list);
             List<Contract> contract = contractDAO.findAll();
+            log.info("List contract: " + contract);
             mm.addAttribute("con", contract);
             mm.addAttribute(Consts.Attr_ResultView, list);
             return "gachno";
         }
     }
 
-    @RequestMapping(value = {"/theodoikhoantamung"}, method = RequestMethod.GET)
-    public String theodoikhoantamungPage(ModelMap mm, HttpSession session) {
-
-        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-        if (u == null) {
-            return "redirect:login";
-        } else {
-            int countAct = mergeDataService.contractStatus("act");
-            int countDone = mergeDataService.contractStatus("done");
-            List<MergeDataWithdraw> listdata = mergeDataService.theodoikhoantamung("");
-            List<Contract> contract = contractDAO.findAll();
-            mm.addAttribute("con", contract);
-            mm.addAttribute(Consts.Attr_ResultView, listdata);
-            mm.addAttribute("countDone", countDone);
-            mm.addAttribute("countAct", countAct);
-            return "theodoikhoantamung";
-        }
-    }
+//    @RequestMapping(value = {"/theodoikhoantamung"}, method = RequestMethod.GET)
+//    public String theodoikhoantamungPage(ModelMap mm, HttpSession session) {
+//        log.info("GET - theodoikhoantamungPage ");
+//        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+//        if (u == null) {
+//            return "redirect:login";
+//        } else {
+//            int countAct = mergeDataService.contractStatus("act");
+//            int countDone = mergeDataService.contractStatus("done");
+//            List<MergeDataWithdraw> listdata = mergeDataService.theodoikhoantamung("");
+//            List<Contract> contract = contractDAO.findAll();
+//            mm.addAttribute("con", contract);
+//            mm.addAttribute(Consts.Attr_ResultView, listdata);
+//            mm.addAttribute("countDone", countDone);
+//            mm.addAttribute("countAct", countAct);
+//            return "theodoikhoantamung";
+//        }
+//    }
 
     @RequestMapping(value = {"/gachno"}, method = RequestMethod.POST)
     public @ResponseBody
     String gachnotoanphanAction(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        log.info("POST - gachnotoanphanAction");
         String id = request.getParameter("id_donhang");
+        log.info("Id detail transaction: " + id);
         String data = request.getParameter("datarequest");
+        log.info("Data id sarequest: " + data);
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
             if (!StringUtil.isEmpty(u) && u.getUserLogin().equals("ketoan")) {
+                log.info("Check role ke toan");
                 String path = System.getProperty("catalina.home") + "/webapps/uynhiemchi/";
                 log.info("Path : " + path);
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-sss");
                 String fileName = sdf.format(date) + multipartFile.getOriginalFilename();
+                log.info("File Name: " + fileName);
                 File file = new File(path, fileName);
+                log.info("File: " + file);
                 if (!file.exists()) {
                     log.info("Check file not exiist : ");
                     file.mkdirs();
                 }
                 multipartFile.transferTo(file);
                 String expath = "uynhiemchi/" + fileName;
+                log.info("File: " + expath);
+                if (expath != null) {
+                    Contract ct = contractDAO.findById(Long.parseLong(id));
+                    ct.setStatus("done");
+                    ct.setRemainAmountBorrow(0l);
+                    ct.setAcceptedBy(u.getUserLogin());
+                    ct.setDateRepayment(LocalDateTime.now());
+                    ct.setUpdatedDate(LocalDateTime.now());
+                    contractDAO.update(ct);
+                    SaRequest sa = saRequestDAO.findById(Long.parseLong(id));
+                    sa.setUpdatedDate(LocalDateTime.now());
+                    sa.setStatus("done");
+                    saRequestDAO.update(sa);
+                    DetailTransaction d = detailTransactionDAO.findById(Integer.parseInt(id));
+                    d.setCollectDate(LocalDateTime.now());
+                    d.setStatus("success");
+                    d.setCollector(u.getUserLogin());
+                    d.setCollectionImages(expath);
+                    detailTransactionDAO.update(d);
+                    log.info("Return update contract and detail transaction success");
+                    return "success";
+                } else {
+                    log.info("Error no exist path");
+                    return "errorNoExistPath";
 
-                Contract ct = contractDAO.findById(Long.parseLong(id));
-                ct.setStatus("done");
-                ct.setRemainAmountBorrow(0l);
-                ct.setAcceptedBy(u.getUserLogin());
-                ct.setDateRepayment(LocalDateTime.now());
-                ct.setUpdatedDate(LocalDateTime.now());
-                contractDAO.update(ct);
-
-                DetailTransaction d = detailTransactionDAO.findById(Integer.parseInt(id));
-                d.setCollectDate(LocalDateTime.now());
-                d.setStatus("success");
-                d.setCollector(u.getUserLogin());
-                d.setCollectionImages(expath);
-                detailTransactionDAO.update(d);
-                return "success";
+                }
             } else {
+                log.info("Wrong role");
                 return "roleError";
             }
         } catch (Exception ex) {
-
+            log.error("Exception: " + ex.getMessage());
             return "error";
         }
     }

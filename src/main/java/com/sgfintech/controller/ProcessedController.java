@@ -32,7 +32,7 @@ public class ProcessedController {
 
     @RequestMapping(value = {"/khachhangthanhtoan"}, method = RequestMethod.GET)
     public String khachhangthanhtoanPage(ModelMap mm, HttpSession session) {
-        log.info("GET - Go into khachhangthanhtoanPage");
+        log.info("GET - khachhangthanhtoanPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -47,3 +47,4 @@ public class ProcessedController {
         }
     }
 }
+

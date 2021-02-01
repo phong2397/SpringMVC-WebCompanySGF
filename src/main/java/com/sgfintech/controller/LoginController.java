@@ -33,37 +33,33 @@ public class LoginController {
         log.info("GET - auth_login page");
         mm.addAttribute(Consts.Attr_Euser, new Useradmin());
         mm.addAttribute(Consts.Attr_ToDay, getDateString());
-        log.info("login ===============================");
-        log.info(System.getProperty("catalina.base"));
-        log.info(System.getProperty("catalina.home"));
         return "auth_login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String checkLogin(HttpServletRequest request, HttpSession session, ModelMap mm) {
+        log.info("POST - checkLogin");
         String user = request.getParameter("user");
+        log.info("User: " + user);
         String pass = request.getParameter("pass");
+        log.info("Pass: " + pass);
+
         Useradmin u = useradminService.checkUser(user);
+
         if (StringUtil.isEmpty(u)) {
+            log.info("Check user not empty");
             session.setAttribute(Consts.Check_User, "Tài khoản không tồn tại trên hệ thống");
-            log.info("checkLogin log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
             return "redirect:login";
         } else {
             String hp = StringUtil.hashPw(pass);
             if (!hp.equals(u.getPassWord())) {
+                log.info("Check user pass ");
                 session.setAttribute(Consts.Check_Pass, "Mật khẩu không chính xác");
-                log.info("checkLogin log ===============================");
-                log.info(System.getProperty("catalina.base"));
-                log.info(System.getProperty("catalina.home"));
                 return "redirect:login";
             } else {
+                log.info("Right user log into page ");
                 u.setPassWord("");
                 session.setAttribute(Consts.Session_Euser, u);
-                log.info("checkLogin log ===============================");
-                log.info(System.getProperty("catalina.base"));
-                log.info(System.getProperty("catalina.home"));
                 return "redirect:home";
             }
         }
@@ -72,10 +68,8 @@ public class LoginController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session) {
+        log.info("GET - log out");
         session.invalidate();
-        log.info("logout log ===============================");
-        log.info(System.getProperty("catalina.base"));
-        log.info(System.getProperty("catalina.home"));
         return "redirect:/login";
     }
 

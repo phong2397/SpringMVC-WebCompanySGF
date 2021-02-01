@@ -263,10 +263,10 @@
                                                 </td>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${empty lst.saRequest.description}">Chưa có lý
-                                                            do</c:when>
+                                                        <c:when test="${empty lst.saRequest.description}"><b>Chưa có lý
+                                                            do</b></c:when>
                                                         <c:otherwise>
-                                                            ${lst.saRequest.description}
+                                                            <b>${lst.saRequest.description}</b>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>
@@ -377,8 +377,8 @@
                  Gson gs= new Gson();
                  String json1 = gs.toJson(list1);
                   %>
-    var result = <%=json%>;
-    var list = <%=json1%>;
+    let result = <%=json%>;
+    let list = <%=json1%>;
     var selectedsaId;
 </script>
 

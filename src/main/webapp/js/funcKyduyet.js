@@ -1,4 +1,4 @@
-function verifyKyduyet() {
+function xacnhanKyduyet() {
     $("#loading").show();
     var dataRequest = $('#ids').text();
     var employeeDuyet = $('#employeeduyet').text();
@@ -14,13 +14,13 @@ function verifyKyduyet() {
         Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Dữ liệu được cập nhật thành công.',
+            title: 'Ký duyệt thành công',
             showConfirmButton: false,
             timer: 3000
         });
         $("#loading").hide();
         $("#modal-right").modal('hide');
-        $("#tr-" + selectedsaId).remove();
+        $("#tr-" + dataRequest).remove();
     } else if (result === "errorEmployee") {
         Swal.fire({
             position: 'top-end',
@@ -92,18 +92,18 @@ function tuchoiDuyetGiaiNgan() {
         Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Dữ liệu được cập nhật thành công.',
+            title: 'Đơn dã bị từ chối',
             showConfirmButton: false,
             timer: 3000
         });
         $("#loading").hide();
         $("#modal-right").modal('hide');
-        $("#tr-" + selectedsaId).remove();
+        $("#tr-" + dataRequest).remove();
     } else if (result === "errorEmployee") {
         Swal.fire({
             position: 'top-end',
             icon: 'error',
-            title: 'Bạn không có quyền giải ngân',
+            title: 'Bạn không có quyền từ chối',
             showConfirmButton: false,
             timer: 3000
         });
