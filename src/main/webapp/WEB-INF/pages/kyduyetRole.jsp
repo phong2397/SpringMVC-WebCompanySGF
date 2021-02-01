@@ -194,7 +194,6 @@
                                         <thead>
                                         <tr>
                                         <tr>
-                                            <th></th>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
                                             <th>Số CMND</th>
@@ -210,16 +209,15 @@
                                             <th>Trạng thái</th>
                                             <th>Nhân viên xét duyệt</th>
                                             <th>Ngày thanh toán</th>
-                                            <th>Số tiền thanh toán</th>
-                                            <th>Số tiền thanh toán</th>
+                                            <th>Số tiền cần thanh toán</th>
+                                            <th>Số tiền cần thanh toán</th>
                                         </tr>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr id="tr-${lst.saRequest.id}">
-                                                <td>
-                                                </td>
+
                                                 <td><a data-toggle="modal" href="#" class="as"
                                                        onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
@@ -282,11 +280,11 @@
                                                 </td>
                                                 <td>
                                                     <fmt:formatNumber
-                                                            value="${lst.saRequest.borrow  * 0.02}"
+                                                            value="${lst.saRequest.borrow+(lst.saRequest.borrow  * 0.02)}"
                                                             type="number"/> đ
                                                 </td>
                                                 <td>
-                                                        ${lst.saRequest.borrow}
+                                                        ${lst.saRequest.borrow+(lst.saRequest.borrow  * 0.02)}
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -344,20 +342,20 @@
                     next: "Trang sau",
                 }
             },
-            select: {
-                style: 'multi',
-                selector: 'td:first-child'
-            },
+            // select: {
+            //     style: 'multi',
+            //     selector: 'td:first-child'
+            // },
             pageLength: 10,
             columnDefs: [
-                {
-                    orderable: false,
-                    className: 'select-checkbox',
-                    targets: 0
-                },
+                // {
+                //     orderable: false,
+                //     className: 'select-checkbox',
+                //     targets: 0
+                // },
                 {
                     visible: false,
-                    targets: [7, 10, 17]
+                    targets: [6, 9, 16]
                 },
             ],
             buttons: [
@@ -365,7 +363,7 @@
                     title: 'Danh sách chờ duyệt',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 9, 11, 12, 13, 14, 16]
                     }
                 },
             ]

@@ -288,7 +288,10 @@
 
                                                 </td>
                                                 <td class="text-center">
-                                                    <b><a href="http://localhost:8080/${lst.payImages}">${lst.payImages}</a></b>
+                                                    <a href="/${lst.payImages}" target="_blank">
+                                                        <img
+                                                                src="/${lst.payImages}" alt=""
+                                                                width="100%"></a>
                                                 </td>
                                                 <td class="text-center">
                                                         ${lst.customerName} - ${lst.customerPhone} - ${lst.id}
@@ -334,14 +337,11 @@
                                     <input type="file" id="importFile"
                                            name="file"/>
                                 </label><br>
-                                <input type="hidden" id="id_donhang" name="id_donhang"/>
+                                <span id="id_donhang" style="display: none"></span>
                                 <img id="imgUpload" class="img" src=""/>
                             </div>
-
                             <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">
-                                Hoàn
-                                thành chuyển
-                                tiền
+                                Hoàn thành chuyển tiền
                             </button>
                             <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng
                                 trang
@@ -421,8 +421,7 @@
 
     function giaingan() {
         var formData = new FormData();
-        var iddonhang = $("#id_donhang").val();
-        console.log(iddonhang)
+        var iddonhang = $("#id_donhang").text();
         formData.append('file', $('#importFile')[0].files[0]);
         try {
             // This async call may fail.

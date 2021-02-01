@@ -201,8 +201,12 @@
                                         <thead>
                                         <tr>
                                         <tr>
+                                            <%
+                                                if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                             <th><input type="checkbox"
                                                        id="rootcheckbox"></th>
+                                            <% } else {%>
+                                            <% }%>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
                                             <th>Số CMND</th>
@@ -227,8 +231,14 @@
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr id="tr-${lst.saRequest.id}">
 
+
+                                                <%
+                                                    if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                                 <td><input type="checkbox" class="checkEmployee"
                                                            value="${lst.saRequest.id}"/></td>
+
+                                                <% } else {%>
+                                                <% }%>
                                                 <td><%
                                                     if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                                     <a data-toggle="modal" href="#" class="as"

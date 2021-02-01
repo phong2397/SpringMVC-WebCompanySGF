@@ -120,7 +120,7 @@ function viewformUpload(id) {
     list = result.find(el => el.id == id);
     console.log(list)
     $("#id_donhang").empty();
-    $("#id_donhang").val(id);
+    $("#id_donhang").text(id);
     $('#modal-giaingan').modal('show');
 }
 

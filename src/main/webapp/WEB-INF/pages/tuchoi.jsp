@@ -181,7 +181,6 @@
                                     <table id="example" class="table table-lg invoice-archive" width="100%">
                                         <thead>
                                         <tr>
-                                            <th></th>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
                                             <th>Số CMND</th>
@@ -201,17 +200,10 @@
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
-                                            <tr>
-                                                <td></td>
-                                                <td><% Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-                                                    String role = u.getRole();
-                                                    if (role.equals("root") || role.equals("tnthamdinh")) { %>
+                                            <tr id="tr-${lst.saRequest.id}">
+                                                <td>
                                                     <a data-toggle="modal" href="#" class="as"
                                                        onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
-                                                    <% } else {%>
-                                                    <a data-toggle="modal" href="#" class="as"
-                                                       onclick="viewInfoNoaction('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
-                                                    <% }%>
                                                 </td>
                                                 <td>
                                                         ${lst.customer.customerName}
@@ -270,10 +262,10 @@
                                                 </td>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${empty lst.saRequest.description}">Chưa có lý
-                                                            do</c:when>
+                                                        <c:when test="${empty lst.saRequest.description}"><b>Chưa có lý
+                                                            do</b></c:when>
                                                         <c:otherwise>
-                                                            ${lst.saRequest.description}
+                                                            <b>${lst.saRequest.description}</b>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>
@@ -332,19 +324,12 @@
                 }
             },
             pageLength: 10,
-            select: {
-                style: 'multi',
-                selector: 'td:first-child'
-            },
+
             columnDefs: [
-                {
-                    orderable: false,
-                    className: 'select-checkbox',
-                    targets: 0
-                },
+
                 {
                     visible: false,
-                    targets: [7, 10]
+                    targets: [6, 9]
                 },
             ],
             buttons: [
@@ -352,29 +337,12 @@
                     title: 'Danh sách từ chối ',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 9, 11, 12, 13, 14]
                     }
                 },
             ]
         })
-        example.on("click", "th.select-checkbox", function () {
-            if ($("th.select-checkbox").hasClass("selected")) {
-                example.rows().deselect();
-                $("th.select-checkbox").removeClass("selected");
-            } else {
-                example.rows().select();
-                $("th.select-checkbox").addClass("selected");
-            }
-        }).on("select deselect", function () {
-            ("Some selection or deselection going on")
-            if (example.rows({
-                selected: true
-            }).count() !== example.rows().count()) {
-                $("th.select-checkbox").removeClass("selected");
-            } else {
-                $("th.select-checkbox").addClass("selected");
-            }
-        });
+
     });
     <%
                   List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");

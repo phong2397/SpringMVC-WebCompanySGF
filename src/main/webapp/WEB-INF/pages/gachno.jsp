@@ -191,7 +191,8 @@
 
                                             </td>
                                             <td class="text-center">
-                                                <b><a href="http://localhost:8080/${lst.payImages}">${lst.payImages}</a></b>
+                                                <a href="/${lst.payImages}" target="_blank"> <img
+                                                        src="/${lst.payImages}" alt="" width="100%"></a>
                                             </td>
                                             <td class="text-center">
                                                     ${lst.collector}
@@ -200,9 +201,10 @@
                                                     ${lst.collectDate}
                                             </td>
                                             <td class="text-center">
-                                                <b><a href="http://localhost:8080/${lst.collectionImages}"> ${lst.collectionImages}</a></b>
-
-
+                                                <a href="/${lst.collectionImages}" target="_blank"><img
+                                                        src="/${lst.collectionImages}"
+                                                        alt="" width="100%"></a>
+                                            </td>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -250,7 +252,7 @@
                                 <input type="file" id="importFile"
                                        name="file"/>
                             </label><br>
-                            <input type="hidden" id="id_donhang" name="id_donhang"/>
+                            <span id="id_donhang" style="display: none"></span>
                             <img class="img" src=""/>
                         </div>
 
@@ -317,7 +319,7 @@
 
     function gachno() {
         var formData = new FormData();
-        var iddonhang = $("#id_donhang").val();
+        var iddonhang = $("#id_donhang").text();
         console.log(iddonhang)
         formData.append('file', $('#importFile')[0].files[0]);
         try {

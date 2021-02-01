@@ -215,17 +215,12 @@ public class SignController {
                 log.info("Check file not null");
                 DetailTransaction detailTransaction = detailTransactionDAO.findById(Integer.parseInt(id));
                 log.info("detailTransaction: " + detailTransaction);
-                SaRequest sa = saRequestDAO.findById(Long.parseLong(id));
-                log.info("SaRequest: " + sa);
                 Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
                 detailTransaction.setPayImages(expath);
                 detailTransaction.setPayer(u.getUserLogin());
                 detailTransaction.setStatus("done");
                 detailTransaction.setPayDate(LocalDateTime.now());
                 detailTransactionDAO.update(detailTransaction);
-                sa.setStatus("act");
-                sa.setDescription("Chuyển tiền thành công");
-                saRequestDAO.update(sa);
                 log.info("success");
                 return "success";
             } else {
@@ -322,6 +317,7 @@ public class SignController {
                     sa.setDescription(textDecline);
                     sa.setEmployeeDuyet(sa.getEmployeeDuyet());
                     sa.setEmployeeDuyetDate(LocalDateTime.now());
+                    sa.setStatus(status);
                     sa.setUpdatedDate(LocalDateTime.now());
                     saRequestDAO.update(sa);
                     Customer c = customerDAO.findByPhone(sa.getCustomerPhone());
