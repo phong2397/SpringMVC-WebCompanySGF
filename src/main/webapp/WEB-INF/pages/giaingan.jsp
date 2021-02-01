@@ -335,7 +335,7 @@
                                            name="file"/>
                                 </label><br>
                                 <input type="hidden" id="id_donhang" name="id_donhang"/>
-                                <img class="img" src=""/>
+                                <img id="imgUpload" class="img" src=""/>
                             </div>
 
                             <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">
@@ -461,7 +461,30 @@
         }
     }
 
+    // TEST: fix 
+    const fileInput = document.getElementById("importFile");
+    // const imgUpload = document.getElementById("imgUpload");
 
+    window.addEventListener('paste', e => {
+        console.log('file clipboard: ', e.clipboardData);
+        fileInput.files = e.clipboardData.files;
+        console.log('OK?')
+        // imgUpload.src = ;
+        // FileReader support
+        if (FileReader && fileInput.files && fileInput.files.length) {
+            var fr = new FileReader();
+            fr.onload = function () {
+                document.getElementById('imgUpload').src = fr.result;
+            }
+            fr.readAsDataURL(fileInput.files[0]);
+        }
+
+        // Not supported
+        else {
+            // fallback -- perhaps submit the input to an iframe and temporarily store
+            // them on the server until the user's session ends.
+        }
+    });
 </script>
 
 </body>
