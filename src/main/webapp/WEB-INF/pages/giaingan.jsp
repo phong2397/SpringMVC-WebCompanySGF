@@ -461,16 +461,9 @@
         }
     }
 
-    // TEST: fix 
     const fileInput = document.getElementById("importFile");
-    // const imgUpload = document.getElementById("imgUpload");
-
     window.addEventListener('paste', e => {
-        console.log('file clipboard: ', e.clipboardData);
         fileInput.files = e.clipboardData.files;
-        console.log('OK?')
-        // imgUpload.src = ;
-        // FileReader support
         if (FileReader && fileInput.files && fileInput.files.length) {
             var fr = new FileReader();
             fr.onload = function () {
@@ -478,7 +471,6 @@
             }
             fr.readAsDataURL(fileInput.files[0]);
         }
-
         // Not supported
         else {
             // fallback -- perhaps submit the input to an iframe and temporarily store
