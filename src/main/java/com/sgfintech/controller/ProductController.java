@@ -38,7 +38,6 @@ public class ProductController {
         log.info("GET - Go into cauhinhPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
-
             return "redirect:login";
         } else {
             List<Product> listdata = productDAO.findAll();

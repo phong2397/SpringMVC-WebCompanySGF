@@ -36,26 +36,8 @@
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <!-- Site wrapper -->
 <div class="wrapper">
+    <jsp:include page="general/_header.jsp"/>
     <style>
-        .page-content {
-            max-width: 700px;
-            margin: 32px auto;
-            padding: 32px;
-            background: #fff;
-        }
-
-
-        .tabbed {
-            overflow-x: hidden; /* so we could easily hide the radio inputs */
-            margin: 32px 0;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .tabbed [type="radio"] {
-            /* hiding the inputs */
-            display: none;
-        }
 
         .tabs {
             display: flex;
@@ -107,7 +89,6 @@
         .tabbed [type="radio"]:nth-of-type(4):checked ~ .tab-content:nth-of-type(4) {
             display: block;
         }</style>
-    <jsp:include page="general/_header.jsp"/>
 
     <!-- Left side column. contains the logo and sidebar -->
     <jsp:include page="general/_menu.jsp"/>
@@ -247,13 +228,14 @@
                                                         <thead>
                                                         <tr>
                                                             <th class="text-center">Mã đơn</th>
-                                                            <th class="text-center">Số hợp đồng</th>
+                                                            \
                                                             <th class="text-center">Tên sản phẩm</th>
                                                             <th class="text-center">Tên công ty</th>
                                                             <th class="text-center">Ngày thanh toán</th>
                                                             <th class="text-center">Số tiền thanh toán</th>
                                                             <th class="text-center">Số tiền thanh toán</th>
                                                             <th class="text-center">Tên khách hàng</th>
+                                                            <th class="text-center">Số điện thoại KH</th>
                                                             <th class="text-center">Số CMND</th>
                                                             <th class="text-center">Số tiền cần thanh toán</th>
                                                             <th class="text-center">Số tiền cần thanh toán</th>
@@ -266,11 +248,8 @@
                                                         <tbody>
                                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                                         <tr>
-                                                            <td class="text-center"><a href="#"
-                                                                                       onclick="viewInfoContract('${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
-                                                            </td>
-                                                            <td class="text-center">
-                                                                    ${lst.contract.idContract}
+                                                            <td class="text-center"><a href="#" class="as"
+                                                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.companies.id}','${lst.contract.idContract}')"><b>${lst.contract.idContract}</b></a>
                                                             </td>
 
                                                             <td class="text-center">
@@ -295,9 +274,13 @@
                                                             <td class="text-center">
                                                                     ${lst.contract.remainAmountBorrow}
                                                             </td>
+
                                                             <td class="text-center">
                                                                     ${lst.customer.customerName}
 
+                                                            </td>
+                                                            <td class="text-center">
+                                                                    ${lst.customer.customerPhone}
                                                             </td>
                                                             <td class="text-center">
                                                                     ${lst.customer.customerId}
@@ -395,17 +378,15 @@
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
-<!-- ./wrapper -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="js/pages/data-table.js"></script>
 <!-- Vendor JS -->
 <script src="js/vendors.min.js"></script>
+
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Crypto Tokenizer Admin App -->
+<script type="text/javascript" src="js/funcThuhoino.js"></script>
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script type="text/javascript" src="js/funcThuhoino.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
@@ -424,7 +405,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [6, 10]
+                    targets: [5, 10]
                 },
             ],
             buttons: [
@@ -437,7 +418,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 1, 2, 3, 4, 6, 7, 8, 10, 11, 12, 13]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14]
 
                     }
                 },
@@ -452,8 +433,8 @@
          Gson gs= new Gson();
          String json1 = gs.toJson(list1);
      %>
-    var result = <%=json%>;
-    var list = <%=json1%>;
+    let result = <%=json%>;
+    let salist = <%=json1%>;
 
 </script>
 </body>

@@ -4,6 +4,7 @@
 <%@ page import="com.sgfintech.entity.Useradmin" %>
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ page import="com.sgfintech.entity.SaRequest" %>
+<%@ page import="com.sgfintech.entity.DetailTransaction" %>
 <%--
   Created by IntelliJ IDEA.
   User: Admin
@@ -198,6 +199,7 @@
                                             <th class="text-center">Mã công ty</th>
                                             <th class="text-center">Tên khách hàng</th>
                                             <th class="text-center">Số điện thoại</th>
+                                            <th class="text-center">Số CMND</th>
                                             <th class="text-center">Chủ tài khoản</th>
                                             <th class="text-center">Số tài khoản</th>
                                             <th class="text-center">Tên ngân hàng</th>
@@ -207,13 +209,11 @@
                                             <th class="text-center">Tổng phí</th>
                                             <th class="text-center">Tổng phí</th>
                                             <th class="text-center">TG yêu cầu</th>
+                                            <th class="text-center">Trạng thái</th>
                                             <th class="text-center">Người chuyển tiền</th>
                                             <th class="text-center">TG chuyển tiền</th>
-                                            <th class="text-center">Người thu tiền</th>
-                                            <th class="text-center">TG thu tiền</th>
-                                            <th class="text-center">Trạng thái</th>
-                                            <th class="text-center">HA trả</th>
-                                            <th class="text-center">HA thu</th>
+                                            <th class="text-center">Chứng từ chuyển tiền</th>
+                                            <th class="text-center">Nội dung chuyển khoản</th>
 
                                         </tr>
                                         </thead>
@@ -232,6 +232,9 @@
                                                 </td>
                                                 <td class="text-center">
                                                         ${lst.customerPhone}
+                                                </td>
+                                                <td class="text-center">
+                                                    -
                                                 </td>
                                                 <td class="text-center">
                                                         ${lst.bankOwner}
@@ -271,6 +274,13 @@
                                                                     value="${day}"/>
                                                 </td>
                                                 <td class="text-center">
+                                                    <c:choose>
+                                                        <c:when test="${lst.status eq 'active'}"><b
+                                                                style="color: orange">Chờ chuyển tiền</b></c:when>
+
+                                                    </c:choose>
+                                                </td>
+                                                <td class="text-center">
                                                         ${lst.payer}
                                                 </td>
                                                 <td class="text-center">
@@ -278,29 +288,10 @@
 
                                                 </td>
                                                 <td class="text-center">
-                                                        ${lst.collector}
+                                                    <b><a href="http://localhost:8080/${lst.payImages}">${lst.payImages}</a></b>
                                                 </td>
                                                 <td class="text-center">
-                                                        ${lst.collectDate}
-
-                                                </td>
-                                                <td class="text-center">
-                                                    <c:choose>
-                                                        <c:when test="${lst.status eq 'active'}"><b
-                                                                style="color: green">Chờ chuyển tiền</b></c:when>
-                                                        <c:when test="${lst.status eq 'success'}"><b
-                                                                style="color: green">Gạch nợ thành công</b></c:when>
-                                                        <c:when test="${lst.status eq 'done'}"><b
-                                                                style="color: green">Chuyển tiền thành công</b></c:when>
-
-                                                    </c:choose>
-                                                </td>
-                                                <td class="text-center">
-                                                    <img src="${lst.payImages}" alt="" width="100%">
-                                                </td>
-                                                <td class="text-center">
-                                                    <img src="${lst.collectionImages}" alt=""
-                                                         width="100%">
+                                                        ${lst.customerName} - ${lst.customerPhone} - ${lst.id}
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -333,31 +324,32 @@
                 <!-- Panes -->
 
                 <div class="modal-body">
-                    <form action="giaingan.html" method="post" id="from_upload"
-                          enctype="multipart/form-data">
-                        <label><b style="color:black; margin-bottom: 20px; ">Chọn hình ảnh:</b><br>
-                            <input type="file" id="importFile" class="btn btn-rounded btn-facebook "
-                                   name="file"/>
-                        </label><br>
-                        <input type="hidden" id="id_donhang" name="id_donhang"/>
-                        <img class="img" src=""/>
-                        <div class="modal-footer modal-footer-uniform">
-                            <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">Hoàn
+
+                    <div class="modal-footer modal-footer-uniform">
+                        <form action="giaingan.html" method="post" id="from_upload"
+                              enctype="multipart/form-data">
+                            <div class="form-group">
+                                <h5 style="color: black ">Giải ngân : Thông tin nhận tiền đầy đủ</h5>
+                                <label><b style="color:black; margin-bottom: 20px; ">Chọn hình ảnh:</b><br>
+                                    <input type="file" id="importFile"
+                                           name="file"/>
+                                </label><br>
+                                <input type="hidden" id="id_donhang" name="id_donhang"/>
+                                <img class="img" src=""/>
+                            </div>
+
+                            <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">
+                                Hoàn
                                 thành chuyển
                                 tiền
                             </button>
-                            <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng trang
+                            <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng
+                                trang
                             </button>
-                        </div>
-                    </form>
-                    <h4 id="labelDanhgia"></h4>
-                    <b style="color:black">Giải ngân : Thông tin nhận tiền đầy đủ</b>
+                        </form>
+                    </div>
                 </div>
-
-
                 <!-- Footer -->
-
-
             </div>
         </div>
     </div>
@@ -382,7 +374,7 @@
 </script>
 <script type="text/javascript">
     <%
-                List<MergeDataOrder> list = (List<MergeDataOrder>) request.getAttribute("views");
+                 List<DetailTransaction> list = ( List<DetailTransaction>) request.getAttribute("views");
                 Gson g = new Gson();
                 String json = g.toJson(list);
 
@@ -390,15 +382,47 @@
                   Gson gSa= new Gson();
                   String jsonSa = gSa.toJson(listSa);
                 %>
-    var result = <%=json%>;
-    var saList = <%=jsonSa%>;
-    console.log(saList);
-    var selectedsaId;
+    let result = <%=json%>;
+    let saList = <%=jsonSa%>;
+
+    $(document).ready(function () {
+
+        $("#loading").hide();
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            order: [[0, "desc"]],
+            language: {
+                emptyTable: "Không có dữ liệu",
+                search: "Tìm kiếm:",
+                paginate: {
+                    previous: "Trang trước",
+                    next: "Trang sau",
+                }
+            },
+            pageLength: 10,
+            columnDefs: [
+                {
+                    visible: false,
+                    targets: [9, 12]
+                },
+            ],
+            buttons: [
+                {
+                    title: 'Danh sách chờ chuyển tiền',
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 9, 12, 14, 15, 16, 17, 18]
+
+                    }
+                },
+            ]
+        })
+    });
 
     function giaingan() {
         var formData = new FormData();
         var iddonhang = $("#id_donhang").val();
-        selectedsaId = iddonhang
+        console.log(iddonhang)
         formData.append('file', $('#importFile')[0].files[0]);
         try {
             // This async call may fail.
@@ -416,53 +440,26 @@
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
-                    title: 'Dữ liệu được cập nhật thành công.',
+                    title: 'Giải ngân thành công.',
                     showConfirmButton: false,
                     timer: 3000
                 });
                 $("#modal-giaingan").modal('hide');
-                $("#tr-" + selectedsaId).remove();
+                $("#tr-" + iddonhang).remove();
+            } else if (text === "errorNoExistPath") {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Cần cập nhật chứng từ chuyển tiền.',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
             }
             return;
         } catch (error) {
             return "Không thể kết nối tới server";
         }
     }
-
-    $(document).ready(function () {
-
-        $("#loading").hide();
-        $('#example').DataTable({
-            dom: 'Bfrtip',
-            ordering: false,
-            order: [[0, "desc"]],
-            language: {
-                emptyTable: "Không có dữ liệu",
-                search: "Tìm kiếm:",
-                paginate: {
-                    previous: "Trang trước",
-                    next: "Trang sau",
-                }
-            },
-            pageLength: 10,
-            columnDefs: [
-                {
-                    visible: false,
-                    targets: [8, 11, 18]
-                },
-            ],
-            buttons: [
-                {
-                    title: 'Danh sách đã ký duyệt',
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 11, 13, 14, 15, 16, 18]
-
-                    }
-                },
-            ]
-        })
-    });
 
 
 </script>

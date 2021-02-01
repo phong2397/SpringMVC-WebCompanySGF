@@ -44,15 +44,8 @@
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <!-- Site wrapper -->
 <div class="wrapper">
+    <jsp:include page="general/_header.jsp"/>
     <style>
-        .page-content {
-            max-width: 700px;
-            margin: 32px auto;
-            padding: 32px;
-            background: #fff;
-        }
-
-
         .tabbed {
             overflow-x: hidden; /* so we could easily hide the radio inputs */
             margin: 32px 0;
@@ -115,7 +108,6 @@
         .tabbed [type="radio"]:nth-of-type(4):checked ~ .tab-content:nth-of-type(4) {
             display: block;
         }</style>
-    <jsp:include page="general/_header.jsp"/>
 
     <!-- Left side column. contains the logo and sidebar -->
     <jsp:include page="general/_menu.jsp"/>
@@ -226,6 +218,9 @@
                                         </div>
                                         <div class="box">
                                             <div class="box-body">
+                                                <div class="box-header with-border">
+                                                    <h4 class="box-title">Tra soát thông tin chuyển tiền và gạch nợ</h4>
+                                                </div>
                                                 <div class="table-responsive">
                                                     <table id="example"
                                                            class="table table-striped table-bordered no-margin"
@@ -311,37 +306,48 @@
                                                                         ${lst.payer}
                                                                 </td>
                                                                 <td class="text-center">
-                                                                        ${lst.payDate}
+                                                                    <fmt:parseDate value="${lst.payDate}"
+                                                                                   pattern="yyyy-MM-dd'T'HH:mm"
+                                                                                   var="day"
+                                                                                   type="date"/>
+                                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                                    value="${day}"/>
 
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    <img src="/${lst.payImages}"
-                                                                         alt="" width="100%">
-                                                                </td>
-                                                                <td class="text-center">
-                                                                        ${lst.collector}
-                                                                </td>
-                                                                <td class="text-center">
-                                                                        ${lst.collectDate}
+                                                                    <b><a href="http://localhost:8080/${lst.payImages}">${lst.payImages}</a></b>
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <c:choose>
                                                                         <c:when test="${lst.status eq 'active'}"><b
-                                                                                style="color: green">Chờ chuyển
+                                                                                style="color: orange">Chờ chuyển
                                                                             tiền</b></c:when>
                                                                         <c:when test="${lst.status eq 'success'}"><b
                                                                                 style="color: green">Gạch nợ thành
                                                                             công</b></c:when>
                                                                         <c:when test="${lst.status eq 'done'}"><b
-                                                                                style="color: green">Chuyển tiền thành
+                                                                                style="color: steelblue">Chuyển tiền
+                                                                            thành
                                                                             công</b></c:when>
 
                                                                     </c:choose>
                                                                 </td>
+                                                                <td class="text-center">
+                                                                        ${lst.collector}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <fmt:parseDate value="${lst.collectDate}"
+                                                                                   pattern="yyyy-MM-dd'T'HH:mm"
+                                                                                   var="day"
+                                                                                   type="date"/>
+                                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                                    value="${day}"/>
+                                                                </td>
 
                                                                 <td class="text-center">
-                                                                    <img src="/${lst.collectionImages}" alt=""
-                                                                         width="100%">
+                                                                    <b><a href="http://localhost:8080/${lst.collectionImages}"> ${lst.collectionImages}</a></b>
+
+
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -444,7 +450,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    // targets: [8, 11]
+                    targets: [8, 11]
                 }
             ],
             buttons: [
@@ -472,8 +478,8 @@
          Gson gs= new Gson();
          String json1 = gs.toJson(list1);
      %>
-    var result = <%=json%>;
-    var list = <%=json1%>;
+    let result = <%=json%>;
+    let list = <%=json1%>;
 
 </script>
 </body>

@@ -205,7 +205,7 @@
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal"
-                        onclick="verifyThamdinh()">
+                        onclick="xacnhanThamdinh()">
                     Xác nhận
                 </button>
                 <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Hủy</button>
@@ -229,50 +229,7 @@
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal"
-                        onclick="verifyKyduyet()">
-                    Xác nhận
-                </button>
-                <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Hủy</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /.modal -->
-<!-- Modal xác nhận giai ngan -->
-<div class="modal modal-fill fade" id="giainganVerify" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 style="color: #0b0b0b">Giải ngân</h4>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
-                <div class="row">
-                    <div class="col-12">
-                        <form action="" method="post"
-                              enctype="multipart/form-data">
-                            <label><h4>Chọn hình ảnh ủy nhiệm thu:</h4>
-                                <button type="button" class="btn btn-rounded btn-info "
-                                        type="file" name="file"> Upload
-                                </button>
-                            </label><br>
-                            <img class="img" src=""/>
-
-                        </form>
-
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 4%">
-                    <div class="col-12"><h4>Bạn có chắc chắn giải ngân cho đơn "<b style="color: black" id="idd"></b>"?
-                    </h4></div>
-                </div>
-
-            </div>
-            <div class="modal-footer modal-footer-uniform">
-                <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal"
-                        onclick="verifyGiaingan()">
+                        onclick="xacnhanKyduyet()">
                     Xác nhận
                 </button>
                 <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Hủy</button>
@@ -313,7 +270,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="tabbable">
-
                     <!-- Nav Tabs, Modal Nav Bar -->
                     <ul class="nav nav-tabs" role="tablist">
                         <%
@@ -327,8 +283,8 @@
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#document" data-toggle="tab">
-                                Thông tin thẩm định và hình ảnh
+                            <a class="nav-link" href="#documentChiThu" data-toggle="tab">
+                                Chứng từ hình ảnh
                             </a>
                         </li>
                         <li class="nav-item active">
@@ -363,9 +319,7 @@
                             </a>
                         </li>
                         <% }%>
-
                     </ul>
-
                 </div>
                 <!-- Close Button -->
                 <button type="button" class="close" data-dismiss="modal">
@@ -516,6 +470,24 @@
                                     <p id="imgContractc"></p></div>
 
                             </div>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="documentChiThu">
+                        <h4>Chứng từ : Hình ảnh </h4>
+                        <div class="row">
+                            <div class="col-5 ">Uỷ nhiệm chuyển tiền</div>
+                            <div class="col-5 ">Uỷ nhiệm thu tiền</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5 ">
+                                <p id="payImages"></p>
+                            </div>
+
+                            <div class="col-5 "><p id="collectionImages"></p><br>
+                            </div>
+
 
                         </div>
                     </div>

@@ -34,25 +34,21 @@ public class TotalListController {
 
     @RequestMapping(value = {"/khachhangtattoan"}, method = RequestMethod.GET)
     public String khachhangtattoanPage(ModelMap mm, HttpSession session) {
-
+        log.info("GET - khachhangtattoan page ");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
             return "redirect:login";
         } else {
             int countAct = mergeDataService.contractStatus("act");
             int countDone = mergeDataService.contractStatus("done");
             List<MergeDataWithdraw> listdata = mergeDataService.getDataWithdraw("done", true, "");
+            log.info("List data:  " + listdata);
             List<Contract> contract = contractDAO.findAll();
+            log.info("List contract:  " + contract);
             mm.addAttribute("con", contract);
             mm.addAttribute(Consts.Attr_ResultView, listdata);
             mm.addAttribute("countDone", countDone);
             mm.addAttribute("countAct", countAct);
-            log.info("test log ===============================");
-            log.info(System.getProperty("catalina.base"));
-            log.info(System.getProperty("catalina.home"));
             return "khachhangtattoan";
         }
     }
@@ -60,13 +56,13 @@ public class TotalListController {
     @RequestMapping(value = "/findContractHistoryModal", method = RequestMethod.POST)
     public @ResponseBody
     String ContractModal(HttpServletRequest request, HttpServletResponse response) {
+        log.info("POST - ContractModal ");
         String customerPhone = request.getParameter("dataRequest");
+        log.info("customer phone: " + customerPhone);
         List<MergeDataWithdraw> result = mergeDataService.getContractModal(customerPhone);
         Gson g = new Gson();
         String responseStr = g.toJson(result);
-        log.info("test log ===============================");
-        log.info(System.getProperty("catalina.base"));
-        log.info(System.getProperty("catalina.home"));
+        log.info("Response Str: : " + responseStr);
         return responseStr;
     }
 }

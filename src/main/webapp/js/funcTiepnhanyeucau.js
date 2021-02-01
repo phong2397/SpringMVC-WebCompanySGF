@@ -1,8 +1,6 @@
-function verifyThamdinh() {
+function xacnhanThamdinh() {
     var dataRequest = $('#saID').text();
     var employeeThamdinh = $('#employeeTD').text().trim();
-    console.log(dataRequest)
-    console.log(employeeThamdinh)
     let data = {
         datarequest: dataRequest,
         status: 'wfs',
@@ -15,17 +13,17 @@ function verifyThamdinh() {
         Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: 'Dữ liệu được cập nhật thành công.',
+            title: 'Xét duyệt thành công.',
             showConfirmButton: false,
             timer: 3000
         });
         $("#modal-right").modal('hide');
-        $("#tr-" + selectedsaId).remove();
+        $("#tr-" + dataRequest).remove();
     } else if (result === "errorEmployee") {
         Swal.fire({
             position: 'top-end',
             icon: 'error',
-            title: 'Bạn không có quyền thẩm định',
+            title: 'Bạn không có quyền xét duyệt',
             showConfirmButton: false,
             timer: 3000
         });
@@ -40,6 +38,79 @@ function verifyThamdinh() {
         });
         $("#modal-right").modal('hide');
 
+    }
+};
+
+function sendOrderThamdinh(data) {
+    try {
+        // This async call may fail.
+        let text = $.ajax({
+            type: "POST",
+            timeout: 100000,
+            url: "changes",
+            data: data,
+            dataType: 'text',
+            async: false
+        }).responseText;
+        return text;
+        console.log(text);
+    } catch (error) {
+        return "Không thể kết nối tới server";
+    }
+}
+
+function tuchoiQuanlyxetduyet() {
+    $("#loading").show();
+    var dataRequest = $('#saID').text();
+    var textdecline = $('#reason').val();
+    var employeeThamdinh = $('#employeeTD').text().trim();
+    if (!textdecline || textdecline === 'null' || textdecline === 'undefined') {
+        $("#loading").hide();
+        return Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Lý do từ chối không hợp lệ',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    }
+    let data = {
+        datarequest: dataRequest,
+        status: 'deni',
+        step: '1',
+        textDecline: textdecline,
+        employeeThamdinh: employeeThamdinh
+    };
+    var result = sendOrderThamdinh(data);
+    if (result === "success") {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Đơn dã bị từ chối',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        $("#modal-right").modal('hide');
+        $("#loading").hide();
+        $("#tr-" + dataRequest).remove();
+    } else if (result === "errorEmployee") {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Bạn không có quyền từ chối',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        $("#loading").hide();
+    } else {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        $("#loading").hide();
     }
 };
 
@@ -64,7 +135,7 @@ function updateDeclineKyduyet() {
             timer: 3000
         });
         $("#modal-right").modal('hide');
-        $("#tr-" + selectedsaId).remove();
+        $("#tr-" + dataRequest).remove();
     } else if (result === "errorEmployee") {
         Swal.fire({
             position: 'top-end',
@@ -125,7 +196,7 @@ function updateDeclineThamdinh() {
             timer: 3000
         });
         $("#modal-right").modal('hide');
-        $("#tr-" + selectedsaId).remove();
+        $("#tr-" + dataRequest).remove();
     } else if (result === "errorEmployee") {
         Swal.fire({
             position: 'top-end',
@@ -163,78 +234,6 @@ function updatestatusDeniThamdinh(data) {
     }
 }
 
-function sendOrderThamdinh(data) {
-    try {
-        // This async call may fail.
-        let text = $.ajax({
-            type: "POST",
-            timeout: 100000,
-            url: "changes",
-            data: data,
-            dataType: 'text',
-            async: false
-        }).responseText;
-        return text;
-        console.log(text);
-    } catch (error) {
-        return "Không thể kết nối tới server";
-    }
-}
-
-function tuchoiQuanlyxetduyet() {
-    $("#loading").show();
-    var dataRequest = $('#saID').text();
-    var textdecline = $('#reason').val();
-    var employeeThamdinh = $('#employeeTD').text().trim();
-    if (!textdecline || textdecline === 'null' || textdecline === 'undefined') {
-        $("#loading").hide();
-        return Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: 'Lý do từ chối không hợp lệ',
-            showConfirmButton: false,
-            timer: 3000
-        });
-    }
-    let data = {
-        datarequest: dataRequest,
-        status: 'deni',
-        step: '1',
-        textDecline: textdecline,
-        employeeThamdinh: employeeThamdinh
-    };
-    var result = sendOrderThamdinh(data);
-    if (result === "success") {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Dữ liệu được cập nhật thành công.',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        $("#modal-right").modal('hide');
-        $("#loading").hide();
-        $("#tr-" + selectedsaId).remove();
-    } else if (result === "errorEmployee") {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: 'Bạn không có quyền thẩm định',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        $("#loading").hide();
-    } else {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
-            showConfirmButton: false,
-            timer: 3000
-        });
-        $("#loading").hide();
-    }
-};
 
 function chiadon() {
     var IDValue = $('.checkEmployee:checkbox:checked').map(

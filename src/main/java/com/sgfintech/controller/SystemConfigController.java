@@ -12,9 +12,7 @@ public class SystemConfigController {
 
     @RequestMapping(value = {"/giaidoantrehan"}, method = RequestMethod.GET)
     public String latePeriod(Model model) {
-        log.info("test log ===============================");
-        log.info(System.getProperty("catalina.base"));
-        log.info(System.getProperty("catalina.home"));
+        log.info("GET - giaidoantrehan page ");
         return "giaidoantrehan";
     }
 }

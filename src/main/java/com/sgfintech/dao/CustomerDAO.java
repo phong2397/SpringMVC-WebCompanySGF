@@ -1,6 +1,7 @@
 package com.sgfintech.dao;
 
 import com.sgfintech.entity.Customer;
+import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.hibernate.query.Query;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
@@ -19,7 +20,7 @@ import java.util.List;
 @Repository(value = "customerDAO")
 @Transactional(rollbackFor = Exception.class)
 public class CustomerDAO {
-
+    private static final Logger log = Logger.getLogger(ContractDAO.class);
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -46,7 +47,7 @@ public class CustomerDAO {
     public void saveAll(final List<Customer> list) {
         Session session = this.sessionFactory.getCurrentSession();
         Transaction tx = session.getTransaction();
-        for (int i = 0; i < list.size() ; i++) {
+        for (int i = 0; i < list.size(); i++) {
             Customer c = list.get(i);
             session.save(c);
             if (i % 50 == 0) {
@@ -77,6 +78,7 @@ public class CustomerDAO {
     }
 
     public List<Customer> getAllItemByCode(String companyCode) {
+        log.info("List customer - getAllItemByCode - req param companyCode ");
         try {
             Session session = this.sessionFactory.getCurrentSession();
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -85,14 +87,17 @@ public class CustomerDAO {
             cr.select(root).where(cb.equal(root.get("companyCode"), companyCode));
             Query<Customer> query = session.createQuery(cr);
             List<Customer> result = query.getResultList();
+            log.info("Result list customer: " + result);
             return result;
         } catch (Exception ex) {
+            log.error("Exception: " + ex.getMessage());
             ex.printStackTrace();
             return null;
         }
     }
 
     public Customer findByPhone(String phone) {
+        log.info("Find customer - findByPhone - req param phone ");
         try {
             Session session = this.sessionFactory.getCurrentSession();
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -101,8 +106,10 @@ public class CustomerDAO {
             cr.select(root).where(cb.equal(root.get("customerPhone"), phone));
             Query<Customer> query = session.createQuery(cr);
             Customer result = query.getSingleResult();
+            log.info("Result: " + result);
             return result;
         } catch (Exception ex) {
+            log.error("Exception: " + ex.getMessage());
             ex.printStackTrace();
             return null;
         }

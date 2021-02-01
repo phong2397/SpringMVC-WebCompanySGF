@@ -599,12 +599,12 @@ function viewInfoCustomer(phone, id, comId) {
         if (typeof (sa.description) === "undefined") {
             $("#saInfo").append('<p>Lý do : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
         } else {
-            $("#saInfo").append('<p>Lý do : <b style="color:forestgreen;">' + sa.description + '</b></p>');
+            $("#saInfo").append('<p>Lý do : <b style="color:red;">' + sa.description + '</b></p>');
         }
         $("#labelDanhgia").empty();
         $("#labelDanhgia").append('Đánh giá');
         $("#danhgia").empty();
-        $("#danhgia").append('<button class="btn btn-rounded btn-info btn-accept" onclick="updateDeclineThamdinh()" >Cập nhật lại</button> ');
+        $("#danhgia").append('<div class="col-4"><button class="btn btn-rounded btn-info btn-accept" onclick="updateDeclineThamdinh()" >Cập nhật lại</button></div> ');
 
     } else if (sa.status == "deni" && sa.employeeDuyetDate != null) {
         $("#saInfo").empty();
@@ -625,7 +625,7 @@ function viewInfoCustomer(phone, id, comId) {
         $("#labelDanhgia").empty();
         $("#danhgia").empty();
         $("#labelDanhgia").append('Đánh giá');
-        $("#danhgia").append('<button class="btn btn-rounded btn-info btn-accept" onclick="updateDeclineKyduyet()">Cập nhật lại</button> ');
+        $("#danhgia").append('<div class="col-4"><button class="btn btn-rounded btn-info btn-accept" onclick="updateDeclineKyduyet()">Cập nhật lại</button> </div>');
     } else if (sa.status === "wfs") {
         $("#saInfo").empty();
         $("#saInfo").append('<h4><b>*</b>&nbsp;&nbsp;Thông tin yêu cầu</h4>');

@@ -384,8 +384,8 @@
                  Gson gs= new Gson();
                  String json1 = gs.toJson(list1);
                   %>
-    var result = <%=json%>;
-    var list = <%=json1%>;
+    let result = <%=json%>;
+    let list = <%=json1%>;
 
 
 </script>

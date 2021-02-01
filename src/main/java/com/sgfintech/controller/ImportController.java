@@ -80,7 +80,6 @@ public class ImportController implements ServletContextAware {
             String excelPath = servletContext.getRealPath(fileLocation + fileName);
             log.info("Excel Path : " + excelPath);
             ExcelHelper excelHelper = new ExcelHelper(excelPath);
-            log.info("Excel Helper : " + excelHelper);
             List<Customer> lstCustomer = excelHelper.parseDataFromExcel("Customer", companyCode);
             log.info("Parse list customer from excel file : " + lstCustomer);
             long c = companiesDAO.countCompanyByCode(companyCode);

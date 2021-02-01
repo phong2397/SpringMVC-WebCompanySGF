@@ -249,7 +249,7 @@
                                                                     value="${day}"/>
                                                 </td>
                                                 <td>
-                                                    <b style="color: red">${lst.saRequest.status}</b>
+                                                    <b style="color: red">Từ chối</b>
                                                 </td>
 
                                                 <td>
@@ -263,10 +263,10 @@
                                                 </td>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${empty lst.saRequest.description}">Chưa có lý
-                                                            do</c:when>
+                                                        <c:when test="${empty lst.saRequest.description}"><b>Chưa có lý
+                                                            do</b></c:when>
                                                         <c:otherwise>
-                                                            ${lst.saRequest.description}
+                                                            <b>${lst.saRequest.description}</b>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>
@@ -377,9 +377,9 @@
                  Gson gs= new Gson();
                  String json1 = gs.toJson(list1);
                   %>
-    var result = <%=json%>;
-    var list = <%=json1%>;
-    var selectedsaId;
+    let result = <%=json%>;
+    let list = <%=json1%>;
+    let selectedsaId;
 </script>
 </body>
 </html>
