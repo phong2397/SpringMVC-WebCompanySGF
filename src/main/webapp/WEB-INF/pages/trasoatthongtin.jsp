@@ -237,8 +237,10 @@
                                                             <th class="text-center">Số tiền tạm ứng</th>
                                                             <th class="text-center">Số tiền tạm ứng</th>
                                                             <th class="text-center">Phí</th>
-                                                            <th class="text-center">Tổng phí</th>
-                                                            <th class="text-center">Tổng phí</th>
+                                                            <th>Mức phí</th>
+                                                            <th>Mức phí</th>
+                                                            <th class="text-center">Tổng</th>
+                                                            <th class="text-center">Tổng</th>
                                                             <th class="text-center">TG yêu cầu</th>
                                                             <th class="text-center">Người chuyển tiền</th>
                                                             <th class="text-center">TG chuyển tiền</th>
@@ -288,6 +290,13 @@
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <fmt:formatNumber
+                                                                            value="${lst.amount * 0.02}"
+                                                                            type="number"/> đ
+
+                                                                </td>
+                                                                <td> ${lst.amount * 0.02}</td>
+                                                                <td class="text-center">
+                                                                    <fmt:formatNumber
                                                                             value="${lst.total}"
                                                                             type="number"/> đ
                                                                 </td>
@@ -327,8 +336,7 @@
                                                                             công</b></c:when>
                                                                         <c:when test="${lst.status eq 'done'}"><b
                                                                                 style="color: steelblue">Chuyển tiền
-                                                                            thành
-                                                                            công</b></c:when>
+                                                                            thành công</b></c:when>
 
                                                                     </c:choose>
                                                                 </td>
@@ -450,12 +458,12 @@
             columnDefs: [
                 {
                     visible: false,
-                    targets: [8, 11]
+                    targets: [8, 11, 13]
                 }
             ],
             buttons: [
                 {
-                    title: 'Danh sách thanh toán',
+                    title: 'Danh sách tra soát thông tin chứng từ',
                     extend: 'excelHtml5',
                     exportOptions: {
                         format: {
@@ -463,7 +471,7 @@
                                 return body;
                             }
                         },
-                        columns: [0, 1, 2, 3, 4, 6, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+                        columns: [0, 1, 2, 3, 4, 6, 8, 9, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21,]
 
                     }
                 },
