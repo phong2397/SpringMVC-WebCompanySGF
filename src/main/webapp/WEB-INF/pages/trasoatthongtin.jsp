@@ -435,7 +435,6 @@
 </div>
 <!-- ./wrapper -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="js/pages/data-table.js"></script>
 <!-- Vendor JS -->
 <script src="js/vendors.min.js"></script>
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
