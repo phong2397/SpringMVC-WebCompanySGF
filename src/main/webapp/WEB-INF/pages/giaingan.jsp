@@ -461,22 +461,32 @@
         }
     }
 
-    const fileInput = document.getElementById("importFile");
-    window.addEventListener('paste', e => {
-        fileInput.files = e.clipboardData.files;
-        if (FileReader && fileInput.files && fileInput.files.length) {
+    function showImage(files){
+        if (FileReader && files && files.length) {
             var fr = new FileReader();
             fr.onload = function () {
                 document.getElementById('imgUpload').src = fr.result;
             }
-            fr.readAsDataURL(fileInput.files[0]);
+            fr.readAsDataURL(files[0]);
         }
         // Not supported
         else {
             // fallback -- perhaps submit the input to an iframe and temporarily store
             // them on the server until the user's session ends.
         }
+
+    }
+
+    const fileInput = document.getElementById("importFile");
+    fileInput.addEventListener("change",function(){
+        showImage(this.files);
+    }, false);
+    window.addEventListener('paste', e => {
+        console.log('event: ', e.clipboardData.files);
+        fileInput.files = e.clipboardData.files;
+        showImage(fileInput.files);
     });
+
 </script>
 
 </body>
