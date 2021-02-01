@@ -100,7 +100,7 @@ public class ImportController implements ServletContextAware {
                 log.info("Customer List: " + customerList);
                 List<Customer> importDB = CompareListHandler.compareList(customerList, lstCustomer);
                 log.info("Compare 2 list: " + importDB);
-                customerDAO.saveAll(importDB);
+                customerDAO.saveAllStateless(importDB);
                 return new Gson().toJson(importDB);
             }
         } catch (Exception ex) {
