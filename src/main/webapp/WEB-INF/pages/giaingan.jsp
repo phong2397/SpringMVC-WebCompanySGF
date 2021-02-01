@@ -205,9 +205,9 @@
                                             <th class="text-center">Tên ngân hàng</th>
                                             <th class="text-center">Số tiền tạm ứng</th>
                                             <th class="text-center">Số tiền tạm ứng</th>
-                                            <th class="text-center">Phí</th>
-                                            <th class="text-center">Tổng tiền tạm ứng</th>
-                                            <th class="text-center">Tổng tiền tạm ứng</th>
+                                            <th class="text-center">Phí dịch vụ</th>
+                                            <th class="text-center">Mức phí</th>
+                                            <th class="text-center">Mức phí</th>
                                             <th class="text-center">TG yêu cầu</th>
                                             <th class="text-center">Trạng thái</th>
                                             <th class="text-center">Người chuyển tiền</th>
@@ -221,8 +221,16 @@
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr id="tr-${lst.id}">
                                                 <td class="text-center">
+                                                    <%
+                                                        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+                                                        String role = u.getRole();
+                                                        if (role.equals("ketoan")) { %>
                                                     <a href="#" data-toggle="modal"
                                                        onclick="viewInfoCustomer('${lst.id}')"><b>${lst.id}</b></a>
+                                                    <% } else {%>
+                                                    <b>${lst.id}</b>
+                                                    <% }%>
+
                                                 </td>
                                                 <td class="text-center">
                                                         ${lst.companyCode}
@@ -259,11 +267,11 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <fmt:formatNumber
-                                                            value="${lst.amount+(lst.amount * 0.02)}"
+                                                            value="${lst.amount * 0.02}"
                                                             type="number"/> đ
                                                 </td>
                                                 <td class="text-center">
-                                                        ${lst.amount+(lst.amount * 0.02)}
+                                                        ${lst.amount * 0.02}
                                                 </td>
                                                 <td class="text-center">
                                                     <fmt:parseDate value="  ${lst.dateRequest}"

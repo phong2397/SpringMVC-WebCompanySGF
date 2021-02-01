@@ -60,6 +60,12 @@
                 </a>
             </li>
             <li>
+                <a href="giaingan.html">
+                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
+                    <span>Giải ngân</span>
+                </a>
+            </li>
+            <li>
                 <a href="tuchoi.html">
                     <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
                     <span>Từ chối</span>
@@ -259,11 +265,18 @@
                 </a>
             </li>
             <li>
+                <a href="giaingan.html">
+                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
+                    <span>Giải ngân</span>
+                </a>
+            </li>
+            <li>
                 <a href="tuchoi.html">
                     <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
                     <span>Từ chối</span>
                 </a>
             </li>
+
             <li>
                 <a href="thaydoimatkhau.html">
                     <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
@@ -290,6 +303,12 @@
                 <a href="kyduyetRole.html">
                     <img src="images/svg-icon/sidebar-menu/charts3.svg" class="svg-icon" alt="">
                     <span>Duyệt giải ngân</span>
+                </a>
+            </li>
+            <li>
+                <a href="giaingan.html">
+                    <img src="images/svg-icon/sidebar-menu/transactions.svg" class="svg-icon" alt="">
+                    <span>Giải ngân</span>
                 </a>
             </li>
             <li>
