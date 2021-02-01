@@ -4,7 +4,7 @@ function verifyKyduyet() {
     var employeeDuyet = $('#employeeduyet').text();
     let data = {
         datarequest: dataRequest,
-        status: 'wfs',
+        status: 'act',
         step: '2',
         employeeDuyet: employeeDuyet,
         textDecline: 'Chờ chuyển tiền',
