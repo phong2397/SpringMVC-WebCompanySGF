@@ -469,12 +469,6 @@
             }
             fr.readAsDataURL(files[0]);
         }
-        // Not supported
-        else {
-            // fallback -- perhaps submit the input to an iframe and temporarily store
-            // them on the server until the user's session ends.
-        }
-
     }
 
     const fileInput = document.getElementById("importFile");
