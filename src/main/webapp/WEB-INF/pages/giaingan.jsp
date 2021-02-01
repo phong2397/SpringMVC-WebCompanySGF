@@ -206,8 +206,8 @@
                                             <th class="text-center">Số tiền tạm ứng</th>
                                             <th class="text-center">Số tiền tạm ứng</th>
                                             <th class="text-center">Phí</th>
-                                            <th class="text-center">Tổng phí</th>
-                                            <th class="text-center">Tổng phí</th>
+                                            <th class="text-center">Tổng tiền tạm ứng</th>
+                                            <th class="text-center">Tổng tiền tạm ứng</th>
                                             <th class="text-center">TG yêu cầu</th>
                                             <th class="text-center">Trạng thái</th>
                                             <th class="text-center">Người chuyển tiền</th>
@@ -259,11 +259,11 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <fmt:formatNumber
-                                                            value="${lst.total}"
+                                                            value="${lst.amount+(lst.amount * 0.02)}"
                                                             type="number"/> đ
                                                 </td>
                                                 <td class="text-center">
-                                                        ${lst.total}
+                                                        ${lst.amount+(lst.amount * 0.02)}
                                                 </td>
                                                 <td class="text-center">
                                                     <fmt:parseDate value="  ${lst.dateRequest}"
