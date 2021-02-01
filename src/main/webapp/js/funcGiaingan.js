@@ -114,7 +114,7 @@
 function viewInfoCustomer(id) {
     list = result.find(el => el.id == id);
     $("#id_donhang").empty();
-    $("#id_donhang").val(id);
+    $("#id_donhang").text(id);
     console.log(id)
     $('#modal-giaingan').modal('show');
 }

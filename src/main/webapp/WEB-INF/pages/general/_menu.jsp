@@ -259,7 +259,7 @@
                 </a>
             </li>
             <li>
-                <a href="tuchoithamdinh.html">
+                <a href="tuchoi.html">
                     <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
                     <span>Từ chối</span>
                 </a>
@@ -293,7 +293,7 @@
                 </a>
             </li>
             <li>
-                <a href="tuchoikyduyet.html">
+                <a href="tuchoi.html">
                     <img src="images/svg-icon/basic.svg" class="svg-icon" alt="">
                     <span>Từ chối</span>
                 </a>

@@ -192,7 +192,6 @@
                                     <table id="example" class="table table-lg invoice-archive" width="100%">
                                         <thead>
                                         <tr>
-                                            <th></th>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
                                             <th>Số CMND</th>
@@ -210,8 +209,6 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr id="tr-${lst.saRequest.id}">
-                                                <td>
-                                                </td>
                                                 <td><a data-toggle="modal" href="#" class="as"
                                                        onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
@@ -318,20 +315,11 @@
                     next: "Trang sau",
                 }
             },
-            select: {
-                style: 'multi',
-                selector: 'td:first-child'
-            },
             pageLength: 10,
             columnDefs: [
                 {
-                    orderable: false,
-                    className: 'select-checkbox',
-                    targets: 0
-                },
-                {
                     visible: false,
-                    targets: [7, 10]
+                    targets: [6, 9]
                 },
             ],
             buttons: [
@@ -339,7 +327,7 @@
                     title: 'Danh sách chờ xét duyệt',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 9, 11]
                     }
                 },
             ]

@@ -7,7 +7,7 @@ function xacnhanKyduyet() {
         status: 'act',
         step: '2',
         employeeDuyet: employeeDuyet,
-        textDecline: 'Chờ chuyển tiền',
+        textDecline: 'Chuyển tiền thành công',
     };
     var result = sendOrderKyduyet(data);
     if (result === "success") {

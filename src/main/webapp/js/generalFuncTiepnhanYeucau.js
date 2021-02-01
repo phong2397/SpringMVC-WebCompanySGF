@@ -620,7 +620,7 @@ function viewInfoCustomer(phone, id, comId) {
         if (typeof (sa.description) === "undefined") {
             $("#saInfo").append('<p>Lý do : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
         } else {
-            $("#saInfo").append('<p>Lý do : <b style="color:forestgreen">' + sa.description + '</b></p>');
+            $("#saInfo").append('<p>Lý do : <b style="color:red">' + sa.description + '</b></p>');
         }
         $("#labelDanhgia").empty();
         $("#danhgia").empty();

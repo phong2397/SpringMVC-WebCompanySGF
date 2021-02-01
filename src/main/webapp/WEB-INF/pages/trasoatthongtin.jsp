@@ -324,10 +324,21 @@
 
                                                                 </td>
                                                                 <td class="text-center">
-                                                                    <a href="/${lst.collectionImages}" target="_blank">
+                                                                    <a href="/${lst.payImages}" target="_blank">
                                                                         <img
                                                                                 src="/${lst.payImages}" alt=""
                                                                                 width="100%"></a>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                        ${lst.collector}
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <fmt:parseDate value="${lst.collectDate}"
+                                                                                   pattern="yyyy-MM-dd'T'HH:mm"
+                                                                                   var="day"
+                                                                                   type="date"/>
+                                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                                    value="${day}"/>
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <c:choose>
@@ -343,18 +354,6 @@
 
                                                                     </c:choose>
                                                                 </td>
-                                                                <td class="text-center">
-                                                                        ${lst.collector}
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <fmt:parseDate value="${lst.collectDate}"
-                                                                                   pattern="yyyy-MM-dd'T'HH:mm"
-                                                                                   var="day"
-                                                                                   type="date"/>
-                                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                                                    value="${day}"/>
-                                                                </td>
-
                                                                 <td class="text-center">
                                                                     <a href="/${lst.collectionImages}" target="_blank">
                                                                         <img
