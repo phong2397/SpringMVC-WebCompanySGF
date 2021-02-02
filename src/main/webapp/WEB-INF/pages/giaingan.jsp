@@ -15,6 +15,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="rp" class="com.sgfintech.util.StringUtil"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     if (session.getAttribute(Consts.Session_Euser) != null) {
@@ -242,7 +243,7 @@
                                                         ${lst.customerPhone}
                                                 </td>
                                                 <td class="text-center">
-                                                    -
+                                                        ${lst.customerId}
                                                 </td>
                                                 <td class="text-center">
                                                         ${lst.bankOwner}
@@ -301,8 +302,9 @@
                                                                 src="/${lst.payImages}" alt=""
                                                                 width="100%"></a>
                                                 </td>
+
                                                 <td class="text-center">
-                                                    Smart Cash - ${lst.customerName}
+                                                    Smart Cash - ${rp.replaceName(lst.customerName)}
                                                     - ${lst.customerPhone} - ${lst.id}
                                                 </td>
                                             </tr>
@@ -382,6 +384,7 @@
 <script type="text/javascript" src="js/funcGiaingan.js">
 </script>
 <script type="text/javascript">
+
     <%
                  List<DetailTransaction> list = ( List<DetailTransaction>) request.getAttribute("views");
                 Gson g = new Gson();
@@ -489,22 +492,6 @@
         showImage(fileInput.files);
     });
 
-    function remove_unicode(str) {
-        str = str.toLowerCase();
-        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-        str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-        str = str.replace(/đ/g, "d");
-        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'| |\"|\&|\#|\[|\]|~|$|_/g, "-");
-
-        str = str.replace(/-+-/g, "-"); //thay thế 2- thành 1-
-        str = str.replace(/^\-+|\-+$/g, "");
-
-        return str;
-    }
 </script>
 
 </body>

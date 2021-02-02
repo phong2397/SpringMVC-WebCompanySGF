@@ -2,6 +2,7 @@ package com.sgfintech.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.Normalizer;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -40,6 +41,12 @@ public class StringUtil {
 
     public static String messageSign(String j) {
         return null;
+    }
+
+    public static String replaceName(String name) {
+        return Normalizer
+                .normalize(name, Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "");
     }
 
 }
