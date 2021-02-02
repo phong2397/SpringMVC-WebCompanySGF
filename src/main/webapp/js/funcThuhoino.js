@@ -1,121 +1,3 @@
-// function gachno() {
-//     $("#loading").show();
-//     var dataRequest = $("#idContract").text();
-//     var moneyRemain = $("#remainAmountBorrow").text().trim();
-//     var moneyRepay = $("#TotalFee1").text().trim();
-//     var total = moneyRemain - moneyRepay;
-//     let data = {datarequest: dataRequest, moneyRemainAmount: moneyRemain, moneyRepay: moneyRepay, total: total};
-//     var result = submitWithdraw(data);
-//     if (result === "success") {
-//         Swal.fire({
-//             position: 'top-end',
-//             icon: 'success',
-//             title: 'Dữ liệu được cập nhật thành công.',
-//             showConfirmButton: false,
-//             timer: 3000
-//         });
-//         $("#loading").hide();
-//         $("#tr-" + selectedContractId).remove();
-//         $('#modalHoadonGachno').modal('hide');
-//         $("#remainAmountBorrowOrder-" + dataRequest).empty();
-//         $("#remainAmountBorrowOrder-" + dataRequest).append(total.toLocaleString("vi-VN") + ' đ');
-//     } else if (result === "roleError") {
-//         Swal.fire({
-//             position: 'top-end',
-//             icon: 'error',
-//             title: 'Bạn không có quyền gạch nợ',
-//             showConfirmButton: false,
-//             timer: 3000
-//         });
-//         $("#loading").hide();
-//
-//     } else if (result === "notcomplete") {
-//         Swal.fire({
-//             position: 'top-end',
-//             icon: 'success',
-//             title: 'Dữ liệu được cập nhật thành công.',
-//             showConfirmButton: false,
-//             timer: 3000
-//         });
-//         $("#loading").hide();
-//         $('#modalHoadonGachno').modal('hide');
-//         $("#" + dataRequest).empty();
-//         $("#" + dataRequest).append((total + (total * 0.02)).toLocaleString("vi-VN") + ' đ');
-//
-//     } else {
-//         Swal.fire({
-//             position: 'top-end',
-//             icon: 'error',
-//             title: 'Có lỗi xảy ra trong quá trình thực thi vui lòng thử lại',
-//             showConfirmButton: false,
-//             timer: 3000
-//         });
-//         $("#loading").hide();
-//
-//     }
-// };
-//
-// function submitWithdraw(data) {
-//     try {
-//         // This async call may fail.
-//         let text = $.ajax({
-//             type: "POST",
-//             timeout: 100000,
-//             url: "gachno",
-//             data: data,
-//             dataType: 'text',
-//             async: false
-//         }).responseText;
-//         return text;
-//         console.log(data)
-//     } catch (error) {
-//         return "Không thể kết nối tới server";
-//     }
-// }
-
-function printDiv(divName) {
-    var printContents = document.getElementById(divName).innerHTML;
-    var originalContents = document.body.innerHTML;
-
-    document.body.innerHTML = printContents;
-
-    window.print();
-
-    document.body.innerHTML = originalContents;
-}
-
-function viewInfo(idContract, custPhone) {
-    selectedContractId = idContract;
-    console.log(selectedContractId)
-
-    let viewInvoice = result.find(el => el.customer.customerPhone == custPhone);
-    console.log(viewInfo)
-    const cust = viewInvoice.customer;
-
-    Object.keys(cust).forEach((key) => {
-        $('#' + key + 'g').text(cust[key]);
-    });
-    viewInvoice = result.find(el => el.contract.idContract == idContract);
-    const contract = viewInvoice.contract;
-    Object.keys(contract).forEach((key) => {
-        if (key == "remainAmountBorrow") {
-            let value = contract[key] + (contract[key] * 0.02);
-            $('#' + key).text(value.toLocaleString("vi-VN") + " đ");
-            $('#remainAmountBorrow1').text(value.toLocaleString("vi-VN") + " đ");
-
-        } else if (key == "borrow") {
-            let value1 = contract[key];
-            $('#' + key).text(value1.toLocaleString("vi-VN") + " đ");
-        } else if (key == "feeBorrow") {
-            let total = contract[key]
-            $('#TotalFee').text(total.toLocaleString("vi-VN") + " đ");
-        } else {
-            $('#' + key).text(contract[key]);
-        }
-    });
-    $('#modalHoadonGachno').modal("show");
-}
-
 function viewformUpload(id) {
     list = result.find(el => el.id == id);
     console.log(list)
@@ -148,7 +30,8 @@ function viewInfoCustomer(phone, comId, idContract) {
                         if (imgCMND[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                             $('#imgCMNDc').append('Bổ sung hình ảnh');
                         } else {
-                            $('#imgCMNDc').append('<img class="img" src="' + imgCMND[key] + '"/>');
+                            $('#imgCMNDc').append('<a href="' + imgCMND[key] + '" target="_blank"><img class="img" src="' + imgCMND[key] + '' + '" /></a>');
+
                         }
                     });
                     const payslipObj = JSON.parse(data.payslip);
@@ -157,7 +40,7 @@ function viewInfoCustomer(phone, comId, idContract) {
                         if (payslipObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                             $('#imgPayslipc').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
-                            $('#imgPayslipc').append('<img class="img" src="' + payslipObj[key] + '"/>');
+                            $('#imgPayslipc').append('<a href="' + payslipObj[key] + '" target="_blank"><img class="img" src="' + payslipObj[key] + '" /></a>');
                         }
                     });
                     const salaryObj = JSON.parse(data.salary);
@@ -166,7 +49,7 @@ function viewInfoCustomer(phone, comId, idContract) {
                         if (salaryObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                             $('#imgSalaryc').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
-                            $('#imgSalaryc').append('<img class="img" src="' + salaryObj[key] + '"/>');
+                            $('#imgSalary').append('<a href="' + salaryObj[key] + '" target="_blank"><img class="img" src="' + salaryObj[key] + '" /></a>');
                         }
                     });
                     const healthObj = JSON.parse(data.health);
@@ -175,7 +58,7 @@ function viewInfoCustomer(phone, comId, idContract) {
                         if (healthObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                             $('#imgHealthc').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
-                            $('#imgHealthc').append('<img class="img"  src="' + healthObj[key] + '"/>');
+                            $('#imgHealthc').append('<a href="' + healthObj[key] + '" target="_blank"><img class="img" src="' + healthObj[key] + '" /></a>');
                         }
                     });
                     const appendixObj = JSON.parse(data.appendix);
@@ -184,7 +67,7 @@ function viewInfoCustomer(phone, comId, idContract) {
                         if (appendixObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                             $('#imgAppendixc').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
-                            $('#imgAppendixc').append('<img class="img" src="' + appendixObj[key] + '"/>');
+                            $('#imgAppendixc').append('<a href="' + appendixObj[key] + '" target="_blank"><img class="img" src="' + appendixObj[key] + '" /></a>');
                         }
                     });
                     const socialObj = JSON.parse(data.social);
@@ -193,7 +76,7 @@ function viewInfoCustomer(phone, comId, idContract) {
                         if (socialObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                             $('#imgSocialc').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
-                            $('#imgSocialc').append('<img class="img" src="' + socialObj[key] + '"/>');
+                            $('#imgSocialc').append('<a href="' + socialObj[key] + '" target="_blank"><img class="img" src="' + socialObj[key] + '" /></a>');
                         }
                     });
                     const contractObj = JSON.parse(data.contract);
@@ -202,7 +85,7 @@ function viewInfoCustomer(phone, comId, idContract) {
                         if (contractObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                             $('#imgContractc').append('<div style="color: grey">Không có hình ảnh</div>');
                         } else {
-                            $('#imgContractc').append('<img class="img" src="' + contractObj[key] + '"/>');
+                            $('#imgContract').append('<a href="' + contractObj[key] + '" target="_blank"><img class="img" src="' + contractObj[key] + '" /></a>');
                         }
                     });
                 },

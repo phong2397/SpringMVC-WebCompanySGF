@@ -102,8 +102,8 @@
                                         <th class="text-center">Số tiền tạm ứng</th>
                                         <th class="text-center">Số tiền tạm ứng</th>
                                         <th class="text-center">Phí</th>
-                                        <th class="text-center">Tổng phí</th>
-                                        <th class="text-center">Tổng phí</th>
+                                        <th class="text-center">Mức phí</th>
+                                        <th class="text-center">Mức phí</th>
                                         <th class="text-center">TG yêu cầu</th>
                                         <th class="text-center">Trạng thái</th>
                                         <th class="text-center">Người chuyển tiền</th>
@@ -153,11 +153,11 @@
                                             </td>
                                             <td class="text-center">
                                                 <fmt:formatNumber
-                                                        value="${lst.total}"
+                                                        value="${lst.amount * 0.02}"
                                                         type="number"/> đ
                                             </td>
                                             <td class="text-center">
-                                                    ${lst.total}
+                                                    ${lst.amount * 0.02}
                                             </td>
                                             <td class="text-center">
                                                 <fmt:parseDate value="  ${lst.dateRequest}"
@@ -247,7 +247,7 @@
                     <form action="gachno.html" method="post" id="from_upload"
                           enctype="multipart/form-data">
                         <div class="form-group">
-                            <h5 style="color: black ">Giải ngân : Thông tin nhận tiền đầy đủ</h5>
+                            <h5 style="color: black ">Upload hình ảnh</h5>
                             <label><b style="color:black; margin-bottom: 20px; ">Chọn hình ảnh:</b><br>
                                 <input type="file" id="importFile"
                                        name="file"/>
@@ -317,6 +317,38 @@
         })
     });
 
+
+    <%
+          List<DetailTransaction> list = ( List<DetailTransaction>) request.getAttribute("views");
+                Gson g = new Gson();
+                String json = g.toJson(list);
+        List<Contract> list1 = (List<Contract>) request.getAttribute("con");
+        Gson gs= new Gson();
+        String json1 = gs.toJson(list1);
+    %>
+    let result = <%=json%>;
+    let list = <%=json1%>;
+
+    function showImage(files) {
+        if (FileReader && files && files.length) {
+            var fr = new FileReader();
+            fr.onload = function () {
+                document.getElementById('imgUpload').src = fr.result;
+            }
+            fr.readAsDataURL(files[0]);
+        }
+    }
+
+    const fileInput = document.getElementById("importFile");
+    fileInput.addEventListener("change", function () {
+        showImage(this.files);
+    }, false);
+    window.addEventListener('paste', e => {
+        console.log('event: ', e.clipboardData.files);
+        fileInput.files = e.clipboardData.files;
+        showImage(fileInput.files);
+    });
+
     function gachno() {
         var formData = new FormData();
         var iddonhang = $("#id_donhang").text();
@@ -358,19 +390,6 @@
             return "Không thể kết nối tới server";
         }
     }
-
-    <%
-          List<DetailTransaction> list = ( List<DetailTransaction>) request.getAttribute("views");
-                Gson g = new Gson();
-                String json = g.toJson(list);
-        List<Contract> list1 = (List<Contract>) request.getAttribute("con");
-        Gson gs= new Gson();
-        String json1 = gs.toJson(list1);
-
-
-    %>
-    let result = <%=json%>;
-    let list = <%=json1%>;
 
 </script>
 </body>
