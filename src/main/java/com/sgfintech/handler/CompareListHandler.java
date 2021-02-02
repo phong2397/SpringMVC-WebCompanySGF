@@ -16,6 +16,7 @@ public class CompareListHandler {
         if (listDB.size() > listIP.size()) {
 
             for (Customer cu : listDB) {
+                isExist = false;
                 for (Customer c : listIP) {
                     if (cu.getCustomerId().equals(c.getCustomerId()) && cu.getCustomerPhone().equals(c.getCustomerPhone())) {
                         isExist = true;
