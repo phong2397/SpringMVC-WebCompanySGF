@@ -65,16 +65,23 @@ public class SaRequestService {
     }
 
     public int[] countStatus() {
-        SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("PROC_COUNTSTATUS");
-        Map<String, Object> outParams = simpleJdbcCall.execute();
-        return new int[]{
-                (Integer) outParams.get("total"),
-                (Integer) outParams.get("act"),
-                (Integer) outParams.get("deni"),
-                (Integer) outParams.get("wfs"),
-                (Integer) outParams.get("wait"),
-                (Integer) outParams.get("done")
-        };
+        try {
+            SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("PROC_COUNTSTATUS");
+            Map<String, Object> outParams = simpleJdbcCall.execute();
+            return new int[]{
+                    (Integer) outParams.get("total"),
+                    (Integer) outParams.get("act"),
+                    (Integer) outParams.get("deni"),
+                    (Integer) outParams.get("wfs"),
+                    (Integer) outParams.get("wait"),
+                    (Integer) outParams.get("done")
+            };
+        } catch (Exception exception) {
+            return new int[]{
+                    0, 0, 0, 0, 0, 0
+            };
+        }
+
     }
 
 

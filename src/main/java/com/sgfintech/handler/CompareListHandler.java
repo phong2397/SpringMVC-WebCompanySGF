@@ -12,8 +12,9 @@ public class CompareListHandler {
 
     public static List<Customer> compareList(List<Customer> listDB, List<Customer> listIP) {
         List<Customer> result = new ArrayList<>();
+        boolean isExist = false;
         if (listDB.size() > listIP.size()) {
-            boolean isExist = false;
+
             for (Customer cu : listDB) {
                 for (Customer c : listIP) {
                     if (cu.getCustomerId().equals(c.getCustomerId()) && cu.getCustomerPhone().equals(c.getCustomerPhone())) {
@@ -26,8 +27,8 @@ public class CompareListHandler {
             }
             return result;
         } else {
-            boolean isExist = false;
             for (Customer cu : listIP) {
+                isExist = false;
                 for (Customer c : listDB) {
                     if (cu.getCustomerId().equals(c.getCustomerId()) && cu.getCustomerPhone().equals(c.getCustomerPhone())) {
                         isExist = true;
