@@ -350,7 +350,7 @@
                                 <span id="id_donhang" style="display: none"></span>
                                 <img id="imgUpload" class="img" src=""/>
                             </div>
-                            <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="giaingan()">
+                            <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="disburse()">
                                 Hoàn thành chuyển tiền
                             </button>
                             <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng
@@ -380,7 +380,7 @@
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script type="text/javascript" src="js/funcGiaingan.js">
+<script type="text/javascript" src="js/díburse.js">
 </script>
 <script type="text/javascript">
 

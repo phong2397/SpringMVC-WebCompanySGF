@@ -257,7 +257,7 @@
 
                         </div>
 
-                        <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="gachno()">Gạch
+                        <button type="button" class=" btn btn-rounded btn-info btn-accept" onclick="writeOff()">Gạch
                             nợ
                         </button>
                         <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Đóng trang
@@ -283,7 +283,7 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script type="text/javascript" src="js/funcThuhoino.js"></script>
+<script type="text/javascript" src="js/collection.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();

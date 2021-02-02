@@ -27,7 +27,6 @@ function xacnhanThamdinh() {
             showConfirmButton: false,
             timer: 3000
         });
-        $("#modal-right").modal('hide');
     } else {
         Swal.fire({
             position: 'top-end',
@@ -36,8 +35,6 @@ function xacnhanThamdinh() {
             showConfirmButton: false,
             timer: 3000
         });
-        $("#modal-right").modal('hide');
-
     }
 };
 

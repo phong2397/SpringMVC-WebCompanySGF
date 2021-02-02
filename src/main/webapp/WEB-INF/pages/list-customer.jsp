@@ -183,7 +183,7 @@
 <script src="assets/vendor_components/sweetalert/sweetalert.min.js"></script>
 <script src="assets/vendor_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script type="text/javascript" src="js/funcListCustomer.js"></script>
+<script type="text/javascript" src="js/listCustomer.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();

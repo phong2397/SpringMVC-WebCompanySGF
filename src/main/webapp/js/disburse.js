@@ -6,7 +6,7 @@ function viewInfoCustomer(id) {
     $('#modal-giaingan').modal('show');
 }
 
-function giaingan() {
+function disburse() {
     var formData = new FormData();
     var iddonhang = $("#id_donhang").text();
     formData.append('file', $('#importFile')[0].files[0]);

@@ -174,7 +174,7 @@
 <script src="assets/vendor_components/sweetalert/sweetalert.min.js"></script>
 <script src="assets/vendor_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="js/funcManageCustomer.js"></script>
+<script src="js/manageCustomer.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();

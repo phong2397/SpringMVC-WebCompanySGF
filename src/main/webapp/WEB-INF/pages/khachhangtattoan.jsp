@@ -200,10 +200,10 @@
                                                 <td>${lst.contract.feeBorrow }
                                                 </td>
                                                 <td><fmt:formatNumber
-                                                        value="${lst.contract.borrow + (lst.contract.borrow * 2/100) }"
+                                                        value="${lst.contract.borrow  }"
                                                         type="number"/> đ
                                                 </td>
-                                                <td> ${lst.contract.borrow + (lst.contract.borrow * 2/100) } </td>
+                                                <td> ${lst.contract.borrow} </td>
                                                 <td><fmt:parseDate value=" ${lst.contract.dateRepayment}"
                                                                    pattern="yyyy-MM-dd'T'HH:mm" var="patientDob"
                                                                    type="date"/>
@@ -241,7 +241,7 @@
 <script src="assets/vendor_components/datatable/datatables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Crypto Tokenizer Admin App -->
-<script type="text/javascript" src="js/funcThuhoino.js"></script>
+<script type="text/javascript" src="js/collection.js"></script>
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
 <script type="text/javascript">

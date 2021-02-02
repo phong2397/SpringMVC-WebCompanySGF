@@ -147,6 +147,7 @@
                                 <div class="slide-container">
                                     <p id="imgContract"></p>
                                 </div>
+                                <br>
                                 <p>Hình ảnh bảng lương :</p>
                                 <div class="slide-container">
                                     <p id="imgSalary"></p>
@@ -472,6 +473,7 @@
                                 <p>Hình ảnh hợp đồng lao động :</p>
                                 <div class="slide-container">
                                     <p id="imgContractc"></p></div>
+                                <br>
                                 <p>Hình ảnh bảng lương :</p>
                                 <div class="slide-container">
                                     <p id="imgSalaryc"></p>

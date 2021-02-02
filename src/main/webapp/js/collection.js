@@ -27,7 +27,7 @@ window.addEventListener('paste', e => {
     showImage(fileInput.files);
 });
 
-function gachno() {
+function writeOff() {
     var formData = new FormData();
     var iddonhang = $("#id_donhang").text();
     console.log(iddonhang)

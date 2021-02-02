@@ -160,7 +160,7 @@ function viewInfoNoaction(phone, id, comId) {
                 if (imgCMND[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgCMND').append('Bổ sung hình ảnh');
                 } else {
-                    $('#imgCMND').append('<img  id="xzoom" class="img" src="' + imgCMND[key] + '' + '" xoriginal ="' + imgCMND[key] + '"  />');
+                    $('#imgCMND').append('<a href="' + imgCMND[key] + '" target="_blank"><img class="img" src="' + imgCMND[key] + '' + '" /></a>');
                 }
             });
             const payslipObj = JSON.parse(response.data.payslip);
@@ -170,7 +170,7 @@ function viewInfoNoaction(phone, id, comId) {
                 if (payslipObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgPayslip').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
-                    $('#imgPayslip').append('<img class="img" src="' + payslipObj[key] + '"/>');
+                    $('#imgPayslip').append('<a href="' + payslipObj[key] + '" target="_blank"><img class="img" src="' + payslipObj[key] + '" /></a>');
                 }
             });
             const salaryObj = JSON.parse(response.data.salary);
@@ -179,7 +179,7 @@ function viewInfoNoaction(phone, id, comId) {
                 if (salaryObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgSalary').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
-                    $('#imgSalary').append('<img class="img" src="' + salaryObj[key] + '"/>');
+                    $('#imgSalary').append('<a href="' + salaryObj[key] + '" target="_blank"><img class="img" src="' + salaryObj[key] + '" /></a>');
                 }
 
             });
@@ -189,7 +189,7 @@ function viewInfoNoaction(phone, id, comId) {
                 if (healthObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgHealth').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
-                    $('#imgHealth').append('<img class="img" src="' + healthObj[key] + '"/>');
+                    $('#imgHealth').append('<a href="' + healthObj[key] + '" target="_blank"><img class="img" src="' + healthObj[key] + '" /></a>');
                 }
             });
             const appendixObj = JSON.parse(response.data.appendix);
@@ -198,7 +198,7 @@ function viewInfoNoaction(phone, id, comId) {
                 if (appendixObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgAppendix').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
-                    $('#imgAppendix').append('<img class="img" src="' + appendixObj[key] + '"/>');
+                    $('#imgAppendix').append('<a href="' + appendixObj[key] + '" target="_blank"><img class="img" src="' + appendixObj[key] + '" /></a>');
                 }
             });
             const socialObj = JSON.parse(response.data.social);
@@ -207,7 +207,7 @@ function viewInfoNoaction(phone, id, comId) {
                 if (socialObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgSocial').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
-                    $('#imgSocial').append('<img class="img" src="' + socialObj[key] + '"/>');
+                    $('#imgSocial').append('<a href="' + socialObj[key] + '" target="_blank"><img class="img" src="' + socialObj[key] + '" /></a>');
                 }
             });
             const contractObj = JSON.parse(response.data.contract);
@@ -217,7 +217,7 @@ function viewInfoNoaction(phone, id, comId) {
                 if (contractObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
                     $('#imgContract').append('<div style="color: grey">Không có hình ảnh</div>');
                 } else {
-                    $('#imgContract').append('<img class="img" src="' + contractObj[key] + '"/>');
+                    $('#imgContract').append('<a href="' + contractObj[key] + '" target="_blank"><img class="img" src="' + contractObj[key] + '" /></a>');
                 }
             });
         })
@@ -272,8 +272,6 @@ function viewInfoNoaction(phone, id, comId) {
     list = result.find(el => el.saRequest.id == id);
     console.log(list)
     let sa = list.saRequest;
-    let kd = sa.employeeDuyet
-    console.log(sa)
     $("#ida").empty();
     $("#ida").append(sa.id);
     $("#saId").empty();
@@ -295,8 +293,9 @@ function viewInfoNoaction(phone, id, comId) {
         if (typeof (sa.description) === "undefined") {
             $("#saInfo").append('<p>Đánh giá : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
         } else {
-            $("#saInfo").append('<p>Đánh giá : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
+            $("#saInfo").append('<p>Đánh giá : <b style="color:hotpink;">' + sa.description + '</b></p>');
         }
+
 
     } else if (sa.status == "act") {
         $("#saInfo").empty();
@@ -325,7 +324,7 @@ function viewInfoNoaction(phone, id, comId) {
         if (typeof (sa.description) === "undefined") {
             $("#saInfo").append('<p>Đánh giá : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
         } else {
-            $("#saInfo").append('<p>Đánh giá : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
+            $("#saInfo").append('<p>Đánh giá : <b style="color:forestgreen;">' + sa.description + '</b></p>');
         }
     } else if (sa.status === "wfs") {
         $("#saInfo").empty();
@@ -339,9 +338,9 @@ function viewInfoNoaction(phone, id, comId) {
         if (typeof (sa.description) === "undefined") {
             $("#saInfo").append('<p>Đánh giá : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
         } else {
-            $("#saInfo").append('<p>Đánh giá : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
+            $("#saInfo").append('<p>Đánh giá : <b style="color:steelblue;">' + sa.description + '</b></p>');
         }
-    } else if (sa.status === "deni" && kd == null) {
+    } else if (sa.status === "deni" && sa.employeeDuyetDate == null) {
         $("#saInfo").empty();
         $("#saInfo").append('<h4><b>*</b>&nbsp;&nbsp;Thông tin yêu cầu</h4>');
         $("#saInfo").append('<p>Tên khách hàng : <span style="color:grey;">' + list.customer.customerName + '</span></p>');
@@ -350,7 +349,12 @@ function viewInfoNoaction(phone, id, comId) {
         $("#saInfo").append('<p>Ngày yêu cầu :' + '<span style="color:grey;"> ' + ("0" + (sa.createdDate.date.day)).slice(-2) + '/' + ("0" + (sa.createdDate.date.month)).slice(-2) + '/' + sa.createdDate.date.year + ' ' + ' ' + ("0" + (sa.createdDate.time.hour)).slice(-2) + ':' + ("0" + (sa.createdDate.time.minute)).slice(-2) + ':' + ("0" + (sa.createdDate.time.second)).slice(-2) + '</span></p>');
         $("#saInfo").append('<p>Người thẩm định : <span style="color:grey;">' + sa.employeeThamdinh + '</span></p>');
         $("#saInfo").append('<p>Ngày thẩm định :' + ' <span style="color:grey;"> ' + ("0" + (sa.employeeThamdinhDate.date.day)).slice(-2) + '/' + ("0" + (sa.employeeThamdinhDate.date.month)).slice(-2) + '/' + sa.employeeThamdinhDate.date.year + ' ' + ' ' + ("0" + (sa.employeeThamdinhDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeThamdinhDate.time.minute)).slice(-2) + ':' + ("0" + (sa.employeeThamdinhDate.time.second)).slice(-2) + '</span></p>');
-    } else if (sa.status === "deni" && kd != null) {
+        if (typeof (sa.description) === "undefined") {
+            $("#saInfo").append('<p>Lý do : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
+        } else {
+            $("#saInfo").append('<p>Lý do : <b style="color:red;">' + sa.description + '</b></p>');
+        }
+    } else if (sa.status === "deni" && sa.employeeDuyetDate != null) {
         $("#saInfo").empty();
         $("#saInfo").append('<h4><b>*</b>&nbsp;&nbsp;Thông tin yêu cầu</h4>');
         $("#saInfo").append('<p>Tên khách hàng : <span style="color:grey;">' + list.customer.customerName + '</span></p>');
@@ -359,8 +363,13 @@ function viewInfoNoaction(phone, id, comId) {
         $("#saInfo").append('<p>Ngày yêu cầu :' + '<span style="color:grey;"> ' + ("0" + (sa.createdDate.date.day)).slice(-2) + '/' + ("0" + (sa.createdDate.date.month)).slice(-2) + '/' + sa.createdDate.date.year + ' ' + ' ' + ("0" + (sa.createdDate.time.hour)).slice(-2) + ':' + ("0" + (sa.createdDate.time.minute)).slice(-2) + ':' + ("0" + (sa.createdDate.time.second)).slice(-2) + '</span></p>');
         $("#saInfo").append('<p>Người thẩm định : <span style="color:grey;">' + sa.employeeThamdinh + '</span></p>');
         $("#saInfo").append('<p>Ngày thẩm định :' + ' <span style="color:grey;"> ' + ("0" + (sa.employeeThamdinhDate.date.day)).slice(-2) + '/' + ("0" + (sa.employeeThamdinhDate.date.month)).slice(-2) + '/' + sa.employeeThamdinhDate.date.year + ' ' + ' ' + ("0" + (sa.employeeThamdinhDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeThamdinhDate.time.minute)).slice(-2) + ':' + ("0" + (sa.employeeThamdinhDate.time.second)).slice(-2) + '</span></p>');
-        $("#saInfo").append('<p>Người duyệt đơn :' + ' ' + sa.employeeDuyet + '</p>');
-        $("#saInfo").append('<p>Ngày duyệt đơn :' + ' ' + ("0" + (sa.employeeDuyetDate.date.day)).slice(-2) + '/' + ("0" + (sa.employeeDuyetDate.date.month)).slice(-2) + '/' + sa.employeeDuyetDate.date.year + ' ' + ' ' + ("0" + (sa.employeeDuyetDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.minute)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.second)).slice(-2) + '</p>');
+        $("#saInfo").append('<p>Người duyệt đơn : <span style="color:grey;">' + ' ' + sa.employeeDuyet + '</span></p>');
+        $("#saInfo").append('<p>Ngày duyệt đơn : <span style="color:grey;">' + ' ' + ("0" + (sa.employeeDuyetDate.date.day)).slice(-2) + '/' + ("0" + (sa.employeeDuyetDate.date.month)).slice(-2) + '/' + sa.employeeDuyetDate.date.year + ' ' + ' ' + ("0" + (sa.employeeDuyetDate.time.hour)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.minute)).slice(-2) + ':' + ("0" + (sa.employeeDuyetDate.time.second)).slice(-2) + '</span></p>');
+        if (typeof (sa.description) === "undefined") {
+            $("#saInfo").append('<p>Lý do : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
+        } else {
+            $("#saInfo").append('<p>Lý do : <b style="color:red;">' + sa.description + '</b></p>');
+        }
     }
     list = result.find(el => el.company.id == comId);
     let com = list.company;
@@ -546,7 +555,7 @@ function viewInfoCustomer(phone, id, comId) {
         if (typeof (sa.description) === "undefined") {
             $("#saInfo").append('<p>Đánh giá : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
         } else {
-            $("#saInfo").append('<p>Đánh giá : <b style="color:#0aa5df;">' + sa.description + '</b></p>');
+            $("#saInfo").append('<p>Đánh giá : <b style="color:hotpink;">' + sa.description + '</b></p>');
         }
 
     } else if (sa.status == "act") {
@@ -638,7 +647,7 @@ function viewInfoCustomer(phone, id, comId) {
         if (typeof (sa.description) === "undefined") {
             $("#saInfo").append('<p>Đánh giá : <span style="color:grey;">' + 'không có thông tin' + '</span></p>');
         } else {
-            $("#saInfo").append('<p>Đánh giá : <b style="color:forestgreen;">' + sa.description + '</b></p>');
+            $("#saInfo").append('<p>Đánh giá : <b style="color:steelblue;">' + sa.description + '</b></p>');
         }
         $("#danhgia").empty();
         $("#labelDanhgia").empty();

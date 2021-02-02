@@ -445,7 +445,7 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script type="text/javascript" src="js/funcThuhoino.js"></script>
+<script type="text/javascript" src="js/collection.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
