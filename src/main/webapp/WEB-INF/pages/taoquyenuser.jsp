@@ -173,8 +173,9 @@
                                         <c:when test="${lst.userLogin ne 'root'}">
                                         <tr>
                                             <td class="text-center">${lst.id}</td>
-                                            <td class="text-center">
-                                                    ${lst.userLogin}
+                                            <td class="text-center" id="${lst.id}">
+                                                <input type="text" class="form-control " value="${lst.userLogin}"
+                                                >
                                             </td>
                                             <td class="text-left">${lst.role}
                                             </td>
@@ -209,6 +210,9 @@
                                                 <button class="btn btn-default"
                                                         onclick="unlockUser('${lst.id}')">
                                                     Mở khóa tài khoản
+                                                </button>
+                                                <button class="btn btn-facebook updateUser">
+                                                    Cập nhật
                                                 </button>
                                             </td>
                                         </tr>
@@ -254,6 +258,56 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script type="text/javascript">
+    $("body").on("click", ".updateUser", function () {
+        let id = $(this).closest("tr").find('td:eq(0)').text()
+        let userLogin = $(this).closest("tr").find('td:eq(1) input').val();
+        console.log(userLogin)
+        console.log(id)
+        let data = {
+            id: id,
+            userlogin: userLogin
+        };
+        var result = updateUserAjax(data);
+        console.log(result)
+        if (result === "success") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Cập nhật tên tàì khoản thành công.',
+                showConfirmButton: false,
+                timer: 100000
+            });
+            $('#' + id).empty()
+            $('#' + id).append('<input type="text" value="' + userLogin + '" class="form-control"/>');
+        } else if (result === "emptyError") {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Không được để trống!',
+                showConfirmButton: false,
+                timer: 100000
+            });
+        }
+    });
+
+    function updateUserAjax(data) {
+        try {
+            // This async call may fail.
+            let text = $.ajax({
+                type: "POST",
+                timeout: 100000,
+                url: "changeUserLogin",
+                data: data,
+                dataType: 'text',
+                async: false,
+            }).responseText;
+            return text;
+            console.log(text);
+        } catch (error) {
+            return "Không thể kết nối tới server";
+        }
+    }
+
     <%
               List<Useradmin> list = (List<Useradmin>) request.getAttribute("views");
               Gson g = new Gson();
@@ -303,12 +357,15 @@
             }
         }
     });
+
+    jQuery.validator.addMethod("emailExt", function (value, element, param) {
+        return value.match(/^[a-zA-Z0-9_\.%\+\-]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,}$/);
+    }, 'Xin vui lòng nhập đúng định dạng email');
     $("#demoForm").validate({
+
         rules: {
             login: {
-                minlength: 4,
-                maxlength: 30,
-                email: true
+                emailExt: true
             },
             pass: {
                 minlength: 4,
@@ -316,11 +373,6 @@
             },
         },
         messages: {
-            login: {
-                minlength: "Hãy nhập ít nhất 4 ký tự",
-                maxlength: "Hãy nhập tối đa 30 ký tự",
-                email: "Xin vui lòng nhập đúng định dạng email"
-            },
             pass: {
                 minlength: "Hãy nhập ít nhất 4 ký tự",
                 maxlength: "Hãy nhập tối đa 30 ký tự"
@@ -345,7 +397,7 @@
                 userRole: userRole,
 
             };
-            var result = submitUser(data);
+            var result = createUserAjax(data);
             if (result === "success") {
                 Swal.fire({
                     position: 'top-end',
@@ -382,7 +434,8 @@
         }
     };
 
-    function submitUser(data) {
+
+    function createUserAjax(data) {
         try {
             // This async call may fail.
             let text = $.ajax({

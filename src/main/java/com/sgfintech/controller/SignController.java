@@ -61,12 +61,8 @@ public class SignController {
     SaRequestService saRequestService;
 
     @RequestMapping(value = {"/kyduyetRole"}, method = RequestMethod.GET)
-    public String kyduyetRole(ModelMap mm, HttpServletRequest request, HttpSession session) {
-//        int countAct = mergeDataService.countStatus("act");
-//        int countWait = mergeDataService.countStatus("wait");
-//        int countWFS = mergeDataService.countStatus("wfs");
-//        int countDone = mergeDataService.countStatus("done");
-        log.info("GET - kyduyetRole");
+    public String signRolePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+        log.info("GET - signRolePage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
@@ -85,37 +81,8 @@ public class SignController {
         }
     }
 
-    @RequestMapping(value = {"/tuchoikyduyet"}, method = RequestMethod.GET)
-    public String tuchoikyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-//        int countAct = mergeDataService.countStatus("act");
-//        int countWait = mergeDataService.countStatus("wait");
-//        int countWFS = mergeDataService.countStatus("wfs");
-//        int countDeni = mergeDataService.countStatus("deni");
-        log.info("GET - tuchoikyduyet page");
-        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-        if (u == null) {
-            return "redirect:login";
-        } else {
-            String empDuyet = u.getUserLogin();
-            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getUserDuyet("deni", empDuyet);
-            List<SaRequest> saRequest = saRequestDAO.findAll();
-            mm.addAttribute("sa", saRequest);
-            mm.addAttribute(Consts.Attr_ResultView, listMergeDatumOrders);
-            int count[] = saRequestService.countStatus();
-            mm.addAttribute("countAct", count[1]);
-            mm.addAttribute("countWait", count[2]);
-            mm.addAttribute("countWFS", count[3]);
-            mm.addAttribute("countDeni", count[2]);
-            return "tuchoikyduyet";
-        }
-    }
-
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.GET)
-    public String kyduyetPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-//        int countWait = mergeDataService.countStatus("wait");
-//        int countWFS = mergeDataService.countStatus("wfs");
-//        int countAct = mergeDataService.countStatus("act");
-//        int countDone = mergeDataService.countStatus("done");
+    public String signPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         log.info("GET - kyduyetPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
@@ -137,17 +104,12 @@ public class SignController {
     }
 
     @RequestMapping(value = {"/giaingan"}, method = RequestMethod.GET)
-    public String giainganPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-//        int countWait = mergeDataService.countStatus("wait");
-//        int countWFS = mergeDataService.countStatus("wfs");
-//        int countAct = mergeDataService.countStatus("act");
-//        int countDone = mergeDataService.countStatus("done");
+    public String disbursePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         log.info("GET - giaingan page");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
             return "redirect:login";
         } else {
-//            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("act", false);
             List<DetailTransaction> listActive = detailTransactionDAO.findAllByActive(1);
             List<Useradmin> admin = useradminDAO.findAll();
             mm.addAttribute("admin", admin);
@@ -189,13 +151,12 @@ public class SignController {
             return "error";
         }
     }
-//    String fileLocation = "file-upload/archived_system/";
 
     private ServletContext servletContext;
 
     @RequestMapping(value = {"/giaingan"}, method = RequestMethod.POST)
     public @ResponseBody
-    String handlerOrderRequest(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    String disburseRequest(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         log.info("POST - giaingan");
         String id = request.getParameter("id_donhang");
         try {
@@ -276,7 +237,7 @@ public class SignController {
 
     @RequestMapping(value = {"/kyduyet"}, method = RequestMethod.POST)
     public @ResponseBody
-    String handlerdisburseRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    String handleSignRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 //        SignatureRSA signatureRSA = context.getBean(SignatureRSA.class);
         log.info("POST - kyduyet");
         String data = request.getParameter("datarequest");

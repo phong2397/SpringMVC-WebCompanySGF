@@ -149,7 +149,7 @@ public class CustomerController {
                     user.setCount(0l);
                     user.setRole(userRole);
                     user.setUserLogin(userLogin);
-                    user.setPassWord(hashedPass);
+                    user.setPassword(hashedPass);
                     useradminDAO.save(user);
                     log.info("Return success create info user admin (status , count , role , user login, password)");
                     return "success";
@@ -176,7 +176,7 @@ public class CustomerController {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
             messageDigest.update(defaultPass.getBytes(), 0, defaultPass.length());
             String hashedPass = new BigInteger(1, messageDigest.digest()).toString(16);
-            user.setPassWord(hashedPass);
+            user.setPassword(hashedPass);
             useradminDAO.update(user);
             log.info("Return success reset pass");
             return "success";
@@ -270,11 +270,11 @@ public class CustomerController {
         log.info("Id user login : " + data);
         try {
             Useradmin user = useradminDAO.findById(Long.parseLong(data));
-            if (user.getPassWord().equals(StringUtil.hashPw(oldpassword))) {
+            if (user.getPassword().equals(StringUtil.hashPw(oldpassword))) {
                 MessageDigest messageDigest = MessageDigest.getInstance("MD5");
                 messageDigest.update(password.getBytes(), 0, password.length());
                 String hashedPass = new BigInteger(1, messageDigest.digest()).toString(16);
-                user.setPassWord(hashedPass);
+                user.setPassword(hashedPass);
                 useradminDAO.update(user);
                 log.info("Return success thay doi mat khau user");
                 return "success";
@@ -289,5 +289,20 @@ public class CustomerController {
         }
     }
 
-
+    @RequestMapping(value = "/changeUserLogin", method = RequestMethod.POST)
+    public @ResponseBody
+    String changeUserLogin(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        log.info("POST - changeUserLogin ");
+        String data = request.getParameter("id");
+        String dataUserLogin = request.getParameter("userlogin");
+        Useradmin user = useradminDAO.findById(Long.parseLong(data));
+        if (user.getUserLogin().equals("")) {
+            return "emptyError";
+        } else {
+            user.setUserLogin(dataUserLogin);
+            useradminDAO.update(user);
+            return "success";
+        }
+    }
 }
+

@@ -52,7 +52,7 @@ public class ApprovalController {
 
 
     @RequestMapping(value = {"/tuchoi"}, method = RequestMethod.GET)
-    public String tuchoiPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+    public String declinePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         log.info("GET - Go into tuchoiPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
@@ -74,41 +74,32 @@ public class ApprovalController {
         }
     }
 
-    @RequestMapping(value = {"/tuchoithamdinh"}, method = RequestMethod.GET)
-    public String tuchoiThamdinhPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-//        int countAct = mergeDataService.countStatus("act");
-//        int countWait = mergeDataService.countStatus("wait");
-//        int countWFS = mergeDataService.countStatus("wfs");
-//        int countDeni = mergeDataService.countStatus("deni");
-        log.info("GET - Go into tuchoiThamdinhPage");
-        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-        if (u == null) {
-            return "redirect:login";
-        } else {
-            String empThamdinh = u.getUserLogin();
-            List<MergeDataOrder> listMergeDataOrders = mergeDataService.getUserThamdinh("deni", empThamdinh);
-            log.info("Data merge table order and customer and companies: " + listMergeDataOrders);
-            List<SaRequest> saRequest = saRequestDAO.findAll();
-            log.info("Data saRequest table find all: " + saRequest);
-            mm.addAttribute("sa", saRequest);
-            mm.addAttribute(Consts.Attr_ResultView, listMergeDataOrders);
-            int[] count = saRequestService.countStatus();
-            log.info("Data count status array: " + count);
-            mm.addAttribute("countAct", count[1]);
-            mm.addAttribute("countWait", count[2]);
-            mm.addAttribute("countWFS", count[3]);
-            mm.addAttribute("countDeni", count[4]);
-            return "tuchoithamdinh";
-        }
-
-    }
+//    @RequestMapping(value = {"/declineThamDinhPage"}, method = RequestMethod.GET)
+//    public String declineThamDinhPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+//        log.info("GET - Go into tuchoiThamdinhPage");
+//        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
+//        if (u == null) {
+//            return "redirect:login";
+//        } else {
+//            String empThamdinh = u.getUserLogin();
+//            List<MergeDataOrder> listMergeDataOrders = mergeDataService.getUserThamdinh("deni", empThamdinh);
+//            log.info("Data merge table order and customer and companies: " + listMergeDataOrders);
+//            List<SaRequest> saRequest = saRequestDAO.findAll();
+//            log.info("Data saRequest table find all: " + saRequest);
+//            mm.addAttribute("sa", saRequest);
+//            mm.addAttribute(Consts.Attr_ResultView, listMergeDataOrders);
+//            int[] count = saRequestService.countStatus();
+//            log.info("Data count status array: " + count);
+//            mm.addAttribute("countAct", count[1]);
+//            mm.addAttribute("countWait", count[2]);
+//            mm.addAttribute("countWFS", count[3]);
+//            mm.addAttribute("countDeni", count[4]);
+//            return "tuchoithamdinh";
+//        }
+//    }
 
     @RequestMapping(value = {"/thamdinhRole"}, method = RequestMethod.GET)
-    public String thamdinhRolePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-//        int countAct = mergeDataService.countStatus("act");
-//        int countWait = mergeDataService.countStatus("wait");
-//        int countWFS = mergeDataService.countStatus("wfs");
-//        int countDone = mergeDataService.countStatus("done");
+    public String approvalRolePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         log.info("GET - Go into thamdinhRolePage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
@@ -132,11 +123,7 @@ public class ApprovalController {
     }
 
     @RequestMapping(value = {"/tongtiepnhan"}, method = RequestMethod.GET)
-    public String tongtiepnhanPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-//        int countWait = mergeDataService.countStatus("wait");
-//        int countWFS = mergeDataService.countStatus("wfs");
-//        int countAct = mergeDataService.countStatus("act");
-//        int countDone = mergeDataService.countStatus("done");
+    public String totalSaRequestPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         log.info("GET - Go into tongtiepnhanPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
@@ -159,7 +146,7 @@ public class ApprovalController {
     }
 
     @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
-    public String thamdinhPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+    public String approvalPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
 //        int countWait = mergeDataService.countStatus("wait");
 //        int countWFS = mergeDataService.countStatus("wfs");
 //        int countAct = mergeDataService.countStatus("act");
@@ -190,7 +177,7 @@ public class ApprovalController {
 
     @RequestMapping(value = "/updateEmployeeThamdinh", method = RequestMethod.POST)
     public @ResponseBody
-    String updateEmployeeThamdinh(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    String updateEmployeeThamDinh(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         log.info("POST - Go into updateEmployeeThamdinh");
         List<SaRequest> lst = new ArrayList<>();
         log.info("Data list saRequest array list: " + lst);
@@ -224,7 +211,7 @@ public class ApprovalController {
 
     @RequestMapping(value = "/findHistoryModal", method = RequestMethod.POST)
     public @ResponseBody
-    String findHistoryModal(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    String findHistorymodal(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         log.info("POST - Go into findHistoryModal");
         String phone = request.getParameter("phone");
         log.info("Data Phone : " + phone);
@@ -293,8 +280,8 @@ public class ApprovalController {
 
     @RequestMapping(value = "/updateStatusDecline", method = RequestMethod.POST)
     public @ResponseBody
-    String updatestatusDecline(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        log.info("POST - Go into updatestatusDecline");
+    String updateStatusDecline(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        log.info("POST - Go into updateStatusDecline");
         String data = request.getParameter("datarequest");
         log.info("Data id request : " + data);
         String status = request.getParameter("status");

@@ -244,7 +244,7 @@
                             rowElement.append('<td>' + e.customerPhone + '</td>');
                             rowElement.append('<td>' + e.customerContractExpired.date.day + "/" + e.customerContractExpired.date.month + "/" + e.customerContractExpired.date.year + '</td>');
                             rowElement.append('<td>' + e.customerContract + '</td>');
-                            rowElement.append('<td>' + e.status + '</td>');
+                            rowElement.append('<td>' + '<b style="color: forestgreen">Đang hoạt động</b>' + '</td>');
                             rowElement.append('<td>' + e.customerBankAcc + '</td>');
                             rowElement.append('<td>' + e.customerBankName + '</td>');
                             rowElement.append('<td>' + e.customerBank + '</td>');

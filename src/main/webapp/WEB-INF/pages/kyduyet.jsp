@@ -213,13 +213,16 @@
                                             <th>Số lần tạm ứng</th>
                                             <th>Nhân viên thẩm định</th>
                                             <th>Số tiền tạm ứng</th>
+                                            <th>Số tiền tạm ứng</th>
                                             <th>Phí dịch vụ</th>
+                                            <th>Mức phí</th>
                                             <th>Mức phí</th>
                                             <th>Thời gian yêu cầu tạm ứng</th>
                                             <th>Trạng thái</th>
                                             <th>Nhân viên xét duyệt</th>
                                             <th>Ngày thanh toán</th>
-                                            <th>Số tiền thanh toán</th>
+                                            <th>Số tiền cần thanh toán</th>
+                                            <th>Số tiền cần thanh toán</th>
                                         </tr>
                                         </tr>
                                         </thead>
@@ -232,15 +235,15 @@
                                                            value="${lst.saRequest.id}"/></td>
 
                                                 <% } %>
-                                                <td><%
-                                                    if (role.equals("root") || role.equals("tnthamdinh")) { %>
+                                                <td>
+                                                    <%
+                                                        if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                                     <a data-toggle="modal" href="#" class="as"
                                                        onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                     <% } else {%>
                                                     <a data-toggle="modal" href="#" class="as"
                                                        onclick="viewInfoNoaction('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
-                                                    <% }%>
-
+                                                    <% } %>
                                                 </td>
                                                 <td>
                                                         ${lst.customer.customerName}
@@ -264,12 +267,18 @@
                                                             type="number"/> đ
                                                 </td>
                                                 <td>
+                                                        ${lst.saRequest.borrow }
+                                                </td>
+                                                <td>
                                                     2 %
                                                 </td>
                                                 <td>
                                                     <fmt:formatNumber
                                                             value="${lst.saRequest.borrow  * 0.02}"
                                                             type="number"/> đ
+                                                </td>
+                                                <td>
+                                                        ${lst.saRequest.borrow  * 0.02}
                                                 </td>
                                                 <td>
                                                     <fmt:parseDate value=" ${lst.saRequest.createdDate}"
@@ -298,7 +307,9 @@
                                                             value="${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }"
                                                             type="number"/> đ
                                                 </td>
-
+                                                <td>
+                                                        ${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -392,8 +403,8 @@
     let result = <%=json%>;
     let saList = <%=jsonSa%>;
     $(document).ready(function () {
-
         $("#loading").hide();
+        <% if (role.equals("nvthamdinh")) { %>
         $('#example').DataTable({
             dom: 'Bfrtip',
             ordering: false,
@@ -410,7 +421,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    // targets: [6, 9, 16]
+                    targets: [7, 10, 16]
                 },
             ],
             buttons: [
@@ -418,11 +429,42 @@
                     title: 'Danh sách chờ ký duyệt ',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+                        columns: [0, 1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14, 16]
                     }
                 },
             ]
         })
+        <%}else if (role.equals("root")) { %>
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            ordering: false,
+            order: [[0, "desc"]],
+            language: {
+                emptyTable: "Không có dữ liệu",
+                search: "Tìm kiếm:",
+                paginate: {
+                    previous: "Trang trước",
+                    next: "Trang sau",
+                }
+            },
+            pageLength: 10,
+            columnDefs: [
+                {
+                    visible: false,
+                    targets: [8, 11, 17]
+                },
+            ],
+            buttons: [
+                {
+                    title: 'Danh sách chờ ký duyệt ',
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 8, 9, 11, 12, 13, 14, 15, 17]
+                    }
+                },
+            ]
+        })
+        <% }%>
     });
 
 

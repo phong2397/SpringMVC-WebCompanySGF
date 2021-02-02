@@ -34,7 +34,7 @@ public class ProductController {
 
 
     @RequestMapping(value = {"/cauhinh"}, method = RequestMethod.GET)
-    public String settings(ModelMap mm, HttpSession session) {
+    public String viewSetting(ModelMap mm, HttpSession session) {
         log.info("GET - Go into cauhinhPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
@@ -51,7 +51,7 @@ public class ProductController {
 
     @RequestMapping(value = "/changeProduct", method = RequestMethod.POST)
     public @ResponseBody
-    String changes(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    String changeParamProduct(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         log.info("test log ===============================");
         log.info(System.getProperty("catalina.base"));
         log.info(System.getProperty("catalina.home"));

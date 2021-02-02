@@ -1,4 +1,3 @@
-//function xảy ra khi nhấn vào accept gọi đến data ajax , thực hiện thành công hiển thị popup alert thông báo success và cập nhật vào talbe product
 $("body").on("click", ".btn-accept", function () {
     var id = $(this).closest("tr").find('td:eq(0)').text().replaceAll("\n", "").trim();
     var productCode = $(this).closest("tr").find('td:eq(1) input').val().trim();
@@ -36,7 +35,6 @@ $("body").on("click", ".btn-accept", function () {
     }
 });
 
-//function ajax gọi đến value trong ProductController thực hiện caapj nhật thông số sản phẩm
 function sendOrder(data) {
     try {
         // This async call may fail.

@@ -147,6 +147,10 @@
                                 <div class="slide-container">
                                     <p id="imgContract"></p>
                                 </div>
+                                <p>Hình ảnh bảng lương :</p>
+                                <div class="slide-container">
+                                    <p id="imgSalary"></p>
+                                </div>
                             </div>
                         </div>
                         <hr>
@@ -468,7 +472,10 @@
                                 <p>Hình ảnh hợp đồng lao động :</p>
                                 <div class="slide-container">
                                     <p id="imgContractc"></p></div>
-
+                                <p>Hình ảnh bảng lương :</p>
+                                <div class="slide-container">
+                                    <p id="imgSalaryc"></p>
+                                </div>
                             </div>
 
                         </div>

@@ -27,13 +27,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Controller
-public class WriteoffController {
+public class WriteOffController {
     @Autowired
     UseradminDAO useradminDAO;
 
@@ -46,7 +45,7 @@ public class WriteoffController {
     @Autowired
     SaRequestDAO saRequestDAO;
 
-    private static final Logger log = Logger.getLogger(WriteoffController.class);
+    private static final Logger log = Logger.getLogger(WriteOffController.class);
 
     @RequestMapping(value = {"/nhacphi"}, method = RequestMethod.GET)
     public String nhacphiPage(ModelMap mm, HttpSession session) {
@@ -115,7 +114,7 @@ public class WriteoffController {
         log.info("Data id sarequest: " + data);
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         try {
-            if (!StringUtil.isEmpty(u) && u.getUserLogin().equals("ketoan")) {
+            if (!StringUtil.isEmpty(u) && u.getRole().equals("ketoan")) {
                 log.info("Check role ke toan");
                 String path = System.getProperty("catalina.home") + "/webapps/uynhiemchi/";
                 log.info("Path : " + path);

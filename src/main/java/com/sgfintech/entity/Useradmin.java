@@ -22,16 +22,13 @@ public class Useradmin implements Serializable {
     private String userLogin;
 
     @Column(name = "pass_word", nullable = false)
-    private String passWord;
+    private String password;
 
     @Column(name = "role", nullable = false)
     private String role;
 
     @Column(name = "status")
     private String status;
-
-    @Column(name = "reset_password_token")
-    private String resetPasswordToken;
 
     @Column(name = "count")
     private Long count;

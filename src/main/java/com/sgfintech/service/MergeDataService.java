@@ -350,27 +350,4 @@ public class MergeDataService {
     }
 
 
-    public List<MergeDataWithdraw> theodoikhoantamung(String date) {
-        log.info("List MergeDataWithdraw (contract and company and customer) - theodoikhoantamung ");
-        String sql = "select co.*,com.*,cu.* from sgft_contract co , sgft_companies com,sgft_customer cu where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code ORDER BY co.id_contract DESC";
-        if (StringUtil.isEmpty(jdbcTemplate)) {
-            jdbcTemplate = new JdbcTemplate(dataSource);
-        }
-
-        try {
-            Object[] param = new Object[]{};
-            return jdbcTemplate.query(sql, param,
-                    (rs, arg1) -> {
-                        Customer cu = new CustomerMapper().mapRow(rs, arg1);
-                        Contract co = new ContractMapper().mapRow(rs, arg1);
-                        Companies com = new CompanyMapper().mapRow(rs, arg1);
-                        return new MergeDataWithdraw(cu, co, com);
-                    });
-        } catch (Exception ex) {
-            log.error("Exception: " + ex.getMessage());
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
 }

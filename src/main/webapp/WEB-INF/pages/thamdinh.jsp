@@ -225,7 +225,9 @@
                                             <th>Số lần tạm ứng</th>
                                             <th>Nhân viên thẩm định</th>
                                             <th>Số tiền tạm ứng</th>
+                                            <th>Số tiền tạm ứng</th>
                                             <th>Phí dịch vụ</th>
+                                            <th>Mức phí</th>
                                             <th>Mức phí</th>
                                             <th>Thời gian yêu cầu tạm ứng</th>
                                         </tr>
@@ -275,12 +277,18 @@
                                                             type="number"/> đ
                                                 </td>
                                                 <td>
+                                                        ${lst.saRequest.borrow }
+                                                </td>
+                                                <td>
                                                     2 %
                                                 </td>
                                                 <td>
                                                     <fmt:formatNumber
                                                             value="${lst.saRequest.borrow  * 0.02}"
                                                             type="number"/> đ
+                                                </td>
+                                                <td>
+                                                        ${lst.saRequest.borrow  * 0.02}
                                                 </td>
                                                 <td>
                                                     <fmt:parseDate value=" ${lst.saRequest.createdDate}"
@@ -371,6 +379,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
+        <% if (role.equals("nvkyduyet")) { %>
         $('#example').DataTable({
             dom: 'Bfrtip',
             ordering: false,
@@ -387,7 +396,7 @@
             columnDefs: [
                 {
                     visible: false,
-                    // targets: [7, 10]
+                    targets: [7, 10]
                 },
             ],
             buttons: [
@@ -395,11 +404,42 @@
                     title: 'Danh sách chờ xét duyệt',
                     extend: 'excelHtml5',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                        columns: [0, 1, 2, 3, 4, 5, 7, 8, 10, 11]
                     }
                 },
             ]
         });
+        <%}else if (role.equals("root")) { %>
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            ordering: false,
+            order: [[0, "desc"]],
+            language: {
+                emptyTable: "Không có dữ liệu",
+                search: "Tìm kiếm:",
+                paginate: {
+                    previous: "Trang trước",
+                    next: "Trang sau",
+                }
+            },
+            pageLength: 10,
+            columnDefs: [
+                {
+                    visible: false,
+                    targets: [8, 11]
+                },
+            ],
+            buttons: [
+                {
+                    title: 'Danh sách chờ xét duyệt',
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 8, 9, 11, 12]
+                    }
+                },
+            ]
+        });
+        <% }%>
     });
 
     ;

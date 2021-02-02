@@ -44,7 +44,7 @@ public class UseradminService {
         if (jdbcTemplate == null) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
-        String sql = "select user_login from sgft_useradmin where role = 'nvkyduyet' order by rand() limit 1";
+        String sql = "select user_login from sgft_useradmin where role = 'nvkyduyet' and status = 0 order by rand() limit 1";
         try {
             return jdbcTemplate.queryForObject(sql, new Object[]{}, String.class);
         } catch (Exception exception) {
