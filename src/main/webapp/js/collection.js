@@ -232,34 +232,30 @@ $("#rootcheckbox").click(function () {
     $('input:checkbox').not(this).prop('checked', this.checked);
 });
 
-$("body").on("click", ".as", function () {
-    var datarequest = $(this).closest("tr").find('td:eq(6)').text().trim();
-    console.log(datarequest)
-    let data = {dataRequest: datarequest};
-    var result = findHistoryModal(data);
-    var obj = JSON.parse(result);
-    $("#tbodyCon").empty();
-    Object.keys(obj).forEach((key) => {
-        let con = obj[key]
-        console.log(con)
-        let time = obj[key].contract.createdDate
-        var rowElement = $('<tr></tr>');
-        rowElement.append('<td><h5><a  href="#" onclick="viewInfoContract(' + con.contract.idContract + ')">' + con.contract.idContract + '</a></h5></td>');
-        rowElement.append('<td><h5>' + ("0" + (time.date.day)).slice(-2) + '/' + ("0" + (time.date.month)).slice(-2) + '/' + ("0" + (time.date.year)).slice(-2) + ' ' + ("0" + (time.time.hour)).slice(-2) + ':' + ("0" + (time.time.minute)).slice(-2) + ':' + ("0" + (time.time.second)).slice(-2) + '</h5></td>');
-        rowElement.append('<td><h5>' + con.contract.acceptedBy + ' </td>');
 
-        rowElement.append('<td><h5>' + con.contract.remainAmountBorrow.toLocaleString("vi-VN") + ' đ</h5></td>');
-        rowElement.append('<td><h5>' + con.contract.borrow.toLocaleString("vi-VN") + ' đ</h5></td>');
-        if (con.contract.status == 'act') {
-            rowElement.append('<td><h5 style="color:#0D8BBD">đã giải ngân</h5></td>');
-
-        } else if (con.contract.status == 'done') {
-            rowElement.append('<td><h5 style="color: hotpink">đã tất toán</h5></td>');
-
-        }
-        $("#tbodyCon").append(rowElement)
-    })
-});
+function findHistoryModal(data) {
+    let result = "";
+    try {
+        $.ajax({
+            type: "POST",
+            timeout: 100000,
+            url: "findContractHistoryModal",
+            data: data,
+            async: false,
+            success: function (data, status, xhr) {
+                result = data;
+                return result;
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+                console.log(textStatus);
+                console.log(errorMessage);
+            }
+        })
+    } catch (error) {
+        return "Không thể kết nối tới server";
+    }
+    return result;
+}
 
 function viewInfoContract(params) {
     salist.forEach((contract) => {
@@ -302,34 +298,9 @@ function viewInfoContract(params) {
                 $("#contractView").append('<p>Ngày gạch nợ :' + ' ' + ("0" + (contract.dateRepayment.date.day)).slice(-2) + '/' + ("0" + (contract.dateRepayment.date.month)).slice(-2) + '/' + contract.dateRepayment.date.year + ' ' + ' ' + ("0" + (contract.dateRepayment.time.hour)).slice(-2) + ':' + ("0" + (contract.dateRepayment.time.minute)).slice(-2) + ':' + ("0" + (contract.dateRepayment.time.second)).slice(-2) + '</p>');
 
             }
-
-
             $('#modalContract').modal('show');
         }
 
     })
 }
 
-function findHistoryModal(data) {
-    let result = "";
-    try {
-        $.ajax({
-            type: "POST",
-            timeout: 100000,
-            url: "findContractHistoryModal",
-            data: data,
-            async: false,
-            success: function (data, status, xhr) {
-                result = data;
-                return result;
-            },
-            error: function (jqXhr, textStatus, errorMessage) {
-                console.log(textStatus);
-                console.log(errorMessage);
-            }
-        })
-    } catch (error) {
-        return "Không thể kết nối tới server";
-    }
-    return result;
-}

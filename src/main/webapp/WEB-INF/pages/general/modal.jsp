@@ -320,7 +320,7 @@
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="#historyCon" data-toggle="tab">
-                                Lịch sử hợp đồng giải ngân
+                                Lịch sử giao dịch
                             </a>
                         </li>
                         <% }%>

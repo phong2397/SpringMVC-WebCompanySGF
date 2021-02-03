@@ -294,6 +294,35 @@
     var result = <%=json%>;
     var salist = <%=json1%>;
 
+    $("body").on("click", ".as", function () {
+        var datarequest = $(this).closest("tr").find('td:eq(6)').text().trim();
+        console.log(datarequest)
+        let data = {dataRequest: datarequest};
+        var result = findHistoryModal(data);
+        var obj = JSON.parse(result);
+        $("#tbodyCon").empty();
+        Object.keys(obj).forEach((key) => {
+            let con = obj[key]
+            console.log(con)
+            let time = obj[key].contract.createdDate
+            var rowElement = $('<tr></tr>');
+            rowElement.append('<td><h5><a  href="#" onclick="viewInfoContract(' + con.contract.idContract + ')">' + con.contract.idContract + '</a></h5></td>');
+            rowElement.append('<td><h5>' + ("0" + (time.date.day)).slice(-2) + '/' + ("0" + (time.date.month)).slice(-2) + '/' + ("0" + (time.date.year)).slice(-2) + ' ' + ("0" + (time.time.hour)).slice(-2) + ':' + ("0" + (time.time.minute)).slice(-2) + ':' + ("0" + (time.time.second)).slice(-2) + '</h5></td>');
+            rowElement.append('<td><h5>' + con.contract.acceptedBy + ' </td>');
+
+            rowElement.append('<td><h5>' + con.contract.remainAmountBorrow.toLocaleString("vi-VN") + ' đ</h5></td>');
+            rowElement.append('<td><h5>' + con.contract.borrow.toLocaleString("vi-VN") + ' đ</h5></td>');
+            if (con.contract.status == 'act') {
+                rowElement.append('<td><h5 style="color:#0D8BBD">đã giải ngân</h5></td>');
+
+            } else if (con.contract.status == 'done') {
+                rowElement.append('<td><h5 style="color: hotpink">đã tất toán</h5></td>');
+
+            }
+            $("#tbodyCon").append(rowElement)
+        })
+    });
+
 </script>
 </body>
 
