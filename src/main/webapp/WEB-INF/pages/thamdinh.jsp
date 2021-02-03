@@ -373,7 +373,7 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
-<script src="js/generalTiepnhanYeucau.js" type="text/javascript"></script>
+<script src="js/generalManageSaRequest.js" type="text/javascript"></script>
 <script src="js/approve.js" type="text/javascript"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript">

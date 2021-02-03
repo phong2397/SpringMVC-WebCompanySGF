@@ -131,14 +131,10 @@ public class CustomerController {
             log.error("Error - Not allow role roor create user admin");
             return "errorRoot";
         } else {
-            if (userRole.equals("") || userPass.equals("") || userLogin.equals("")) {
-                log.error("Error - Not allow empty role , pass , userLogin");
-                return "error";
-            }
             try {
                 Useradmin u = useradminService.checkUser(userLogin);
                 if (!StringUtil.isEmpty(u)) {
-                    log.error("Error - Not exist User Admin");
+                    log.error("Error - Check exist User Admin");
                     return "errorExist";
                 } else {
                     MessageDigest messageDigest = MessageDigest.getInstance("MD5");
@@ -296,12 +292,13 @@ public class CustomerController {
         String data = request.getParameter("id");
         String dataUserLogin = request.getParameter("userlogin");
         Useradmin user = useradminDAO.findById(Long.parseLong(data));
-        if (user.getUserLogin().equals("")) {
-            return "emptyError";
-        } else {
+        if (!StringUtil.isEmpty(dataUserLogin)) {
             user.setUserLogin(dataUserLogin);
             useradminDAO.update(user);
             return "success";
+        } else {
+            return "emptyError";
+
         }
     }
 }

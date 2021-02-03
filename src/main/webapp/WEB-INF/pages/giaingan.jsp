@@ -380,7 +380,7 @@
 <script src="js/template.js"></script>
 <script src="js/demo.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script type="text/javascript" src="js/díburse.js">
+<script type="text/javascript" src="js/disburse.js">
 </script>
 <script type="text/javascript">
 
