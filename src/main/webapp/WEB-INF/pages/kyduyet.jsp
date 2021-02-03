@@ -351,7 +351,7 @@
                             </option>
                             <c:forEach items="${admin}" var="lst" varStatus="loop">
                                 <c:choose>
-                                    <c:when test="${lst.role eq 'nvkyduyet'}">
+                                    <c:when test="${lst.role eq 'nvkyduyet' && lst.status eq 0}">
                                         <option value="${lst.userLogin}">
                                             <span> ${lst.userLogin}</span>
                                         </option>
