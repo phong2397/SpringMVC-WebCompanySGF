@@ -289,7 +289,7 @@ function viewInfoContract(params) {
                 $("#contractView").append('<p>Mức Phí :' + ' ' + contract.feeBorrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#contractView").append('<p>Trạng thái :' + ' ' + '<b style="color: hotpink">' + 'đã tất toán' + '</b></p>');
                 $("#contractView").append('<p>Số tiền còn nợ :' + ' ' + '0' + ' đ</p>');
-                $("#contractView").append('<p>Số tiền thanh toán :' + ' ' + contract.remainAmountBorrow.toLocaleString("vi-VN") + ' đ</p>');
+                $("#contractView").append('<p>Số tiền thanh toán :' + ' ' + contract.borrow.toLocaleString("vi-VN") + ' đ</p>');
                 $("#contractView").append('<p>Mã giao dịch :' + ' ' + contract.transactionId + '</p>');
                 $("#contractView").append('<p>Mã hệ thống(System Trace) :' + ' ' + contract.systemTrace + '</p>');
                 $("#contractView").append('<p>Ngày thanh toán :' + ' ' + ("0" + (contract.dateRepayment.date.day)).slice(-2) + '/' + ("0" + (contract.dateRepayment.date.month)).slice(-2) + '/' + contract.dateRepayment.date.year + ' ' + ' ' + ("0" + (contract.dateRepayment.time.hour)).slice(-2) + ':' + ("0" + (contract.dateRepayment.time.minute)).slice(-2) + ':' + ("0" + (contract.dateRepayment.time.second)).slice(-2) + '</p>');

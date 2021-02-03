@@ -45,6 +45,7 @@ public class SaRequestService {
                 preparedStatement.setLong(2, saRequest.getId());
             }
         });
+        log.info("UpdateCount Employee Tham Dinh: " + updateCounts);
         return updateCounts;
     }
 
@@ -61,6 +62,7 @@ public class SaRequestService {
                 preparedStatement.setLong(2, saRequest.getId());
             }
         });
+        log.info("UpdateCount Employee Duyet: " + updateCounts);
         return updateCounts;
     }
 

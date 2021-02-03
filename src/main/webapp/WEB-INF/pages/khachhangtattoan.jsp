@@ -127,7 +127,7 @@
                                            data-page-size="10" width="100%">
                                         <thead>
                                         <tr>
-                                            <th>Mã đơn vay</th>
+                                            <th>Mã đơn</th>
                                             <th>Mã công ty</th>
                                             <th>Tên khách hàng</th>
                                             <th>Chủ tài khoản</th>
@@ -296,7 +296,6 @@
 
     $("body").on("click", ".as", function () {
         var datarequest = $(this).closest("tr").find('td:eq(6)').text().trim();
-        console.log(datarequest)
         let data = {dataRequest: datarequest};
         var result = findHistoryModal(data);
         var obj = JSON.parse(result);

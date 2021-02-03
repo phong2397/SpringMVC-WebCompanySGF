@@ -78,7 +78,7 @@
                                            data-page-size="10" width="100%">
                                         <thead>
                                         <tr>
-                                            <th>Mã đơn vay</th>
+                                            <th>Mã đơn</th>
                                             <th>Tên sản phẩm</th>
                                             <th>Tên công ty</th>
                                             <th>Tên khách hàng</th>
@@ -245,7 +245,6 @@
     let salist = <%=json1%>;
     $("body").on("click", ".as", function () {
         var datarequest = $(this).closest("tr").find('td:eq(4)').text().trim();
-        console.log(datarequest)
         let data = {dataRequest: datarequest};
         var result = findHistoryModal(data);
         var obj = JSON.parse(result);

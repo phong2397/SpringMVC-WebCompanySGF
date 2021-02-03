@@ -1,6 +1,5 @@
 $("body").on("click", ".as", function () {
     var phone = $(this).closest('tr').children('td:eq(4)').text().trim();
-    console.log(phone)
     data = {phone: phone};
     var result = findHistoryModal(data);
     var obj = JSON.parse(result);
@@ -58,7 +57,6 @@ function findHistoryModal(data) {
 
 function viewInfoOrder(params) {
     list.forEach((order) => {
-        console.log(list)
         if (order.id == params) {
             let sa = order.status
             console.log(sa)
@@ -225,11 +223,8 @@ function viewInfoNoaction(phone, id, comId) {
             console.log(error);
         });
     let c = list.customer;
-    console.log(c.customerRelative)
     const date = c.customerBirthday;
     const idDate = c.customerIdDate.date;
-    console.log(typeof (c.customerRelativePhone));
-    console.log(typeof (c.customerRelative));
 
     $("#relativeInfo").empty();
     $("#relativeInfo").append(' <h4><b>*</b>&nbsp;&nbsp;Thông tin người thân</h4>');
@@ -270,7 +265,6 @@ function viewInfoNoaction(phone, id, comId) {
     })
 
     list = result.find(el => el.saRequest.id == id);
-    console.log(list)
     let sa = list.saRequest;
     $("#ida").empty();
     $("#ida").append(sa.id);
@@ -373,7 +367,6 @@ function viewInfoNoaction(phone, id, comId) {
     }
     list = result.find(el => el.company.id == comId);
     let com = list.company;
-    console.log(com)
     $("#job").empty();
     $("#job").append('<h4><b>*</b>&nbsp;&nbsp;&nbsp;Công việc</h4>');
     $("#job").append('<p>Mã công ty : <span style="color:grey;">' + com.companyCode + '</span></p>');
@@ -402,7 +395,6 @@ function viewInfoNoaction(phone, id, comId) {
 
 function viewInfoCustomer(phone, id, comId) {
     selectedsaId = id;
-    console.log(selectedsaId)
     let list = result.find(el => el.customer.customerPhone == phone);
     axios({
         method: 'GET',
@@ -475,7 +467,6 @@ function viewInfoCustomer(phone, id, comId) {
                 }
             });
             const contractObj = JSON.parse(response.data.contract);
-            console.log(contractObj)
             $('#imgContract').empty()
             Object.keys(contractObj).forEach((key) => {
                 if (contractObj[key] == 'https://dev.sgft.info/upload/' + phone + '@') {
@@ -658,7 +649,6 @@ function viewInfoCustomer(phone, id, comId) {
     }
 
     list = result.find(el => el.company.id == comId);
-    console.log(list)
     let com = list.company;
     $("#job").empty();
     $("#job").append('<h4><b>*</b>&nbsp;&nbsp;&nbsp;Công việc</h4>');
