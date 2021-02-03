@@ -55,7 +55,7 @@ public class TotalListController {
 
     @RequestMapping(value = "/findContractHistoryModal", method = RequestMethod.POST)
     public @ResponseBody
-    String ContractModal(HttpServletRequest request, HttpServletResponse response) {
+    String findContractHistoryModal(HttpServletRequest request, HttpServletResponse response) {
         log.info("POST - ContractModal ");
         String customerPhone = request.getParameter("dataRequest");
         log.info("customer phone: " + customerPhone);

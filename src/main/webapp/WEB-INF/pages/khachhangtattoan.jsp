@@ -68,7 +68,7 @@
                         <a class="box box-link-shadow text-center" href="javascript:void(0)">
                             <div class="box-body">
                                 <div class="font-size-24">${countDone}</div>
-                                <span>Tổng số lượng gạch nợ</span>
+                                <span>Đơn đã gạch nợ</span>
                             </div>
                             <div class="box-body bg-info">
                                 <p>

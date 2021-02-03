@@ -211,7 +211,7 @@ public class ApprovalController {
 
     @RequestMapping(value = "/findHistoryModal", method = RequestMethod.POST)
     public @ResponseBody
-    String findHistorymodal(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    String findHistoryModal(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         log.info("POST - Go into findHistoryModal");
         String phone = request.getParameter("phone");
         log.info("Data Phone : " + phone);

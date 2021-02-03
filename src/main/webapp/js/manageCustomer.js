@@ -18,14 +18,31 @@ $("body").on("click", ".btn-outline", function () {
             rowElement.append('<td ><b>' + e.customer.customerName + '</b><br>' +
                 'Ngày sinh :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerBirthday.day + '/' + e.customer.customerBirthday.month + '/' + e.customer.customerBirthday.year + '</span><br>' +
                 'Số điện thoại :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerPhone + '</span></td>');
-            rowElement.append('<td>' + 'Thường trú :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerAddress + '</span><br>' +
-                'Tạm trú :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerAddressTemp + '</span></td>');
-            rowElement.append('<td>' + 'Vị trí :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerPosition + '</span><br>' +
-                'Mức lương :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerSalary.toLocaleString("vi-VN") + ' ' + 'đ</span></td>');
-            rowElement.append('<td>' +
-                'Số CMND :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerId + '</span><br>' +
-                'Nơi cấp :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerIdLocation +
-                '</span></td>');
+            if (e.customer.customerAddressTemp === undefined || e.customer.customerAddress === undefined) {
+                rowElement.append('<td>' + 'Thường trú :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + 'Không có thông tin' + '</span><br>' +
+                    'Tạm trú :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + 'Không có thông tin' + '</span></td>');
+            } else {
+                rowElement.append('<td>' + 'Thường trú :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerAddress + '</span><br>' +
+                    'Tạm trú :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerAddressTemp + '</span></td>');
+            }
+            if (e.customer.customerPosition === undefined) {
+                rowElement.append('<td>' + 'Vị trí :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + 'Không có thông tin' + '</span><br>' +
+                    'Mức lương :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerSalary.toLocaleString("vi-VN") + ' ' + 'đ</span></td>');
+            } else {
+                rowElement.append('<td>' + 'Vị trí :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerPosition + '</span><br>' +
+                    'Mức lương :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerSalary.toLocaleString("vi-VN") + ' ' + 'đ</span></td>');
+            }
+            if (e.customer.customerIdLocation === undefined) {
+                rowElement.append('<td>' +
+                    'Số CMND :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerId + '</span><br>' +
+                    'Nơi cấp :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + 'Không có thông tin' +
+                    '</span></td>');
+            } else {
+                rowElement.append('<td>' +
+                    'Số CMND :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerId + '</span><br>' +
+                    'Nơi cấp :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerIdLocation +
+                    '</span></td>');
+            }
             rowElement.append('<td>' +
                 'Tên ngân hàng :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerBankName + '</span><br>' +
                 'Chủ tài khoản :' + ' ' + '<span style=" font-weight: 300 bold;color: grey">' + e.customer.customerBank + '</span><br>' +
