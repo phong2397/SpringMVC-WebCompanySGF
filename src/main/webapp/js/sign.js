@@ -1,4 +1,4 @@
-function xacnhanKyduyet() {
+function xacNhanKyduyet() {
     $("#loading").show();
     var dataRequest = $('#ids').text();
     var employeeDuyet = $('#employeeduyet').text();

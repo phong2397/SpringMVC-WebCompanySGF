@@ -210,7 +210,7 @@
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal"
-                        onclick="xacnhanThamdinh()">
+                        onclick="xacNhanThamdinh()">
                     Xác nhận
                 </button>
                 <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Hủy</button>
@@ -234,7 +234,7 @@
             </div>
             <div class="modal-footer modal-footer-uniform">
                 <button type="button" class="btn btn-rounded btn-warning" data-dismiss="modal"
-                        onclick="xacnhanKyduyet()">
+                        onclick="xacNhanKyduyet()">
                     Xác nhận
                 </button>
                 <button type="button" class="btn btn-rounded btn-github" data-dismiss="modal">Hủy</button>

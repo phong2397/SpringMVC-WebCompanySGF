@@ -1,4 +1,4 @@
-function xacnhanThamdinh() {
+function xacNhanThamdinh() {
     var dataRequest = $('#saID').text();
     var employeeThamdinh = $('#employeeTD').text().trim();
     let data = {

@@ -211,9 +211,9 @@
                                             <th class="text-center">Mức phí</th>
                                             <th class="text-center">TG yêu cầu</th>
                                             <th class="text-center">Trạng thái</th>
-                                            <th class="text-center">Người chuyển tiền</th>
-                                            <th class="text-center">TG chuyển tiền</th>
-                                            <th class="text-center">Chứng từ chuyển tiền</th>
+                                            <th class="text-center">Người giải ngân</th>
+                                            <th class="text-center">TG giải ngân</th>
+                                            <th class="text-center">Chứng từ giải ngân</th>
                                             <th class="text-center">Nội dung chuyển khoản</th>
 
                                         </tr>

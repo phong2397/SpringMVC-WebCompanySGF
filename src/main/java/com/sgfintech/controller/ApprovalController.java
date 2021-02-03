@@ -74,30 +74,6 @@ public class ApprovalController {
         }
     }
 
-//    @RequestMapping(value = {"/declineThamDinhPage"}, method = RequestMethod.GET)
-//    public String declineThamDinhPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-//        log.info("GET - Go into tuchoiThamdinhPage");
-//        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-//        if (u == null) {
-//            return "redirect:login";
-//        } else {
-//            String empThamdinh = u.getUserLogin();
-//            List<MergeDataOrder> listMergeDataOrders = mergeDataService.getUserThamdinh("deni", empThamdinh);
-//            log.info("Data merge table order and customer and companies: " + listMergeDataOrders);
-//            List<SaRequest> saRequest = saRequestDAO.findAll();
-//            log.info("Data saRequest table find all: " + saRequest);
-//            mm.addAttribute("sa", saRequest);
-//            mm.addAttribute(Consts.Attr_ResultView, listMergeDataOrders);
-//            int[] count = saRequestService.countStatus();
-//            log.info("Data count status array: " + count);
-//            mm.addAttribute("countAct", count[1]);
-//            mm.addAttribute("countWait", count[2]);
-//            mm.addAttribute("countWFS", count[3]);
-//            mm.addAttribute("countDeni", count[4]);
-//            return "tuchoithamdinh";
-//        }
-//    }
-
     @RequestMapping(value = {"/thamdinhRole"}, method = RequestMethod.GET)
     public String approvalRolePage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         log.info("GET - Go into thamdinhRolePage");
@@ -147,10 +123,6 @@ public class ApprovalController {
 
     @RequestMapping(value = {"/thamdinh"}, method = RequestMethod.GET)
     public String approvalPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
-//        int countWait = mergeDataService.countStatus("wait");
-//        int countWFS = mergeDataService.countStatus("wfs");
-//        int countAct = mergeDataService.countStatus("act");
-//        int countDone = mergeDataService.countStatus("done");
         log.info("GET - Go into thamdinhPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
