@@ -85,25 +85,6 @@ public class WriteOffController {
         }
     }
 
-//    @RequestMapping(value = {"/theodoikhoantamung"}, method = RequestMethod.GET)
-//    public String theodoikhoantamungPage(ModelMap mm, HttpSession session) {
-//        log.info("GET - theodoikhoantamungPage ");
-//        Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
-//        if (u == null) {
-//            return "redirect:login";
-//        } else {
-//            int countAct = mergeDataService.contractStatus("act");
-//            int countDone = mergeDataService.contractStatus("done");
-//            List<MergeDataWithdraw> listdata = mergeDataService.theodoikhoantamung("");
-//            List<Contract> contract = contractDAO.findAll();
-//            mm.addAttribute("con", contract);
-//            mm.addAttribute(Consts.Attr_ResultView, listdata);
-//            mm.addAttribute("countDone", countDone);
-//            mm.addAttribute("countAct", countAct);
-//            return "theodoikhoantamung";
-//        }
-//    }
-
     @RequestMapping(value = {"/gachno"}, method = RequestMethod.POST)
     public @ResponseBody
     String gachnotoanphanAction(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
