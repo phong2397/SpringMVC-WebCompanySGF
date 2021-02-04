@@ -99,7 +99,7 @@ public class ApprovalController {
     }
 
     @RequestMapping(value = {"/tongtiepnhan"}, method = RequestMethod.GET)
-    public String totalSaRequestPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
+    public String showTotalSaRequestPage(ModelMap mm, HttpServletRequest request, HttpSession session) {
         log.info("GET - Go into tongtiepnhanPage");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {

@@ -80,7 +80,7 @@ function ajaxPost(data) {
         $.ajax({
             type: "POST",
             timeout: 100000,
-            url: "doSearchManage",
+            url: "searchByInfoCompany",
             data: data,
             async: false,
             success: function (data, status, xhr) { //data nay chinh la cai cuc em return o controller

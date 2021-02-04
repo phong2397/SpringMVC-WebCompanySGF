@@ -54,16 +54,16 @@ public class CustomerController {
     private UseradminService useradminService;
 
 
-    @RequestMapping(value = {"/list-customer"}, method = RequestMethod.GET)
-    public String listCustomer(Model model) {
-        log.info("GET - Go into list-customer page");
-        return "list-customer";
+    @RequestMapping(value = {"/thongtinkhachhang"}, method = RequestMethod.GET)
+    public String listInfoCustomer(Model model) {
+        log.info("GET - thongtinkhachhang page");
+        return "thongtinkhachhang";
     }
 
-    @RequestMapping(value = "/doSearch", method = RequestMethod.POST)
+    @RequestMapping(value = "/searchByInfoCustomer", method = RequestMethod.POST)
     public @ResponseBody
-    String doSearch(HttpServletRequest request, HttpServletResponse response) {
-        log.info("POST - Search inside thong tin khach  hang ");
+    String searchByInfoCustomer(HttpServletRequest request, HttpServletResponse response) {
+        log.info("POST - Search thong tin khach hang theo so dien thoai, so cmnd, ho va ten");
         String customerName = request.getParameter("customerName");
         log.info("Customer Name: " + customerName);
         String customerId = request.getParameter("customerId");
@@ -77,25 +77,24 @@ public class CustomerController {
         return responseStr;
     }
 
-    @RequestMapping(value = {"/manage-customer"}, method = RequestMethod.GET)
-    public String manageCustomer(ModelMap mm) {
+    @RequestMapping(value = {"/quanlydanhsach"}, method = RequestMethod.GET)
+    public String manageList(ModelMap mm) {
         log.info("GET - Go into quan ly danh sach page");
         List<Companies> listdata = companiesDAO.findAll();
-        log.info("GET - Search inside quan ly danh sach ");
         mm.addAttribute(Consts.Attr_ResultView, listdata);
-        return "manage-customer";
+        return "quanlydanhsach";
     }
 
-    @RequestMapping(value = "/doSearchManage", method = RequestMethod.POST)
+    @RequestMapping(value = "/searchByInfoCompany", method = RequestMethod.POST)
     public @ResponseBody
-    String doSearchManage(HttpServletRequest request, HttpServletResponse response) {
-        log.info("POST - doSearchManage");
+    String searchByInfoCompany(HttpServletRequest request, HttpServletResponse response) {
+        log.info("POST - Search thong tin khach hang theo ma cong ty va ten cong ty");
         String companyCode = request.getParameter("companyCode");
         log.info("Company Code: " + companyCode);
         String companyName = request.getParameter("companyName");
         log.info("Company Name: " + companyName);
         List<CustomerHandler> result = mergeDataService.searchCustomerCompany(companyCode, companyName);
-        log.info("Return result list of merge data companies and customer search companyCode or companyName: " + result);
+        log.info("Return result list: " + result);
         Gson g = new Gson();
         String responseStr = g.toJson(result);
         log.info("ResponseStr: " + responseStr);

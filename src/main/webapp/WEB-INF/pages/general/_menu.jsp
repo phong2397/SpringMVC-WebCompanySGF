@@ -29,13 +29,13 @@
                 </a>
             </li>
             <li>
-                <a href="manage-customer.html">
+                <a href="quanlydanhsach.html">
                     <img src="images/svg-icon/form_elements.svg" class="svg-icon" alt="">
                     <span>Quản lý danh sách</span>
                 </a>
             </li>
             <li>
-                <a href="list-customer.html">
+                <a href="thongtinkhachhang.html">
                     <img src="images/svg-icon/user.svg" class="svg-icon" alt="">
                     <span>Thông tin khách hàng</span>
                 </a>
@@ -219,13 +219,13 @@
                 </a>
             </li>
             <li>
-                <a href="manage-customer.html">
+                <a href="quanlydanhsach.html">
                     <img src="images/svg-icon/form_elements.svg" class="svg-icon" alt="">
                     <span>Quản lý danh sách</span>
                 </a>
             </li>
             <li>
-                <a href="list-customer.html">
+                <a href="thongtinkhachhang.html">
                     <img src="images/svg-icon/user.svg" class="svg-icon" alt="">
                     <span>Thông tin khách hàng</span>
                 </a>

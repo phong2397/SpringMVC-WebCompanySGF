@@ -190,7 +190,8 @@
                             <div class="box-body">
                                 <div class="table-responsive">
 
-                                    <table id="example" class="table table-lg invoice-archive" width="100%">
+                                    <table id="example" class="table table-striped table-bordered no-margin"
+                                           width="100%">
                                         <thead>
                                         <tr>
                                         <tr>

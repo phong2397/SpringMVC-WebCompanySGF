@@ -83,7 +83,7 @@ function ajaxPost(data) {
             timeout: 100000,
             data: data,
             async: false,
-            url: "doSearch",
+            url: "searchByInfoCustomer",
             success: function (data, status, xhr) {
                 result = data
                 console.log(data)

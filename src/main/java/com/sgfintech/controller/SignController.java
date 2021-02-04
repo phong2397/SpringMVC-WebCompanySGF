@@ -131,8 +131,7 @@ public class SignController {
         log.info("POST - update employee duyet");
         List<SaRequest> lst = new ArrayList<>();
         String[] data = request.getParameterValues("datarequest[]");
-        System.out.println(data);
-
+        log.info("Id SaRequest: " + data);
         String employeeDuyet = request.getParameter("employeeDuyet");
         for (String d : data) {
             SaRequest s = new SaRequest();

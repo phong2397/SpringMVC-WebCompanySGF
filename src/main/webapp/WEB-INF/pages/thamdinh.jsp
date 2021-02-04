@@ -34,21 +34,11 @@
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 <style type="text/css">
     input[type="checkbox"] {
-        left: inherit !important;
-        /*position: absolute !important;*/
-        display: block !important;
+        position: initial !important;
+        display: inline-block !important;
         opacity: 100 !important;
     }
 
-    .xzoom-source img, .xzoom-preview img, .xzoom-lens img {
-        display: block;
-        max-width: none;
-        max-height: none;
-        -webkit-transition: none;
-        -moz-transition: none;
-        -o-transition: none;
-        transition: none;
-    }
 </style>
 <div class="wrapper">
 
@@ -210,7 +200,8 @@
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-                                    <table id="example" class="table table-lg invoice-archive" width="100%">
+                                    <table id="example" class="table table-striped table-bordered no-margin"
+                                           width="100%">
                                         <thead>
                                         <tr>
                                             <%

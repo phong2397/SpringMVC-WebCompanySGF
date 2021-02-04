@@ -1,17 +1,18 @@
-<%@ page import="com.sgfintech.entity.Companies" %>
+<%@ page import="com.sgfintech.handler.CustomerHandler" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.sgfintech.entity.Useradmin" %>
 <%@ page import="com.sgfintech.util.Consts" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: Admin
   Date: 12/09/2020
-  Time: 16:42
+  Time: 16:40
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -48,14 +49,14 @@
             <div class="content-header">
                 <div class="d-flex align-items-center">
                     <div class="mr-auto">
-                        <h3 class="page-title">Quản lý danh sách khách hàng </h3>
+                        <h3 class="page-title">Danh sách khách hàng </h3>
                         <div class="d-inline-block align-items-center">
                             <nav>
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a>
                                     </li>
                                     <li class="breadcrumb-item" aria-current="page">Upload tài liệu</li>
-                                    <li class="breadcrumb-item active" aria-current="page">Quản lý danh sách
+                                    <li class="breadcrumb-item active" aria-current="page">Thông tin khách hàng
                                     </li>
                                 </ol>
                             </nav>
@@ -71,47 +72,37 @@
                     <div class="col-lg-12 col-12">
                         <div class="box">
                             <!-- /.box-header -->
-                            <form class="form">
+                            <form class="form-control">
                                 <div class="box-body">
-                                    <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin công ty
+                                    <h4 class="box-title text-info"><i class="ti-save mr-15"></i> Thông tin khách hàng
                                     </h4>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label style="color:black">Tên công ty</label><br>
-                                                <select id="company_name" class="form-control"
-                                                        onchange="onCompanyName(event)">
-                                                    <option id="companyName">
-                                                        -- Vui lòng chọn --
-                                                    </option>
-                                                    <c:forEach items="${views}" var="lst" varStatus="loop">
-                                                        <option id="companyName" value="${lst.companyName}">
-                                                            <span> ${lst.companyName}</span>
-                                                        </option>
-                                                    </c:forEach>
-                                                </select>
+                                                <label>Số điện thoại </label>
+                                                <input type="text" class="form-control" name="customerPhone"
+                                                       id="customerPhone"
+                                                       placeholder="Số điện thoại">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label style="color: black">Mã công ty </label>
-                                                <select id="company_code" class="form-control"
-                                                        onchange="onCompanyChanged(event)">
-                                                    <option id="companyCode">
-                                                        -- Please Choose --
-                                                    </option>
-                                                    <c:forEach items="${views}" var="lst" varStatus="loop">
-                                                        <option id="companyCode" value="${lst.companyCode}">
-                                                                ${lst.companyCode}
-                                                        </option>
-                                                    </c:forEach>
-                                                </select>
+                                                <label>Số CMND</label>
+                                                <input type="text" class="form-control" name="customerId"
+                                                       id="customerId"
+                                                       placeholder="Số CMND">
                                             </div>
                                         </div>
-
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Họ và tên</label>
+                                                <input type="text" class="form-control" name="customerName"
+                                                       id="customerName"
+                                                       placeholder="Họ và tên">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <button type="button"
-                                            class="btn btn-rounded btn-primary btn-outline">
+                                    <button type="button" class="btn btn-rounded btn-primary btn-outline">
                                         <i class="ti-save-alt"></i> Tìm kiếm
                                     </button>
                                 </div>
@@ -126,8 +117,8 @@
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-
-                                    <table class="table table-lg invoice-archive" width="100%">
+                                    <table id="example" class="table table-striped table-bordered no-margin"
+                                           width="100%">
                                         <thead>
                                         <tr>
                                             <th>Mã công ty</th>
@@ -140,6 +131,7 @@
                                         </tr>
                                         </thead>
                                         <tbody id="tbodytable">
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -149,7 +141,6 @@
                 </div>
             </section>
             <!-- /.content -->
-
         </div>
     </div>
     <!-- /.content-wrapper -->
@@ -158,7 +149,26 @@
     <!-- Control Sidebar -->
     <jsp:include page="general/_controlSidebar.jsp"/>
     <!-- /.control-sidebar -->
+    <div class="modal modal-right fade" id="modal-right" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông tin chi tiết khách hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="font-weight: bold; color: #0b0b0b">
+                    <p>Họ Tên : <img src="" id="customerImageFront" alt=""></p>
+                    <p>Email : <img src="" id="customerImageBack" alt=""></p>
 
+                </div>
+                <div class="modal-footer modal-footer-uniform">
+                    <button type="button" class="btn btn-rounded btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
@@ -169,38 +179,16 @@
 <!-- Crypto Tokenizer Admin App -->
 <script src="js/template.js"></script>
 <script src="js/pages/dashboard9.js"></script>
-<script src="js/demo.js"></script>
+<script src="js/pages/data-table.js"></script>
 <script src="assets/vendor_components/dropzone/dropzone.js"></script>
 <script src="assets/vendor_components/sweetalert/sweetalert.min.js"></script>
 <script src="assets/vendor_components/sweetalert/jquery.sweet-alert.custom.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="js/manageCustomer.js"></script>
+<script type="text/javascript" src="js/listCustomer.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").hide();
     });
-    <%
-        List<Companies> list = (List<Companies>) request.getAttribute("views");
-        Gson g = new Gson();
-        String json = g.toJson(list);
-    %>
-    var comList = <%=json%>;
-
-    function onCompanyChanged(e) {
-        let value = e.target.value;
-        console.log(value)
-        let com = comList.find(e => e.companyCode == value);
-        console.log(com)
-        $('#companyName').text(com.companyName);
-    }
-
-    function onCompanyName(e) {
-        let value1 = e.target.value;
-        console.log(value1)
-        let com1 = comList.find(e => e.companyName == value1);
-        console.log(com1)
-        $('#companyCode').text(com1.companyCode);
-    }
 </script>
 </body>
 
