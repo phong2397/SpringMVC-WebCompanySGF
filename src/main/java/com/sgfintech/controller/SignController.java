@@ -282,6 +282,7 @@ public class SignController {
                     Customer c = customerDAO.findByPhone(sa.getCustomerPhone());
                     final DetailTransaction d = new DetailTransaction();
                     d.setId(sa.getId());
+                    d.setCustomerId(c.getCustomerId());
                     d.setCompanyCode(c.getCompanyCode());
                     d.setCustomerName(c.getCustomerName());
                     d.setBankAccount(c.getCustomerBankAcc());
