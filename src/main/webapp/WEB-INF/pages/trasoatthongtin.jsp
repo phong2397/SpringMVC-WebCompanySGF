@@ -460,7 +460,7 @@
                     next: "Trang sau",
                 }
             },
-            pageLength: 20,
+            pageLength: 10,
             columnDefs: [
                 {
                     visible: false,

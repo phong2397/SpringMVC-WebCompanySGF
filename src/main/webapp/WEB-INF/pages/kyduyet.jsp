@@ -82,24 +82,131 @@
                                     if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                 <button class="btn btn-primary" data-toggle="modal" href="#modalKyduyet">Chia đơn
                                 </button>
-                                <% } else {
-                                }
+                                <% }
                                 %>
-
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
-
+                                    <%
+                                        if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                     <table id="example" class="table table-striped table-bordered no-margin"
                                            width="100%">
                                         <thead>
                                         <tr>
-                                        <tr>
-                                            <%
-                                                if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                             <th><input type="checkbox"
                                                        id="rootcheckbox"></th>
-                                            <% }%>
+
+                                            <th>Mã đơn</th>
+                                            <th>Họ và tên</th>
+                                            <th>Số CMND</th>
+                                            <th>Điện thoại</th>
+                                            <th>Số lần tạm ứng</th>
+                                            <th>Nhân viên thẩm định</th>
+                                            <th>Số tiền tạm ứng</th>
+                                            <th>Số tiền tạm ứng</th>
+                                            <th>Phí dịch vụ</th>
+                                            <th>Mức phí</th>
+                                            <th>Mức phí</th>
+                                            <th>Thời gian yêu cầu tạm ứng</th>
+                                            <th>Trạng thái</th>
+                                            <th>Nhân viên ký duyệt</th>
+                                            <th>Ngày thanh toán</th>
+                                            <th>Số tiền cần thanh toán</th>
+                                            <th>Số tiền cần thanh toán</th>
+                                        </tr>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${views}" var="lst" varStatus="loop">
+                                            <c:choose>
+                                                <c:when test="${lst.saRequest.status eq 'wfs'}">
+                                                    <tr id="tr-${lst.saRequest.id}">
+                                                        <td><input type="checkbox"
+                                                                   class="checkEmployee"
+                                                                   value="${lst.saRequest.id}"/>
+                                                        </td>
+                                                        <td>
+                                                            <a data-toggle="modal" href="#" class="as"
+                                                               onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
+                                                        </td>
+                                                        <td>
+                                                                ${lst.customer.customerName}
+                                                        </td>
+                                                        <td>
+                                                                ${lst.customer.customerId}
+                                                        </td>
+                                                        <td>
+                                                                ${lst.customer.customerPhone}
+                                                        </td>
+                                                        <td>
+                                                                ${count.countBorrow(views, lst.customer.customerPhone)}
+                                                        </td>
+
+                                                        <td>
+                                                                ${lst.saRequest.employeeThamdinh}
+                                                        </td>
+                                                        <td>
+                                                            <fmt:formatNumber
+                                                                    value="${lst.saRequest.borrow }"
+                                                                    type="number"/> đ
+                                                        </td>
+                                                        <td>
+                                                                ${lst.saRequest.borrow }
+                                                        </td>
+                                                        <td>
+                                                            2 %
+                                                        </td>
+                                                        <td>
+                                                            <fmt:formatNumber
+                                                                    value="${lst.saRequest.borrow  * 0.02}"
+                                                                    type="number"/> đ
+                                                        </td>
+                                                        <td>
+                                                                ${lst.saRequest.borrow  * 0.02}
+                                                        </td>
+                                                        <td>
+                                                            <fmt:parseDate value=" ${lst.saRequest.createdDate}"
+                                                                           pattern="yyyy-MM-dd'T'HH:mm" var="day"
+                                                                           type="date"/>
+                                                            <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                            value="${day}"/>
+                                                        </td>
+                                                        <td>
+                                                            Thông qua
+                                                        </td>
+                                                        <td id="employeeDuyet-${lst.saRequest.id}">
+                                                            <c:choose>
+                                                                <c:when test="${empty  lst.saRequest.employeeDuyet}">-</c:when>
+                                                                <c:otherwise>
+                                                                    ${lst.saRequest.employeeDuyet}
+                                                                </c:otherwise>
+
+                                                            </c:choose>
+                                                        </td>
+                                                        <td>
+                                                            05/02/2021
+                                                        </td>
+                                                        <td>
+                                                            <fmt:formatNumber
+                                                                    value="${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }"
+                                                                    type="number"/> đ
+                                                        </td>
+                                                        <td>
+                                                                ${lst.saRequest.borrow  + (0.02 * lst.saRequest.borrow ) }
+                                                        </td>
+                                                    </tr>
+                                                </c:when>
+                                                <c:otherwise>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                    <% } else { %>
+                                    <table id="example" class="table table-striped table-bordered no-margin"
+                                           width="100%">
+                                        <thead>
+                                        <tr>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
                                             <th>Số CMND</th>
@@ -125,21 +232,10 @@
                                             <c:choose>
                                                 <c:when test="${lst.saRequest.status eq 'wfs'}">
                                                     <tr id="tr-${lst.saRequest.id}">
-                                                        <% if (role.equals("root") || role.equals("tnthamdinh")) { %>
-                                                        <td><input type="checkbox"
-                                                                   class="checkEmployee"
-                                                                   value="${lst.saRequest.id}"/>
-                                                        </td>
-                                                        <td>
-                                                            <a data-toggle="modal" href="#" class="as"
-                                                               onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
-                                                        </td>
-                                                        <% } else {%>
                                                         <td>
                                                             <a data-toggle="modal" href="#" class="as"
                                                                onclick="viewInfoNoaction('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                         </td>
-                                                        <% }%>
                                                         <td>
                                                                 ${lst.customer.customerName}
                                                         </td>
@@ -213,7 +309,7 @@
                                         </c:forEach>
                                         </tbody>
                                     </table>
-
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
@@ -303,7 +399,7 @@
     let saList = <%=jsonSa%>;
     $(document).ready(function () {
         $("#loading").hide();
-        <% if (role.equals("nvthamdinh")) { %>
+        <% if (role.equals("nvkyduyet")) { %>
         $('#example').DataTable({
             dom: 'Bfrtip',
             order: [[0, "desc"]],

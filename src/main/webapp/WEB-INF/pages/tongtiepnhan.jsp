@@ -161,11 +161,11 @@
                                                         </h6></c:when>
                                                         <c:when test="${lst.saRequest.status eq 'act' }"><h6
                                                                 class="mb-0 font-weight-bold"
-                                                                style="color: greenyellow"> chờ chuyển tiền
+                                                                style="color: green"> đã giải ngân
                                                         </h6></c:when>
                                                         <c:when test="${lst.saRequest.status eq 'done' }"><h6
                                                                 class="mb-0 font-weight-bold"
-                                                                style="color: hotpink"> đã giải ngân
+                                                                style="color: hotpink"> đã hoàn thành
                                                         </h6></c:when>
                                                         <c:when test="${lst.saRequest.status eq 'deni' }"><h6
                                                                 class="mb-0 font-weight-bold"

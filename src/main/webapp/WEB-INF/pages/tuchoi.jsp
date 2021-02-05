@@ -186,8 +186,8 @@
                                             <th class="text-center">Mã đơn</th>
                                             <th class="text-center">Họ và tên</th>
                                             <th class="text-center">Số CMND</th>
-                                            <th class="text-center">Điện thoại</th>
                                             <th class="text-center">Số lần tạm ứng</th>
+                                            <th class="text-center">Điện thoại</th>
                                             <th class="text-center">Nhân viên thẩm định</th>
                                             <th class="text-center">Số tiền tạm ứng</th>
                                             <th class="text-center">Số tiền tạm ứng</th>
@@ -215,11 +215,12 @@
                                                         <td class="text-center">
                                                                 ${lst.customer.customerId}
                                                         </td>
-                                                        <td class="text-center">
-                                                                ${lst.customer.customerPhone}
-                                                        </td>
+
                                                         <td class="text-center">
                                                                 ${count.countBorrow(views, lst.customer.customerPhone)}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.customer.customerPhone}
                                                         </td>
                                                         <td class="text-center">
                                                                 ${lst.saRequest.employeeThamdinh}

@@ -91,15 +91,14 @@
                             </div>
                             <div class="box-body">
                                 <div class="table-responsive">
+                                    <%
+                                        if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                     <table id="example" class="table table-striped table-bordered no-margin"
                                            width="100%">
                                         <thead>
                                         <tr>
-                                            <%
-                                                if (role.equals("root") || role.equals("tnthamdinh")) { %>
                                             <th><input type="checkbox"
                                                        id="rootcheckbox"></th>
-                                            <% }%>
                                             <th class="text-center">Mã đơn</th>
                                             <th class="text-center">Họ và tên</th>
                                             <th class="text-center">Số CMND</th>
@@ -119,7 +118,7 @@
                                             <c:choose>
                                                 <c:when test="${lst.saRequest.status eq 'wait'}">
                                                     <tr id="tr-${lst.saRequest.id}">
-                                                        <% if (role.equals("root") || role.equals("tnthamdinh")) { %>
+
                                                         <td class="text-center"><input type="checkbox"
                                                                                        class="checkEmployee"
                                                                                        value="${lst.saRequest.id}"/>
@@ -128,12 +127,88 @@
                                                             <a data-toggle="modal" href="#" class="as"
                                                                onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                         </td>
-                                                        <% } else {%>
+                                                        <td class="text-center">
+                                                                ${lst.customer.customerName}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.customer.customerId}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.customer.customerPhone}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${count.countBorrow(views, lst.customer.customerPhone)}
+                                                        </td>
+                                                        <td id="empColumn-${lst.saRequest.id}" class="text-center">
+                                                            <c:choose>
+                                                                <c:when test="${empty  lst.saRequest.employeeThamdinh}">-</c:when>
+                                                                <c:otherwise>
+                                                                    ${lst.saRequest.employeeThamdinh}
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <fmt:formatNumber
+                                                                    value="${lst.saRequest.borrow }"
+                                                                    type="number"/> đ
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.saRequest.borrow }
+                                                        </td>
+                                                        <td class="text-center">
+                                                            2 %
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <fmt:formatNumber
+                                                                    value="${lst.saRequest.borrow  * 0.02}"
+                                                                    type="number"/> đ
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.saRequest.borrow  * 0.02}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <fmt:parseDate value=" ${lst.saRequest.createdDate}"
+                                                                           pattern="yyyy-MM-dd'T'HH:mm" var="day"
+                                                                           type="date"/>
+                                                            <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                            value="${day}"/>
+                                                        </td>
+                                                    </tr>
+                                                </c:when>
+                                                <c:otherwise>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                    <% } else { %>
+                                    <table id="example" class="table table-striped table-bordered no-margin"
+                                           width="100%">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">Mã đơn</th>
+                                            <th class="text-center">Họ và tên</th>
+                                            <th class="text-center">Số CMND</th>
+                                            <th class="text-center">Điện thoại</th>
+                                            <th class="text-center">Số lần tạm ứng</th>
+                                            <th class="text-center">Nhân viên thẩm định</th>
+                                            <th class="text-center">Số tiền tạm ứng</th>
+                                            <th class="text-center">Số tiền tạm ứng</th>
+                                            <th class="text-center">Phí dịch vụ</th>
+                                            <th class="text-center">Mức phí</th>
+                                            <th class="text-center">Mức phí</th>
+                                            <th class="text-center">Thời gian yêu cầu tạm ứng</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${views}" var="lst" varStatus="loop">
+                                            <c:choose>
+                                                <c:when test="${lst.saRequest.status eq 'wait'}">
+                                                    <tr id="tr-${lst.saRequest.id}">
                                                         <td class="text-center">
                                                             <a data-toggle="modal" href="#" class="as"
                                                                onclick="viewInfoNoaction('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                         </td>
-                                                        <% }%>
                                                         <td class="text-center">
                                                                 ${lst.customer.customerName}
                                                         </td>
@@ -189,6 +264,9 @@
                                         </c:forEach>
                                         </tbody>
                                     </table>
+
+                                    <% } %>
+
                                 </div>
 
                             </div>
