@@ -15,6 +15,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="count" class="com.sgfintech.util.StringUtil"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <%
@@ -72,115 +74,7 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="row">
-                    <!-- /.col -->
-                    <div class="col-xl-3 col-md-6 col-12">
-                        <div class="box box-inverse box-warning">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Chờ giải quyết</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countWait}</div>
-                                    <span>Yêu cầu chờ thẩm định</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-xl-3 col-md-6 col-12 ">
-                        <div class="box box-inverse box-primary">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Chờ ký duyệt</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countWFS}</div>
-                                    <span>Yêu cầu chờ ký duyệt</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-12 ">
-                        <div class="box box-inverse box-success">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Đã ký duyệt</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countAct}</div>
-                                    <span>Yêu cầu đã được giải ngân</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-xl-3 col-md-6 col-12 ">
-                        <div class="box box-inverse " style="background-color: hotpink">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5> Đã giải ngân</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countDone}</div>
-                                    <span>Yêu cầu tất toán thành công</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <jsp:include page="general/countSarequest.jsp"/>
                 <div class="row">
                     <div class="col-12">
                         <div class="box">
@@ -193,77 +87,82 @@
                                            width="100%">
                                         <thead>
                                         <tr>
-                                            <th>Mã đơn</th>
-                                            <th>Họ và tên</th>
-                                            <th>Số CMND</th>
-                                            <th>Điện thoại</th>
-                                            <th>Số lần tạm ứng</th>
-                                            <th>Nhân viên thẩm định</th>
-                                            <th>Số tiền tạm ứng</th>
-                                            <th>Số tiền tạm ứng</th>
-                                            <th>Phí dịch vụ</th>
-                                            <th>Mức phí</th>
-                                            <th>Mức phí</th>
-                                            <th>Thời gian yêu cầu tạm ứng</th>
+                                            <th class="text-center">Mã đơn</th>
+                                            <th class="text-center">Họ và tên</th>
+                                            <th class="text-center">Số CMND</th>
+                                            <th class="text-center">Số lần tạm ứng</th>
+                                            <th class="text-center">Điện thoại</th>
+                                            <th class="text-center">Nhân viên thẩm định</th>
+                                            <th class="text-center">Số tiền tạm ứng</th>
+                                            <th class="text-center">Số tiền tạm ứng</th>
+                                            <th class="text-center">Phí dịch vụ</th>
+                                            <th class="text-center">Mức phí</th>
+                                            <th class="text-center">Mức phí</th>
+                                            <th class="text-center">Thời gian yêu cầu tạm ứng</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
-                                            <tr id="tr-${lst.saRequest.id}">
-                                                <td><a data-toggle="modal" href="#" class="as"
-                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerName}
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerId}
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerPhone}
-                                                </td>
+                                            <c:choose>
+                                                <c:when test="${lst.saRequest.status eq 'wait' && lst.saRequest.employeeThamdinh eq euser.userLogin}">
+                                                    <tr id="tr-${lst.saRequest.id}">
+                                                        <td class="text-center"><a data-toggle="modal" href="#"
+                                                                                   class="as"
+                                                                                   onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.customer.customerName}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.customer.customerId}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${count.countBorrow(views, lst.customer.customerPhone)}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.customer.customerPhone}
+                                                        </td>
+                                                        <td id="addColumn" class="text-center">
+                                                            <c:choose>
+                                                                <c:when test="${empty  lst.saRequest.employeeThamdinh}">-</c:when>
+                                                                <c:otherwise>
+                                                                    ${lst.saRequest.employeeThamdinh}
+                                                                </c:otherwise>
 
-                                                <td>
-                                                        ${lst.saRequest.timeBorrow}
-                                                </td>
-                                                <td id="addColumn">
-                                                    <c:choose>
-                                                        <c:when test="${empty  lst.saRequest.employeeThamdinh}">-</c:when>
-                                                        <c:otherwise>
-                                                            ${lst.saRequest.employeeThamdinh}
-                                                        </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.saRequest.borrow}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <fmt:formatNumber
+                                                                    value="${lst.saRequest.borrow }"
+                                                                    type="number"/> đ
+                                                        </td>
+                                                        <td class="text-center">
+                                                            2 %
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.saRequest.borrow * 0.02}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <fmt:formatNumber
+                                                                    value="${lst.saRequest.borrow  * 0.02}"
+                                                                    type="number"/> đ
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <fmt:parseDate value=" ${lst.saRequest.createdDate}"
+                                                                           pattern="yyyy-MM-dd'T'HH:mm" var="day"
+                                                                           type="date"/>
+                                                            <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                            value="${day}"/>
+                                                        </td>
 
-                                                    </c:choose>
-                                                </td>
-                                                <td>
-                                                        ${lst.saRequest.borrow}
-                                                </td>
-                                                <td>
-                                                    <fmt:formatNumber
-                                                            value="${lst.saRequest.borrow }"
-                                                            type="number"/> đ
-                                                </td>
-                                                <td>
-                                                    2 %
-                                                </td>
-                                                <td>
-                                                        ${lst.saRequest.borrow * 0.02}
-                                                </td>
-                                                <td>
-                                                    <fmt:formatNumber
-                                                            value="${lst.saRequest.borrow  * 0.02}"
-                                                            type="number"/> đ
-                                                </td>
-                                                <td>
-                                                    <fmt:parseDate value=" ${lst.saRequest.createdDate}"
-                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="day"
-                                                                   type="date"/>
-                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                                    value="${day}"/>
-                                                </td>
-
-                                            </tr>
-
+                                                    </tr>
+                                                </c:when>
+                                                <c:otherwise>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </c:forEach>
                                         </tbody>
                                     </table>

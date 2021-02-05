@@ -110,32 +110,32 @@ public class MergeDataService {
         }
     }
 
-    public List<MergeDataOrder> getData(String status) {
-        log.info("List MergeDataOrder (saRequest and company and customer) - getData  ");
-        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com  where sa.company_code = com.company_code and sa.company_code  = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status=? ORDER BY sa.id DESC";
-        if (StringUtil.isEmpty(jdbcTemplate)) {
-            jdbcTemplate = new JdbcTemplate(dataSource);
-        }
-        try {
-
-            Object[] param = new Object[]{status};
-            List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
-                    (rs, arg1) -> {
-                        Customer c = new CustomerMapper().mapRow(rs, arg1);
-                        SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
-                        Companies com = new CompanyMapper().mapRow(rs, arg1);
-                        return new MergeDataOrder(c, s, com);
-                    });
-            log.info("Result List getData: " + resultList);
-            return resultList;
-        } catch (Exception ex) {
-            return null;
-        }
-    }
+//    public List<MergeDataOrder> getData(String status) {
+//        log.info("List MergeDataOrder (saRequest and company and customer) - getData  ");
+//        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com  where sa.company_code = com.company_code and sa.company_code  = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status=? ORDER BY sa.id DESC";
+//        if (StringUtil.isEmpty(jdbcTemplate)) {
+//            jdbcTemplate = new JdbcTemplate(dataSource);
+//        }
+//        try {
+//
+//            Object[] param = new Object[]{status};
+//            List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
+//                    (rs, arg1) -> {
+//                        Customer c = new CustomerMapper().mapRow(rs, arg1);
+//                        SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
+//                        Companies com = new CompanyMapper().mapRow(rs, arg1);
+//                        return new MergeDataOrder(c, s, com);
+//                    });
+//            log.info("Result List getData: " + resultList);
+//            return resultList;
+//        } catch (Exception ex) {
+//            return null;
+//        }
+//    }
 
     public List<MergeDataOrder> getDataTongTiepNhan() {
         log.info("List MergeDataOrder (saRequest and company and customer) - getDataTongTiepNhan ");
-        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com  where sa.company_code = com.company_code and sa.company_code  = cu.company_code and sa.customer_phone = cu.customer_phone";
+        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com  where sa.company_code = com.company_code and sa.company_code  = cu.company_code and sa.customer_phone = cu.customer_phone ORDER BY sa.id DESC";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
@@ -157,88 +157,23 @@ public class MergeDataService {
         }
     }
 
-    public int contractStatus(String status) {
-        log.info("Count number contract status - contractStatus ");
-        String sql = "select COUNT(con.status) from sgft_contract con where con.status = ? ";
-        if (StringUtil.isEmpty(jdbcTemplate)) {
-            jdbcTemplate = new JdbcTemplate(dataSource);
-        }
-        try {
-            int count = jdbcTemplate.queryForObject(sql, new Object[]{status}, Integer.class);
-            log.info("Count: " + count);
-            return count;
-        } catch (Exception ex) {
-            log.error("Exception: " + ex.getMessage());
-            ex.printStackTrace();
-            return 0;
-        }
-    }
 
-    public List<MergeDataOrder> getDataShow(String status, boolean nodate) {
-        log.info("List MergeDataOrder (saReuqest and company and customer) - getDataShow ");
-        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where cu.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status = ? ORDER BY sa.id DESC";
+    public List<MergeDataOrder> getUser() {
+        log.info("List MergeDataOrder (saRequest and company and customer) - getUser(Thamdinh or Kyduyet)");
+        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where cu.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone  ORDER BY sa.id DESC";
         if (StringUtil.isEmpty(jdbcTemplate)) {
             jdbcTemplate = new JdbcTemplate(dataSource);
         }
         try {
-            Object[] param = new Object[]{status};
+            Object[] param = new Object[]{};
             List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
                     (rs, arg1) -> {
-                        Customer c = new CustomerMapper().mapRow(rs, arg1);
-                        SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
-                        Companies com = new CompanyMapper().mapRow(rs, arg1);
-                        return new MergeDataOrder(c, s, com);
-                    });
-            log.info("Result list getDataShow: " + resultList);
-            return resultList;
-        } catch (Exception ex) {
-            log.error("Exception: " + ex.getMessage());
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    public List<MergeDataOrder> getUserThamdinh(String status, String empThamdinh) {
-        log.info("List MergeDataOrder (saRequest and company and customer) - getUserThamdinh ");
-        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where cu.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status = ? and sa.employee_thamdinh = ?  ORDER BY sa.id DESC";
-        if (StringUtil.isEmpty(jdbcTemplate)) {
-            jdbcTemplate = new JdbcTemplate(dataSource);
-        }
-        try {
-            Object[] param = new Object[]{status, empThamdinh};
-            List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
-                    (rs, arg1) -> {
-
                         Customer c = new CustomerMapper().mapRow(rs, arg1);
                         SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
                         Companies com = new CompanyMapper().mapRow(rs, arg1);
                         return new MergeDataOrder(c, s, com);
                     });
             log.info("Result list getUserThamdinh: " + resultList);
-            return resultList;
-        } catch (Exception ex) {
-            log.error("Exception: " + ex.getMessage());
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    public List<MergeDataOrder> getUserDuyet(String status, String empDuyet) {
-        log.info("List MergeDataOrder (saRequest and company and customer) - getUserDuyet ");
-        String sql = "select sa.*, cu.*,com.* from sgft_sa_request sa, sgft_customer cu,sgft_companies com where cu.company_code = com.company_code and sa.company_code = cu.company_code and sa.customer_phone = cu.customer_phone and sa.status = ? and sa.employee_duyet = ?  ORDER BY sa.id DESC";
-        if (StringUtil.isEmpty(jdbcTemplate)) {
-            jdbcTemplate = new JdbcTemplate(dataSource);
-        }
-        try {
-            Object[] param = new Object[]{status, empDuyet};
-            List<MergeDataOrder> resultList = jdbcTemplate.query(sql, param,
-                    (rs, arg1) -> {
-                        Customer c = new CustomerMapper().mapRow(rs, arg1);
-                        SaRequest s = new SaRequestMapper().mapRow(rs, arg1);
-                        Companies com = new CompanyMapper().mapRow(rs, arg1);
-                        return new MergeDataOrder(c, s, com);
-                    });
-            log.info("Result list getUserDuyet: " + resultList);
             return resultList;
         } catch (Exception ex) {
             log.error("Exception: " + ex.getMessage());
@@ -295,28 +230,6 @@ public class MergeDataService {
         }
     }
 
-//    public List<MergeDataWithdraw> gachnodata(String date) {
-//        String sql = "";
-//        Object[] param = null;
-//        if (StringUtil.isEmpty(jdbcTemplate)) {
-//            jdbcTemplate = new JdbcTemplate(dataSource);
-//        }
-//        sql = "select co.*,cu.*,com.* from sgft_contract co,sgft_customer cu ,  sgft_companies com where co.customer_phone = cu.customer_phone and cu.company_code = com.company_code and co.status in ('act','notcomplete')  ORDER BY co.id_contract DESC";
-//        param = new Object[]{};
-//
-//        try {
-//            List<MergeDataWithdraw> resultList = jdbcTemplate.query(sql, param,
-//                    (rs, arg1) -> {
-//                        Customer cu = new CustomerMapper().mapRow(rs, arg1);
-//                        Contract co = new ContractMapper().mapRow(rs, arg1);
-//                        Companies com = new CompanyMapper().mapRow(rs, arg1);
-//                        return new MergeDataWithdraw(cu, co, com);
-//                    });
-//            return resultList;
-//        } catch (Exception ex) {
-//            return null;
-//        }
-//    }
 
     public List<MergeDataWithdraw> getDataWithdraw(String status, boolean nodate, String date) { //no check date = true
         log.info("List MergeDataWithdraw (contract and company and customer) - getDataWithdraw ");

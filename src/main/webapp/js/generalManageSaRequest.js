@@ -18,10 +18,10 @@ $("body").on("click", ".as", function () {
             rowElement.append('<td><h5 style="color:  #0aa5df">chờ ký duyệt</h5></td>');
 
         } else if (sa.saRequest.status == 'done') {
-            rowElement.append('<td><h5 style="color: hotpink"> đã giải ngân</h5></td>');
+            rowElement.append('<td><h5 style="color: hotpink"> đã hoàn thành</h5></td>');
 
         } else if (sa.saRequest.status == 'act') {
-            rowElement.append('<td><h5 style="color: green">chờ chuyển tiền</h5></td>');
+            rowElement.append('<td><h5 style="color: green">đã giải ngân</h5></td>');
 
         } else if (sa.saRequest.status == 'deni') {
             rowElement.append('<td><h5 style="color: red">từ chối</h5></td>');

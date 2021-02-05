@@ -30,6 +30,7 @@
     }
 %>
 <jsp:include page="general/_head.jsp"/>
+<jsp:useBean id="count" class="com.sgfintech.util.StringUtil"/>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 
@@ -182,95 +183,101 @@
                                            width="100%">
                                         <thead>
                                         <tr>
-                                            <th>Mã đơn</th>
-                                            <th>Họ và tên</th>
-                                            <th>Số CMND</th>
-                                            <th>Điện thoại</th>
-                                            <th>Số lần tạm ứng</th>
-                                            <th>Nhân viên thẩm định</th>
-                                            <th>Số tiền tạm ứng</th>
-                                            <th>Số tiền tạm ứng</th>
-                                            <th>Phí dịch vụ</th>
-                                            <th>Mức phí</th>
-                                            <th>Mức phí</th>
-                                            <th>Thời gian yêu cầu tạm ứng</th>
-                                            <th>Trạng thái</th>
-                                            <th>Nhân viên xét duyệt</th>
-                                            <th>Lý do từ chối</th>
+                                            <th class="text-center">Mã đơn</th>
+                                            <th class="text-center">Họ và tên</th>
+                                            <th class="text-center">Số CMND</th>
+                                            <th class="text-center">Điện thoại</th>
+                                            <th class="text-center">Số lần tạm ứng</th>
+                                            <th class="text-center">Nhân viên thẩm định</th>
+                                            <th class="text-center">Số tiền tạm ứng</th>
+                                            <th class="text-center">Số tiền tạm ứng</th>
+                                            <th class="text-center">Phí dịch vụ</th>
+                                            <th class="text-center">Mức phí</th>
+                                            <th class="text-center">Mức phí</th>
+                                            <th class="text-center">Thời gian yêu cầu tạm ứng</th>
+                                            <th class="text-center">Trạng thái</th>
+                                            <th class="text-center">Nhân viên xét duyệt</th>
+                                            <th class="text-center">Lý do từ chối</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
-                                            <tr id="tr-${lst.saRequest.id}">
-                                                <td>
-                                                    <a data-toggle="modal" href="#" class="as"
-                                                       onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerName}
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerId}
-                                                </td>
-                                                <td>
-                                                        ${lst.customer.customerPhone}
-                                                </td>
+                                            <c:choose>
+                                                <c:when test="${lst.saRequest.status eq 'deni'}">
+                                                    <tr id="tr-${lst.saRequest.id}">
+                                                        <td class="text-center">
+                                                            <a data-toggle="modal" href="#" class="as"
+                                                               onclick="viewInfoCustomer('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.customer.customerName}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.customer.customerId}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.customer.customerPhone}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${count.countBorrow(views, lst.customer.customerPhone)}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.saRequest.employeeThamdinh}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.saRequest.borrow}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <fmt:formatNumber
+                                                                    value="${lst.saRequest.borrow }"
+                                                                    type="number"/> đ
+                                                        </td>
+                                                        <td class="text-center">
+                                                            2 %
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${lst.saRequest.borrow * 0.02}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <fmt:formatNumber
+                                                                    value="${lst.saRequest.borrow  * 0.02}"
+                                                                    type="number"/> đ
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <fmt:parseDate value=" ${lst.saRequest.createdDate}"
+                                                                           pattern="yyyy-MM-dd'T'HH:mm" var="day"
+                                                                           type="date"/>
+                                                            <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
+                                                                            value="${day}"/>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <b style="color: red">Từ chối</b>
+                                                        </td>
 
-                                                <td>
-                                                        ${lst.saRequest.timeBorrow}
-                                                </td>
-                                                <td>
-                                                        ${lst.saRequest.employeeThamdinh}
-                                                </td>
-                                                <td>
-                                                        ${lst.saRequest.borrow}
-                                                </td>
-                                                <td>
-                                                    <fmt:formatNumber
-                                                            value="${lst.saRequest.borrow }"
-                                                            type="number"/> đ
-                                                </td>
-                                                <td>
-                                                    2 %
-                                                </td>
-                                                <td>
-                                                        ${lst.saRequest.borrow * 0.02}
-                                                </td>
-                                                <td>
-                                                    <fmt:formatNumber
-                                                            value="${lst.saRequest.borrow  * 0.02}"
-                                                            type="number"/> đ
-                                                </td>
-                                                <td>
-                                                    <fmt:parseDate value=" ${lst.saRequest.createdDate}"
-                                                                   pattern="yyyy-MM-dd'T'HH:mm" var="day"
-                                                                   type="date"/>
-                                                    <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
-                                                                    value="${day}"/>
-                                                </td>
-                                                <td>
-                                                    <b style="color: red">Từ chối</b>
-                                                </td>
+                                                        <td class="text-center">
+                                                            <c:choose>
+                                                                <c:when test="${empty lst.saRequest.employeeDuyet}">-</c:when>
+                                                                <c:otherwise>
+                                                                    ${lst.saRequest.employeeDuyet}
+                                                                </c:otherwise>
 
-                                                <td>
-                                                    <c:choose>
-                                                        <c:when test="${empty lst.saRequest.employeeDuyet}">-</c:when>
-                                                        <c:otherwise>
-                                                            ${lst.saRequest.employeeDuyet}
-                                                        </c:otherwise>
-
-                                                    </c:choose>
-                                                </td>
-                                                <td>
-                                                    <c:choose>
-                                                        <c:when test="${empty lst.saRequest.description}"><b>Chưa có lý
-                                                            do</b></c:when>
-                                                        <c:otherwise>
-                                                            <b>${lst.saRequest.description}</b>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </td>
-                                            </tr>
+                                                            </c:choose>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <c:choose>
+                                                                <c:when test="${empty lst.saRequest.description}"><b>Chưa
+                                                                    có lý
+                                                                    do</b></c:when>
+                                                                <c:otherwise>
+                                                                    <b>${lst.saRequest.description}</b>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
+                                                    </tr>
+                                                </c:when>
+                                                <c:otherwise>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </c:forEach>
                                         </tbody>
                                     </table>

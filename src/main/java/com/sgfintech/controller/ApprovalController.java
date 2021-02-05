@@ -58,7 +58,7 @@ public class ApprovalController {
         if (u == null) {
             return "redirect:login";
         } else {
-            List<MergeDataOrder> listMergeDataOrders = mergeDataService.getData("deni");
+            List<MergeDataOrder> listMergeDataOrders = mergeDataService.getDataTongTiepNhan();
             log.info("Data merge table order and customer and companies: " + listMergeDataOrders);
             List<SaRequest> saRequest = saRequestDAO.findAll();
             log.info("Data saRequest table: " + saRequest);
@@ -81,8 +81,7 @@ public class ApprovalController {
         if (u == null) {
             return "redirect:login";
         } else {
-            String empThamdinh = u.getUserLogin();
-            List<MergeDataOrder> listThamdinhLogin = mergeDataService.getUserThamdinh("wait", empThamdinh);
+            List<MergeDataOrder> listThamdinhLogin = mergeDataService.getUser();
             log.info("Data merge table order and customer and companies: " + listThamdinhLogin);
             mm.addAttribute(Consts.Attr_ResultView, listThamdinhLogin);
             List<SaRequest> sa = saRequestDAO.findAll();
@@ -128,7 +127,7 @@ public class ApprovalController {
         if (u == null) {
             return "redirect:login";
         } else {
-            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getData("wait");
+            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataTongTiepNhan();
             log.info("Data merge table order and customer and companies: " + listMergeDatumOrders);
             List<SaRequest> sa = saRequestDAO.findAll();
             log.info("Data saRequest table find all : " + sa);

@@ -1,11 +1,18 @@
 package com.sgfintech.util;
 
+import com.sgfintech.entity.SaRequest;
+import com.sgfintech.handler.MergeDataOrder;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLOutput;
 import java.text.Normalizer;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * @author lucnguyen.hcmut@gmail.com
@@ -47,6 +54,18 @@ public class StringUtil {
         return Normalizer
                 .normalize(name, Normalizer.Form.NFD)
                 .replaceAll("[^\\p{ASCII}]", "");
+    }
+
+    public static Integer countBorrow(List<MergeDataOrder> lst, String phone) {
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH) + 1;
+        int count = 0;
+        for (MergeDataOrder m : lst) {
+            if (m.getSaRequest().getCustomerPhone().equals(phone) && m.getSaRequest().getStatus().equals("done") && m.getSaRequest().getCreatedDate().getMonth().getValue() == month) {
+                count += 1;
+            }
+        }
+        return count;
     }
 
 }

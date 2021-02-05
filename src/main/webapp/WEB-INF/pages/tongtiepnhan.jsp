@@ -30,6 +30,7 @@
     }
 %>
 <jsp:include page="general/_head.jsp"/>
+<jsp:useBean id="count" class="com.sgfintech.util.StringUtil"/>
 
 <body class="hold-transition light-skin sidebar-mini theme-primary">
 
@@ -63,115 +64,7 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="row">
-                    <!-- /.col -->
-                    <div class="col-xl-3 col-md-6 col-12">
-                        <div class="box box-inverse box-warning">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Chờ giải quyết</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countWait}</div>
-                                    <span>Yêu cầu chờ thẩm định</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-xl-3 col-md-6 col-12 ">
-                        <div class="box box-inverse box-primary">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Chờ ký duyệt</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countWFS}</div>
-                                    <span>Yêu cầu chờ ký duyệt</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-12 ">
-                        <div class="box box-inverse box-success">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Chờ giải ngân</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countAct}</div>
-                                    <span>Yêu cầu chờ được giải ngân</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-xl-3 col-md-6 col-12 ">
-                        <div class="box box-inverse " style="background-color: hotpink">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5> Đã giải ngân</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countDone}</div>
-                                    <span>Yêu cầu đã giải ngân</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <jsp:include page="general/countSarequest.jsp"/>
                 <div class="row">
                     <div class="col-12">
                         <div class="box">
@@ -185,12 +78,11 @@
                                            width="100%">
                                         <thead>
                                         <tr>
-                                            <th></th>
                                             <th>Mã đơn</th>
                                             <th>Họ và tên</th>
                                             <th>Số CMND</th>
-                                            <th>Điện thoại</th>
                                             <th>Số lần tạm ứng</th>
+                                            <th>Điện thoại</th>
                                             <th>Nhân viên thẩm định</th>
                                             <th>Số tiền tạm ứng</th>
                                             <th>Số tiền tạm ứng</th>
@@ -208,7 +100,6 @@
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr>
-                                                <td></td>
                                                 <td><a data-toggle="modal" href="#" class="as"
                                                        onclick="viewInfoNoaction('${lst.customer.customerPhone}','${lst.saRequest.id}','${lst.company.id}')"><b>${lst.saRequest.id}</b></a>
                                                 </td>
@@ -219,11 +110,10 @@
                                                         ${lst.customer.customerId}
                                                 </td>
                                                 <td>
-                                                        ${lst.customer.customerPhone}
+                                                        ${count.countBorrow(views, lst.customer.customerPhone)}
                                                 </td>
-
                                                 <td>
-                                                        ${lst.saRequest.timeBorrow}
+                                                        ${lst.customer.customerPhone}
                                                 </td>
                                                 <td>
                                                     <c:choose>
@@ -353,21 +243,11 @@
                     next: "Trang sau",
                 }
             },
-            order: [[1, "desc"]],
-            pageLength: 10,
-            select: {
-                style: 'multi',
-                selector: 'td:first-child'
-            },
+            order: [[0, "desc"]],
             columnDefs: [
                 {
-                    orderable: false,
-                    className: 'select-checkbox',
-                    targets: 0
-                },
-                {
                     visible: false,
-                    targets: [7, 10, 17]
+                    targets: [6, 9, 16]
                 },
             ],
             buttons: [
@@ -380,7 +260,8 @@
                                 return body;
                             }
                         },
-                        columns: [1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 17]
+                        columns: [0, 1, 2, 3, 4, 5, 6, 8, 9, 11, 12, 13, 14, 16]
+
                     }
                 },
             ]

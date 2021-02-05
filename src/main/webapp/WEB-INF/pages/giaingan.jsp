@@ -74,115 +74,7 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="row">
-                    <!-- /.col -->
-                    <div class="col-xl-3 col-md-6 col-12">
-                        <div class="box box-inverse box-warning">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Chờ giải quyết</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countWait}</div>
-                                    <span>Yêu cầu chờ thẩm định</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-xl-3 col-md-6 col-12 ">
-                        <div class="box box-inverse box-primary">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Chờ ký duyệt</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countWFS}</div>
-                                    <span>Yêu cầu chờ ký duyệt</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-12 ">
-                        <div class="box box-inverse box-success">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5>Đã ký duyệt</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countAct}</div>
-                                    <span>Yêu cầu chờ giải ngân</span>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-xl-3 col-md-6 col-12 ">
-                        <div class="box box-inverse " style="background-color: hotpink">
-                            <div class="box-body">
-                                <div class="flexbox">
-                                    <h5> Đã giải ngân</h5>
-                                    <div class="dropdown">
-											<span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
-                                                    class="ion-android-more-vertical rotate-90"></i></span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="ion-android-list"></i>
-                                                Details</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-add"></i> Add
-                                                new</a>
-                                            <a class="dropdown-item" href="#"><i class="ion-android-refresh"></i>
-                                                Refresh</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="text-center my-2">
-                                    <div class="font-size-60">${countDone}</div>
-                                    <span>Yêu cầu tất toán thành công</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <jsp:include page="general/countSarequest.jsp"/>
                 <div class="row">
                     <div class="col-12">
                         <div class="box">
@@ -196,32 +88,32 @@
                                            width="100%">
                                         <thead>
                                         <tr>
-                                            <th class="text-center">Mã đơn</th>
-                                            <th class="text-center">Mã công ty</th>
-                                            <th class="text-center">Tên khách hàng</th>
-                                            <th class="text-center">Số điện thoại</th>
-                                            <th class="text-center">Số CMND</th>
-                                            <th class="text-center">Chủ tài khoản</th>
-                                            <th class="text-center">Số tài khoản</th>
-                                            <th class="text-center">Tên ngân hàng</th>
-                                            <th class="text-center">Số tiền tạm ứng</th>
-                                            <th class="text-center">Số tiền tạm ứng</th>
-                                            <th class="text-center">Phí dịch vụ</th>
-                                            <th class="text-center">Mức phí</th>
-                                            <th class="text-center">Mức phí</th>
-                                            <th class="text-center">TG yêu cầu</th>
-                                            <th class="text-center">Trạng thái</th>
-                                            <th class="text-center">Người giải ngân</th>
-                                            <th class="text-center">TG giải ngân</th>
-                                            <th class="text-center">Chứng từ giải ngân</th>
-                                            <th class="text-center">Nội dung chuyển khoản</th>
+                                            <th class="text-left">Mã đơn</th>
+                                            <th class="text-left">Mã công ty</th>
+                                            <th class="text-left">Tên khách hàng</th>
+                                            <th class="text-left">Số điện thoại</th>
+                                            <th class="text-left">Số CMND</th>
+                                            <th class="text-left">Chủ tài khoản</th>
+                                            <th class="text-left">Số tài khoản</th>
+                                            <th class="text-left">Tên ngân hàng</th>
+                                            <th class="text-left">Số tiền tạm ứng</th>
+                                            <th class="text-left">Số tiền tạm ứng</th>
+                                            <th class="text-left">Phí dịch vụ</th>
+                                            <th class="text-left">Mức phí</th>
+                                            <th class="text-left">Mức phí</th>
+                                            <th class="text-left">TG yêu cầu</th>
+                                            <th class="text-left">Trạng thái</th>
+                                            <th class="text-left">Người giải ngân</th>
+                                            <th class="text-left">TG giải ngân</th>
+                                            <th class="text-left">Chứng từ giải ngân</th>
+                                            <th class="text-left">Nội dung chuyển khoản</th>
 
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach items="${views}" var="lst" varStatus="loop">
                                             <tr id="tr-${lst.id}">
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                     <%
                                                         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
                                                         String role = u.getRole();
@@ -233,48 +125,48 @@
                                                     <% }%>
 
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                         ${lst.companyCode}
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                         ${lst.customerName}
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                         ${lst.customerPhone}
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                         ${lst.customerId}
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                         ${lst.bankOwner}
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                         ${lst.bankAccount}
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                         ${lst.bankName}
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                     <fmt:formatNumber
                                                             value="${lst.amount}"
                                                             type="number"/> đ
 
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                         ${lst.amount}
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                     2 %
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                     <fmt:formatNumber
                                                             value="${lst.amount * 0.02}"
                                                             type="number"/> đ
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                         ${lst.amount * 0.02}
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                     <fmt:parseDate value="  ${lst.dateRequest}"
                                                                    pattern="yyyy-MM-dd'T'HH:mm"
                                                                    var="day"
@@ -282,28 +174,28 @@
                                                     <fmt:formatDate pattern="dd/MM/yyyy - hh:mm a"
                                                                     value="${day}"/>
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                     <c:choose>
                                                         <c:when test="${lst.status eq 'active'}"><b
                                                                 style="color: orange">Chờ chuyển tiền</b></c:when>
 
                                                     </c:choose>
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                         ${lst.payer}
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                         ${lst.payDate}
 
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                     <a href="/${lst.payImages}" target="_blank">
                                                         <img
                                                                 src="/${lst.payImages}" alt=""
                                                                 width="100%"></a>
                                                 </td>
 
-                                                <td class="text-center">
+                                                <td class="text-left">
                                                     Smart Cash - ${rp.replaceName(lst.customerName)}
                                                     - ${lst.customerPhone} - ${lst.id}
                                                 </td>

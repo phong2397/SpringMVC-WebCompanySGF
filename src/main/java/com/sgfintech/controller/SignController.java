@@ -67,8 +67,7 @@ public class SignController {
         if (u == null) {
             return "redirect:login";
         } else {
-            String empDuyet = u.getUserLogin();
-            List<MergeDataOrder> listXetduyetLogin = mergeDataService.getUserDuyet("wfs", empDuyet);
+            List<MergeDataOrder> listXetduyetLogin = mergeDataService.getUser();
             mm.addAttribute(Consts.Attr_ResultView, listXetduyetLogin);
             List<SaRequest> saRequest = saRequestDAO.findAll();
             mm.addAttribute("sa", saRequest);
@@ -88,7 +87,7 @@ public class SignController {
         if (u == null) {
             return "redirect:login";
         } else {
-            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataShow("wfs", false);
+            List<MergeDataOrder> listMergeDatumOrders = mergeDataService.getDataTongTiepNhan();
             List<Useradmin> admin = useradminDAO.findAll();
             mm.addAttribute("admin", admin);
             List<SaRequest> saRequest = saRequestDAO.findAll();

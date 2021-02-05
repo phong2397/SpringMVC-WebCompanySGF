@@ -36,7 +36,7 @@ public class TotalListController {
     SaRequestService saRequestService;
 
     @RequestMapping(value = {"/khachhangtattoan"}, method = RequestMethod.GET)
-    public String khachhangtattoanPage(ModelMap mm, HttpSession session) {
+    public String customerRepayPage(ModelMap mm, HttpSession session) {
         log.info("GET - khachhangtattoan page ");
         Useradmin u = (Useradmin) session.getAttribute(Consts.Session_Euser);
         if (u == null) {
