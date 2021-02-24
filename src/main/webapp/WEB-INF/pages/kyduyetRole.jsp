@@ -240,17 +240,8 @@
                     next: "Trang sau",
                 }
             },
-            // select: {
-            //     style: 'multi',
-            //     selector: 'td:first-child'
-            // },
             pageLength: 10,
             columnDefs: [
-                // {
-                //     orderable: false,
-                //     className: 'select-checkbox',
-                //     targets: 0
-                // },
                 {
                     visible: false,
                     targets: [6, 9, 16]

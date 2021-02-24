@@ -45,6 +45,9 @@ public class WriteOffController {
     @Autowired
     SaRequestDAO saRequestDAO;
 
+    @Autowired
+    DetailTransactionDAO detailTransactionDAO;
+
     private static final Logger log = Logger.getLogger(WriteOffController.class);
 
     @RequestMapping(value = {"/nhacphi"}, method = RequestMethod.GET)
@@ -64,8 +67,6 @@ public class WriteOffController {
         }
     }
 
-    @Autowired
-    DetailTransactionDAO detailTransactionDAO;
 
     @RequestMapping(value = {"/gachno"}, method = RequestMethod.GET)
     public String gachnoPage(ModelMap mm, HttpSession session) {
